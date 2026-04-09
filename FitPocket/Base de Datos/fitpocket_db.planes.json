@@ -1,0 +1,63 @@
+[{
+  "_id": {
+    "$oid": "69d7e1fe9f1f37822ddce087"
+  },
+  "userId": {
+    "$oid": "69d7e17f9f1f37822ddce080"
+  },
+  "version": 1,
+  "activo": true,
+  "contenido": {
+    "meta": {
+      "objetivo": "Perder 4kg en 8 semanas",
+      "duracionSemanas": 8,
+      "caloriasObjetivoDia": 1800,
+      "nivelDificultad": "intermedio",
+      "justificacion": "Plan basado en déficit calórico moderado"
+    },
+    "rutina": [
+      {
+        "dia": "Lunes",
+        "tipo": "Fuerza",
+        "duracionMinutos": 60,
+        "ejercicios": [
+          {
+            "nombre": "Sentadilla",
+            "series": 4,
+            "repeticiones": "10",
+            "descansoSegundos": 90,
+            "nota": "Mantené la espalda recta"
+          }
+        ]
+      }
+    ],
+    "dieta": [
+      {
+        "dia": "Lunes",
+        "desayuno": {
+          "descripcion": "Avena con frutas",
+          "calorias": 350
+        },
+        "almuerzo": {
+          "descripcion": "Pollo con arroz integral",
+          "calorias": 600
+        },
+        "merienda": {
+          "descripcion": "Yogur griego",
+          "calorias": 150
+        },
+        "cena": {
+          "descripcion": "Ensalada con atún",
+          "calorias": 400
+        },
+        "costoEstimadoDia": 2500
+      }
+    ]
+  },
+  "createdAt": {
+    "$date": "2025-01-01T00:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-01T00:00:00.000Z"
+  }
+}]
