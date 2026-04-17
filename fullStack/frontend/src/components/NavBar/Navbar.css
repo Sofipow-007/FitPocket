@@ -1,0 +1,48 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg2);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--bg3);
+}
+
+.navbar__logo h1 {
+  font-family: Georgia, serif;
+  color: var(--vio);
+  font-size: 1.5rem;
+}
+
+.navbar__actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  font-family: system-ui, sans-serif;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: var(--vio);
+  color: var(--ink);
+}
+
+.btn-primary:hover {
+  background-color: var(--vio3);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--ink2);
+  border: 1px solid var(--vio);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg3);
+  color: var(--ink);
+}
