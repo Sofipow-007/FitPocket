@@ -5,5 +5,6 @@ const userControl = require('../controllers/userController')
 
 router.get('/perfil', auth, userControl.getInfo)
 router.put('/actualizar', auth, userControl.actualizarPerfil)
+router.delete('/:email', auth, userControl.borrarPerfil)
 
 module.exports = router;
