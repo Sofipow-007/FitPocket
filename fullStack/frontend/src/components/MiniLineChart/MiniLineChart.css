@@ -1,0 +1,17 @@
+.mini-line-chart {
+    width: 100%;
+    height: 120px;
+    padding: 1rem;
+  }
+  
+  .mini-line-chart svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .mini-line-chart polyline {
+    stroke: #ffcc00; /* 👈 color fijo para contraste */
+    stroke-width: 3;
+    fill: none;
+  }
+  
