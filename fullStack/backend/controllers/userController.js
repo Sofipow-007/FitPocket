@@ -43,3 +43,25 @@ exports.actualizarPerfil = async (req, res) => {
         res.status(500).send('Error en el servidor')
     }
 }
+
+exports.borrarPerfil = async (req, res) => {
+    try {
+        const { email } = req.body
+        const user = await User.findOneAndDelete({ email })
+
+        if (!user) {
+            return res.status(404).json({
+                message: "Usuario no encontrado"
+            })
+        }
+
+        res.json({
+            message: 'Usuario eliminado correctamente',
+            email: user.email
+        });
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send('Error en el servidor')
+    }
+}
