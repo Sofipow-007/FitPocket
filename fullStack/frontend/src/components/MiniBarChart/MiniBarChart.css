@@ -1,0 +1,16 @@
+.mini-bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    height: 100px;              /* altura máxima del gráfico */
+    padding: 1rem;
+  }
+  
+  .bar {
+    flex: 1;
+    background-color: #ffcc00; /* 👈 color fijo amarillo para contraste */
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s ease;
+  }
+  
+  
