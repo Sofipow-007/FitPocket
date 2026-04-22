@@ -1,6 +1,8 @@
 import "./App.css";
 import Navbar from "./components/NavBar/Navbar";
 import IMCCalculator from "./components/IMCCalculator/IMCCalculator";
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner"; 
+
 
 function App() {
   return (
@@ -8,6 +10,7 @@ function App() {
       <Navbar />
       <main>
         <IMCCalculator />
+        <LoadingSpinner />
       </main>
     </div>
   );
