@@ -30,6 +30,32 @@
   }
 }
 
+#root {
+  width: 100%;            /* ocupa todo el ancho */
+  margin: 0;              /* sin márgenes laterales */
+  text-align: center;
+  min-height: 100vh;      /* ocupa toda la altura visible */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;       /* evita scroll extra */
+}
+
+
+:root {
+  /* Paleta para Login */
+  --bg1: #0d1b2a;   /* fondo general muy oscuro */
+  --bg2: #1b263b;   /* panel izquierdo (login form) */
+  --bg3: #415a77;   /* panel derecho (info) */
+
+  --vio: #e0e1dd;   /* títulos y botones */
+  --vio3: #778da9;  /* subtítulos, detalles */
+
+  --ink: #ffffff;   /* texto principal */
+  --ink2: #cfd8dc;  /* texto secundario */
+}
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;

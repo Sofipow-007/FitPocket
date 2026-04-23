@@ -68,3 +68,20 @@
     width: 100%;            /* botones ocupan todo el ancho en mobile */
   }
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--vio3); /* contraste con bg2/bg3 */
+  padding: 1rem 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.navbar__logo h1 {
+  font-family: Georgia, serif;
+  color: var(--ink);
+  font-size: 1.5rem;
+  margin: 0;
+}
