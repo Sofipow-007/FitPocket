@@ -16,3 +16,4 @@ module.exports = connectDB;
 
 // username: powersofiaet36_db_user
 // password: q3Nw8vJ9txXk9hnS
+// cosas del .env:
