@@ -2,16 +2,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--bg2); /* color base */
+  background-color: var(--bg-superficies);
   padding: 1rem 2rem;
   width: 100%;
   box-sizing: border-box;
-  border: none;
 }
 
 .navbar__logo h1 {
   font-family: Georgia, serif;
-  color: var(--vio);
+  color: var(--vio-primario);
   font-size: 1.5rem;
   margin: 0;
 }
@@ -20,26 +19,6 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.btn {
-  font-family: system-ui, sans-serif;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.btn-secondary {
-  background-color: transparent;
-  color: var(--vio);
-  border: 1px solid var(--vio);
-}
-
-.btn-secondary:hover {
-  background-color: var(--bg3);
-  color: var(--ink);
 }
 
 @media (max-width: 600px) {
@@ -53,10 +32,6 @@
     flex-direction: column;
     width: 100%;
     gap: 1rem;
-  }
-
-  .btn {
-    width: 100%;
   }
 }
 
