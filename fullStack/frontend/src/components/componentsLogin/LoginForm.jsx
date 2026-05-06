@@ -3,7 +3,6 @@ import "./LoginForm.css";
 export default function LoginForm() {
   return (
     <div className="login-form">
-      <h1>FitPocket</h1>
       <h2>Bienvenido de vuelta</h2>
       <p>Ingresá para continuar con tu plan activo</p>
       <form>

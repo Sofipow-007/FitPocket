@@ -1,137 +1,43 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
+  /* Tipografía base */
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Fondos */
+  --bg-base: #16141f;     /* fondo principal */
+  --bg-superficies: #1e1b2e; /* cards, navbar, paneles */
+  --bg-inputs: #252238;   /* inputs, panel login derecho */
+  --bg-bordes: #2e2a42;   /* bordes, separadores */
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
+  /* Violeta — color principal */
+  --vio-primario: #8b7ff5;
+  --vio-suave: #a99ef7;
+  --vio-hover: #6c5ce7;
 
-#root {
-  width: 100%;            /* ocupa todo el ancho */
-  margin: 0;              /* sin márgenes laterales */
-  text-align: center;
-  min-height: 100vh;      /* ocupa toda la altura visible */
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  overflow: hidden;       /* evita scroll extra */
-}
+  /* Textos */
+  --texto-primario: #f0eeff;
+  --texto-secundario: #c8c3e8;
+  --texto-terciario: #8a86b0;
+  --texto-minimo: #55527a;
 
-
-:root {
-  /* Paleta para Login */
-  --bg1: #0d1b2a;   /* fondo general muy oscuro */
-  --bg2: #1b263b;   /* panel izquierdo (login form) */
-  --bg3: #415a77;   /* panel derecho (info) */
-
-  --vio: #e0e1dd;   /* títulos y botones */
-  --vio3: #778da9;  /* subtítulos, detalles */
-
-  --ink: #ffffff;   /* texto principal */
-  --ink2: #cfd8dc;  /* texto secundario */
-}
-
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+  /* Semánticos */
+  --verde: #3dbf8a;
+  --ambar: #d4902a;
+  --rojo: #e05252;
 }
 
 body {
   margin: 0;
+  font: 18px/145% var(--sans);
+  background: var(--bg-base);
+  color: var(--texto-primario);
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  width: 100%;
+  height: 100vh;          /* ocupa toda la pantalla */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }

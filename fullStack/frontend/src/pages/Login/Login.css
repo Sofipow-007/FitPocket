@@ -1,32 +1,32 @@
 .login-page {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: calc(100vh - 60px); /* resta la altura del navbar */
+  height: 100%;        /* ocupa toda la pantalla */
   width: 100%;
 }
 
-
 .login-left {
-  background-color: var(--bg2); /* panel más oscuro */
+  background-color: var(--bg-superficies); /* panel izquierdo */
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 3rem;
-  color: var(--ink);
+  color: var(--texto-primario);
 }
 
 .login-right {
-  background-color: var(--bg3); /* panel más claro */
+  background-color: var(--bg-inputs); /* panel derecho */
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 3rem;
-  color: var(--ink);
+  color: var(--texto-primario);
 }
 
 @media (max-width: 768px) {
   .login-page {
-    grid-template-columns: 1fr; /* en mobile se apilan */
+    grid-template-columns: 1fr;
+    height: auto;
   }
 
   .login-left,

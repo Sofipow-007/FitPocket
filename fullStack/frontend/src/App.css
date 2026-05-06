@@ -1,21 +1,32 @@
 .App {
-  background-color: var(--bg1);
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  height: 100vh; /* toda la pantalla */
+  background-color: var(--bg-base);
 }
 
-main.login-layout {
+main {
+  flex: 1; /* ocupa todo el espacio restante debajo del Navbar */
+  display: flex;
+}
+
+.login-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.login-page {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* dos columnas iguales */
-  gap: 0;
-  padding: 0; /* quitamos padding para que llegue a los bordes */
+  grid-template-columns: 1fr 1fr;
   width: 100%;
 }
 
 @media (max-width: 768px) {
-  main.login-layout {
-    grid-template-columns: 1fr; /* en mobile se apilan */
+  .login-page {
+    grid-template-columns: 1fr;
+    height: auto;
   }
 }

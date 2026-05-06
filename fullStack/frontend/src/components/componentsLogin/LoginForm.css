@@ -4,19 +4,23 @@
 }
 
 .login-form h1 {
-  color: var(--vio);
-  margin-bottom: 1rem;
+  font-family: var(--heading);
+  font-weight: 700;
+  color: var(--texto-primario); /* título principal */
 }
 
 .login-form h2 {
+  font-family: var(--heading);
+  font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--vio);
+  color: var(--vio-suave);      /* subtítulo */
 }
 
 .login-form p {
   margin-bottom: 1.5rem;
   font-size: 1rem;
-  color: var(--ink2);
+  color: var(--texto-secundario);
+  font-family: var(--sans);
 }
 
 .login-form form {
@@ -27,22 +31,28 @@
 
 .login-form input {
   padding: 0.75rem;
-  border: 1px solid var(--bg3);
+  border: 1px solid var(--bg-bordes);
   border-radius: 4px;
-  background-color: var(--bg1);
-  color: var(--ink);
+  background-color: var(--bg-inputs);
+  color: var(--texto-primario);
+  font-family: var(--sans);
+}
+
+.login-form input::placeholder {
+  color: var(--texto-terciario);
 }
 
 .login-form input:focus {
   outline: none;
-  border-color: var(--vio);
+  border-color: var(--vio-primario);
 }
 
 .forgot-password {
   font-size: 0.8rem;
-  color: var(--vio);
+  color: var(--vio-suave);
   text-align: right;
   text-decoration: none;
+  font-family: var(--sans);
 }
 
 .forgot-password:hover {
@@ -53,12 +63,14 @@
   padding: 0.75rem;
   border: none;
   border-radius: 4px;
-  background-color: var(--vio);
-  color: var(--bg1);
+  background-color: var(--vio-primario);
+  color: var(--bg-base);
   font-weight: bold;
   cursor: pointer;
+  font-family: var(--sans);
+  font-size: 1rem;
 }
 
 .login-form button:hover {
-  background-color: var(--vio3);
+  background-color: var(--vio-hover);
 }

@@ -1,0 +1,22 @@
+.login-hero {
+    width: 100%;
+    flex-shrink: 0; /* asegura que el header no colapse */
+  }
+  
+  /* Botón secundario dentro del Navbar */
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--vio-primario);
+    border: 1px solid var(--vio-primario);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--sans);
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--vio-hover);
+    color: var(--texto-primario);
+  }
+  
