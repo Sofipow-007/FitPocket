@@ -1,0 +1,34 @@
+.register-info {
+  max-width: 400px;
+  color: var(--texto-primario);
+}
+
+.register-info h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--vio-suave);
+}
+
+.register-info p {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: var(--texto-secundario);
+}
+
+.register-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.register-info li {
+  margin-bottom: 3rem;
+  font-size: 1.5rem;
+  color: var(--texto-primario);
+}
+
+.register-info strong {
+  color: var(--verde);
+  margin-right: 0.5rem;
+}
