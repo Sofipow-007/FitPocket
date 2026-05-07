@@ -1,0 +1,56 @@
+.guest-container {
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 2rem;
+    font-family: system-ui, sans-serif;
+  }
+  
+  .guest-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .title {
+    font-family: Georgia, serif;
+    color: var(--vio);
+    font-size: 2.5rem;
+  }
+  
+  .subtitle {
+    font-family: Georgia, serif;
+    color: var(--vio2);
+    margin-top: 0.5rem;
+  }
+  
+  .description {
+    color: var(--ink2);
+    margin: 1rem 0;
+  }
+  
+  .cta {
+    background: var(--vio);
+    color: var(--ink);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .cta:hover {
+    background: var(--vio3);
+  }
+  
+  .guest-section {
+    background: var(--bg2);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+  }
+  
+  .guest-footer {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
