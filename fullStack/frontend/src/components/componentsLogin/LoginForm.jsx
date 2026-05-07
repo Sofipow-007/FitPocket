@@ -21,13 +21,9 @@ export default function LoginForm() {
         return;
       }
 
-      // Guardar token en localStorage
       localStorage.setItem("token", data.token);
-
-      // Podés guardar también el usuario
       console.log("Usuario logueado:", data.user);
 
-      // Redirigir a dashboard o home
       // window.location.href = "/dashboard";
     } catch (err) {
       console.error(err);
@@ -40,18 +36,22 @@ export default function LoginForm() {
       <h2>Bienvenido de vuelta</h2>
       <p>Ingresá para continuar con tu plan activo</p>
       <form onSubmit={handleSubmit}>
+        <label>Email</label>
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
+        <label>Contraseña</label>
         <input
           type="password"
           placeholder="Contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
         <button type="submit" className="btn btn-primary">Iniciar sesión</button>
       </form>
