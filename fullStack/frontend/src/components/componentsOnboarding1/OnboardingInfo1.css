@@ -1,0 +1,24 @@
+.onboarding-info1 {
+    padding: 2rem;
+    color: var(--texto-primario);
+    font-family: var(--sans);
+  }
+  
+  .onboarding-info1 h3 {
+    font-family: var(--heading);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--vio-suave);
+  }
+  
+  .onboarding-info1 p {
+    margin-bottom: 1rem;
+    color: var(--texto-secundario);
+  }
+  
+  .onboarding-info1 ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+    color: var(--texto-primario);
+  }
+  

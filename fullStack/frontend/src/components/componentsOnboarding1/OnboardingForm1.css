@@ -1,0 +1,53 @@
+.onboarding-form1 {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .onboarding-form1 h2 {
+    font-family: var(--heading);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--vio-suave);
+  }
+  
+  .onboarding-form1 label {
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+    margin-bottom: 0.25rem;
+  }
+  
+  .onboarding-form1 input,
+  .onboarding-form1 select {
+    padding: 0.75rem;
+    border: 1px solid var(--bg-bordes);
+    border-radius: 4px;
+    background-color: var(--bg-inputs);
+    color: var(--texto-primario);
+    font-family: var(--sans);
+  }
+  
+  .onboarding-form1 input:focus,
+  .onboarding-form1 select:focus {
+    outline: none;
+    border-color: var(--vio-primario);
+  }
+  
+  .onboarding-form1 button {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--vio-primario);
+    color: var(--bg-base);
+    font-weight: bold;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 1rem;
+  }
+  
+  .onboarding-form1 button:hover {
+    background-color: var(--vio-hover);
+  }
+  
