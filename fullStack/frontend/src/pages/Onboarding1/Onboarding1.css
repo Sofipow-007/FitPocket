@@ -1,0 +1,39 @@
+.onboarding1-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-base);
+}
+
+.onboarding1-content {
+  flex: 1;
+  display: flex;                /* usamos flex en lugar de grid */
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem 4rem;
+  gap: 3rem;
+}
+
+.onboarding1-info {
+  flex: 1;                      /* ocupa mitad izquierda */
+  max-width: 500px;
+}
+
+.onboarding1-form {
+  flex: 1;                      /* ocupa mitad derecha */
+  max-width: 400px;
+}
+
+@media (max-width: 768px) {
+  .onboarding1-content {
+    flex-direction: column;     /* en mobile se apilan */
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .onboarding1-info,
+  .onboarding1-form {
+    max-width: 100%;
+  }
+}

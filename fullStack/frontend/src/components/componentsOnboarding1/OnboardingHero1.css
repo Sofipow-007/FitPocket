@@ -1,6 +1,20 @@
 .onboarding-hero1 {
-    width: 100%;
-    flex-shrink: 0;
-    height: auto;
-  }
-  
+  width: 100%;
+  flex-shrink: 0;
+  background-color: var(--bg2); /* mismo fondo que el navbar */
+}
+
+.navbar-wrapper {
+  display: flex;
+  justify-content: space-between; /* logo a la izquierda, texto a la derecha */
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.step-title {
+  font-family: var(--heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--vio-primario);
+  margin: 0;
+}
