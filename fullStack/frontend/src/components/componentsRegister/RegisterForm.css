@@ -40,6 +40,42 @@
   border-color: var(--vio-primario);
 }
 
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--texto-secundario); /* 👈 ahora el ícono hereda color */
+}
+
+.password-strength {
+  font-size: 0.85rem;
+  font-family: var(--sans);
+  margin-top: -0.5rem;
+}
+
+.password-strength.débil {
+  color: red;
+}
+
+.password-strength.media {
+  color: orange;
+}
+
+.password-strength.fuerte {
+  color: green;
+}
+
 .register-form button {
   padding: 0.75rem;
   border: none;

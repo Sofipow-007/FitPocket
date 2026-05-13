@@ -1,10 +1,19 @@
 import "./RegisterForm.css";
 import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";  // 👈 importamos íconos
 
 export default function RegisterForm() {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const getStrength = (pwd) => {
+    if (!pwd) return "";
+    if (pwd.length < 6) return "Débil";
+    if (pwd.length < 10) return "Media";
+    return "Fuerte";
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +34,6 @@ export default function RegisterForm() {
       localStorage.setItem("token", data.token);
       console.log("Usuario registrado:", data.user);
 
-      // Redirigir a login o dashboard
       // window.location.href = "/login";
     } catch (err) {
       console.error(err);
@@ -54,12 +62,25 @@ export default function RegisterForm() {
         />
 
         <label>Contraseña</label>
-        <input
-          type="password"
-          placeholder="Mínimo 8 caracteres"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="password-wrapper">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Mínimo 8 caracteres"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+        {password && (
+          <div className={`password-strength ${getStrength(password).toLowerCase()}`}>
+            Fortaleza de contraseña: {getStrength(password)}
+          </div>
+        )}
 
         <button type="submit" className="btn btn-primary">
           Crear cuenta y continuar
