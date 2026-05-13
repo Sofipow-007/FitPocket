@@ -65,3 +65,47 @@ exports.borrarPerfil = async (req, res) => {
         res.status(500).send('Error en el servidor')
     }
 }
+
+const completarOnboarding = async (req, res) => {
+    try {
+        const {
+            peso, altura, edad, sexo,
+            obetivo, nivel, diasDispo,
+            minutosPorSesion, tipoDieta,
+            presupuesto, limitaciones
+        } = req.body
+
+        const usuario = await User.findByIdAndUpdate(
+            req.userId,
+            {
+                perfil: {
+                    peso, altura, edad, sexo,
+                    objetivo, nivel, diasDispo,
+                    minutosPorSesion, tipoDieta,
+                    presupuesto, limitaciones
+                }
+            },
+            {
+                new: true
+            } // Documento actualizado
+        )
+
+        if (!usuario) {
+            return res.status(404).json({ error: "Usuario no encontrado" })
+        }
+
+        res.json({
+            ok: true,
+            mensaje: "Perfil guardado, generando plan"
+        })
+
+        // para hacer: disparar webhook a N8N
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
+module.exports= {
+    completarOnboarding
+}
