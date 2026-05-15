@@ -1,12 +1,18 @@
 .onboarding-hero1 {
   width: 100%;
   flex-shrink: 0;
-  background-color: var(--bg2); /* mismo fondo que el navbar */
+  background-color: var(--bg2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
 }
 
 .navbar-wrapper {
+  width: 100%;
   display: flex;
-  justify-content: space-between; /* logo a la izquierda, texto a la derecha */
+  justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
 }

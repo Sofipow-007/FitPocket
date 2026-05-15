@@ -7,7 +7,7 @@
 
 .onboarding1-content {
   flex: 1;
-  display: flex;                /* usamos flex en lugar de grid */
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
@@ -16,18 +16,18 @@
 }
 
 .onboarding1-info {
-  flex: 1;                      /* ocupa mitad izquierda */
+  flex: 1;
   max-width: 500px;
 }
 
 .onboarding1-form {
-  flex: 1;                      /* ocupa mitad derecha */
+  flex: 1;
   max-width: 400px;
 }
 
 @media (max-width: 768px) {
   .onboarding1-content {
-    flex-direction: column;     /* en mobile se apilan */
+    flex-direction: column;
     align-items: center;
     padding: 1.5rem;
   }
