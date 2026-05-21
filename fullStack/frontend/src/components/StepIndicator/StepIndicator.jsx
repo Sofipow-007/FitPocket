@@ -1,4 +1,4 @@
-import "./StepsIndicator.css";
+import "./StepIndicator.css";
 
 
 export default function StepsIndicator({ currentStep }) {

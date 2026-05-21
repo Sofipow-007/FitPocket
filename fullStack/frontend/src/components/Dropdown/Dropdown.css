@@ -1,0 +1,20 @@
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.dropdown label {
+  font-weight: 500;
+  color: var(--texto-primario);
+}
+
+.dropdown select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--bg-bordes);
+  background-color: var(--bg2);
+  color: var(--texto-primario);
+  cursor: pointer;
+}
