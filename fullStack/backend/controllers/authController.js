@@ -74,3 +74,16 @@ exports.login = async (req, res) => {
         res.status(500).send('Error en el servidor');
     }
 };
+
+const {dispararPlan} = require('../services/webhookService')
+const register = async (req, res) => {
+    const { nombre, email, password, perfil } = req.body
+    const hash = await bcrypt.hash(password, 10)
+    const usuario = new User ({ nombre, email, passwordHash : hash, perfil })
+    await usuario.save()
+
+    dispararPlan(usuario._id, perfil)
+
+    const token = jwt.sign({ userId: usuario._id }, process.env.JWT_SECRET)
+    res.json({ token, userId: usuario._id})
+}

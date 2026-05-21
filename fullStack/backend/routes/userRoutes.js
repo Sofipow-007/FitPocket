@@ -7,4 +7,7 @@ router.get('/perfil', auth, userControl.getInfo)
 router.put('/actualizar', auth, userControl.actualizarPerfil)
 router.delete('/:email', auth, userControl.borrarPerfil)
 
+//ruta del onboarding
+router.post('/onboarding', auth, userControl.completarOnboarding)
+
 module.exports = router;
