@@ -1,15 +1,27 @@
-import Navbar from "../NavBar/Navbar";
 import StepIndicator from "../StepIndicator/StepIndicator";
-import "./OnboardingHero1.css";
-
+import OnboardingInfo1 from "./OnboardingInfo1";
 import "./OnboardingHero1.css";
 
 export default function OnboardingHero1() {
   return (
-    <header className="onboarding-hero1">
-      <Navbar />
-      <h2 className="step-title">Paso 1 de 4 - Tu cuerpo</h2>
-      <StepIndicator currentStep={1} />
-    </header>
+    <aside className="ob-panel">
+
+      {/* Logo */}
+      <div className="ob-panel__logo">
+        <span className="ob-panel__logo-dot" />
+        <span className="ob-panel__logo-text">FitPlan AI</span>
+      </div>
+
+      {/* Stepper vertical */}
+      <div className="ob-panel__stepper">
+        <StepIndicator currentStep={1} />
+      </div>
+
+      {/* Info motivacional */}
+      <div className="ob-panel__info">
+        <OnboardingInfo1 />
+      </div>
+
+    </aside>
   );
 }
