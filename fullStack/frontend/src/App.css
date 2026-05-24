@@ -1,13 +1,23 @@
 .App {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* toda la pantalla */
+  min-height: 100vh;
   background-color: var(--bg-base);
 }
-
 main {
   flex: 1; /* ocupa todo el espacio restante debajo del Navbar */
   display: flex;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.main-content > * {
+  width: 100%;
 }
 
 .login-container {

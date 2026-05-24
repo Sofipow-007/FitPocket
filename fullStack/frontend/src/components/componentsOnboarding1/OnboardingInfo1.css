@@ -1,0 +1,22 @@
+/* ── OnboardingInfo1 ─────────────────────────────────────────── */
+
+.ob-info1__title {
+  font-family: var(--heading);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--ink2);
+  line-height: 1.4;
+  margin: 0 0 10px;
+}
+
+.ob-info1__title em {
+  font-style: italic;
+  color: var(--vio2);
+}
+
+.ob-info1__body {
+  font-size: 12px;
+  color: var(--ink4);
+  line-height: 1.7;
+  margin: 0;
+}
