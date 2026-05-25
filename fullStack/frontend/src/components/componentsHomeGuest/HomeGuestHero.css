@@ -24,17 +24,17 @@
 /* ── Labels de sección ───────────────────────────────────────── */
 .hg-section-label {
   font-family: 'JetBrains Mono', var(--mono);
-  font-size: 11px;
+  font-size: 35px;
   letter-spacing: 0.12em;
   color: var(--vio);
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 0px;
   text-transform: uppercase;
 }
 
 .hg-section-title {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(32px, 4vw, 52px);
+  font-size: clamp(0px, 4vw, 52px);
   font-weight: 400;
   text-align: center;
   color: var(--ink);
