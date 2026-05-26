@@ -1,0 +1,57 @@
+/* ── Onboarding2 — mismo layout que Onboarding1 ─────────────── */
+
+.ob2-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg);
+  overflow-x: hidden;
+}
+
+.ob2-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 72px 48px 80px;
+  background-color: var(--bg);
+  position: relative;
+  overflow: hidden; 
+  min-width: 0;
+}
+
+.ob2-main::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 127, 245, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ob2-main > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .ob2-layout {
+    flex-direction: column;
+  }
+
+  .ob2-main {
+    padding: 32px 24px;
+  }
+
+  .ob2-main::before {
+    display: none;
+  }
+}
+
+html, body {
+  overflow: hidden;
+}
