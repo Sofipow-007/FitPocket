@@ -35,6 +35,11 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 56px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
 }
 
 .ob-panel__logo-dot {
@@ -54,6 +59,10 @@
   letter-spacing: 0.03em;
 }
 
+.ob-panel__logo:hover .ob-panel__logo-text {
+  color: var(--vio2);
+  transition: color 0.2s;
+}
 /* ── Stepper ──────────────────────────────────────────────────── */
 .ob-panel__stepper {
   flex: 1;

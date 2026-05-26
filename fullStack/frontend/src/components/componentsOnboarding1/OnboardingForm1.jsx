@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Dropdown from "../DropDown/Dropdown";
+import { useNavigate } from "react-router-dom";
 import "./OnboardingForm1.css";
 
 const SEX_OPTIONS = [
@@ -15,6 +16,7 @@ function getIMCCategory(imc) {
 }
 
 export default function OnboardingForm1() {
+  const navigate = useNavigate();
   const [edad,   setEdad]   = useState("");
   const [peso,   setPeso]   = useState("");
   const [altura, setAltura] = useState("");
@@ -117,7 +119,11 @@ export default function OnboardingForm1() {
 
         {/* Botón siguiente */}
         <div className="ob-form1__actions">
-          <button type="submit" className="ob-form1__btn-next">
+          <button
+            type="button"
+            className="ob-form1__btn-next"
+            onClick={() => navigate("/onboarding/2")}  // ← navega al paso 2
+          >
             Siguiente →
           </button>
         </div>
