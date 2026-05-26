@@ -718,3 +718,8 @@
     display: none;
   }
 }
+
+.hg-root .navbar__logo-img {
+  width: 100px;
+  height: 100px;
+}
