@@ -152,7 +152,7 @@ function SectionComparison() {
 
   return (
     <section className="hg-comparison">
-      <div className="hg-section-label reveal" ref={titleRef}>POR QUÉ FITPLAN AI</div>
+      <div className="hg-section-label reveal" ref={titleRef}>POR QUÉ FITPOCKET</div>
       <h2 className="hg-section-title reveal">
         Dos formas de entrenar.<br />
         <em>Una funciona.</em>
@@ -164,7 +164,7 @@ function SectionComparison() {
           <p>Rutinas de internet que no conocen tu cuerpo, tu horario ni tu presupuesto. Abandonás en dos semanas.</p>
         </div>
         <div className="hg-comparison__card hg-comparison__card--us reveal" ref={rightRef}>
-          <div className="hg-comparison__tag hg-comparison__tag--us">FITPLAN AI</div>
+          <div className="hg-comparison__tag hg-comparison__tag--us">FITPOCKET</div>
           <h3>Plan que te conoce.<br />Y aprende.</h3>
           <p>La IA analiza tus datos, genera tu rutina y dieta, y las regenera automáticamente si bajás del umbral de adherencia.</p>
         </div>
