@@ -10,7 +10,7 @@ export default function OnboardingHero1() {
       {/* Logo */}
       <div className="ob-panel__logo">
         <img src={logo} alt="FitPocket" className="ob-panel__logo-img" />
-        <span className="ob-panel__logo-text">FitPlan AI</span>
+        <span className="ob-panel__logo-text">FitPocket</span>
       </div>
 
       {/* Stepper vertical */}
