@@ -1,5 +1,6 @@
 import StepIndicator from "../StepIndicator/StepIndicator";
 import OnboardingInfo1 from "./OnboardingInfo1";
+import logo from '../../assets/fitpocketlogo(inverted).png';
 import "./OnboardingHero1.css";
 
 export default function OnboardingHero1() {
@@ -8,7 +9,7 @@ export default function OnboardingHero1() {
 
       {/* Logo */}
       <div className="ob-panel__logo">
-        <span className="ob-panel__logo-dot" />
+        <img src={logo} alt="FitPocket" className="ob-panel__logo-img" />
         <span className="ob-panel__logo-text">FitPlan AI</span>
       </div>
 
