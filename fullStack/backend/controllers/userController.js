@@ -1,6 +1,7 @@
 // -------------- Algunas funciones CRUD en el usuario (Actualizar, Leer, Borrar) --------------
 
 const User = require('../models/User')
+const {dispararPlan} = require('../services/webhookService')
 
 exports.getInfo = async (req, res) => {
     try {
@@ -63,5 +64,47 @@ exports.borrarPerfil = async (req, res) => {
     catch (error) {
         console.error(error.message)
         res.status(500).send('Error en el servidor')
+    }
+}
+
+exports.completarOnboarding = async (req, res) => {
+    try {
+        const {
+            peso, altura, edad, sexo,
+            objetivo, nivel, diasDispo,
+            minutosPorSesion, tipoDieta,
+            presupuesto, limitaciones
+        } = req.body
+
+        const usuario = await User.findByIdAndUpdate(
+            req.userId,
+            {
+                perfil: {
+                    peso, altura, edad, sexo,
+                    objetivo, nivel, diasDispo,
+                    minutosPorSesion, tipoDieta,
+                    presupuesto, limitaciones
+                }
+            },
+            {
+                new: true
+            } // Documento actualizado
+        )
+
+        if (!usuario) {
+            return res.status(404).json({ error: "Usuario no encontrado" })
+        }
+
+        res.json({
+            ok: true,
+            mensaje: "Perfil guardado, generando plan"
+        })
+
+        // dispararPlan(req.userId, perfil)
+
+        // para hacer: disparar webhook a N8N
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message })
     }
 }
