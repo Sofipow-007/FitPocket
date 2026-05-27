@@ -38,6 +38,12 @@
   z-index: 1;
 }
 
+.ob1-layout,
+.ob2-layout {
+  overflow: hidden;
+  height: 100vh;
+}
+
 @media (max-width: 768px) {
   .ob2-layout {
     flex-direction: column;
