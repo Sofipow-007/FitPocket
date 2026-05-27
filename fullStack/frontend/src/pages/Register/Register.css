@@ -1,45 +1,198 @@
-.register-container {
+/* ── Layout ──────────────────────────────────────────────────── */
+.reg-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg);
+  overflow-x: hidden;
+}
+
+/* ── Panel izquierdo ─────────────────────────────────────────── */
+.reg-panel {
+  width: 420px;
+  min-width: 420px;
+  background: var(--bg2);
+  border-right: 1px solid rgba(139, 127, 245, 0.1);
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;  /* evita scroll extra */
+  padding: 40px 44px;
+  position: relative;
+  overflow: hidden;
 }
 
-.register-page {
+.reg-panel__glow {
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,127,245,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.reg-panel__glow2 {
+  position: absolute;
+  bottom: -80px;
+  right: -80px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,127,245,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Logo */
+.reg-panel__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-bottom: 64px;
+  position: relative;
+  z-index: 1;
+}
+
+.reg-panel__logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.reg-panel__logo-text {
+  font-family: var(--heading);
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.reg-panel__logo:hover .reg-panel__logo-text {
+  color: var(--vio2);
+  transition: color 0.2s;
+}
+
+/* Contenido */
+.reg-panel__content {
   flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* dos columnas iguales en desktop */
-  width: 100%;
-  height: 100%; /* ocupa el espacio restante debajo del Navbar */
+  position: relative;
+  z-index: 1;
 }
 
-.register-left {
-  background-color: var(--bg-superficies);
+.reg-panel__eyebrow {
+  font-family: var(--mono, "JetBrains Mono", monospace);
+  font-size: 10px;
+  color: var(--vio);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 16px;
+}
+
+.reg-panel__title {
+  font-family: var(--heading);
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0 0 40px;
+}
+
+.reg-panel__title em {
+  font-style: italic;
+  color: var(--vio2);
+}
+
+/* Lista de pasos */
+.reg-panel__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem;
-  color: var(--texto-primario);
+  flex-direction: column;
+  gap: 28px;
 }
 
-.register-right {
-  background-color: var(--bg-inputs);
+.reg-panel__list li {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem;
-  color: var(--texto-primario);
+  gap: 16px;
+  align-items: flex-start;
 }
 
-@media (max-width: 768px) {
-  .register-page {
-    grid-template-columns: 1fr; /* en mobile se apilan */
-    min-height: auto;
+.reg-panel__num {
+  font-family: var(--mono, "JetBrains Mono", monospace);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--vio);
+  flex-shrink: 0;
+  margin-top: 2px;
+  min-width: 24px;
+}
+
+.reg-panel__list strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.reg-panel__list p {
+  font-size: 13px;
+  color: var(--ink4);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Footer */
+.reg-panel__footer {
+  font-family: var(--mono, "JetBrains Mono", monospace);
+  font-size: 10px;
+  color: var(--ink4);
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Panel derecho ────────────────────────────────────────────── */
+.reg-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.reg-main__glow {
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,127,245,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .reg-layout {
+    flex-direction: column;
   }
 
-  .register-left,
-  .register-right {
-    padding: 2rem;
+  .reg-panel {
+    width: 100%;
+    min-width: unset;
+    padding: 32px 28px 28px;
+  }
+
+  .reg-panel__logo {
+    margin-bottom: 32px;
+  }
+
+  .reg-main {
+    padding: 40px 24px;
   }
 }

@@ -723,3 +723,56 @@
   width: 100px;
   height: 100px;
 }
+
+/* ── Botones navbar ───────────────────────────────────────────── */
+.hg-nav-login {
+  background: transparent;
+  border: 1px solid rgba(139, 127, 245, 0.3);
+  border-radius: 8px;
+  color: var(--ink2);
+  font-family: 'DM Sans', var(--sans);
+  font-size: 14px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+ 
+.hg-nav-login:hover {
+  background: var(--vio-t);
+  border-color: var(--vio);
+  color: var(--ink);
+}
+ 
+.hg-nav-register {
+  background: var(--vio3);
+  border: none;
+  border-radius: 8px;
+  color: var(--ink);
+  font-family: 'DM Sans', var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(108, 92, 231, 0.3);
+  transition: all 0.2s ease;
+}
+ 
+.hg-nav-register:hover {
+  background: var(--vio4, #5a4bc7);
+  transform: translateY(-1px);
+}
+ 
+/* ── Fix textos de sección invisibles ────────────────────────── */
+/* Los section-title usan .reveal pero están en viewport al cargar
+   Solución: bajar el threshold y forzar revealed en los que no usan ref */
+.hg-section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 400;
+  text-align: center;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0 auto 56px;
+  max-width: 640px;
+  /* Sin opacity:0 por defecto — el reveal se maneja via JS */
+}
