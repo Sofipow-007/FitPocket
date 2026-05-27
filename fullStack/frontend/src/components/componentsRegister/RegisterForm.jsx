@@ -18,23 +18,25 @@ export default function RegisterForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/auth/register", {
+      const res = await fetch("http://localhost:3000/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nombre, email, password }),
       });
-
+  
       const data = await res.json();
-
+  
       if (!res.ok) {
         alert(data.msg || "Error en registro");
         return;
       }
-
+  
+      // Guardamos el token para usarlo en onboarding
       localStorage.setItem("token", data.token);
-      console.log("Usuario registrado:", data.user);
-
-      // window.location.href = "/login";
+  
+      // Navegamos al primer paso del onboarding
+      window.location.href = "/onboarding/1";
+  
     } catch (err) {
       console.error(err);
       alert("Error en el servidor");

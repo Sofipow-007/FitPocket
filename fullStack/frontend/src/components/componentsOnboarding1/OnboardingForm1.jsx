@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Dropdown from "../DropDown/Dropdown";
 import "./OnboardingForm1.css";
 
 const SEX_OPTIONS = [
-  { value: "femenino", label: "Femenino" },
+  { value: "femenino",  label: "Femenino" },
   { value: "masculino", label: "Masculino" },
 ];
 
@@ -15,6 +16,7 @@ function getIMCCategory(imc) {
 }
 
 export default function OnboardingForm1() {
+  const navigate = useNavigate();
   const [edad,   setEdad]   = useState("");
   const [peso,   setPeso]   = useState("");
   const [altura, setAltura] = useState("");
@@ -34,94 +36,73 @@ export default function OnboardingForm1() {
 
   const categoria = imc ? getIMCCategory(imc) : null;
 
+  const handleSiguiente = () => {
+    // Validación básica antes de avanzar
+    if (!edad || !peso || !altura || !sexo) {
+      alert("Completá todos los campos antes de continuar");
+      return;
+    }
+
+    // Guardamos en localStorage para recuperar en el paso final
+    localStorage.setItem("ob_paso1", JSON.stringify({
+      edad:   parseInt(edad),
+      peso:   parseFloat(peso),
+      altura: parseFloat(altura),
+      sexo,
+    }));
+
+    navigate("/onboarding/2");
+  };
+
   return (
     <div className="ob-form1">
-
-      {/* Encabezado */}
       <div className="ob-form1__header">
         <span className="ob-form1__paso">Paso 1 de 4</span>
         <h1 className="ob-form1__title">Tu cuerpo</h1>
-        <p className="ob-form1__subtitle">
-          Calculamos tu IMC y personalizamos el plan
-        </p>
+        <p className="ob-form1__subtitle">Calculamos tu IMC y personalizamos el plan</p>
       </div>
 
       <form className="ob-form1__form" onSubmit={e => e.preventDefault()}>
-
-        {/* Fila 1: edad / peso / altura */}
         <div className="ob-form1__row3">
           <div className="ob-form1__field">
             <label className="ob-form1__label">Edad</label>
-            <input
-              type="number"
-              className="ob-form1__input"
-              placeholder="Años"
-              value={edad}
-              onChange={e => setEdad(e.target.value)}
-              min="10" max="99"
-            />
+            <input type="number" className="ob-form1__input" placeholder="Años"
+              value={edad} onChange={e => setEdad(e.target.value)} min="10" max="99" />
           </div>
           <div className="ob-form1__field">
             <label className="ob-form1__label">Peso (kg)</label>
-            <input
-              type="number"
-              className="ob-form1__input"
-              placeholder="kg"
-              value={peso}
-              onChange={e => setPeso(e.target.value)}
-              min="30" max="300"
-            />
+            <input type="number" className="ob-form1__input" placeholder="kg"
+              value={peso} onChange={e => setPeso(e.target.value)} min="30" max="300" />
           </div>
           <div className="ob-form1__field">
             <label className="ob-form1__label">Altura (cm)</label>
-            <input
-              type="number"
-              className="ob-form1__input"
-              placeholder="cm"
-              value={altura}
-              onChange={e => setAltura(e.target.value)}
-              min="100" max="250"
-            />
+            <input type="number" className="ob-form1__input" placeholder="cm"
+              value={altura} onChange={e => setAltura(e.target.value)} min="100" max="250" />
           </div>
         </div>
 
-        {/* Fila 2: sexo + IMC card */}
         <div className="ob-form1__row2">
           <div className="ob-form1__field">
             <label className="ob-form1__label">Sexo</label>
-            <Dropdown
-              label="Sexo"
-              options={SEX_OPTIONS}
-              value={sexo}
-              onChange={setSexo}
-            />
+            <Dropdown label="Sexo" options={SEX_OPTIONS} value={sexo} onChange={setSexo} />
           </div>
-
-          {/* IMC Card */}
           <div className="ob-form1__imc-card">
             <span className="ob-form1__imc-label">IMC Estimado</span>
-            <span
-              className="ob-form1__imc-val"
-              style={{ color: categoria?.color ?? "var(--ink4)" }}
-            >
+            <span className="ob-form1__imc-val" style={{ color: categoria?.color ?? "var(--ink4)" }}>
               {imc ?? "—"}
             </span>
-            <span
-              className="ob-form1__imc-cat"
-              style={{ color: categoria?.color ?? "var(--ink4)" }}
-            >
+            <span className="ob-form1__imc-cat" style={{ color: categoria?.color ?? "var(--ink4)" }}>
               {categoria?.label ?? "Ingresá datos"}
             </span>
           </div>
         </div>
 
-        {/* Botón siguiente */}
         <div className="ob-form1__actions">
-          <button type="submit" className="ob-form1__btn-next">
+          {/* Botón que llama handleSiguiente, no submit */}
+          <button type="button" className="ob-form1__btn-next" onClick={handleSiguiente}>
             Siguiente →
           </button>
         </div>
-
       </form>
     </div>
   );
