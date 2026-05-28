@@ -67,6 +67,50 @@ exports.borrarPerfil = async (req, res) => {
     }
 }
 
+// exports.onboarding1 = async (req, res) => {
+//     try {
+//         const { peso, altura, edad, sexo } = req.body
+//         const usuario = await User.findByIdAndUpdate(
+//             req.user.userId,
+//             {
+//                 perfil: {
+//                     peso, altura, edad, sexo
+//                 }
+//             },
+//             {
+//                 new: true
+//             } // Documento actualizado
+//         )
+//         res.json(usuario)
+//     }
+//     catch (error) {
+//         console.error(error.message)
+//         res.status(500).send('Error en el servidor')
+//     }
+// }
+
+// exports.onboarding2 = async (req, res) => {
+//     try {
+//         const { objetivo, nivel } = req.body
+//         const usuario = await User.findByIdAndUpdate(
+//             req.user.userId,
+//             {
+//                 perfil: {
+//                     objetivo, nivel
+//                 }
+//             },
+//             {
+//                 new: true
+//             } // Documento actualizado
+//         )
+//         res.json(usuario)
+//     }
+//     catch (error) {
+//         console.error(error.message)
+//         res.status(500).send('Error en el servidor')
+//     }
+// }
+
 exports.completarOnboarding = async (req, res) => {
     try {
         const {

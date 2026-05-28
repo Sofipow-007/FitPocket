@@ -61,7 +61,7 @@ export default function OnboardingForm2() {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3001/auth/onboarding", {
+      const res = await fetch("http://localhost:3000/users/onboarding", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,8 +103,7 @@ export default function OnboardingForm2() {
         {OBJETIVOS.map((obj) => (
           <button key={obj.id} type="button"
             className={`ob2-obj-card ${objetivo === obj.id ? "ob2-obj-card--selected" : ""}`}
-            onClick={() => setObjetivo(obj.id)}
-          >
+            onClick={() => setObjetivo(obj.id)}>
             {objetivo === obj.id && <span className="ob2-obj-card__check">✓</span>}
             <span className="ob2-obj-card__title">{obj.titulo}</span>
             <span className="ob2-obj-card__sub">{obj.subtitulo}</span>
