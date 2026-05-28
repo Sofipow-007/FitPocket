@@ -51,20 +51,20 @@
   border: none;
   padding: 0;
   cursor: pointer;
-  margin-bottom: 64px;
+  margin-bottom: 32px;
   position: relative;
   z-index: 1;
 }
 
 .reg-panel__logo-img {
-  width: 32px;
-  height: 32px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
 }
 
 .reg-panel__logo-text {
   font-family: var(--heading);
-  font-size: 18px;
+  font-size: 32px;
   color: var(--ink);
 }
 
