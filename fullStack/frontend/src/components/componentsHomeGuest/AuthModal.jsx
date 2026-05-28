@@ -84,7 +84,7 @@ export default function AuthModal({ isOpen, onClose }) {
         {/* Logo */}
         <div className="auth-modal__logo">
           <span className="auth-modal__logo-dot" />
-          <span className="auth-modal__logo-text">FitPlan AI</span>
+          <span className="auth-modal__logo-text">FitPocket</span>
         </div>
 
         <h2 className="auth-modal__title">Bienvenido de vuelta</h2>

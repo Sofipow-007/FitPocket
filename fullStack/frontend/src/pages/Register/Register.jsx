@@ -1,10 +1,13 @@
+import { useState } from "react";
 import "./Register.css";
 import RegisterFormNew from "../../components/componentsRegister/RegisterFormNew";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 import { useNavigate } from "react-router-dom";
+import AuthModal from "../../components/componentsHomeGuest/AuthModal";
 
 export default function Register() {
   const navigate = useNavigate();
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   return (
     <div className="reg-layout">
@@ -58,9 +61,14 @@ export default function Register() {
       {/* Panel derecho — formulario */}
       <main className="reg-main">
         <div className="reg-main__glow" />
-        <RegisterFormNew onLoginClick={() => navigate("/login")} />
+        <RegisterFormNew onLoginClick={() => setIsAuthOpen(true)} />
       </main>
 
+      {/* Modal de login */}
+      <AuthModal 
+        isOpen={isAuthOpen} 
+        onClose={() => setIsAuthOpen(false)} 
+      />
     </div>
   );
 }
