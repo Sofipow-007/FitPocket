@@ -1,4 +1,4 @@
-![Logo FitPocket](FitPocket/Diseño/logo/fitpocketwith-text&inverted.png)
+<img src="FitPocket/Diseño/logo/fitpocketwith-text&inverted.png" width="400" alt="Texto descriptivo">
 
 FitPocket es tu coach/asistente IA personal para que puedas saber cómo empezar en tus primeros días de entrenamiento en un gimnasio. 
 Podrás administrar tus rutinas, FitPocket se adapta a ti, y te recomienda las mejores opciones posibles en los días que tengas libres.
