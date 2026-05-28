@@ -1,4 +1,4 @@
-![Logo FitPocket](FitPocket/Diseño/logo/fitpocketlogoinverted.png)
+![Logo FitPocket](FitPocket/Diseño/logo/fitpocketwith-text&inverted.png)
 
 # FitPocket
 
