@@ -84,7 +84,12 @@ export default function OnboardingForm1() {
         <div className="ob-form1__row2">
           <div className="ob-form1__field">
             <label className="ob-form1__label">Sexo</label>
-            <Dropdown label="Sexo" options={SEX_OPTIONS} value={sexo} onChange={setSexo} />
+            <Dropdown
+              label="Sexo"
+              options={SEX_OPTIONS}
+              value={sexo}
+              onChange={(e) => setSexo(e.target.value)}
+            />
           </div>
           <div className="ob-form1__imc-card">
             <span className="ob-form1__imc-label">IMC Estimado</span>
