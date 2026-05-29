@@ -1,210 +1,197 @@
-/* ── OnboardingForm2 ─────────────────────────────────────────── */
-
-.ob2-form {
+/* ── Onboarding step 2 — Tu objetivo ──────────────────────────── */
+.ob2-card {
   width: 100%;
-  max-width: 100%;
+  max-width: 560px;
+  background: var(--bg2);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-xl);
+  padding: 36px 36px 32px;
+  box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
 }
 
-/* ── Encabezado ───────────────────────────────────────────────── */
-.ob2-form__header {
-  display: flex;
-  flex-direction: column;
+/* ── Header ────────────────────────────────────────────────────── */
+.ob2-header__eyebrow {
+  display: inline-flex;
+  align-items: center;
   gap: 6px;
-}
-
-.ob2-form__paso {
-  font-family: var(--mono, "JetBrains Mono", monospace);
-  font-size: 11px;
-  color: var(--ink4);
-  letter-spacing: 0.07em;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 10px;
 }
-
-.ob2-form__title {
+.ob2-header__title {
   font-family: var(--heading);
-  font-size: 52px;
-  font-weight: 400;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
   color: var(--ink);
-  margin: 0;
-  line-height: 1.1;
+  margin: 0 0 6px;
+}
+.ob2-header__subtitle {
+  font-size: 0.875rem;
+  color: var(--ink3);
 }
 
-.ob2-form__subtitle {
-  font-size: 15px;
-  color: var(--ink4);
-  margin: 0;
-}
-
-/* ── Grid de objetivos ────────────────────────────────────────── */
-.ob2-form__grid {
+/* ── Objetivos grid ────────────────────────────────────────────── */
+.ob2-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 10px;
 }
 
 .ob2-obj-card {
-  background: var(--bg2);
-  border: 1px solid var(--bg4);
-  border-radius: 14px;
-  padding: 20px 24px;
+  background: var(--bg3);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
   text-align: left;
   cursor: pointer;
-  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  gap: 8px;
+  transition: border-color var(--t-base), background var(--t-base), box-shadow var(--t-base);
+  position: relative;
 }
-
 .ob2-obj-card:hover {
-  border-color: rgba(139, 127, 245, 0.3);
+  border-color: rgba(0,232,135,0.3);
+}
+.ob2-obj-card--selected {
+  background: var(--green-t);
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px rgba(0,232,135,0.15), 0 4px 20px rgba(0,232,135,0.08);
 }
 
-.ob2-obj-card--selected {
-  background: var(--vio-t, rgba(139, 127, 245, 0.08));
-  border-color: var(--vio);
-  box-shadow: 0 0 0 1px rgba(139, 127, 245, 0.2),
-              0 4px 20px rgba(139, 127, 245, 0.1);
+.ob2-obj-card__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-sm);
+  background: var(--bg4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink3);
+  transition: background var(--t-base), color var(--t-base);
+}
+.ob2-obj-card__icon svg { width: 18px; height: 18px; }
+.ob2-obj-card--selected .ob2-obj-card__icon {
+  background: rgba(0,232,135,0.15);
+  color: var(--green);
 }
 
 .ob2-obj-card__check {
   position: absolute;
   top: 12px;
-  right: 14px;
-  font-size: 12px;
-  color: var(--vio);
-  font-weight: 500;
+  right: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
 }
+.ob2-obj-card__check svg { width: 10px; height: 10px; }
 
 .ob2-obj-card__title {
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1.3;
-}
-
-.ob2-obj-card--selected .ob2-obj-card__title {
+  font-family: var(--heading);
+  font-size: 0.92rem;
+  font-weight: 700;
   color: var(--ink);
 }
-
 .ob2-obj-card__sub {
-  font-size: 13px;
+  font-size: 0.78rem;
   color: var(--ink3);
   line-height: 1.5;
 }
 
-/* ── Nivel de experiencia ─────────────────────────────────────── */
-.ob2-form__nivel {
+/* ── Nivel ─────────────────────────────────────────────────────── */
+.ob2-nivel {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
-.ob2-form__nivel-label {
-  font-family: var(--mono, "JetBrains Mono", monospace);
-  font-size: 10px;
-  color: var(--ink4);
+.ob2-nivel__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  color: var(--ink3);
 }
-
-.ob2-form__chips {
+.ob2-chips {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
-
 .ob2-chip {
-  padding: 8px 20px;
-  border-radius: 20px;
-  border: 1px solid var(--bg4);
+  padding: 8px 18px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--border-hover);
   background: var(--bg3);
   color: var(--ink3);
-  font-family: var(--sans);
-  font-size: 13px;
+  font-size: 0.84rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--t-fast);
 }
-
 .ob2-chip:hover {
-  border-color: rgba(139, 127, 245, 0.3);
+  border-color: rgba(0,232,135,0.3);
   color: var(--ink2);
 }
-
 .ob2-chip--selected {
-  background: var(--vio-t, rgba(139, 127, 245, 0.12));
-  border-color: var(--vio);
-  color: var(--vio);
-  box-shadow: 0 0 0 1px rgba(139, 127, 245, 0.15);
+  background: var(--green-t);
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 600;
 }
 
-/* ── Navegación ───────────────────────────────────────────────── */
-.ob2-form__actions {
+/* ── Actions ───────────────────────────────────────────────────── */
+.ob2-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 8px;
 }
-
-.ob2-btn {
-  padding: 11px 24px;
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.ob2-btn--back {
-  background: transparent;
-  border: 1px solid var(--bg4);
+.ob2-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--border-hover);
   color: var(--ink3);
+  font-size: 0.875rem;
+  padding: 10px 20px;
+  border-radius: var(--r-full);
+  transition: border-color var(--t-fast), color var(--t-fast);
 }
+.ob2-btn-back:hover { border-color: var(--ink3); color: var(--ink2); }
+.ob2-btn-back svg { width: 14px; height: 14px; }
 
-.ob2-btn--back:hover {
-  border-color: var(--ink4);
-  color: var(--ink2);
-}
-
-.ob2-btn--next {
-  background: var(--vio3, #6c5ce7);
+.ob2-btn-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--grad);
   border: none;
-  color: var(--ink);
-  box-shadow: 0 4px 20px rgba(108, 92, 231, 0.35);
-  position: relative;
-  overflow: hidden;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 12px 26px;
+  border-radius: var(--r-full);
+  transition: opacity var(--t-fast), transform var(--t-fast);
 }
-
-.ob2-btn--next::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-.ob2-btn--next:hover {
-  background: var(--vio4, #5a4bc7);
+.ob2-btn-next:hover:not(:disabled) {
+  opacity: 0.88;
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(108, 92, 231, 0.4);
 }
+.ob2-btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
+.ob2-btn-next svg { width: 16px; height: 16px; }
 
-.ob2-btn--next:active {
-  transform: translateY(0);
-}
-
-/* ── Responsive ───────────────────────────────────────────────── */
+/* ── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  .ob2-form__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ob2-form__title {
-    font-size: 36px;
-  }
+  .ob2-card { padding: 28px 20px 24px; }
+  .ob2-grid { grid-template-columns: 1fr; }
 }

@@ -1,22 +1,18 @@
 import './Navbar.css';
 import logo from '../../assets/fitpocketlogo(inverted).png';
 
-export default function Navbar({ children, showLogo = true }) {
-  if (!showLogo && !children) return null;
-
+export default function Navbar({ children, showLogo = true, onLogoClick }) {
   return (
-    <nav className="navbar">
+    <nav className="nav">
       {showLogo && (
-        <div className="navbar__logo">
-          <img src={logo} alt="FitPocket" className="navbar__logo-img" />
-          <h1>FitPocket</h1>
-        </div>
+        <button className="nav__logo" onClick={onLogoClick} aria-label="Inicio">
+          <img src={logo} alt="FitPocket" className="nav__logo-img" />
+          <span className="nav__logo-text">FitPocket</span>
+        </button>
       )}
-      {children && (
-        <div className="navbar__extra">
-          {children}
-        </div>
-      )}
+      <div className="nav__actions">
+        {children}
+      </div>
     </nav>
   );
 }
