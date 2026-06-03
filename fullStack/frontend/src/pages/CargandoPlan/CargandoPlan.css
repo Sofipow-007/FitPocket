@@ -1,0 +1,165 @@
+/* ── Loading screen — Cargando Plan ───────────────────────────── */
+.cp-page {
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px);
+  background-size: 28px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background orbs */
+.cp-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+}
+.cp-orb--1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0,232,135,0.09) 0%, transparent 70%);
+  top: -200px;
+  right: -150px;
+}
+.cp-orb--2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(79,142,247,0.07) 0%, transparent 70%);
+  bottom: -100px;
+  left: -100px;
+}
+
+/* ── Content ───────────────────────────────────────────────────── */
+.cp-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 24px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+}
+
+/* Logo */
+.cp-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cp-logo__img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+.cp-logo__text {
+  font-family: var(--heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink2);
+  letter-spacing: -0.01em;
+}
+
+/* ── Ring ──────────────────────────────────────────────────────── */
+.cp-ring-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+.cp-ring {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
+}
+.cp-ring__bg {
+  fill: none;
+  stroke: var(--bg4);
+  stroke-width: 6;
+}
+.cp-ring__fill {
+  fill: none;
+  stroke: url(#cp-grad);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.15s ease;
+  filter: drop-shadow(0 0 6px rgba(0,232,135,0.4));
+}
+
+/* SVG gradient definition — injected inline via defs */
+.cp-ring-wrap::before {
+  content: '';
+}
+
+.cp-ring__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cp-ring__pct {
+  font-family: var(--heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+}
+
+/* ── Step text ─────────────────────────────────────────────────── */
+.cp-step {
+  font-size: 0.9rem;
+  color: var(--ink3);
+  text-align: center;
+  min-height: 1.4em;
+  transition: opacity var(--t-base);
+}
+
+/* ── Steps list ────────────────────────────────────────────────── */
+.cp-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.cp-step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.3;
+  transition: opacity var(--t-base);
+}
+.cp-step-item--done {
+  opacity: 1;
+}
+.cp-step-item__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink4);
+  flex-shrink: 0;
+  transition: background var(--t-base);
+}
+.cp-step-item--done .cp-step-item__dot {
+  background: var(--green);
+  box-shadow: 0 0 6px rgba(0,232,135,0.5);
+}
+.cp-step-item__text {
+  font-size: 0.82rem;
+  color: var(--ink3);
+}
+.cp-step-item--done .cp-step-item__text {
+  color: var(--ink2);
+}
+
+/* ── Reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cp-ring__fill { transition: none; }
+  .cp-step-item { transition: none; }
+  .cp-step-item__dot { transition: none; }
+  .cp-step-item__text { transition: none; }
+}

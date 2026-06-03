@@ -1,8 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Register.css";
 import RegisterFormNew from "../../components/componentsRegister/RegisterFormNew";
-import logo from "../../assets/fitpocketlogo(inverted).png";
-import { useNavigate } from "react-router-dom";
 import AuthModal from "../../components/componentsHomeGuest/AuthModal";
 
 export default function Register() {
@@ -10,65 +9,27 @@ export default function Register() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   return (
-    <div className="reg-layout">
+    <div
+      className="min-h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden"
+      style={{ background: "#050508" }}
+    >
+      {/* Background orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(249,115,22,0.10) 0%, transparent 70%)", filter: "blur(60px)" }} />
+        <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 70%)", filter: "blur(60px)" }} />
+      </div>
 
-      {/* Panel izquierdo — decorativo */}
-      <aside className="reg-panel">
-        <div className="reg-panel__glow" />
-        <div className="reg-panel__glow2" />
+      <div className="relative z-10 w-full">
+        <RegisterFormNew
+          onLoginClick={() => setIsAuthOpen(true)}
+          onLogoClick={() => navigate("/")}
+          onGoOnboarding={() => navigate("/onboarding")}
+        />
+      </div>
 
-        <button className="reg-panel__logo" onClick={() => navigate("/")}>
-          <img src={logo} alt="FitPocket" className="reg-panel__logo-img" />
-          <span className="reg-panel__logo-text">FitPlan AI</span>
-        </button>
-
-        <div className="reg-panel__content">
-          <p className="reg-panel__eyebrow">Por qué registrarse</p>
-          <h2 className="reg-panel__title">
-            Tu plan,<br />
-            <em>listo en 3 minutos.</em>
-          </h2>
-          <ul className="reg-panel__list">
-            <li>
-              <span className="reg-panel__num">01</span>
-              <div>
-                <strong>Completás el onboarding</strong>
-                <p>Datos físicos, objetivo y disponibilidad.</p>
-              </div>
-            </li>
-            <li>
-              <span className="reg-panel__num">02</span>
-              <div>
-                <strong>La IA genera tu plan</strong>
-                <p>Rutina + dieta personalizadas en ~15 seg.</p>
-              </div>
-            </li>
-            <li>
-              <span className="reg-panel__num">03</span>
-              <div>
-                <strong>Seguís el checklist</strong>
-                <p>El plan se adapta automáticamente.</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <p className="reg-panel__footer">
-          Sin tarjeta de crédito · Sin compromisos
-        </p>
-      </aside>
-
-      {/* Panel derecho — formulario */}
-      <main className="reg-main">
-        <div className="reg-main__glow" />
-        <RegisterFormNew onLoginClick={() => setIsAuthOpen(true)} />
-      </main>
-
-      {/* Modal de login */}
-      <AuthModal 
-        isOpen={isAuthOpen} 
-        onClose={() => setIsAuthOpen(false)} 
-      />
+      <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
     </div>
   );
 }

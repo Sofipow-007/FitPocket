@@ -1,0 +1,253 @@
+/* ── Onboarding step 4 — Limitaciones ─────────────────────────── */
+.ob4-card {
+  width: 100%;
+  max-width: 560px;
+  background: var(--bg2);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-xl);
+  padding: 36px 36px 32px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Header ────────────────────────────────────────────────────── */
+.ob4-title {
+  font-family: var(--heading);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin: 0 0 8px;
+  text-wrap: balance;
+}
+.ob4-subtitle {
+  font-size: 0.875rem;
+  color: var(--ink3);
+  line-height: 1.5;
+}
+
+/* ── Section ───────────────────────────────────────────────────── */
+.ob4-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ob4-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.ob4-label-opt {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink4);
+  font-size: 0.7rem;
+}
+
+/* ── Chips ─────────────────────────────────────────────────────── */
+.ob4-chips-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ob4-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--border-hover);
+  background: var(--bg3);
+  color: var(--ink3);
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+.ob4-chip:hover {
+  border-color: rgba(0,232,135,0.3);
+  color: var(--ink2);
+}
+.ob4-chip--on {
+  background: var(--green-t);
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 600;
+}
+.ob4-chip--none.ob4-chip--on {
+  background: rgba(79,142,247,0.08);
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.ob4-chip:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+.ob4-chip__check {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  flex-shrink: 0;
+}
+.ob4-chip__check svg { width: 8px; height: 8px; }
+
+/* ── Textarea ──────────────────────────────────────────────────── */
+.ob4-textarea {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-md);
+  color: var(--ink);
+  font-size: 0.875rem;
+  padding: 14px 16px;
+  resize: vertical;
+  min-height: 90px;
+  transition: border-color var(--t-fast);
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+.ob4-textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+.ob4-textarea::placeholder { color: var(--ink4); }
+
+.ob4-char-count {
+  font-size: 0.72rem;
+  color: var(--ink4);
+  text-align: right;
+}
+
+/* ── API error ─────────────────────────────────────────────────── */
+.ob4-api-error {
+  font-size: 0.82rem;
+  color: var(--err);
+  background: var(--err-t);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+  line-height: 1.4;
+}
+
+/* ── Confirmation card ─────────────────────────────────────────── */
+.ob4-confirm-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(0,232,135,0.07);
+  border: 1px solid rgba(0,232,135,0.22);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+}
+.ob4-confirm-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-sm);
+  background: rgba(0,232,135,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  flex-shrink: 0;
+}
+.ob4-confirm-card__icon svg { width: 20px; height: 20px; }
+.ob4-confirm-card__title {
+  font-family: var(--heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--green);
+  margin: 0 0 2px;
+}
+.ob4-confirm-card__sub {
+  font-size: 0.82rem;
+  color: var(--ink3);
+  margin: 0;
+}
+
+/* ── Actions ───────────────────────────────────────────────────── */
+.ob4-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+.ob4-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--border-hover);
+  color: var(--ink3);
+  font-size: 0.875rem;
+  padding: 10px 20px;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  transition: border-color var(--t-fast), color var(--t-fast);
+}
+.ob4-btn-back:hover { border-color: var(--ink3); color: var(--ink2); }
+.ob4-btn-back svg { width: 14px; height: 14px; }
+
+.ob4-btn-generate {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--grad);
+  border: none;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 13px 28px;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  transition: opacity var(--t-fast), transform var(--t-fast);
+  box-shadow: 0 0 24px rgba(0,232,135,0.2);
+}
+.ob4-btn-generate:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 0 32px rgba(0,232,135,0.32);
+}
+.ob4-btn-generate:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Spinner */
+.ob4-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: ob4-spin 0.7s linear infinite;
+  display: inline-block;
+}
+@keyframes ob4-spin {
+  to { transform: rotate(360deg); }
+}
+.ob4-btn-back:focus-visible,
+.ob4-btn-generate:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+/* ── Reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ob4-chip,
+  .ob4-textarea,
+  .ob4-btn-back,
+  .ob4-btn-generate { transition: none; }
+  .ob4-spinner { animation: none; opacity: 0.6; }
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .ob4-card { padding: 28px 20px 24px; }
+  .ob4-btn-generate { padding: 12px 22px; font-size: 0.85rem; }
+}
