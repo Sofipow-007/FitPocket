@@ -102,6 +102,13 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* ── Textura global — dot grid sutil ──────────────────────────── */
+/* Aplicada directamente a los contenedores de cada vista          */
+.fitpocket-texture {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
 /* Ocultar scrollbar en todos los navegadores */
 * {
   scrollbar-width: none;

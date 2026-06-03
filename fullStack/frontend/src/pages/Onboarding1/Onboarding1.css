@@ -1,7 +1,9 @@
 /* ── Onboarding shared layout ──────────────────────────────────── */
 .ob-page {
   min-height: 100vh;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px);
+  background-size: 28px 28px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -45,24 +47,23 @@
 .ob-header__logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
 }
-.ob-header__logo-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 8px rgba(0,232,135,0.5);
+.ob-header__logo-img {
+  height: 36px;
+  width: auto;
+  display: block;
 }
 .ob-header__logo-text {
   font-family: var(--heading);
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--ink2);
+  letter-spacing: -0.01em;
 }
 
 .ob-header__meta {
@@ -85,7 +86,12 @@
 .ob-progress__fill {
   height: 100%;
   background: var(--grad);
-  transition: width 0.5s ease;
+  width: 100%;
+  transform-origin: left center;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ob-progress__fill { transition: none; }
 }
 
 /* ── Body ──────────────────────────────────────────────────────── */

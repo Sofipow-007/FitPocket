@@ -56,48 +56,21 @@ export default function OnboardingForm2() {
   const navigate = useNavigate();
   const [objetivo, setObjetivo] = useState(null);
   const [nivel,    setNivel]    = useState("principiante");
-  const [loading,  setLoading]  = useState(false);
 
-  const handleSiguiente = async () => {
-    if (!objetivo) { alert("Seleccioná un objetivo antes de continuar"); return; }
+  const [error, setError] = useState("");
 
-    const paso1 = JSON.parse(localStorage.getItem("ob_paso1") || "{}");
-    const perfil = {
-      ...paso1,
-      objetivo,
-      nivel,
-      diasDisponibles:  ["lunes", "miércoles", "viernes"],
-      minutosPorSesion: 60,
-      tipoDieta:        "normal",
-      presupuesto:      0,
-      limitaciones:     [],
-    };
-
-    const token = localStorage.getItem("token");
-    setLoading(true);
-    try {
-      const res  = await fetch("http://localhost:3000/users/onboarding", {
-        method:  "POST",
-        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
-        body:    JSON.stringify(perfil),
-      });
-      const data = await res.json();
-      if (!res.ok) { alert(data.error || "Error al guardar el perfil"); return; }
-      localStorage.removeItem("ob_paso1");
-      navigate("/cargando-plan");
-    } catch {
-      alert("Error en el servidor");
-    } finally {
-      setLoading(false);
-    }
+  const handleSiguiente = () => {
+    if (!objetivo) { setError("Seleccioná un objetivo para continuar."); return; }
+    setError("");
+    localStorage.setItem("ob_paso2", JSON.stringify({ objetivo, nivel }));
+    navigate("/onboarding/3");
   };
 
   return (
     <div className="ob2-card">
       <div>
-        <span className="ob2-header__eyebrow">Tu objetivo</span>
         <h1 className="ob2-header__title">¿Qué querés lograr?</h1>
-        <p className="ob2-header__subtitle">El plan se diseña alrededor de esta meta</p>
+        <p className="ob2-header__subtitle">Tu plan se construye alrededor de este objetivo</p>
       </div>
 
       <div className="ob2-grid">
@@ -134,6 +107,7 @@ export default function OnboardingForm2() {
         </div>
       </div>
 
+      {error && <p className="ob2-error" role="alert">{error}</p>}
       <div className="ob2-actions">
         <button type="button" className="ob2-btn-back" onClick={() => navigate("/onboarding")}>
           <IconArrowLeft /> Anterior
@@ -142,9 +116,8 @@ export default function OnboardingForm2() {
           type="button"
           className="ob2-btn-next"
           onClick={handleSiguiente}
-          disabled={loading}
         >
-          {loading ? "Guardando..." : "Siguiente"} {!loading && <IconArrowRight />}
+          Siguiente <IconArrowRight />
         </button>
       </div>
     </div>

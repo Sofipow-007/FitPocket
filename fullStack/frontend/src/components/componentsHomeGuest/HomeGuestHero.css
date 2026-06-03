@@ -29,7 +29,9 @@
     radial-gradient(ellipse 90% 70% at 50% -5%,  rgba(249,115,22,0.18) 0%, transparent 65%),
     radial-gradient(ellipse 60% 60% at 90% 90%,  rgba(168,85,247,0.14) 0%, transparent 60%),
     radial-gradient(ellipse 50% 50% at 10% 80%,  rgba(249,115,22,0.08) 0%, transparent 55%),
+    radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px),
     #050508;
+  background-size: auto, auto, auto, 28px 28px, auto;
 }
 
 /* ── Bento card hover tilt ─────────────────────────────────────── */

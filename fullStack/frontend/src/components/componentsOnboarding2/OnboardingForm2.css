@@ -13,28 +13,19 @@
 }
 
 /* ── Header ────────────────────────────────────────────────────── */
-.ob2-header__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 10px;
-}
 .ob2-header__title {
   font-family: var(--heading);
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: -0.04em;
   color: var(--ink);
-  margin: 0 0 6px;
+  margin: 0 0 8px;
+  text-wrap: balance;
 }
 .ob2-header__subtitle {
   font-size: 0.875rem;
   color: var(--ink3);
+  line-height: 1.5;
 }
 
 /* ── Objetivos grid ────────────────────────────────────────────── */
@@ -148,6 +139,10 @@
   color: var(--green);
   font-weight: 600;
 }
+.ob2-chip:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
 
 /* ── Actions ───────────────────────────────────────────────────── */
 .ob2-actions {
@@ -189,6 +184,34 @@
 }
 .ob2-btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
 .ob2-btn-next svg { width: 16px; height: 16px; }
+.ob2-btn-back:focus-visible,
+.ob2-btn-next:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+.ob2-obj-card:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ob2-obj-card,
+  .ob2-chip,
+  .ob2-btn-back,
+  .ob2-btn-next { transition: none; }
+}
+
+/* ── Inline error ──────────────────────────────────────────────── */
+.ob2-error {
+  font-size: 0.82rem;
+  color: var(--err);
+  background: var(--err-t);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+  line-height: 1.4;
+}
 
 /* ── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 600px) {

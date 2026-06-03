@@ -22,6 +22,7 @@ export default function OnboardingForm1() {
   const [altura, setAltura] = useState("");
   const [sexo,   setSexo]   = useState("");
   const [imc,    setImc]    = useState(null);
+  const [error,  setError]  = useState("");
 
   useEffect(() => {
     const p = parseFloat(peso);
@@ -37,9 +38,10 @@ export default function OnboardingForm1() {
 
   const handleSiguiente = () => {
     if (!edad || !peso || !altura || !sexo) {
-      alert("Completá todos los campos antes de continuar");
+      setError("Completá todos los campos para continuar.");
       return;
     }
+    setError("");
     localStorage.setItem("ob_paso1", JSON.stringify({
       edad:   parseInt(edad),
       peso:   parseFloat(peso),
@@ -52,7 +54,6 @@ export default function OnboardingForm1() {
   return (
     <div className="ob1-card">
       <div className="ob1-header">
-        <span className="ob1-header__eyebrow">Tu cuerpo</span>
         <h1 className="ob1-header__title">Datos físicos</h1>
         <p className="ob1-header__subtitle">Calculamos tu IMC y personalizamos el plan</p>
       </div>
@@ -123,6 +124,7 @@ export default function OnboardingForm1() {
           </div>
         </div>
 
+        {error && <p className="ob1-error" role="alert">{error}</p>}
         <div className="ob1-actions">
           <button type="button" className="ob1-btn-next" onClick={handleSiguiente}>
             Siguiente <IconArrow />

@@ -13,28 +13,19 @@
 .ob1-header {
   margin-bottom: 32px;
 }
-.ob1-header__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 10px;
-}
 .ob1-header__title {
   font-family: var(--heading);
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: -0.04em;
   color: var(--ink);
-  margin: 0 0 6px;
+  margin: 0 0 8px;
+  text-wrap: balance;
 }
 .ob1-header__subtitle {
   font-size: 0.875rem;
   color: var(--ink3);
+  line-height: 1.5;
 }
 
 /* ── Form ──────────────────────────────────────────────────────── */
@@ -174,7 +165,29 @@
   opacity: 0.88;
   transform: translateY(-1px);
 }
+.ob1-btn-next:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
 .ob1-btn-next svg { width: 16px; height: 16px; }
+
+/* ── Inline error ──────────────────────────────────────────────── */
+.ob1-error {
+  font-size: 0.82rem;
+  color: var(--err);
+  background: var(--err-t);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+  line-height: 1.4;
+}
+
+/* ── Reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ob1-input,
+  .ob1-select,
+  .ob1-btn-next { transition: none; }
+}
 
 /* ── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 600px) {

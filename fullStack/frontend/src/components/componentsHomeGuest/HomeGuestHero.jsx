@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthModal from "./AuthModal";
 import "./HomeGuestHero.css";
+import logo from "../../assets/fitpocketlogo(inverted).png";
 
 /* ── Icons ─────────────────────────────────────────────────────── */
 const IconArrow = () => (
@@ -95,14 +96,14 @@ export default function HomeGuestHero() {
   const [loginOpen, setLoginOpen] = useState(false);
 
   return (
-    <div className="min-h-screen font-[DM_Sans,system-ui,sans-serif]" style={{ background: "#050508", color: "#FAFAFA" }}>
+    <div className="min-h-screen font-[DM_Sans,system-ui,sans-serif]" style={{ backgroundColor: "#050508", backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px)", backgroundSize: "28px 28px", color: "#FAFAFA" }}>
 
       {/* ── Navbar ── */}
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-5xl z-50
         flex items-center justify-between px-5 py-3
         bg-[#0F0F16]/85 backdrop-blur-xl border border-white/8 rounded-2xl">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse-dot" />
+        <div className="flex items-center gap-2.5">
+          <img src={logo} alt="" className="h-8 w-auto" />
           <span className="font-[Space_Grotesk,sans-serif] font-bold text-[15px] text-white">FitPocket</span>
         </div>
         <div className="flex items-center gap-2">
