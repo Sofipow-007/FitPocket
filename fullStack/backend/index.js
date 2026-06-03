@@ -14,6 +14,7 @@ server.use(express.json())
 server.use('/auth', require('./routes/authRoutes'))
 server.use('/users', require('./routes/userRoutes'));
 
+server.use('/plan', require('./routes/planRoutes'))
 const PORT = process.env.PORT || 3001;
 
 server.listen(PORT, () => {

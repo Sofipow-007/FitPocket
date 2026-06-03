@@ -1,8 +1,9 @@
-const { generarPlanDemo, guardarPlan, getPlanActual } = require('../controller/planController')
+const express = require('express');
+const router = express.Router();
+const planControl = require('../controllers/planController.js')
 const auth = require('../middleware/auth')
 
-router.post('/generar', generarPlanDemo)
+router.post('/generar', auth, planControl.generarPlanDemo)
+router.get('/actual', auth, planControl.getPlanActual)
 
-router.post('/guardar', guardarPlan)
-
-router.get('/actual', auth, getPlanActual)
+module.exports = router;
