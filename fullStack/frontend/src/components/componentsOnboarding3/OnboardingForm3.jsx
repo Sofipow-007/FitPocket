@@ -55,7 +55,7 @@ export default function OnboardingForm3() {
     if (dias.length === 0) { setError("Seleccioná al menos un día disponible."); return; }
     setError("");
     localStorage.setItem("ob_paso3", JSON.stringify({
-      diasDisponibles:  dias,
+      diasDispo:         dias,
       minutosPorSesion: minutos,
       tipoDieta:        dieta,
       presupuesto:      presupuesto ? parseFloat(presupuesto) : 0,

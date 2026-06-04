@@ -117,7 +117,8 @@ exports.completarOnboarding = async (req, res) => {
             peso, altura, edad, sexo,
             objetivo, nivel, diasDispo,
             minutosPorSesion, tipoDieta,
-            presupuesto, limitaciones
+            presupuesto, limitaciones,
+            diasDisponibles
         } = req.body
 
         const usuario = await User.findByIdAndUpdate(
@@ -125,7 +126,8 @@ exports.completarOnboarding = async (req, res) => {
             {
                 perfil: {
                     peso, altura, edad, sexo,
-                    objetivo, nivel, diasDispo,
+                    objetivo, nivel,
+                    diasDispo: diasDispo ?? diasDisponibles,
                     minutosPorSesion, tipoDieta,
                     presupuesto, limitaciones
                 }

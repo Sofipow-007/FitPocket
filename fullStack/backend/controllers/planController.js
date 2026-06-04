@@ -1,16 +1,19 @@
 const Plan = require('../models/Plan')
 const User = require('../models/User')
-const { generarPlan } = require('../services/iaService')
 // const { dispararPlan } = require('../services/webhookService')
 
 // función interna que arma el plan según el perfil
-// cuando tengan la API key, esto se reemplaza por generarPlan(perfil) de iaService.js
+// generación manual de prueba antes de automatizar con IA
 const armarPlanMock = (perfil) => {
-
-  const diasEntrenamiento = perfil.diasDispo || []
+  const diasEntrenamiento = perfil.diasDispo || perfil.diasDisponibles || []
   const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+  const objetivo = perfil.objetivo || 'salud general'
+  const nivel = perfil.nivel || 'principiante'
+  const minutosSesion = perfil.minutosPorSesion || 45
+  const presupuesto = perfil.presupuesto || 15000
+  const tipoDieta = perfil.tipoDieta || 'normal'
+  const limitaciones = perfil.limitaciones || []
 
-  // ejercicios según objetivo
   const ejerciciosPorObjetivo = {
     'perder grasa': [
       { nombre: 'Sentadilla', series: 3, repeticiones: '15', descansoSegundos: 45, nota: 'Controlá la bajada' },
@@ -34,17 +37,15 @@ const armarPlanMock = (perfil) => {
     ]
   }
 
-  // filtrar ejercicios según limitaciones
-  const limitaciones = perfil.limitaciones || []
-  let ejercicios = ejerciciosPorObjetivo[perfil.objetivo] || ejerciciosPorObjetivo['salud general']
-  if (limitaciones.includes('espalda baja')) {
+  const limitacionesBajas = limitaciones.map(l => l.toLowerCase())
+  let ejercicios = ejerciciosPorObjetivo[objetivo] || ejerciciosPorObjetivo['salud general']
+  if (limitacionesBajas.includes('espalda baja') || limitacionesBajas.includes('lumbar')) {
     ejercicios = ejercicios.filter(e => !['Remo con barra', 'Sentadilla con peso'].includes(e.nombre))
   }
-  if (limitaciones.includes('rodilla')) {
+  if (limitacionesBajas.includes('rodilla')) {
     ejercicios = ejercicios.filter(e => !['Sentadilla', 'Burpees', 'Saltos de soga'].includes(e.nombre))
   }
 
-  // armar rutina para los 7 días
   const rutina = diasSemana.map(dia => {
     const diaMinuscula = dia.toLowerCase()
       .replace('é', 'e').replace('á', 'a')
@@ -53,13 +54,12 @@ const armarPlanMock = (perfil) => {
     )
     return {
       dia,
-      tipo: entrena ? `Entrenamiento — ${perfil.objetivo}` : 'Descanso',
-      duracionMinutos: entrena ? (perfil.minutosPorSesion || 45) : 0,
+      tipo: entrena ? `Entrenamiento — ${objetivo}` : 'Descanso',
+      duracionMinutos: entrena ? minutosSesion : 0,
       ejercicios: entrena ? ejercicios : []
     }
   })
 
-  // dieta base según tipo
   const comidasPorDieta = {
     'normal': {
       desayuno: { descripcion: 'Avena con leche y banana', calorias: 350 },
@@ -84,12 +84,18 @@ const armarPlanMock = (perfil) => {
       almuerzo: { descripcion: 'Salmón con espárragos y manteca', calorias: 580 },
       merienda: { descripcion: 'Nueces y queso en cubos', calorias: 250 },
       cena: { descripcion: 'Carne vacuna con ensalada verde y aceite de oliva', calorias: 500 }
+    },
+    'singluten': {
+      desayuno: { descripcion: 'Tortilla de avena sin gluten con fruta', calorias: 330 },
+      almuerzo: { descripcion: 'Pechuga de pollo con quinoa y vegetales', calorias: 540 },
+      merienda: { descripcion: 'Yogur natural con semillas', calorias: 210 },
+      cena: { descripcion: 'Merluza al horno con batata y ensalada', calorias: 430 }
     }
   }
 
-  const comidas = comidasPorDieta[perfil.tipoDieta] || comidasPorDieta['normal']
+  const comidas = comidasPorDieta[tipoDieta.toLowerCase()] || comidasPorDieta['normal']
   const caloriasTotal = Object.values(comidas).reduce((acc, c) => acc + c.calorias, 0)
-  const costoDia = Math.round((perfil.presupuesto || 15000) / 30)
+  const costoDia = Math.round(presupuesto / 30)
 
   const dieta = diasSemana.map(dia => ({
     dia,
@@ -99,81 +105,89 @@ const armarPlanMock = (perfil) => {
 
   return {
     meta: {
-      objetivo: perfil.objetivo,
+      objetivo,
       duracionSemanas: 4,
       caloriasObjetivoDia: caloriasTotal,
-      nivelDificultad: perfil.nivel || 'principiante',
-      justificacion: `Plan de ${perfil.objetivo} para nivel ${perfil.nivel || 'principiante'}, ${diasEntrenamiento.length} días por semana de ${perfil.minutosPorSesion || 45} minutos. Dieta ${perfil.tipoDieta || 'normal'}.`
+      nivelDificultad: nivel,
+      justificacion: `Plan de ${objetivo} para ${perfil.sexo || 'persona'} de ${perfil.edad || 'edad'} años, ${perfil.peso || 'peso'} kg y ${perfil.altura || 'altura'} cm. ${diasEntrenamiento.length} días de entrenamiento de ${minutosSesion} minutos por sesión, con dieta ${tipoDieta} y presupuesto mensual de $${presupuesto}.`
     },
     rutina,
     dieta
   }
 }
 
-exports.generarPlanDemo = async (req, res) => {
-    try {
-        const userId = req.user?.userId
-        if (!userId) return res.status(401).json({ error: 'Token inválido o faltante' })
+exports.generarPlan = async (req, res) => {
+  try {
+    const userId = req.user?.userId
+    if (!userId) return res.status(401).json({ error: 'Token inválido o faltante' })
 
-        const user = await User.findById(userId)
-        if (!user) return res.status(404).json({ error: 'Usuario no encontrado' })
+    const user = await User.findById(userId)
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' })
 
-        const perfil = user.perfil
-        if (!perfil || !perfil.objetivo || !perfil.diasDispo) return res.status(400).json({ error: 'Falta el perfil del usuario' })
-        
-        // Armar plan con el perfil del usuario
-        const contenido = await armarPlanMock(perfil)
-
-        // archivar el plan activo anterior si existe
-        await Plan.updateOne(
-            { userId, estado: 'activo' },
-            { estado: 'archivado' }
-        )
-
-        // calcular la versión nueva
-        const ultimoPlan = await Plan.findOne(
-            { userId },
-            {},
-            { sort: { createdAt: -1 } }
-        )
-        const version = ultimoPlan ? ultimoPlan.version + 1 : 1
-
-        // guardar el plan nuevo
-        const nuevoPlan = new Plan({
-            userId,
-            version,
-            estado: 'activo',
-            meta: contenido.meta,
-            rutina: contenido.rutina,
-            dieta: contenido.dieta
-        })
-        await nuevoPlan.save()
-
-        return res.json({
-            ok: true,
-            planId: nuevoPlan._id,
-            version,
-            plan: contenido
-        })
+    const perfil = user.perfil || {}
+    if (!perfil.objetivo || !(perfil.diasDispo?.length || perfil.diasDisponibles?.length)) {
+      return res.status(400).json({ error: 'Falta el perfil del usuario' })
     }
-    catch (error) {
-        console.error('Error al generar el plan:', error)
-        return res.status(500).json({ error: 'Error interno del servidor' })
+
+    const perfilCompleto = {
+      ...perfil,
+      diasDispo: perfil.diasDispo || perfil.diasDisponibles || [],
+      tipoDieta: perfil.tipoDieta || 'normal',
+      limitaciones: perfil.limitaciones || [],
+      minutosPorSesion: perfil.minutosPorSesion || 45,
+      presupuesto: perfil.presupuesto || 15000,
+      nivel: perfil.nivel || 'principiante'
     }
+
+    const contenido = armarPlanMock(perfilCompleto)
+
+    await Plan.updateOne(
+      { userId, estado: 'activo' },
+      { estado: 'archivado' }
+    )
+
+    const ultimoPlan = await Plan.findOne(
+      { userId },
+      {},
+      { sort: { createdAt: -1 } }
+    )
+    const version = ultimoPlan ? ultimoPlan.version + 1 : 1
+
+    const nuevoPlan = new Plan({
+      userId,
+      version,
+      estado: 'activo',
+      meta: contenido.meta,
+      rutina: contenido.rutina,
+      dieta: contenido.dieta
+    })
+    await nuevoPlan.save()
+
+    return res.json({
+      ok: true,
+      planId: nuevoPlan._id,
+      version,
+      plan: contenido
+    })
+  }
+  catch (error) {
+    console.error('Error al generar el plan:', error)
+    return res.status(500).json({ error: 'Error interno del servidor' })
+  }
 }
 
 exports.getPlanActual = async (req, res) => {
-    try{
-        const { userId } = req.params
-        const plan = await Plan.findOne({
-            userId,
-            estado: 'activo'
-        })
-        if (!plan) return res.status(404).json({ error: 'Sin plan activo' })
-        res.json(plan)
-    }
-    catch (error) {
-        console.error('Error al obtener el plan actual:', error)
-        return res.status(500).json({ error: 'Error interno del servidor' })
-    }
+  try {
+    const { userId } = req.params
+    const plan = await Plan.findOne({
+      userId,
+      estado: 'activo'
+    })
+    if (!plan) return res.status(404).json({ error: 'Sin plan activo' })
+    res.json(plan)
+  }
+  catch (error) {
+    console.error('Error al obtener el plan actual:', error)
+    return res.status(500).json({ error: 'Error interno del servidor' })
+  }
 }
