@@ -104,3 +104,73 @@
   position: relative;
   z-index: 1;
 }
+
+/* ── Efectos de peso ───────────────────────────────────────────── */
+body[data-peso-level="1"] .ob-page { animation: ob-shake1 3s ease-in-out infinite; }
+body[data-peso-level="2"] .ob-page { animation: ob-shake2 3s ease-in-out infinite; }
+body[data-peso-level="3"] .ob-page { animation: ob-shake3 3s ease-in-out infinite; }
+body[data-peso-level="4"] .ob-page { animation: ob-shake4 3s ease-in-out infinite; }
+body[data-peso-level="5"] .ob-page { animation: ob-shake5 3s ease-in-out infinite; }
+body[data-peso-level="fall"] .ob-page {
+  animation: ob-fall 1.8s ease-in forwards;
+  transform-origin: bottom center;
+}
+
+@keyframes ob-shake1 {
+  0%, 100% { transform: translate(0, 0); }
+  30%      { transform: translate(-2px, -1px); }
+  70%      { transform: translate(2px,  1px); }
+}
+@keyframes ob-shake2 {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(-4px, -2px); }
+  50%      { transform: translate(4px,  2px); }
+  80%      { transform: translate(-3px, -1px); }
+}
+@keyframes ob-shake3 {
+  0%, 100% { transform: translate(0, 0); }
+  15%      { transform: translate(-7px, -3px); }
+  35%      { transform: translate(7px,  3px); }
+  55%      { transform: translate(-5px, -2px); }
+  75%      { transform: translate(6px,  2px); }
+}
+@keyframes ob-shake4 {
+  0%, 100% { transform: translate(0, 0); }
+  10%      { transform: translate(-12px, -4px); }
+  25%      { transform: translate(11px,   4px); }
+  45%      { transform: translate(-9px,  -3px); }
+  60%      { transform: translate(10px,   3px); }
+  80%      { transform: translate(-11px, -4px); }
+}
+@keyframes ob-shake5 {
+  0%, 100% { transform: translate(0, 0); }
+  8%       { transform: translate(-18px, -6px); }
+  20%      { transform: translate(16px,   6px); }
+  35%      { transform: translate(-14px, -5px); }
+  50%      { transform: translate(17px,   5px); }
+  65%      { transform: translate(-15px, -6px); }
+  82%      { transform: translate(16px,   4px); }
+}
+@keyframes ob-fall {
+  0%   { transform: translateY(0)     translateX(0);    opacity: 1; }
+  10%  { transform: translateY(-20px) translateX(5px);  opacity: 1; }
+  25%  { transform: translateY(15vh)  translateX(-8px); opacity: 0.95; }
+  45%  { transform: translateY(50vh)  translateX(10px); opacity: 0.7; }
+  65%  { transform: translateY(100vh) translateX(-5px); opacity: 0.4; }
+  100% { transform: translateY(200vh) translateX(0);    opacity: 0; }
+}
+
+/* ── Partículas de polvo ───────────────────────────────────────── */
+.ob-dust {
+  position: fixed;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,180,140,0.85) 0%, rgba(160,130,90,0.4) 100%);
+  pointer-events: none;
+  z-index: 9999;
+  animation: ob-dust-fall linear forwards;
+}
+@keyframes ob-dust-fall {
+  0%   { transform: translateY(0)    translateX(0);                    opacity: 0.9; }
+  30%  { opacity: 0.7; }
+  100% { transform: translateY(80px) translateX(var(--drift, 0px));    opacity: 0; }
+}
