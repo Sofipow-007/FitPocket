@@ -112,8 +112,7 @@ body[data-peso-level="3"] .ob-page { animation: ob-shake3 3s ease-in-out infinit
 body[data-peso-level="4"] .ob-page { animation: ob-shake4 3s ease-in-out infinite; }
 body[data-peso-level="5"] .ob-page { animation: ob-shake5 3s ease-in-out infinite; }
 body[data-peso-level="fall"] .ob-page {
-  animation: ob-fall 1.8s ease-in forwards;
-  transform-origin: bottom center;
+  /* la gravedad la maneja JS */
 }
 
 @keyframes ob-shake1 {
@@ -151,13 +150,15 @@ body[data-peso-level="fall"] .ob-page {
   65%      { transform: translate(-15px, -6px); }
   82%      { transform: translate(16px,   4px); }
 }
-@keyframes ob-fall {
-  0%   { transform: translateY(0)     translateX(0);    opacity: 1; }
-  10%  { transform: translateY(-20px) translateX(5px);  opacity: 1; }
-  25%  { transform: translateY(15vh)  translateX(-8px); opacity: 0.95; }
-  45%  { transform: translateY(50vh)  translateX(10px); opacity: 0.7; }
-  65%  { transform: translateY(100vh) translateX(-5px); opacity: 0.4; }
-  100% { transform: translateY(200vh) translateX(0);    opacity: 0; }
+/* ── Elementos en caída libre (JS los mueve) ───────────────────── */
+.ob-gravity-el {
+  position: fixed !important;
+  z-index: 9000;
+  margin: 0 !important;
+  box-sizing: border-box;
+  transition: none !important;
+  animation: none !important;
+  pointer-events: none;
 }
 
 /* ── Partículas de polvo ───────────────────────────────────────── */

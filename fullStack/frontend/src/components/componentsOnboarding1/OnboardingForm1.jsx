@@ -43,64 +43,167 @@ export default function OnboardingForm1() {
   
   useEffect(() => {
     const p = parseFloat(peso);
-
+  
     let level = 0;
-    if (!p || p < 81) level = 0;
-    else if (p < 121) level = 1;
-    else if (p < 161) level = 2;
-    else if (p < 201) level = 3;
-    else if (p < 241) level = 4;
-    else if (p < 300) level = 5;
-    else level = 'fall';
-
+    if      (!p || p < 81)  level = 0;
+    else if (p < 121)        level = 1;
+    else if (p < 161)        level = 2;
+    else if (p < 201)        level = 3;
+    else if (p < 241)        level = 4;
+    else if (p < 300)        level = 5;
+    else                     level = 'fall';
+  
     document.body.setAttribute('data-peso-level', String(level));
-
+  
+    // limpiar efectos anteriores
     if (dustTimerRef.current) {
       clearInterval(dustTimerRef.current);
       dustTimerRef.current = null;
     }
     document.querySelectorAll('.ob-dust').forEach(d => d.remove());
-
+    if (document.body._gravityRunner) {
+      Matter.Runner.stop(document.body._gravityRunner);
+      document.body._gravityRunner = null;
+    }
+    if (document.body._gravityEngine) {
+      Matter.Engine.clear(document.body._gravityEngine);
+      document.body._gravityEngine = null;
+    }
+    if (document.body._gravityEls) {
+      document.body._gravityEls.forEach(el => {
+        el.classList.remove('ob-gravity-el');
+        el.style.cssText = '';
+      });
+      document.body._gravityEls = null;
+    }
+    const page = document.querySelector('.ob-page');
+    if (page) page.style.visibility = '';
+  
     const spawnDust = (count, maxSize) => {
       for (let i = 0; i < count; i++) {
         const d = document.createElement('div');
         d.className = 'ob-dust';
         const size = 2 + Math.random() * maxSize;
         d.style.cssText = `
-        left: ${Math.random() * 100}vw;
-        top: ${Math.random() * 40}px;
-        width: ${size}px;
-        height: ${size}px;
-        --drift: ${(Math.random() * 60 - 30)}px;
-        animation-duration: ${0.6 + Math.random() * 1.2}s;
-        animation-delay: ${Math.random() * 0.3}s;
-      `;
+          left: ${Math.random() * 100}vw;
+          top: ${Math.random() * 40}px;
+          width: ${size}px;
+          height: ${size}px;
+          --drift: ${(Math.random() * 60 - 30)}px;
+          animation-duration: ${0.6 + Math.random() * 1.2}s;
+          animation-delay: ${Math.random() * 0.3}s;
+        `;
         document.body.appendChild(d);
         d.addEventListener('animationend', () => d.remove(), { once: true });
       }
     };
-
+  
     const config = [
       null,
       { interval: 3500, count: 1, size: 2 },
       { interval: 2000, count: 2, size: 3 },
       { interval: 1000, count: 4, size: 4 },
-      { interval: 500, count: 6, size: 5 },
-      { interval: 200, count: 10, size: 7 },
+      { interval: 500,  count: 6, size: 5 },
+      { interval: 200,  count: 10, size: 7 },
     ];
-
+  
+    const launchGravity = () => {
+      const page = document.querySelector('.ob-page');
+      if (!page) return;
+  
+      const { Engine, Runner, Bodies, Composite, Events } = Matter;
+  
+      const candidates = Array.from(page.querySelectorAll(
+        '.ob-header, .ob-progress, .ob1-card'
+      ));
+      const domEls = candidates.filter(el =>
+        !candidates.some(other => other !== el && other.contains(el))
+      );
+      if (domEls.length === 0) return;
+  
+      const engine = Engine.create({ gravity: { y: 1.8 } });
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+  
+      const floor     = Bodies.rectangle(W / 2, H + 25, W * 2, 50, { isStatic: true });
+      const wallLeft  = Bodies.rectangle(-25, H / 2, 50, H * 2, { isStatic: true });
+      const wallRight = Bodies.rectangle(W + 25, H / 2, 50, H * 2, { isStatic: true });
+      Composite.add(engine.world, [floor, wallLeft, wallRight]);
+  
+      const pairs = domEls.map(el => {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width  / 2;
+        const cy = rect.top  + rect.height / 2;
+  
+        const body = Bodies.rectangle(cx, cy, rect.width, rect.height, {
+          restitution: 0.45,
+          friction:    0.3,
+          frictionAir: 0.01,
+          angle: (Math.random() - 0.5) * 0.15,
+        });
+  
+        Matter.Body.setVelocity(body, {
+          x: (Math.random() - 0.5) * 6,
+          y: (Math.random() - 0.5) * 2,
+        });
+  
+        el.classList.add('ob-gravity-el');
+        el.style.left   = rect.left + 'px';
+        el.style.top    = rect.top  + 'px';
+        el.style.width  = rect.width  + 'px';
+        el.style.height = rect.height + 'px';
+        el.style.transformOrigin = 'center center';
+  
+        Composite.add(engine.world, body);
+        return { el, body };
+      });
+  
+      page.style.visibility = 'hidden';
+      pairs.forEach(p => { p.el.style.visibility = 'visible'; });
+  
+      const runner = Runner.create();
+      Runner.run(runner, engine);
+  
+      Events.on(engine, 'afterUpdate', () => {
+        pairs.forEach(({ el, body }) => {
+          const { x, y } = body.position;
+          el.style.left      = (x - parseFloat(el.style.width)  / 2) + 'px';
+          el.style.top       = (y - parseFloat(el.style.height) / 2) + 'px';
+          el.style.transform = `rotate(${body.angle}rad)`;
+        });
+      });
+  
+      setTimeout(() => {
+        pairs.forEach(({ el }) => {
+          el.style.transition = 'opacity 0.8s';
+          el.style.opacity = '0';
+          setTimeout(() => el.remove(), 850);
+        });
+        setTimeout(() => {
+          Runner.stop(runner);
+          Engine.clear(engine);
+          page.style.visibility = 'visible';
+        }, 900);
+      }, 4000);
+  
+      document.body._gravityRunner = runner;
+      document.body._gravityEngine = engine;
+      document.body._gravityEls   = pairs.map(p => p.el);
+    };
+  
     if (typeof level === 'number' && level > 0 && config[level]) {
       const { interval, count, size } = config[level];
       spawnDust(count, size);
       dustTimerRef.current = setInterval(() => spawnDust(count, size), interval);
     }
-
+  
     if (level === 'fall') {
       spawnDust(30, 8);
       const burst = setInterval(() => spawnDust(20, 8), 100);
       setTimeout(() => clearInterval(burst), 800);
+      launchGravity();
     }
-
+  
     return () => {
       if (dustTimerRef.current) clearInterval(dustTimerRef.current);
     };
