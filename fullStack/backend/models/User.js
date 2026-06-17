@@ -77,6 +77,10 @@ const schemaUser = new mongoose.Schema({
         limitaciones: [{
             type: String
         }]
+    },
+    dvh: {
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true

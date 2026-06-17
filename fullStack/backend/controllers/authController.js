@@ -1,9 +1,9 @@
 // ---------- Archivo con las funciones register y login (autorizacion) ----------
 
-const {dispararPlan} = require('../services/webhookService')
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { calcularDVH } = require('../utils/digitosVerificadores');
 
 // POST /auth/register
 exports.register = async (req, res) => {
@@ -28,15 +28,12 @@ exports.register = async (req, res) => {
             perfil: {}
         });
 
+        user.dvh = calcularDVH([user.email, user.nombre, user.rol]);
         await user.save();
 
         // Generar JWT
         const payload = { userId: user._id, rol: user.rol };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
-
-        // dispararPlan(usuario._id, perfil)
-
-        // NOTA: Aquí iría el disparador del webhook a N8N posteriormente
 
         res.status(201).json({ token, user: { _id: user._id, nombre: user.nombre, email: user.email } });
     } catch (error) {
@@ -77,4 +74,3 @@ exports.login = async (req, res) => {
         res.status(500).send('Error en el servidor');
     }
 };
-
