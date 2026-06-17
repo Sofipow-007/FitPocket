@@ -1,0 +1,29 @@
+{
+    "onboarding1": {
+      "titulo": "Datos físicos",
+      "subtitulo": "Calculamos tu IMC y personalizamos el plan",
+      "edad": "Edad",
+      "peso": "Peso (kg)",
+      "altura": "Altura (cm)",
+      "sexo": "Sexo",
+      "selecciona": "Seleccioná",
+      "femenino": "Femenino",
+      "masculino": "Masculino",
+      "imcEstimado": "IMC estimado",
+      "ingresaDatos": "Ingresá tus datos",
+      "siguiente": "Siguiente",
+      "errorCampos": "Completá todos los campos para continuar."
+    },
+    "login": {
+      "titulo": "Bienvenido de vuelta",
+      "subtitulo": "Ingresá a tu cuenta para continuar",
+      "email": "Email",
+      "password": "Contraseña",
+      "ingresar": "Ingresar",
+      "ingresando": "Ingresando...",
+      "sinCuenta": "¿No tenés cuenta?",
+      "registrarse": "Registrarse",
+      "errorConexion": "Error de conexión. Intentá más tarde.",
+      "errorCredenciales": "Email o contraseña incorrectos"
+    }
+  }

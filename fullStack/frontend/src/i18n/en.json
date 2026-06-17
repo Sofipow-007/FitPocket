@@ -1,0 +1,29 @@
+{
+    "onboarding1": {
+      "titulo": "Physical data",
+      "subtitulo": "We calculate your BMI and personalize your plan",
+      "edad": "Age",
+      "peso": "Weight (kg)",
+      "altura": "Height (cm)",
+      "sexo": "Sex",
+      "selecciona": "Select",
+      "femenino": "Female",
+      "masculino": "Male",
+      "imcEstimado": "Estimated BMI",
+      "ingresaDatos": "Enter your data",
+      "siguiente": "Next",
+      "errorCampos": "Complete all fields to continue."
+    },
+    "login": {
+      "titulo": "Welcome back",
+      "subtitulo": "Sign in to your account to continue",
+      "email": "Email",
+      "password": "Password",
+      "ingresar": "Sign in",
+      "ingresando": "Signing in...",
+      "sinCuenta": "Don't have an account?",
+      "registrarse": "Sign up",
+      "errorConexion": "Connection error. Try again later.",
+      "errorCredenciales": "Invalid email or password"
+    }
+  }
