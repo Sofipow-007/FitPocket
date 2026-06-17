@@ -1,0 +1,120 @@
+{
+  "name": "FitPocket - WF2 Checkins diarios",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "cronExpression", "expression": "0 0 * * *" }]
+        },
+        "timezone": "America/Argentina/Buenos_Aires"
+      },
+      "id": "sched-001",
+      "name": "Cron 00:00 BsAs",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "operation": "find",
+        "collection": "usuarios",
+        "query": "={ \"activo\": true }",
+        "options": { "projection": "{ \"_id\": 1, \"nombre\": 1, \"diasDispo\": 1 }" }
+      },
+      "id": "mongo-002",
+      "name": "MongoDB - Leer usuarios activos",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "split-001",
+      "name": "Iterar por usuario",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const usuario = $input.first().json;\n\n// Dias de la semana en español\nconst diasSemana = ['domingo','lunes','martes','miercoles','jueves','viernes','sabado'];\nconst hoy = new Date();\nconst diaHoy = diasSemana[hoy.getDay()];\n\n// Verificar si el usuario entrena hoy\nconst entrenaHoy = usuario.diasDispo && usuario.diasDispo.includes(diaHoy);\n\nreturn [{\n  json: {\n    ...usuario,\n    diaHoy,\n    entrenaHoy\n  }\n}];"
+      },
+      "id": "code-002",
+      "name": "Calcular dia de hoy",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-dia",
+              "leftValue": "={{ $json.entrenaHoy }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-002",
+      "name": "IF - Dia disponible",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const usuario = $input.first().json;\nconst hoy = new Date();\n\nreturn [{\n  json: {\n    usuarioId: usuario._id,\n    fecha: hoy.toISOString().split('T')[0],\n    dia: usuario.diaHoy,\n    completado: false,\n    porcentaje: 0,\n    items: [],\n    creadoEn: hoy.toISOString()\n  }\n}];"
+      },
+      "id": "code-003",
+      "name": "Preparar documento checkin",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 220]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "checkins",
+        "fields": "=usuarioId,fecha,dia,completado,porcentaje,items,creadoEn"
+      },
+      "id": "mongo-003",
+      "name": "MongoDB - Insertar checkin",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [1560, 220]
+    }
+  ],
+  "connections": {
+    "Cron 00:00 BsAs": {
+      "main": [[{ "node": "MongoDB - Leer usuarios activos", "type": "main", "index": 0 }]]
+    },
+    "MongoDB - Leer usuarios activos": {
+      "main": [[{ "node": "Iterar por usuario", "type": "main", "index": 0 }]]
+    },
+    "Iterar por usuario": {
+      "main": [[{ "node": "Calcular dia de hoy", "type": "main", "index": 0 }]]
+    },
+    "Calcular dia de hoy": {
+      "main": [[{ "node": "IF - Dia disponible", "type": "main", "index": 0 }]]
+    },
+    "IF - Dia disponible": {
+      "main": [
+        [{ "node": "Preparar documento checkin", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Preparar documento checkin": {
+      "main": [[{ "node": "MongoDB - Insertar checkin", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "fitpocket" }]
+}

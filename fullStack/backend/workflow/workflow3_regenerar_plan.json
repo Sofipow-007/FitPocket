@@ -1,0 +1,218 @@
+{
+  "name": "FitPocket - WF3 Regenerar plan baja adherencia",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "cronExpression", "expression": "0 23 * * 0" }]
+        },
+        "timezone": "America/Argentina/Buenos_Aires"
+      },
+      "id": "sched-002",
+      "name": "Cron Domingos 23:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "operation": "find",
+        "collection": "usuarios",
+        "query": "={ \"activo\": true }",
+        "options": { "projection": "{ \"_id\": 1, \"nombre\": 1, \"email\": 1, \"objetivo\": 1, \"nivelActividad\": 1, \"diasDispo\": 1, \"edad\": 1, \"peso\": 1, \"altura\": 1 }" }
+      },
+      "id": "mongo-004",
+      "name": "MongoDB - Leer usuarios",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "split-002",
+      "name": "Iterar por usuario",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const usuario = $input.first().json;\nconst hoy = new Date();\n\n// Calcular inicio de la semana actual (lunes)\nconst lunes = new Date(hoy);\nlunes.setDate(hoy.getDate() - ((hoy.getDay() + 6) % 7));\nlunes.setHours(0,0,0,0);\n\nreturn [{\n  json: {\n    ...usuario,\n    fechaDesde: lunes.toISOString().split('T')[0],\n    fechaHasta: hoy.toISOString().split('T')[0]\n  }\n}];"
+      },
+      "id": "code-004",
+      "name": "Calcular rango semana",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "operation": "find",
+        "collection": "checkins",
+        "query": "={{ { \"usuarioId\": $json._id, \"fecha\": { \"$gte\": $json.fechaDesde, \"$lte\": $json.fechaHasta } } }}",
+        "options": { "projection": "{ \"porcentaje\": 1, \"completado\": 1 }" }
+      },
+      "id": "mongo-005",
+      "name": "MongoDB - Checkins de la semana",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const checkins = $input.all().map(i => i.json);\nconst usuario = $('Calcular rango semana').first().json;\n\nif (checkins.length === 0) {\n  return [{ json: { ...usuario, adherencia: 0, totalCheckins: 0 } }];\n}\n\nconst totalPorcentaje = checkins.reduce((sum, c) => sum + (c.porcentaje || 0), 0);\nconst adherencia = Math.round(totalPorcentaje / checkins.length);\n\nreturn [{\n  json: {\n    ...usuario,\n    adherencia,\n    totalCheckins: checkins.length\n  }\n}];"
+      },
+      "id": "code-005",
+      "name": "Calcular adherencia",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-adh",
+              "leftValue": "={{ $json.adherencia }}",
+              "rightValue": 50,
+              "operator": { "type": "number", "operation": "lt" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-003",
+      "name": "IF - Adherencia menor 50%",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "operation": "find",
+        "collection": "planes",
+        "query": "={{ { \"usuarioId\": $json._id, \"activo\": true } }}",
+        "options": { "projection": "{ \"version\": 1, \"meta\": 1 }" }
+      },
+      "id": "mongo-006",
+      "name": "MongoDB - Leer plan actual",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [1780, 220]
+    },
+    {
+      "parameters": {
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "model": "claude-sonnet-4-6",
+          "max_tokens": 4096,
+          "messages": [
+            {
+              "role": "user",
+              "content": "=El usuario {{ $('Calcular adherencia').first().json.nombre }} tuvo una adherencia de {{ $('Calcular adherencia').first().json.adherencia }}% esta semana (objetivo: {{ $('Calcular adherencia').first().json.objetivo }}).\n\nEl plan anterior no fue efectivo. Generá un plan NUEVO más accesible y motivador para:\nEdad: {{ $('Calcular adherencia').first().json.edad }} años\nPeso: {{ $('Calcular adherencia').first().json.peso }}kg\nAltura: {{ $('Calcular adherencia').first().json.altura }}cm\nObjetivo: {{ $('Calcular adherencia').first().json.objetivo }}\nNivel actividad: {{ $('Calcular adherencia').first().json.nivelActividad }}\nDías disponibles: {{ $('Calcular adherencia').first().json.diasDispo.join(', ') }}\n\nHacé el plan más corto y simple que el anterior para mejorar la adherencia.\nRespondé SOLO con JSON válido sin markdown. Misma estructura: { meta, rutina, dieta }"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-002",
+      "name": "Claude API - Nuevo plan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 220]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.content[0].text;\nconst clean = raw.replace(/```json\\n?/g, '').replace(/```/g, '').trim();\n\nlet plan;\ntry {\n  plan = JSON.parse(clean);\n} catch(e) {\n  throw new Error('Claude no devolvio JSON valido: ' + clean.substring(0, 200));\n}\n\nconst usuario = $('Calcular adherencia').first().json;\nconst planActual = $('MongoDB - Leer plan actual').first().json;\n\nreturn [{\n  json: {\n    usuarioId: usuario._id,\n    version: (planActual.version || 1) + 1,\n    activo: true,\n    adherenciaAnterior: usuario.adherencia,\n    creadoEn: new Date().toISOString(),\n    meta: plan.meta,\n    rutina: plan.rutina,\n    dieta: plan.dieta\n  }\n}];"
+      },
+      "id": "code-006",
+      "name": "Parsear nuevo plan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2220, 220]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "collection": "planes",
+        "filter": "={{ { \"usuarioId\": $('Calcular adherencia').first().json._id, \"activo\": true } }}",
+        "updateKey": "activo",
+        "fields": "=activo",
+        "options": {}
+      },
+      "id": "mongo-007",
+      "name": "MongoDB - Desactivar plan viejo",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [2440, 220]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "planes",
+        "fields": "=usuarioId,version,activo,adherenciaAnterior,creadoEn,meta,rutina,dieta"
+      },
+      "id": "mongo-008",
+      "name": "MongoDB - Insertar plan nuevo",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [2660, 220]
+    }
+  ],
+  "connections": {
+    "Cron Domingos 23:00": {
+      "main": [[{ "node": "MongoDB - Leer usuarios", "type": "main", "index": 0 }]]
+    },
+    "MongoDB - Leer usuarios": {
+      "main": [[{ "node": "Iterar por usuario", "type": "main", "index": 0 }]]
+    },
+    "Iterar por usuario": {
+      "main": [[{ "node": "Calcular rango semana", "type": "main", "index": 0 }]]
+    },
+    "Calcular rango semana": {
+      "main": [[{ "node": "MongoDB - Checkins de la semana", "type": "main", "index": 0 }]]
+    },
+    "MongoDB - Checkins de la semana": {
+      "main": [[{ "node": "Calcular adherencia", "type": "main", "index": 0 }]]
+    },
+    "Calcular adherencia": {
+      "main": [[{ "node": "IF - Adherencia menor 50%", "type": "main", "index": 0 }]]
+    },
+    "IF - Adherencia menor 50%": {
+      "main": [
+        [{ "node": "MongoDB - Leer plan actual", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "MongoDB - Leer plan actual": {
+      "main": [[{ "node": "Claude API - Nuevo plan", "type": "main", "index": 0 }]]
+    },
+    "Claude API - Nuevo plan": {
+      "main": [[{ "node": "Parsear nuevo plan", "type": "main", "index": 0 }]]
+    },
+    "Parsear nuevo plan": {
+      "main": [[{ "node": "MongoDB - Desactivar plan viejo", "type": "main", "index": 0 }]]
+    },
+    "MongoDB - Desactivar plan viejo": {
+      "main": [[{ "node": "MongoDB - Insertar plan nuevo", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "fitpocket" }]
+}
