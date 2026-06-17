@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
         await user.save();
 
         // Generar JWT
-        const payload = { userId: user._id };
+        const payload = { userId: user._id, rol: user.rol };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
 
         // dispararPlan(usuario._id, perfil)
@@ -62,7 +62,7 @@ exports.login = async (req, res) => {
         }
 
         // Devolver JWT
-        const payload = { userId: user._id };
+        const payload = { userId: user._id, rol: user.rol };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
 
         res.json({ 

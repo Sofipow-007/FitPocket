@@ -17,6 +17,12 @@ const schemaUser = new mongoose.Schema({
         required: true
     },
 
+    rol: {
+        type: String,
+        enum: ['usuario', 'admin'],
+        default: 'usuario'
+    },
+
     perfil: {
         peso: {
             type: Number
