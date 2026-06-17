@@ -1,27 +1,33 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomeGuest    from "./pages/HomeGuest/HomeGuest";
-import Register     from "./pages/Register/Register";
-import Onboarding1  from "./pages/Onboarding1/Onboarding1";
-import Onboarding2  from "./pages/Onboarding2/Onboarding2";
-import Onboarding3  from "./pages/Onboarding3/Onboarding3";
-import Onboarding4  from "./pages/Onboarding4/Onboarding4";
-import CargandoPlan from "./pages/CargandoPlan/CargandoPlan";
+import { Suspense, lazy } from "react";
+
+const HomeGuest    = lazy(() => import("./pages/HomeGuest/HomeGuest"));
+const Register     = lazy(() => import("./pages/Register/Register"));
+const Login        = lazy(() => import("./pages/Login/Login"));
+const Onboarding1  = lazy(() => import("./pages/Onboarding1/Onboarding1"));
+const Onboarding2  = lazy(() => import("./pages/Onboarding2/Onboarding2"));
+const Onboarding3  = lazy(() => import("./pages/Onboarding3/Onboarding3"));
+const Onboarding4  = lazy(() => import("./pages/Onboarding4/Onboarding4"));
+const CargandoPlan = lazy(() => import("./pages/CargandoPlan/CargandoPlan"));
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <main className="main-content">
-          <Routes>
-            <Route path="/"              element={<HomeGuest />} />
-            <Route path="/register"      element={<Register />} />
-            <Route path="/onboarding"    element={<Onboarding1 />} />
-            <Route path="/onboarding/2"  element={<Onboarding2 />} />
-            <Route path="/onboarding/3"  element={<Onboarding3 />} />
-            <Route path="/onboarding/4"  element={<Onboarding4 />} />
-            <Route path="/cargando-plan" element={<CargandoPlan />} />
-          </Routes>
+          <Suspense fallback={<div className="loading-page">Cargando...</div>}>
+            <Routes>
+              <Route path="/"              element={<HomeGuest />} />
+              <Route path="/register"      element={<Register />} />
+              <Route path="/login"         element={<Login />} />
+              <Route path="/onboarding"    element={<Onboarding1 />} />
+              <Route path="/onboarding/2"  element={<Onboarding2 />} />
+              <Route path="/onboarding/3"  element={<Onboarding3 />} />
+              <Route path="/onboarding/4"  element={<Onboarding4 />} />
+              <Route path="/cargando-plan" element={<CargandoPlan />} />
+            </Routes>
+          </Suspense>
         </main>
       </div>
     </BrowserRouter>
