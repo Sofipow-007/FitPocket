@@ -40,10 +40,10 @@ const IconArrowRight = () => (
 );
 
 const OBJETIVOS = [
-  { id: "grasa",      icon: <IconFlame />,    titulo: "Perder grasa",    subtitulo: "Déficit calórico + cardio progresivo" },
-  { id: "musculo",    icon: <IconDumbbell />, titulo: "Ganar músculo",   subtitulo: "Superávit calórico + entrenamiento de fuerza" },
+  { id: "perder grasa",      icon: <IconFlame />,    titulo: "Perder grasa",    subtitulo: "Déficit calórico + cardio progresivo" },
+  { id: "ganar músculo",    icon: <IconDumbbell />, titulo: "Ganar músculo",   subtitulo: "Superávit calórico + entrenamiento de fuerza" },
   { id: "resistencia",icon: <IconBolt />,     titulo: "Resistencia",     subtitulo: "Cardio progresivo y zona aeróbica" },
-  { id: "salud",      icon: <IconHeart />,    titulo: "Salud general",   subtitulo: "Balance entre fuerza, cardio y bienestar" },
+  { id: "salud general",      icon: <IconHeart />,    titulo: "Salud general",   subtitulo: "Balance entre fuerza, cardio y bienestar" },
 ];
 
 const NIVELES = [

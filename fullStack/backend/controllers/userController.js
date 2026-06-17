@@ -38,6 +38,7 @@ exports.actualizarPerfil = async (req, res) => {
                 message: "Usuario no encontrado"
             })
         }
+        res.json({ ok: true, user })
     }
     catch (error) {
         console.error(error.message)
@@ -47,8 +48,7 @@ exports.actualizarPerfil = async (req, res) => {
 
 exports.borrarPerfil = async (req, res) => {
     try {
-        const { email } = req.body
-        const user = await User.findOneAndDelete({ email })
+        const user = await User.findByIdAndDelete(req.user.userId)
 
         if (!user) {
             return res.status(404).json({

@@ -14,6 +14,6 @@ module.exports = (req, res, next) => {
         req.user = decoded; // { userId: '...' } queda disponible en todos los controllers
         next();
     } catch (error) {
-        res.status(401).json({ msg: 'Token inválido' });
+        return res.status(401).json({ msg: 'Token inválido' });
     }
 };

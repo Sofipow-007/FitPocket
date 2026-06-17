@@ -178,7 +178,7 @@ exports.generarPlan = async (req, res) => {
 
 exports.getPlanActual = async (req, res) => {
   try {
-    const { userId } = req.params
+    const userId = req.user.userId
     const plan = await Plan.findOne({
       userId,
       estado: 'activo'

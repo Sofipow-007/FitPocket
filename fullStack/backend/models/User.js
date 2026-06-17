@@ -60,7 +60,8 @@ const schemaUser = new mongoose.Schema({
                 'normal',
                 'vegana',
                 'vegetariana',
-                'keto'
+                'keto',
+                'singluten'
             ]
         },
 
