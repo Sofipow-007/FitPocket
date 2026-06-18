@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import AuthModal from "./AuthModal";
 import "./HomeGuestHero.css";
 import logo from "../../assets/fitpocketlogo(inverted).png";
@@ -37,19 +38,21 @@ const IconSpark = () => (
 );
 
 /* ── Mockup inside bento ───────────────────────────────────────── */
-const DAYS = [
-  { day: "Lun", work: "Tren superior",   dur: "45m", done: true },
-  { day: "Mar", work: "Cardio HIIT",     dur: "30m", done: true },
-  { day: "Mié", work: "Descanso activo", dur: "—",   rest: true },
-  { day: "Jue", work: "Tren inferior",   dur: "45m", today: true },
-  { day: "Vie", work: "Cardio + Core",   dur: "40m" },
-];
-
 function PlanMockup() {
+  const { t } = useTranslation();
+  const diasData = t("home.bento.mockup.dias", { returnObjects: true });
+  const DAYS = [
+    { ...diasData[0], done: true  },
+    { ...diasData[1], done: true  },
+    { ...diasData[2], rest: true  },
+    { ...diasData[3], today: true },
+    { ...diasData[4] },
+  ];
+
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex items-center justify-between mb-1">
-        <span className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">Semana 1</span>
+        <span className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">{t("home.bento.mockup.semana")}</span>
         <span className="text-[11px] font-bold text-orange-400 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded-full">1 800 kcal</span>
       </div>
       {DAYS.map((d, i) => (
@@ -75,12 +78,12 @@ function PlanMockup() {
             </span>
           )}
           {d.today && (
-            <span className="text-[10px] font-bold text-purple-400 bg-purple-500/15 px-1.5 py-0.5 rounded-full">Hoy</span>
+            <span className="text-[10px] font-bold text-purple-400 bg-purple-500/15 px-1.5 py-0.5 rounded-full">{t("home.bento.mockup.hoy")}</span>
           )}
         </div>
       ))}
       <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/5">
-        <span className="text-[11px] text-zinc-500 flex-shrink-0">Adherencia</span>
+        <span className="text-[11px] text-zinc-500 flex-shrink-0">{t("home.bento.mockup.adherenciaLabel")}</span>
         <div className="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
           <div className="h-full rounded-full mockup-bar-fill" style={{ width: "74%" }} />
         </div>
@@ -93,7 +96,11 @@ function PlanMockup() {
 /* ── Main ──────────────────────────────────────────────────────── */
 export default function HomeGuestHero() {
   const navigate = useNavigate();
+  const { t }    = useTranslation();
   const [loginOpen, setLoginOpen] = useState(false);
+
+  const pasos = t("home.bento.pasos", { returnObjects: true });
+  const stats = t("home.bento.stats", { returnObjects: true });
 
   return (
     <div className="min-h-screen font-[DM_Sans,system-ui,sans-serif]" style={{ backgroundColor: "#050508", backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px)", backgroundSize: "28px 28px", color: "#FAFAFA" }}>
@@ -112,14 +119,14 @@ export default function HomeGuestHero() {
             className="px-4 py-2 text-sm text-zinc-400 border border-white/10 rounded-full
               hover:border-orange-500/40 hover:text-orange-400 transition-all duration-150 cursor-pointer"
           >
-            Entrar
+            {t("home.entrar")}
           </button>
           <button
             onClick={() => navigate("/register")}
             className="px-4 py-2 text-sm font-semibold text-black bg-orange-500 rounded-full
               hover:bg-orange-400 transition-all duration-150 cursor-pointer btn-glow"
           >
-            Empezar gratis
+            {t("home.empezarGratis")}
           </button>
         </div>
       </nav>
@@ -130,13 +137,12 @@ export default function HomeGuestHero() {
 
           <h1 className="font-[Space_Grotesk,sans-serif] font-extrabold leading-[0.95] tracking-tight animate-float-up"
             style={{ fontSize: "clamp(3.5rem, 10vw, 8rem)" }}>
-            <span className="block text-white">ENTRENÁS</span>
-            <span className="block text-gradient-orange">MEJOR.</span>
+            <span className="block text-white">{t("home.hero.titulo1")}</span>
+            <span className="block text-gradient-orange">{t("home.hero.titulo2")}</span>
           </h1>
 
           <p className="text-zinc-400 text-lg max-w-md leading-relaxed animate-float-up" style={{ animationDelay: "0.1s" }}>
-            Obtené tu rutina y alimentación personalizada según tu cuerpo, objetivos y presupuesto.
-            Tu plan se adapta automáticamente si tu adherencia baja.
+            {t("home.hero.desc")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 animate-float-up" style={{ animationDelay: "0.3s" }}>
@@ -146,7 +152,7 @@ export default function HomeGuestHero() {
                 bg-orange-500 rounded-2xl hover:bg-orange-400 cursor-pointer
                 transition-all duration-200 btn-glow"
             >
-              Empezar gratis <IconArrow />
+              {t("home.empezarGratis")} <IconArrow />
             </button>
             <button
               onClick={() => document.getElementById("bento")?.scrollIntoView({ behavior: "smooth" })}
@@ -154,7 +160,7 @@ export default function HomeGuestHero() {
                 border border-white/10 rounded-2xl hover:border-orange-500/30 hover:text-orange-400
                 cursor-pointer transition-all duration-200"
             >
-              Ver cómo funciona
+              {t("home.verComoFunciona")}
             </button>
           </div>
 
@@ -168,14 +174,14 @@ export default function HomeGuestHero() {
                 </div>
               ))}
             </div>
-            <span><strong className="text-orange-400">+2 400</strong> planes generados esta semana</span>
+            <span><strong className="text-orange-400">{t("home.hero.planes")}</strong></span>
           </div>
 
         </div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40">
-          <span className="text-[11px] uppercase tracking-widest text-zinc-500">scroll</span>
+          <span className="text-[11px] uppercase tracking-widest text-zinc-500">{t("home.hero.scroll")}</span>
           <div className="w-px h-8 bg-gradient-to-b from-zinc-500 to-transparent" />
         </div>
       </section>
@@ -183,9 +189,9 @@ export default function HomeGuestHero() {
       {/* ── Bento Grid ── */}
       <section id="bento" className="max-w-5xl mx-auto px-6 py-24">
         <div className="mb-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-orange-400">Funcionalidades</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-orange-400">{t("home.bento.seccion")}</span>
           <h2 className="font-[Space_Grotesk,sans-serif] font-extrabold text-4xl md:text-5xl text-white mt-3 tracking-tight leading-tight">
-            Todo en un solo lugar.
+            {t("home.bento.titulo")}
           </h2>
         </div>
 
@@ -199,42 +205,38 @@ export default function HomeGuestHero() {
                 flex items-center justify-center text-orange-400">
                 <IconDumbbell />
               </span>
-              <span className="font-[Space_Grotesk,sans-serif] font-semibold text-white text-sm">Tu plan semanal</span>
+              <span className="font-[Space_Grotesk,sans-serif] font-semibold text-white text-sm">{t("home.bento.planSemanal")}</span>
             </div>
             <PlanMockup />
           </div>
 
           {/* Card — Adherencia */}
           <div className="bento-card bg-[#0F0F16] border border-white/7 rounded-3xl p-6 flex flex-col justify-between cursor-default">
-            <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Adherencia promedio</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500">{t("home.bento.adherenciaAvg")}</span>
             <div>
               <div className="font-[Space_Grotesk,sans-serif] font-extrabold text-6xl text-gradient-orange leading-none">74%</div>
-              <p className="text-zinc-500 text-sm mt-2">Usuarios que siguen el plan +2 semanas</p>
+              <p className="text-zinc-500 text-sm mt-2">{t("home.bento.adherenciaSub")}</p>
             </div>
           </div>
 
           {/* Card — Setup rápido */}
           <div className="bento-card bg-orange-500 rounded-3xl p-6 flex flex-col justify-between cursor-default">
-            <span className="text-xs font-semibold uppercase tracking-widest text-orange-900/70">Setup</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-orange-900/70">{t("home.bento.setupLabel")}</span>
             <div>
               <div className="font-[Space_Grotesk,sans-serif] font-extrabold text-6xl text-black leading-none">3 min</div>
-              <p className="text-black/60 text-sm mt-2">Para tener tu plan completo listo</p>
+              <p className="text-black/60 text-sm mt-2">{t("home.bento.setupSub")}</p>
             </div>
           </div>
 
           {/* Card — Cómo funciona */}
           <div className="bento-card md:col-span-2 bg-[#0F0F16] border border-white/7 rounded-3xl p-6 cursor-default">
-            <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4 block">El proceso</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4 block">{t("home.bento.proceso")}</span>
             <div className="grid grid-cols-3 gap-4">
-              {[
-                { n: "01", t: "Onboarding", d: "Datos, objetivo y disponibilidad" },
-                { n: "02", t: "Tu plan listo", d: "Rutina + dieta personalizada en segundos" },
-                { n: "03", t: "Seguís", d: "El plan se adapta automáticamente" },
-              ].map(s => (
+              {pasos.map(s => (
                 <div key={s.n} className="flex flex-col gap-2">
                   <span className="font-[Space_Grotesk,sans-serif] font-extrabold text-2xl text-orange-500/50">{s.n}</span>
-                  <span className="font-semibold text-white text-sm">{s.t}</span>
-                  <span className="text-zinc-500 text-xs leading-relaxed">{s.d}</span>
+                  <span className="font-semibold text-white text-sm">{s.titulo}</span>
+                  <span className="text-zinc-500 text-xs leading-relaxed">{s.desc}</span>
                 </div>
               ))}
             </div>
@@ -242,23 +244,19 @@ export default function HomeGuestHero() {
 
           {/* Card — Adaptación */}
           <div className="bento-card bg-[#120E1F] border border-purple-500/15 rounded-3xl p-6 flex flex-col justify-between cursor-default">
-            <span className="text-xs font-semibold uppercase tracking-widest text-purple-400">Se adapta solo</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-purple-400">{t("home.bento.adaptaLabel")}</span>
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <IconSpark />
-                <span className="font-[Space_Grotesk,sans-serif] font-extrabold text-2xl text-white">Auto-ajuste</span>
+                <span className="font-[Space_Grotesk,sans-serif] font-extrabold text-2xl text-white">{t("home.bento.adaptaTitulo")}</span>
               </div>
-              <p className="text-zinc-500 text-sm">Si tu adherencia baja del 50%, el plan se regenera automáticamente</p>
+              <p className="text-zinc-500 text-sm">{t("home.bento.adaptaDesc")}</p>
             </div>
           </div>
 
           {/* Card — Stats */}
           <div className="bento-card md:col-span-2 bg-[#0D0D0D] border border-white/5 rounded-3xl p-6 flex items-center gap-6 cursor-default">
-            {[
-              { val: "7", unit: "días", desc: "Plan completo" },
-              { val: "50%", unit: "umbral", desc: "Regeneración auto" },
-              { val: "100%", unit: "gratis", desc: "Sin tarjeta" },
-            ].map((s, i) => (
+            {stats.map((s, i) => (
               <div key={i} className="flex-1 text-center">
                 <div className="font-[Space_Grotesk,sans-serif] font-extrabold text-3xl text-white">
                   {s.val}<span className="text-orange-400 text-lg ml-0.5">{s.unit}</span>
@@ -277,15 +275,15 @@ export default function HomeGuestHero() {
           style={{ background: "linear-gradient(135deg, #F97316 0%, #A855F7 100%)" }}>
           <div className="relative z-10">
             <h2 className="font-[Space_Grotesk,sans-serif] font-extrabold text-5xl text-white tracking-tight mb-4 leading-tight">
-              ¿Listo para entrenar<br />diferente?
+              {t("home.cta.titulo")}
             </h2>
-            <p className="text-white/70 text-lg mb-8">Sin tarjeta de crédito · Sin compromisos · 3 minutos</p>
+            <p className="text-white/70 text-lg mb-8">{t("home.cta.subtitulo")}</p>
             <button
               onClick={() => navigate("/register")}
               className="inline-flex items-center gap-2 px-10 py-4 bg-black text-white
                 font-bold text-lg rounded-2xl hover:bg-zinc-900 cursor-pointer transition-all duration-200"
             >
-              Empezar gratis <IconArrow />
+              {t("home.cta.btn")} <IconArrow />
             </button>
           </div>
           {/* Decorative circles */}
@@ -296,7 +294,7 @@ export default function HomeGuestHero() {
 
       {/* ── Footer ── */}
       <footer className="border-t border-white/5 py-8 text-center">
-        <p className="text-xs text-zinc-600">© 2025 FitPocket · Todos los derechos reservados</p>
+        <p className="text-xs text-zinc-600">{t("home.footer")}</p>
       </footer>
 
       <AuthModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />

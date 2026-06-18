@@ -1,29 +1,249 @@
 {
-    "onboarding1": {
-      "titulo": "Datos físicos",
-      "subtitulo": "Calculamos tu IMC y personalizamos el plan",
-      "edad": "Edad",
-      "peso": "Peso (kg)",
-      "altura": "Altura (cm)",
-      "sexo": "Sexo",
-      "selecciona": "Seleccioná",
-      "femenino": "Femenino",
-      "masculino": "Masculino",
-      "imcEstimado": "IMC estimado",
-      "ingresaDatos": "Ingresá tus datos",
-      "siguiente": "Siguiente",
-      "errorCampos": "Completá todos los campos para continuar."
+  "cargando": {
+    "pasos": [
+      "Analizando tu perfil físico...",
+      "Calculando carga de entrenamiento...",
+      "Optimizando días y rutinas...",
+      "Ajustando nutrición al presupuesto...",
+      "Finalizando tu plan personalizado..."
+    ]
+  },
+  "dashboard": {
+    "saludo": {
+      "manana": "Buenos días",
+      "tarde":  "Buenas tardes",
+      "noche":  "Buenas noches"
     },
-    "login": {
-      "titulo": "Bienvenido de vuelta",
-      "subtitulo": "Ingresá a tu cuenta para continuar",
-      "email": "Email",
-      "password": "Contraseña",
-      "ingresar": "Ingresar",
-      "ingresando": "Ingresando...",
-      "sinCuenta": "¿No tenés cuenta?",
-      "registrarse": "Registrarse",
-      "errorConexion": "Error de conexión. Intentá más tarde.",
-      "errorCredenciales": "Email o contraseña incorrectos"
+    "hoy":            "hoy",
+    "entrenarHoy":    "Entrenás hoy",
+    "descansoHoy":    "Descanso hoy",
+    "proximaSesion":  "Próxima: {{dia}}",
+    "recuperate":     "Recuperate bien. El cuerpo crece en el descanso.",
+    "racha":          "racha",
+    "kcalHoy":        "kcal hoy",
+    "imc":            "IMC",
+    "verPlan":        "Ver mi plan",
+    "semana":         "Semana",
+    "dietaHoy":       "Dieta de hoy",
+    "desayuno":       "Desayuno",
+    "almuerzo":       "Almuerzo",
+    "merienda":       "Merienda",
+    "cena":           "Cena",
+    "sinPlan":        "Generá tu plan para ver el detalle",
+    "salir":          "Salir",
+    "errorConexion":  "No se pudo cargar tu información. Revisá tu conexión.",
+    "dias": {
+      "lun": "Lun", "mar": "Mar", "mie": "Mié",
+      "jue": "Jue", "vie": "Vie", "sab": "Sáb", "dom": "Dom"
     }
+  },
+  "ejercicios": {
+    "push":    { "muscles": "Pecho · Tríceps · Hombros",             "tip": "Controlá el descenso. Pausa en el pecho antes de empujar." },
+    "pull":    { "muscles": "Espalda · Bíceps · Romboides",          "tip": "Retracción escapular al inicio. Codos cerca del cuerpo." },
+    "legs":    { "muscles": "Cuádriceps · Glúteos · Isquiotibiales", "tip": "Rodillas alineadas con los pies. Espalda recta durante todo el movimiento." },
+    "core":    { "muscles": "Abdomen · Core · Estabilizadores",      "tip": "Cuerpo en línea recta de cabeza a talones. Respiración constante." },
+    "general": { "muscles": "Músculos compuestos",                   "tip": "Técnica primero, peso después. Controlá cada repetición." }
+  },
+  "home": {
+    "entrar":          "Entrar",
+    "empezarGratis":   "Empezar gratis",
+    "verComoFunciona": "Ver cómo funciona",
+    "hero": {
+      "titulo1": "ENTRENÁS",
+      "titulo2": "MEJOR.",
+      "desc":    "Obtené tu rutina y alimentación personalizada según tu cuerpo, objetivos y presupuesto. Tu plan se adapta automáticamente si tu adherencia baja.",
+      "planes":  "+2 400 planes generados esta semana",
+      "scroll":  "scroll"
+    },
+    "bento": {
+      "seccion":      "Funcionalidades",
+      "titulo":       "Todo en un solo lugar.",
+      "planSemanal":  "Tu plan semanal",
+      "mockup": {
+        "semana":          "Semana 1",
+        "hoy":             "Hoy",
+        "adherenciaLabel": "Adherencia",
+        "dias": [
+          { "day": "Lun", "work": "Tren superior",   "dur": "45m" },
+          { "day": "Mar", "work": "Cardio HIIT",     "dur": "30m" },
+          { "day": "Mié", "work": "Descanso activo", "dur": "—"   },
+          { "day": "Jue", "work": "Tren inferior",   "dur": "45m" },
+          { "day": "Vie", "work": "Cardio + Core",   "dur": "40m" }
+        ]
+      },
+      "adherenciaAvg": "Adherencia promedio",
+      "adherenciaSub": "Usuarios que siguen el plan +2 semanas",
+      "setupLabel":    "Setup",
+      "setupSub":      "Para tener tu plan completo listo",
+      "proceso":       "El proceso",
+      "pasos": [
+        { "n": "01", "titulo": "Onboarding",    "desc": "Datos, objetivo y disponibilidad" },
+        { "n": "02", "titulo": "Tu plan listo", "desc": "Rutina + dieta personalizada en segundos" },
+        { "n": "03", "titulo": "Seguís",        "desc": "El plan se adapta automáticamente" }
+      ],
+      "adaptaLabel":  "Se adapta solo",
+      "adaptaTitulo": "Auto-ajuste",
+      "adaptaDesc":   "Si tu adherencia baja del 50%, el plan se regenera automáticamente",
+      "stats": [
+        { "val": "7",    "unit": "días",   "desc": "Plan completo" },
+        { "val": "50%",  "unit": "umbral", "desc": "Regeneración auto" },
+        { "val": "100%", "unit": "gratis", "desc": "Sin tarjeta" }
+      ]
+    },
+    "cta": {
+      "titulo":    "¿Listo para entrenar diferente?",
+      "subtitulo": "Sin tarjeta de crédito · Sin compromisos · 3 minutos",
+      "btn":       "Empezar gratis"
+    },
+    "footer": "© 2025 FitPocket · Todos los derechos reservados"
+  },
+  "authModal": {
+    "ariaLabel":  "Iniciar sesión",
+    "cerrar":     "Cerrar",
+    "titulo":     "Bienvenido de vuelta",
+    "subtitulo":  "Ingresá a tu cuenta para continuar",
+    "email":      "Email",
+    "contrasena": "Contraseña",
+    "placeholder": {
+      "email":      "tu@email.com",
+      "contrasena": "Tu contraseña"
+    },
+    "mostrar":          "Mostrar contraseña",
+    "ocultar":          "Ocultar contraseña",
+    "ingresar":         "Ingresar →",
+    "ingresando":       "Ingresando...",
+    "noTenes":          "¿No tenés cuenta?",
+    "registrarse":      "Registrarse",
+    "errorCredenciales": "Email o contraseña incorrectos",
+    "errorConexion":    "Error de conexión. Intentá más tarde."
+  },
+  "onboarding1": {
+    "titulo":       "Datos físicos",
+    "subtitulo":    "Calculamos tu IMC y personalizamos el plan",
+    "edad":         "Edad",
+    "peso":         "Peso (kg)",
+    "altura":       "Altura (cm)",
+    "sexo":         "Sexo",
+    "selecciona":   "Seleccioná",
+    "femenino":     "Femenino",
+    "masculino":    "Masculino",
+    "imcEstimado":  "IMC estimado",
+    "ingresaDatos": "Ingresá tus datos",
+    "siguiente":    "Siguiente",
+    "errorCampos":  "Completá todos los campos para continuar."
+  },
+  "register": {
+    "volver":      "Volver al inicio",
+    "titulo":      "Crear cuenta",
+    "subtitulo":   "Empezá gratis. Sin tarjeta de crédito.",
+    "nombre":      "Nombre",
+    "email":       "Email",
+    "contrasena":  "Contraseña",
+    "placeholder": {
+      "nombre":     "Tu nombre",
+      "contrasena": "Mínimo 8 caracteres"
+    },
+    "fuerza": {
+      "muyDebil":  "Muy débil",
+      "debil":     "Débil",
+      "media":     "Media",
+      "fuerte":    "Fuerte",
+      "muyFuerte": "Muy fuerte"
+    },
+    "mostrar":       "Mostrar",
+    "ocultar":       "Ocultar",
+    "crear":         "Crear cuenta y continuar →",
+    "creando":       "Creando cuenta...",
+    "terminos":      "Al registrarte aceptás los",
+    "terminosLink":  "términos de uso",
+    "yaTenes":       "¿Ya tenés cuenta?",
+    "iniciarSesion": "Iniciá sesión",
+    "errorRegistro": "Error en el registro",
+    "errorConexion": "Error de conexión. Intentá más tarde."
+  },
+  "ob2": {
+    "titulo":        "¿Qué querés lograr?",
+    "subtitulo":     "Tu plan se construye alrededor de este objetivo",
+    "nivelLabel":    "Nivel de experiencia",
+    "anterior":      "Anterior",
+    "siguiente":     "Siguiente",
+    "errorObjetivo": "Seleccioná un objetivo para continuar.",
+    "obj": {
+      "perderGrasa":  { "titulo": "Perder grasa",    "sub": "Déficit calórico + cardio progresivo" },
+      "ganarMusculo": { "titulo": "Ganar músculo",   "sub": "Superávit calórico + entrenamiento de fuerza" },
+      "resistencia":  { "titulo": "Resistencia",     "sub": "Cardio progresivo y zona aeróbica" },
+      "saludGeneral": { "titulo": "Salud general",   "sub": "Balance entre fuerza, cardio y bienestar" }
+    },
+    "nivel": {
+      "principiante": "Principiante",
+      "intermedio":   "Intermedio",
+      "avanzado":     "Avanzado"
+    }
+  },
+  "ob3": {
+    "titulo":            "Contanos tu rutina",
+    "subtitulo":         "Adaptamos el plan a tus tiempos y preferencias",
+    "diasLabel":         "Días disponibles",
+    "minutosLabel":      "Minutos por sesión",
+    "dietaLabel":        "Tipo de dieta",
+    "presupuestoLabel":  "Presupuesto mensual",
+    "opcional":          "(opcional)",
+    "presupuestoPrefix": "ARS $",
+    "diasSeleccionado_one":   "{{count}} día seleccionado",
+    "diasSeleccionado_other": "{{count}} días seleccionados",
+    "dias": {
+      "lunes":     "Lun",
+      "martes":    "Mar",
+      "miercoles": "Mié",
+      "jueves":    "Jue",
+      "viernes":   "Vie",
+      "sabado":    "Sáb",
+      "domingo":   "Dom"
+    },
+    "dieta": {
+      "normal":      "Sin restricción",
+      "vegetariano": "Vegetariano",
+      "vegano":      "Vegano",
+      "sinGluten":   "Sin gluten"
+    },
+    "anterior":  "Anterior",
+    "siguiente": "Siguiente",
+    "errorDias": "Seleccioná al menos un día disponible."
+  },
+  "ob4": {
+    "titulo":           "¿Algo que debamos saber?",
+    "subtitulo":        "Evitamos ejercicios que puedan causarte molestias",
+    "limitLabel":       "Limitaciones físicas",
+    "aclarLabel":       "Aclaración adicional",
+    "opcional":         "(opcional)",
+    "aclarPlaceholder": "Ej: operé la rodilla derecha en 2022, puedo caminar pero no correr...",
+    "todo":             "Todo listo.",
+    "planTiempo":       "Tu plan se generará en 8–20 segundos.",
+    "anterior":         "Anterior",
+    "generando":        "Generando...",
+    "generar":          "Generar mi plan",
+    "limit": {
+      "lumbar":       "Dolor lumbar",
+      "rodilla":      "Rodilla operada",
+      "hombro":       "Hombro",
+      "asma":         "Asma",
+      "hipertension": "Hipertensión",
+      "ninguna":      "Ninguna"
+    },
+    "errorGuardar":  "No pudimos guardar tu perfil. Intentá de nuevo.",
+    "errorConexion": "No hay conexión con el servidor. Revisá tu conexión e intentá de nuevo."
+  },
+  "login": {
+    "titulo":            "Bienvenido de vuelta",
+    "subtitulo":         "Ingresá a tu cuenta para continuar",
+    "email":             "Email",
+    "password":          "Contraseña",
+    "ingresar":          "Ingresar",
+    "ingresando":        "Ingresando...",
+    "olvidaste":         "¿Olvidaste tu contraseña?",
+    "sinCuenta":         "¿No tenés cuenta?",
+    "registrarse":       "Registrarse",
+    "errorConexion":     "Error de conexión. Intentá más tarde.",
+    "errorCredenciales": "Email o contraseña incorrectos"
   }
+}

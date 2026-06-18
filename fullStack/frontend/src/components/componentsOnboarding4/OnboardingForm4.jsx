@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./OnboardingForm4.css";
 
 const IconArrowLeft = () => (
@@ -26,16 +27,17 @@ const IconShield = () => (
 );
 
 const LIMITACIONES = [
-  { id: "lumbar",       label: "Dolor lumbar" },
-  { id: "rodilla",      label: "Rodilla operada" },
-  { id: "hombro",       label: "Hombro" },
-  { id: "asma",         label: "Asma" },
-  { id: "hipertension", label: "Hipertensión" },
-  { id: "ninguna",      label: "Ninguna" },
+  { id: "lumbar",       tKey: "ob4.limit.lumbar"       },
+  { id: "rodilla",      tKey: "ob4.limit.rodilla"      },
+  { id: "hombro",       tKey: "ob4.limit.hombro"       },
+  { id: "asma",         tKey: "ob4.limit.asma"         },
+  { id: "hipertension", tKey: "ob4.limit.hipertension" },
+  { id: "ninguna",      tKey: "ob4.limit.ninguna"      },
 ];
 
 export default function OnboardingForm4() {
   const navigate = useNavigate();
+  const { t }    = useTranslation();
   const [limitaciones, setLimitaciones] = useState([]);
   const [aclaracion,   setAclaracion]   = useState("");
   const [loading,      setLoading]      = useState(false);
@@ -77,13 +79,13 @@ export default function OnboardingForm4() {
         body:    JSON.stringify(perfil),
       });
       const data = await res.json();
-      if (!res.ok) { setApiError(data.error || "No pudimos guardar tu perfil. Intentá de nuevo."); return; }
+      if (!res.ok) { setApiError(data.error || t("ob4.errorGuardar")); return; }
       localStorage.removeItem("ob_paso1");
       localStorage.removeItem("ob_paso2");
       localStorage.removeItem("ob_paso3");
       navigate("/cargando-plan");
     } catch {
-      setApiError("No hay conexión con el servidor. Revisá tu conexión e intentá de nuevo.");
+      setApiError(t("ob4.errorConexion"));
     } finally {
       setLoading(false);
     }
@@ -92,13 +94,13 @@ export default function OnboardingForm4() {
   return (
     <div className="ob4-card">
       <div>
-        <h1 className="ob4-title">¿Algo que debamos saber?</h1>
-        <p className="ob4-subtitle">Evitamos ejercicios que puedan causarte molestias</p>
+        <h1 className="ob4-title">{t("ob4.titulo")}</h1>
+        <p className="ob4-subtitle">{t("ob4.subtitulo")}</p>
       </div>
 
       {/* Chips limitaciones */}
       <div className="ob4-section">
-        <span className="ob4-label">Limitaciones físicas</span>
+        <span className="ob4-label">{t("ob4.limitLabel")}</span>
         <div className="ob4-chips-row">
           {LIMITACIONES.map(lim => (
             <button
@@ -110,7 +112,7 @@ export default function OnboardingForm4() {
               {limitaciones.includes(lim.id) && lim.id !== "ninguna" && (
                 <span className="ob4-chip__check"><IconCheck /></span>
               )}
-              {lim.label}
+              {t(lim.tKey)}
             </button>
           ))}
         </div>
@@ -119,12 +121,12 @@ export default function OnboardingForm4() {
       {/* Aclaración adicional */}
       <div className="ob4-section">
         <label className="ob4-label" htmlFor="ob4-aclaracion">
-          Aclaración adicional <span className="ob4-label-opt">(opcional)</span>
+          {t("ob4.aclarLabel")} <span className="ob4-label-opt">{t("ob4.opcional")}</span>
         </label>
         <textarea
           id="ob4-aclaracion"
           className="ob4-textarea"
-          placeholder="Ej: operé la rodilla derecha en 2022, puedo caminar pero no correr..."
+          placeholder={t("ob4.aclarPlaceholder")}
           value={aclaracion}
           onChange={e => setAclaracion(e.target.value)}
           rows={3}
@@ -141,15 +143,15 @@ export default function OnboardingForm4() {
           <IconShield />
         </div>
         <div>
-          <p className="ob4-confirm-card__title">Todo listo.</p>
-          <p className="ob4-confirm-card__sub">Tu plan se generará en 8–20 segundos.</p>
+          <p className="ob4-confirm-card__title">{t("ob4.todo")}</p>
+          <p className="ob4-confirm-card__sub">{t("ob4.planTiempo")}</p>
         </div>
       </div>
 
       {apiError && <p className="ob4-api-error" role="alert">{apiError}</p>}
       <div className="ob4-actions">
         <button type="button" className="ob4-btn-back" onClick={() => navigate("/onboarding/3")}>
-          <IconArrowLeft /> Anterior
+          <IconArrowLeft /> {t("ob4.anterior")}
         </button>
         <button
           type="button"
@@ -159,11 +161,11 @@ export default function OnboardingForm4() {
         >
           {loading ? (
             <>
-              <span className="ob4-spinner" /> Generando...
+              <span className="ob4-spinner" /> {t("ob4.generando")}
             </>
           ) : (
             <>
-              <IconSparkle /> Generar mi plan
+              <IconSparkle /> {t("ob4.generar")}
             </>
           )}
         </button>

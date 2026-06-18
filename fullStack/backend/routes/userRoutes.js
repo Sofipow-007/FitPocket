@@ -11,4 +11,7 @@ router.delete('/borrar', auth, roles('admin'), userControl.borrarPerfil)
 //ruta del onboarding
 router.post('/onboarding', auth, userControl.completarOnboarding)
 
+// solo admin: verifica integridad de la base de datos mediante DVV
+router.get('/verificar-integridad', auth, roles('admin'), userControl.verificarIntegridad)
+
 module.exports = router;

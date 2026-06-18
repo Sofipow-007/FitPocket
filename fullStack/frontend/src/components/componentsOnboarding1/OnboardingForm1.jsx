@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./OnboardingForm1.css";
 
 const IconArrow = () => (
@@ -17,6 +18,7 @@ function getIMCCategory(imc) {
 
 export default function OnboardingForm1() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [edad,   setEdad]   = useState("");
   const [peso,   setPeso]   = useState("");
   const [altura, setAltura] = useState("");
@@ -38,7 +40,7 @@ export default function OnboardingForm1() {
 
   const handleSiguiente = () => {
     if (!edad || !peso || !altura || !sexo) {
-      setError("Completá todos los campos para continuar.");
+      setError(t("onboarding1.errorCampos"));
       return;
     }
     setError("");
@@ -54,14 +56,14 @@ export default function OnboardingForm1() {
   return (
     <div className="ob1-card">
       <div className="ob1-header">
-        <h1 className="ob1-header__title">Datos físicos</h1>
-        <p className="ob1-header__subtitle">Calculamos tu IMC y personalizamos el plan</p>
+        <h1 className="ob1-header__title">{t("onboarding1.titulo")}</h1>
+        <p className="ob1-header__subtitle">{t("onboarding1.subtitulo")}</p>
       </div>
 
       <div className="ob1-form">
         <div className="ob1-row3">
           <div className="ob1-field">
-            <label className="ob1-label" htmlFor="ob1-edad">Edad</label>
+            <label className="ob1-label" htmlFor="ob1-edad">{t("onboarding1.edad")}</label>
             <input
               id="ob1-edad"
               type="number"
@@ -73,7 +75,7 @@ export default function OnboardingForm1() {
             />
           </div>
           <div className="ob1-field">
-            <label className="ob1-label" htmlFor="ob1-peso">Peso (kg)</label>
+            <label className="ob1-label" htmlFor="ob1-peso">{t("onboarding1.peso")}</label>
             <input
               id="ob1-peso"
               type="number"
@@ -85,7 +87,7 @@ export default function OnboardingForm1() {
             />
           </div>
           <div className="ob1-field">
-            <label className="ob1-label" htmlFor="ob1-altura">Altura (cm)</label>
+            <label className="ob1-label" htmlFor="ob1-altura">{t("onboarding1.altura")}</label>
             <input
               id="ob1-altura"
               type="number"
@@ -100,26 +102,26 @@ export default function OnboardingForm1() {
 
         <div className="ob1-row2">
           <div className="ob1-field">
-            <label className="ob1-label" htmlFor="ob1-sexo">Sexo</label>
+            <label className="ob1-label" htmlFor="ob1-sexo">{t("onboarding1.sexo")}</label>
             <select
               id="ob1-sexo"
               className="ob1-select"
               value={sexo}
               onChange={e => setSexo(e.target.value)}
             >
-              <option value="">Seleccioná</option>
-              <option value="femenino">Femenino</option>
-              <option value="masculino">Masculino</option>
+              <option value="">{t("onboarding1.selecciona")}</option>
+              <option value="femenino">{t("onboarding1.femenino")}</option>
+              <option value="masculino">{t("onboarding1.masculino")}</option>
             </select>
           </div>
 
           <div className={`ob1-imc${!imc ? " ob1-imc--empty" : ""}`}>
-            <span className="ob1-imc__label">IMC estimado</span>
+            <span className="ob1-imc__label">{t("onboarding1.imcEstimado")}</span>
             <span className="ob1-imc__val" style={{ color: categoria?.color ?? "var(--ink4)" }}>
               {imc ?? "—"}
             </span>
             <span className="ob1-imc__cat" style={{ color: categoria?.color ?? "var(--ink4)" }}>
-              {categoria?.label ?? "Ingresá tus datos"}
+              {categoria?.label ?? t("onboarding1.ingresaDatos")}
             </span>
           </div>
         </div>
@@ -127,7 +129,7 @@ export default function OnboardingForm1() {
         {error && <p className="ob1-error" role="alert">{error}</p>}
         <div className="ob1-actions">
           <button type="button" className="ob1-btn-next" onClick={handleSiguiente}>
-            Siguiente <IconArrow />
+            {t("onboarding1.siguiente")} <IconArrow />
           </button>
         </div>
       </div>

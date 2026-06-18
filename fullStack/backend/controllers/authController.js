@@ -1,54 +1,57 @@
-// ---------- Archivo con las funciones register y login (autorizacion) ----------
-
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { calcularDVH } = require('../utils/digitosVerificadores');
+const { encrypt, decrypt } = require('../utils/crypto');
 
 // POST /auth/register
 exports.register = async (req, res) => {
     try {
         const { nombre, email, password } = req.body;
 
-        // Validar si el usuario ya existe
         let user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({ msg: 'El usuario ya existe' });
         }
 
-        // Hashear contraseña 
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
-        // Crear documento en usuarios
+        // DVH calculado sobre valores en texto plano antes de encriptar
+        const rol = 'usuario';
+        const dvh = calcularDVH([email, nombre, rol]);
+
         user = new User({
-            nombre,
+            nombre: encrypt(nombre),   // nombre encriptado en BD
             email,
             passwordHash,
-            perfil: {}
+            rol,
+            perfil: {},
+            dvh,
         });
 
-        user.dvh = calcularDVH([user.email, user.nombre, user.rol]);
         await user.save();
 
-        // Generar JWT
         const payload = { userId: user._id, rol: user.rol };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-        res.status(201).json({ token, user: { _id: user._id, nombre: user.nombre, email: user.email } });
+        // Responder con nombre en texto plano
+        res.status(201).json({
+            token,
+            user: { _id: user._id, nombre, email },
+        });
     } catch (error) {
         console.error(error.message);
         res.status(500).send('Error en el servidor');
     }
 };
 
-// POST /auth/login 
+// POST /auth/login
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Validar credenciales 
-        let user = await User.findOne({ email });
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ msg: 'Credenciales inválidas' });
         }
@@ -58,16 +61,16 @@ exports.login = async (req, res) => {
             return res.status(400).json({ msg: 'Credenciales inválidas' });
         }
 
-        // Devolver JWT
         const payload = { userId: user._id, rol: user.rol };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-        res.json({ 
-            token, user: { 
+        res.json({
+            token,
+            user: {
                 _id: user._id,
-                nombre: user.nombre,
-                email: user.email
-            }
+                nombre: decrypt(user.nombre),  // desencriptar al devolver
+                email: user.email,
+            },
         });
     } catch (error) {
         console.error(error.message);

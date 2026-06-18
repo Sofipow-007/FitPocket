@@ -1,29 +1,249 @@
 {
-    "onboarding1": {
-      "titulo": "Physical data",
-      "subtitulo": "We calculate your BMI and personalize your plan",
-      "edad": "Age",
-      "peso": "Weight (kg)",
-      "altura": "Height (cm)",
-      "sexo": "Sex",
-      "selecciona": "Select",
-      "femenino": "Female",
-      "masculino": "Male",
-      "imcEstimado": "Estimated BMI",
-      "ingresaDatos": "Enter your data",
-      "siguiente": "Next",
-      "errorCampos": "Complete all fields to continue."
+  "cargando": {
+    "pasos": [
+      "Analyzing your physical profile...",
+      "Calculating training load...",
+      "Optimizing days and routines...",
+      "Adjusting nutrition to your budget...",
+      "Finalizing your personalized plan..."
+    ]
+  },
+  "dashboard": {
+    "saludo": {
+      "manana": "Good morning",
+      "tarde":  "Good afternoon",
+      "noche":  "Good evening"
     },
-    "login": {
-      "titulo": "Welcome back",
-      "subtitulo": "Sign in to your account to continue",
-      "email": "Email",
-      "password": "Password",
-      "ingresar": "Sign in",
-      "ingresando": "Signing in...",
-      "sinCuenta": "Don't have an account?",
-      "registrarse": "Sign up",
-      "errorConexion": "Connection error. Try again later.",
-      "errorCredenciales": "Invalid email or password"
+    "hoy":            "today",
+    "entrenarHoy":    "Training today",
+    "descansoHoy":    "Rest day",
+    "proximaSesion":  "Next: {{dia}}",
+    "recuperate":     "Rest well. The body grows during recovery.",
+    "racha":          "streak",
+    "kcalHoy":        "kcal today",
+    "imc":            "BMI",
+    "verPlan":        "View my plan",
+    "semana":         "Week",
+    "dietaHoy":       "Today's diet",
+    "desayuno":       "Breakfast",
+    "almuerzo":       "Lunch",
+    "merienda":       "Snack",
+    "cena":           "Dinner",
+    "sinPlan":        "Generate your plan to see the details",
+    "salir":          "Log out",
+    "errorConexion":  "Could not load your information. Check your connection.",
+    "dias": {
+      "lun": "Mon", "mar": "Tue", "mie": "Wed",
+      "jue": "Thu", "vie": "Fri", "sab": "Sat", "dom": "Sun"
     }
+  },
+  "ejercicios": {
+    "push":    { "muscles": "Chest · Triceps · Shoulders",      "tip": "Control the descent. Pause at the chest before pushing." },
+    "pull":    { "muscles": "Back · Biceps · Rhomboids",        "tip": "Scapular retraction at the start. Keep elbows close." },
+    "legs":    { "muscles": "Quadriceps · Glutes · Hamstrings", "tip": "Knees aligned with feet. Keep back straight throughout." },
+    "core":    { "muscles": "Abs · Core · Stabilizers",        "tip": "Body in a straight line from head to heels. Constant breathing." },
+    "general": { "muscles": "Compound muscles",                 "tip": "Technique first, then weight. Control each repetition." }
+  },
+  "home": {
+    "entrar":          "Sign in",
+    "empezarGratis":   "Start free",
+    "verComoFunciona": "See how it works",
+    "hero": {
+      "titulo1": "TRAIN",
+      "titulo2": "BETTER.",
+      "desc":    "Get your personalized routine and nutrition plan based on your body, goals and budget. Your plan automatically adapts if your adherence drops.",
+      "planes":  "+2 400 plans generated this week",
+      "scroll":  "scroll"
+    },
+    "bento": {
+      "seccion":     "Features",
+      "titulo":      "Everything in one place.",
+      "planSemanal": "Your weekly plan",
+      "mockup": {
+        "semana":          "Week 1",
+        "hoy":             "Today",
+        "adherenciaLabel": "Adherence",
+        "dias": [
+          { "day": "Mon", "work": "Upper body",      "dur": "45m" },
+          { "day": "Tue", "work": "HIIT Cardio",     "dur": "30m" },
+          { "day": "Wed", "work": "Active recovery", "dur": "—"   },
+          { "day": "Thu", "work": "Lower body",      "dur": "45m" },
+          { "day": "Fri", "work": "Cardio + Core",   "dur": "40m" }
+        ]
+      },
+      "adherenciaAvg": "Average adherence",
+      "adherenciaSub": "Users who follow the plan for 2+ weeks",
+      "setupLabel":    "Setup",
+      "setupSub":      "To have your complete plan ready",
+      "proceso":       "The process",
+      "pasos": [
+        { "n": "01", "titulo": "Onboarding",       "desc": "Data, goal and availability" },
+        { "n": "02", "titulo": "Your plan ready",  "desc": "Personalized routine + diet in seconds" },
+        { "n": "03", "titulo": "Keep going",       "desc": "The plan adapts automatically" }
+      ],
+      "adaptaLabel":  "Adapts on its own",
+      "adaptaTitulo": "Auto-adjust",
+      "adaptaDesc":   "If your adherence drops below 50%, the plan is automatically regenerated",
+      "stats": [
+        { "val": "7",    "unit": "days",      "desc": "Complete plan" },
+        { "val": "50%",  "unit": "threshold", "desc": "Auto-regeneration" },
+        { "val": "100%", "unit": "free",      "desc": "No credit card" }
+      ]
+    },
+    "cta": {
+      "titulo":    "Ready to train differently?",
+      "subtitulo": "No credit card · No commitments · 3 minutes",
+      "btn":       "Start free"
+    },
+    "footer": "© 2025 FitPocket · All rights reserved"
+  },
+  "authModal": {
+    "ariaLabel":  "Sign in",
+    "cerrar":     "Close",
+    "titulo":     "Welcome back",
+    "subtitulo":  "Sign in to your account to continue",
+    "email":      "Email",
+    "contrasena": "Password",
+    "placeholder": {
+      "email":      "you@email.com",
+      "contrasena": "Your password"
+    },
+    "mostrar":           "Show password",
+    "ocultar":           "Hide password",
+    "ingresar":          "Sign in →",
+    "ingresando":        "Signing in...",
+    "noTenes":           "Don't have an account?",
+    "registrarse":       "Sign up",
+    "errorCredenciales": "Invalid email or password",
+    "errorConexion":     "Connection error. Try again later."
+  },
+  "onboarding1": {
+    "titulo":       "Physical data",
+    "subtitulo":    "We calculate your BMI and personalize your plan",
+    "edad":         "Age",
+    "peso":         "Weight (kg)",
+    "altura":       "Height (cm)",
+    "sexo":         "Sex",
+    "selecciona":   "Select",
+    "femenino":     "Female",
+    "masculino":    "Male",
+    "imcEstimado":  "Estimated BMI",
+    "ingresaDatos": "Enter your data",
+    "siguiente":    "Next",
+    "errorCampos":  "Complete all fields to continue."
+  },
+  "register": {
+    "volver":      "Back to home",
+    "titulo":      "Create account",
+    "subtitulo":   "Start free. No credit card required.",
+    "nombre":      "Name",
+    "email":       "Email",
+    "contrasena":  "Password",
+    "placeholder": {
+      "nombre":     "Your name",
+      "contrasena": "Minimum 8 characters"
+    },
+    "fuerza": {
+      "muyDebil":  "Very weak",
+      "debil":     "Weak",
+      "media":     "Fair",
+      "fuerte":    "Strong",
+      "muyFuerte": "Very strong"
+    },
+    "mostrar":       "Show",
+    "ocultar":       "Hide",
+    "crear":         "Create account and continue →",
+    "creando":       "Creating account...",
+    "terminos":      "By signing up you accept the",
+    "terminosLink":  "terms of use",
+    "yaTenes":       "Already have an account?",
+    "iniciarSesion": "Sign in",
+    "errorRegistro": "Registration error",
+    "errorConexion": "Connection error. Try again later."
+  },
+  "ob2": {
+    "titulo":        "What do you want to achieve?",
+    "subtitulo":     "Your plan is built around this goal",
+    "nivelLabel":    "Experience level",
+    "anterior":      "Back",
+    "siguiente":     "Next",
+    "errorObjetivo": "Select a goal to continue.",
+    "obj": {
+      "perderGrasa":  { "titulo": "Lose fat",       "sub": "Caloric deficit + progressive cardio" },
+      "ganarMusculo": { "titulo": "Build muscle",   "sub": "Caloric surplus + strength training" },
+      "resistencia":  { "titulo": "Endurance",      "sub": "Progressive cardio and aerobic zone" },
+      "saludGeneral": { "titulo": "General health", "sub": "Balance of strength, cardio and wellness" }
+    },
+    "nivel": {
+      "principiante": "Beginner",
+      "intermedio":   "Intermediate",
+      "avanzado":     "Advanced"
+    }
+  },
+  "ob3": {
+    "titulo":            "Tell us your routine",
+    "subtitulo":         "We adapt the plan to your schedule and preferences",
+    "diasLabel":         "Available days",
+    "minutosLabel":      "Minutes per session",
+    "dietaLabel":        "Diet type",
+    "presupuestoLabel":  "Monthly budget",
+    "opcional":          "(optional)",
+    "presupuestoPrefix": "ARS $",
+    "diasSeleccionado_one":   "{{count}} day selected",
+    "diasSeleccionado_other": "{{count}} days selected",
+    "dias": {
+      "lunes":     "Mon",
+      "martes":    "Tue",
+      "miercoles": "Wed",
+      "jueves":    "Thu",
+      "viernes":   "Fri",
+      "sabado":    "Sat",
+      "domingo":   "Sun"
+    },
+    "dieta": {
+      "normal":      "No restriction",
+      "vegetariano": "Vegetarian",
+      "vegano":      "Vegan",
+      "sinGluten":   "Gluten-free"
+    },
+    "anterior":  "Back",
+    "siguiente": "Next",
+    "errorDias": "Select at least one available day."
+  },
+  "ob4": {
+    "titulo":           "Anything we should know?",
+    "subtitulo":        "We avoid exercises that may cause you discomfort",
+    "limitLabel":       "Physical limitations",
+    "aclarLabel":       "Additional notes",
+    "opcional":         "(optional)",
+    "aclarPlaceholder": "E.g. I had surgery on my right knee in 2022, I can walk but not run...",
+    "todo":             "All set.",
+    "planTiempo":       "Your plan will be generated in 8–20 seconds.",
+    "anterior":         "Back",
+    "generando":        "Generating...",
+    "generar":          "Generate my plan",
+    "limit": {
+      "lumbar":       "Lower back pain",
+      "rodilla":      "Knee surgery",
+      "hombro":       "Shoulder",
+      "asma":         "Asthma",
+      "hipertension": "Hypertension",
+      "ninguna":      "None"
+    },
+    "errorGuardar":  "We couldn't save your profile. Please try again.",
+    "errorConexion": "No connection to the server. Check your connection and try again."
+  },
+  "login": {
+    "titulo":            "Welcome back",
+    "subtitulo":         "Sign in to your account to continue",
+    "email":             "Email",
+    "password":          "Password",
+    "ingresar":          "Sign in",
+    "ingresando":        "Signing in...",
+    "olvidaste":         "Forgot your password?",
+    "sinCuenta":         "Don't have an account?",
+    "registrarse":       "Sign up",
+    "errorConexion":     "Connection error. Try again later.",
+    "errorCredenciales": "Invalid email or password"
   }
+}

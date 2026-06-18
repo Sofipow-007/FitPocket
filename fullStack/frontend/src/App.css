@@ -1,3 +1,40 @@
+/* Global lang toggle — visible on all non-dashboard pages */
+.g-lang {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  background: rgba(6, 6, 14, 0.7);
+}
+
+.g-lang__btn {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 150ms, background 150ms;
+}
+
+.g-lang__btn--on {
+  color: #00E887;
+  background: rgba(0, 232, 135, 0.12);
+}
+
+.g-lang__btn:hover:not(.g-lang__btn--on) {
+  color: rgba(255, 255, 255, 0.85);
+}
+
 .App {
   display: flex;
   flex-direction: column;

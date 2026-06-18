@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./OnboardingForm2.css";
 
 /* ── SVG Icons ─────────────────────────────────────────────────── */
@@ -40,27 +41,28 @@ const IconArrowRight = () => (
 );
 
 const OBJETIVOS = [
-  { id: "perder grasa",      icon: <IconFlame />,    titulo: "Perder grasa",    subtitulo: "Déficit calórico + cardio progresivo" },
-  { id: "ganar músculo",    icon: <IconDumbbell />, titulo: "Ganar músculo",   subtitulo: "Superávit calórico + entrenamiento de fuerza" },
-  { id: "resistencia",icon: <IconBolt />,     titulo: "Resistencia",     subtitulo: "Cardio progresivo y zona aeróbica" },
-  { id: "salud general",      icon: <IconHeart />,    titulo: "Salud general",   subtitulo: "Balance entre fuerza, cardio y bienestar" },
+  { id: "perder grasa",  tKey: "ob2.obj.perderGrasa",  icon: <IconFlame />    },
+  { id: "ganar músculo", tKey: "ob2.obj.ganarMusculo", icon: <IconDumbbell /> },
+  { id: "resistencia",   tKey: "ob2.obj.resistencia",  icon: <IconBolt />     },
+  { id: "salud general", tKey: "ob2.obj.saludGeneral", icon: <IconHeart />    },
 ];
 
 const NIVELES = [
-  { id: "principiante", label: "Principiante" },
-  { id: "intermedio",   label: "Intermedio" },
-  { id: "avanzado",     label: "Avanzado" },
+  { id: "principiante", tKey: "ob2.nivel.principiante" },
+  { id: "intermedio",   tKey: "ob2.nivel.intermedio"   },
+  { id: "avanzado",     tKey: "ob2.nivel.avanzado"     },
 ];
 
 export default function OnboardingForm2() {
-  const navigate = useNavigate();
+  const navigate    = useNavigate();
+  const { t }       = useTranslation();
   const [objetivo, setObjetivo] = useState(null);
   const [nivel,    setNivel]    = useState("principiante");
 
   const [error, setError] = useState("");
 
   const handleSiguiente = () => {
-    if (!objetivo) { setError("Seleccioná un objetivo para continuar."); return; }
+    if (!objetivo) { setError(t("ob2.errorObjetivo")); return; }
     setError("");
     localStorage.setItem("ob_paso2", JSON.stringify({ objetivo, nivel }));
     navigate("/onboarding/3");
@@ -69,8 +71,8 @@ export default function OnboardingForm2() {
   return (
     <div className="ob2-card">
       <div>
-        <h1 className="ob2-header__title">¿Qué querés lograr?</h1>
-        <p className="ob2-header__subtitle">Tu plan se construye alrededor de este objetivo</p>
+        <h1 className="ob2-header__title">{t("ob2.titulo")}</h1>
+        <p className="ob2-header__subtitle">{t("ob2.subtitulo")}</p>
       </div>
 
       <div className="ob2-grid">
@@ -85,14 +87,14 @@ export default function OnboardingForm2() {
             {objetivo === obj.id && (
               <span className="ob2-obj-card__check"><IconCheck /></span>
             )}
-            <span className="ob2-obj-card__title">{obj.titulo}</span>
-            <span className="ob2-obj-card__sub">{obj.subtitulo}</span>
+            <span className="ob2-obj-card__title">{t(`${obj.tKey}.titulo`)}</span>
+            <span className="ob2-obj-card__sub">{t(`${obj.tKey}.sub`)}</span>
           </button>
         ))}
       </div>
 
       <div className="ob2-nivel">
-        <span className="ob2-nivel__label">Nivel de experiencia</span>
+        <span className="ob2-nivel__label">{t("ob2.nivelLabel")}</span>
         <div className="ob2-chips">
           {NIVELES.map(n => (
             <button
@@ -101,7 +103,7 @@ export default function OnboardingForm2() {
               className={`ob2-chip${nivel === n.id ? " ob2-chip--selected" : ""}`}
               onClick={() => setNivel(n.id)}
             >
-              {n.label}
+              {t(n.tKey)}
             </button>
           ))}
         </div>
@@ -110,14 +112,14 @@ export default function OnboardingForm2() {
       {error && <p className="ob2-error" role="alert">{error}</p>}
       <div className="ob2-actions">
         <button type="button" className="ob2-btn-back" onClick={() => navigate("/onboarding")}>
-          <IconArrowLeft /> Anterior
+          <IconArrowLeft /> {t("ob2.anterior")}
         </button>
         <button
           type="button"
           className="ob2-btn-next"
           onClick={handleSiguiente}
         >
-          Siguiente <IconArrowRight />
+          {t("ob2.siguiente")} <IconArrowRight />
         </button>
       </div>
     </div>

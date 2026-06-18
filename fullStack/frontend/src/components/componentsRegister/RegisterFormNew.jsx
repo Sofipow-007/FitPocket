@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./RegisterFormNew.css";
 
 /* ── Icons ─────────────────────────────────────────────────────── */
@@ -31,28 +32,30 @@ const IconArrow = () => (
 );
 
 /* ── Password strength ─────────────────────────────────────────── */
+const FUERZA_KEYS = [
+  null,
+  { key: "register.fuerza.muyDebil",  color: "#EF4444" },
+  { key: "register.fuerza.debil",     color: "#F97316" },
+  { key: "register.fuerza.media",     color: "#EAB308" },
+  { key: "register.fuerza.fuerte",    color: "#3B82F6" },
+  { key: "register.fuerza.muyFuerte", color: "#22C55E" },
+];
+
 function getStrength(pwd) {
-  if (!pwd) return { score: 0, label: "", color: "" };
+  if (!pwd) return { score: 0, key: "", color: "" };
   let s = 0;
   if (pwd.length >= 8)          s++;
   if (pwd.length >= 12)         s++;
   if (/[A-Z]/.test(pwd))        s++;
   if (/[0-9]/.test(pwd))        s++;
   if (/[^A-Za-z0-9]/.test(pwd)) s++;
-  const levels = [
-    null,
-    { label: "Muy débil",  color: "#EF4444" },
-    { label: "Débil",     color: "#F97316" },
-    { label: "Media",     color: "#EAB308" },
-    { label: "Fuerte",    color: "#3B82F6" },
-    { label: "Muy fuerte",color: "#22C55E" },
-  ];
-  return { score: s, ...levels[s] };
+  return { score: s, ...FUERZA_KEYS[s] };
 }
 
 /* ── Main ──────────────────────────────────────────────────────── */
 export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboarding }) {
   const navigate = useNavigate();
+  const { t }    = useTranslation();
   const [nombre,       setNombre]       = useState("");
   const [email,        setEmail]        = useState("");
   const [password,     setPassword]     = useState("");
@@ -72,11 +75,11 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
         body: JSON.stringify({ nombre, email, password }),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.msg || "Error en el registro"); return; }
+      if (!res.ok) { setError(data.msg || t("register.errorRegistro")); return; }
       localStorage.setItem("token", data.token);
       navigate("/onboarding");
     } catch {
-      setError("Error de conexión. Intentá más tarde.");
+      setError(t("register.errorConexion"));
     } finally {
       setLoading(false);
     }
@@ -92,7 +95,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
         onClick={() => onLogoClick?.() ?? navigate("/")}
         className="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-orange-400 transition-colors mb-6 cursor-pointer"
       >
-        <IconArrowLeft /> Volver al inicio
+        <IconArrowLeft /> {t("register.volver")}
       </button>
 
       {/* Card */}
@@ -105,24 +108,24 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
         </div>
 
         <h1 className="font-[Space_Grotesk,sans-serif] font-extrabold text-[1.75rem] text-white tracking-tight mb-1">
-          Crear cuenta
+          {t("register.titulo")}
         </h1>
-        <p className="text-sm text-zinc-500 mb-7">Empezá gratis. Sin tarjeta de crédito.</p>
+        <p className="text-sm text-zinc-500 mb-7">{t("register.subtitulo")}</p>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
           <div className="flex flex-col gap-1.5">
             <label htmlFor="reg-nombre" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
-              Nombre
+              {t("register.nombre")}
             </label>
-            <input id="reg-nombre" type="text" className={inputBase} placeholder="Tu nombre"
+            <input id="reg-nombre" type="text" className={inputBase} placeholder={t("register.placeholder.nombre")}
               value={nombre} onChange={e => setNombre(e.target.value)} required autoFocus />
           </div>
 
           <div className="flex flex-col gap-1.5">
             <label htmlFor="reg-email" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
-              Email
+              {t("register.email")}
             </label>
             <input id="reg-email" type="email" className={inputBase} placeholder="tu@email.com"
               value={email} onChange={e => setEmail(e.target.value)} required />
@@ -130,14 +133,14 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
 
           <div className="flex flex-col gap-1.5">
             <label htmlFor="reg-password" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
-              Contraseña
+              {t("register.contrasena")}
             </label>
             <div className="relative">
               <input
                 id="reg-password"
                 type={showPassword ? "text" : "password"}
                 className={`${inputBase} pr-12`}
-                placeholder="Mínimo 8 caracteres"
+                placeholder={t("register.placeholder.contrasena")}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
@@ -145,7 +148,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
               <button
                 type="button"
                 onClick={() => setShowPassword(v => !v)}
-                aria-label={showPassword ? "Ocultar" : "Mostrar"}
+                aria-label={showPassword ? t("register.ocultar") : t("register.mostrar")}
                 tabIndex={-1}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer"
               >
@@ -163,7 +166,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
                 </div>
                 <span className="text-[11px] font-semibold min-w-[64px] text-right transition-colors"
                   style={{ color: strength.color }}>
-                  {strength.label}
+                  {strength.key ? t(strength.key) : ""}
                 </span>
               </div>
             )}
@@ -182,7 +185,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
               bg-orange-500 hover:bg-orange-400 disabled:opacity-50 disabled:cursor-not-allowed
               cursor-pointer transition-all duration-150"
           >
-            {loading ? "Creando cuenta..." : "Crear cuenta y continuar →"}
+            {loading ? t("register.creando") : t("register.crear")}
           </button>
 
         </form>
@@ -208,20 +211,20 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
 
         {/* Footer links */}
         <p className="text-xs text-zinc-600 text-center mt-4">
-          Al registrarte aceptás los{" "}
+          {t("register.terminos")}{" "}
           <button type="button" className="text-zinc-500 underline underline-offset-2 hover:text-zinc-300 cursor-pointer transition-colors">
-            términos de uso
+            {t("register.terminosLink")}
           </button>
         </p>
 
         <div className="flex items-center justify-center gap-1.5 mt-3 text-sm text-zinc-600">
-          <span>¿Ya tenés cuenta?</span>
+          <span>{t("register.yaTenes")}</span>
           <button
             type="button"
             onClick={onLoginClick}
             className="text-orange-400 font-semibold hover:opacity-75 cursor-pointer transition-opacity"
           >
-            Iniciá sesión
+            {t("register.iniciarSesion")}
           </button>
         </div>
 

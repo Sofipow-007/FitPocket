@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./AuthModal.css";
 
 const IconEyeOpen = () => (
@@ -17,6 +18,7 @@ const IconEyeClosed = () => (
 
 export default function AuthModal({ isOpen, onClose }) {
   const navigate = useNavigate();
+  const { t }    = useTranslation();
   const [email,        setEmail]        = useState("");
   const [password,     setPassword]     = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -50,12 +52,12 @@ export default function AuthModal({ isOpen, onClose }) {
         body:    JSON.stringify({ email, password }),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.msg || "Email o contraseña incorrectos"); return; }
+      if (!res.ok) { setError(data.msg || t("authModal.errorCredenciales")); return; }
       localStorage.setItem("token", data.token);
       onClose();
       navigate("/dashboard");
     } catch {
-      setError("Error de conexión. Intentá más tarde.");
+      setError(t("authModal.errorConexion"));
     } finally {
       setLoading(false);
     }
@@ -70,27 +72,27 @@ export default function AuthModal({ isOpen, onClose }) {
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"
-      aria-label="Iniciar sesión"
+      aria-label={t("authModal.ariaLabel")}
     >
       <div className="auth-modal">
-        <button className="auth-modal__close" onClick={onClose} aria-label="Cerrar">✕</button>
+        <button className="auth-modal__close" onClick={onClose} aria-label={t("authModal.cerrar")}>✕</button>
 
         <div className="auth-modal__logo">
           <span className="auth-modal__logo-dot" />
           <span className="auth-modal__logo-text">FitPocket</span>
         </div>
 
-        <h2 className="auth-modal__title">Bienvenido de vuelta</h2>
-        <p className="auth-modal__subtitle">Ingresá a tu cuenta para continuar</p>
+        <h2 className="auth-modal__title">{t("authModal.titulo")}</h2>
+        <p className="auth-modal__subtitle">{t("authModal.subtitulo")}</p>
 
         <form className="auth-modal__form" onSubmit={handleSubmit}>
           <div className="auth-modal__field">
-            <label className="auth-modal__label" htmlFor="am-email">Email</label>
+            <label className="auth-modal__label" htmlFor="am-email">{t("authModal.email")}</label>
             <input
               id="am-email"
               type="email"
               className="auth-modal__input"
-              placeholder="tu@email.com"
+              placeholder={t("authModal.placeholder.email")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -99,13 +101,13 @@ export default function AuthModal({ isOpen, onClose }) {
           </div>
 
           <div className="auth-modal__field">
-            <label className="auth-modal__label" htmlFor="am-password">Contraseña</label>
+            <label className="auth-modal__label" htmlFor="am-password">{t("authModal.contrasena")}</label>
             <div className="auth-modal__password-wrap">
               <input
                 id="am-password"
                 type={showPassword ? "text" : "password"}
                 className="auth-modal__input"
-                placeholder="Tu contraseña"
+                placeholder={t("authModal.placeholder.contrasena")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -114,7 +116,7 @@ export default function AuthModal({ isOpen, onClose }) {
                 type="button"
                 className="auth-modal__eye"
                 onClick={() => setShowPassword(v => !v)}
-                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                aria-label={showPassword ? t("authModal.ocultar") : t("authModal.mostrar")}
                 tabIndex={-1}
               >
                 {showPassword ? <IconEyeClosed /> : <IconEyeOpen />}
@@ -125,18 +127,18 @@ export default function AuthModal({ isOpen, onClose }) {
           {error && <div className="auth-modal__error" role="alert">{error}</div>}
 
           <button type="submit" className="auth-modal__btn" disabled={loading}>
-            {loading ? "Ingresando..." : "Ingresar →"}
+            {loading ? t("authModal.ingresando") : t("authModal.ingresar")}
           </button>
         </form>
 
         <div className="auth-modal__footer">
-          <span>¿No tenés cuenta?</span>
+          <span>{t("authModal.noTenes")}</span>
           <button
             type="button"
             className="auth-modal__link"
             onClick={() => { onClose(); navigate("/register"); }}
           >
-            Registrarse
+            {t("authModal.registrarse")}
           </button>
         </div>
       </div>

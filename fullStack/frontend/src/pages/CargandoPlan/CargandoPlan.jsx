@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./CargandoPlan.css";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 
-const PASOS = [
-  "Analizando tu perfil físico...",
-  "Calculando carga de entrenamiento...",
-  "Optimizando días y rutinas...",
-  "Ajustando nutrición al presupuesto...",
-  "Finalizando tu plan personalizado...",
-];
-
 export default function CargandoPlan() {
+  const { t }        = useTranslation();
+  const PASOS        = t("cargando.pasos", { returnObjects: true });
   const [pasoActual, setPasoActual] = useState(0);
   const [progreso,   setProgreso]   = useState(0);
 
