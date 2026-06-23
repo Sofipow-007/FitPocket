@@ -13,7 +13,3 @@ const connectDB = async () => {
     }
 };
 module.exports = connectDB;
-
-// username: beltranmauroet36_db_user
-// password: rtrrN22ueJqbe4bo
-// cosas del .env:

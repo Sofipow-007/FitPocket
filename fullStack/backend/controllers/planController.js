@@ -1,6 +1,6 @@
 const Plan = require('../models/Plan')
 const User = require('../models/User')
-// const { dispararPlan } = require('../services/webhookService')
+const { dispararPlan } = require('../services/webhookService')
 
 // función interna que arma el plan según el perfil
 // generación manual de prueba antes de automatizar con IA
