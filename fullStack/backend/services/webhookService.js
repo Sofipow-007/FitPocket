@@ -1,14 +1,13 @@
 const axios = require('axios')
 
-// Webhook Generar_Plan
+// Llama al webhook de N8N y retorna el plan generado por IA
 const dispararPlan = async (userId, perfil) => {
-    try {
-        await axios.post(process.env.N8N_WEBHOOK_URL, {
-            userId,
-            perfil
-        })
-    } catch (err) {
-        console.error('webhook N8N falló: ', err.message)
-    }
+  const respuesta = await axios.post(process.env.N8N_WEBHOOK_URL, {
+    userId,
+    perfil
+  })
+  // N8N responde con { ok: true, plan: {...} }
+  return respuesta.data
 }
-module.exports = {dispararPlan}
+
+module.exports = { dispararPlan }

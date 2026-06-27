@@ -28,13 +28,13 @@
             },
             {
               "id": "cond-objetivo",
-              "leftValue": "={{ $json.body.objetivo }}",
+              "leftValue": "={{ $json.body.perfil.objetivo }}",
               "rightValue": "",
               "operator": { "type": "string", "operation": "notEmpty" }
             },
             {
               "id": "cond-diasDispo",
-              "leftValue": "={{ $json.body.diasDispo }}",
+              "leftValue": "={{ $json.body.perfil.diasDispo }}",
               "rightValue": "",
               "operator": { "type": "array", "operation": "notEmpty" }
             }
@@ -50,74 +50,109 @@
     },
     {
       "parameters": {
-        "url": "https://api.anthropic.com/v1/messages",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "anthropic-version", "value": "2023-06-01" },
-            { "name": "content-type", "value": "application/json" }
+            { "name": "Content-Type", "value": "application/json" }
           ]
         },
         "sendBody": true,
         "contentType": "json",
         "body": {
-          "model": "claude-sonnet-4-6",
+          "model": "llama-3.3-70b-versatile",
           "max_tokens": 4096,
+          "temperature": 0.7,
           "messages": [
             {
+              "role": "system",
+              "content": "Sos un entrenador personal y nutricionista experto. Respondés ÚNICAMENTE con JSON válido puro, sin texto adicional, sin markdown, sin bloques de código."
+            },
+            {
               "role": "user",
-              "content": "=Generá un plan de fitness y nutrición personalizado en JSON para:\nNombre: {{ $('Webhook Registro').first().json.body.nombre }}\nEdad: {{ $('Webhook Registro').first().json.body.edad }} años\nPeso: {{ $('Webhook Registro').first().json.body.peso }}kg\nAltura: {{ $('Webhook Registro').first().json.body.altura }}cm\nObjetivo: {{ $('Webhook Registro').first().json.body.objetivo }}\nNivel de actividad: {{ $('Webhook Registro').first().json.body.nivelActividad }}\nDías disponibles: {{ $('Webhook Registro').first().json.body.diasDispo.join(', ') }}\n\nRespondé SOLO con JSON válido, sin texto adicional, sin markdown, sin backticks. Estructura exacta:\n{\n  \"meta\": { \"objetivo\": string, \"caloriasObjetivo\": number, \"proteinasDiarias\": number },\n  \"rutina\": [ { \"dia\": string, \"ejercicios\": [ { \"nombre\": string, \"series\": number, \"reps\": string, \"descanso\": string } ] } ],\n  \"dieta\": [ { \"dia\": string, \"comidas\": [ { \"momento\": string, \"descripcion\": string, \"calorias\": number } ] } ]\n}"
+              "content": "=Generá un plan de fitness y nutrición para:\nPeso: {{ $('Webhook Registro').first().json.body.perfil.peso }}kg\nAltura: {{ $('Webhook Registro').first().json.body.perfil.altura }}cm\nEdad: {{ $('Webhook Registro').first().json.body.perfil.edad }} años\nSexo: {{ $('Webhook Registro').first().json.body.perfil.sexo }}\nObjetivo: {{ $('Webhook Registro').first().json.body.perfil.objetivo }}\nNivel: {{ $('Webhook Registro').first().json.body.perfil.nivel }}\nDías disponibles: {{ $('Webhook Registro').first().json.body.perfil.diasDispo.join(', ') }}\nMinutos por sesión: {{ $('Webhook Registro').first().json.body.perfil.minutosPorSesion }}\nTipo de dieta: {{ $('Webhook Registro').first().json.body.perfil.tipoDieta }}\nPresupuesto mensual: ${{ $('Webhook Registro').first().json.body.perfil.presupuesto }}\nLimitaciones: {{ $('Webhook Registro').first().json.body.perfil.limitaciones.length > 0 ? $('Webhook Registro').first().json.body.perfil.limitaciones.join(', ') : 'ninguna' }}\n\nEstructura JSON exacta requerida:\n{\"meta\":{\"objetivo\":\"string\",\"duracionSemanas\":number,\"caloriasObjetivoDia\":number,\"nivelDificultad\":\"string\",\"justificacion\":\"string\"},\"rutina\":[{\"dia\":\"string\",\"tipo\":\"string\",\"duracionMinutos\":number,\"ejercicios\":[{\"nombre\":\"string\",\"series\":number,\"repeticiones\":\"string\",\"descansoSegundos\":number,\"nota\":\"string\"}]}],\"dieta\":[{\"dia\":\"string\",\"desayuno\":{\"descripcion\":\"string\",\"calorias\":number},\"almuerzo\":{\"descripcion\":\"string\",\"calorias\":number},\"merienda\":{\"descripcion\":\"string\",\"calorias\":number},\"cena\":{\"descripcion\":\"string\",\"calorias\":number},\"costoEstimadoDia\":number}]}\n\nLa rutina y dieta deben tener los 7 días. Los días sin entrenamiento tienen ejercicios en []."
             }
           ]
         },
         "options": {}
       },
       "id": "http-001",
-      "name": "Claude API - Generar plan",
+      "name": "Groq API - Generar plan",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [680, 220]
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.first().json.content[0].text;\n\n// Limpiar markdown si Claude lo incluye igual\nconst clean = raw\n  .replace(/```json\\n?/g, '')\n  .replace(/```/g, '')\n  .trim();\n\nlet plan;\ntry {\n  plan = JSON.parse(clean);\n} catch(e) {\n  throw new Error('Claude no devolvio JSON valido: ' + clean.substring(0, 200));\n}\n\nconst webhookData = $('Webhook Registro').first().json.body;\n\nreturn [{\n  json: {\n    usuarioId: webhookData.userId,\n    version: 1,\n    activo: true,\n    creadoEn: new Date().toISOString(),\n    meta: plan.meta,\n    rutina: plan.rutina,\n    dieta: plan.dieta\n  }\n}];"
+        "jsCode": "const raw = $input.first().json.choices[0].message.content;\n\nconst clean = raw\n  .replace(/```json\\n?/g, '')\n  .replace(/```/g, '')\n  .trim();\n\nlet plan;\ntry {\n  plan = JSON.parse(clean);\n} catch(e) {\n  throw new Error('Groq no devolvio JSON valido: ' + clean.substring(0, 200));\n}\n\nconst webhookData = $('Webhook Registro').first().json.body;\n\nreturn [{\n  json: {\n    userId: webhookData.userId,\n    plan: {\n      meta:   plan.meta,\n      rutina: plan.rutina,\n      dieta:  plan.dieta\n    }\n  }\n}];"
       },
       "id": "code-001",
-      "name": "Parsear respuesta Claude",
+      "name": "Parsear respuesta Groq",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [900, 220]
     },
     {
       "parameters": {
-        "operation": "insert",
-        "collection": "planes",
-        "fields": "=usuarioId,version,activo,creadoEn,meta,rutina,dieta"
+        "jsCode": "// Archivar plan activo anterior y calcular versión\n// N8N no puede hacer updateOne directamente con lógica condicional\n// así que preparamos el documento a insertar con versión 1 por defecto\n// El backend ya no guarda — solo N8N guarda\n\nconst data = $input.first().json;\n\nreturn [{\n  json: {\n    userId:  data.userId,\n    version: 1,\n    estado:  'activo',\n    meta:    data.plan.meta,\n    rutina:  data.plan.rutina,\n    dieta:   data.plan.dieta,\n    plan:    data.plan\n  }\n}];"
+      },
+      "id": "code-002",
+      "name": "Preparar documento",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 220]
+    },
+    {
+      "parameters": {
+        "operation": "updateOne",
+        "collection": "plans",
+        "filter": "={ \"userId\": { \"$oid\": \"{{ $json.userId }}\" }, \"estado\": \"activo\" }",
+        "update": "={ \"$set\": { \"estado\": \"archivado\" } }",
+        "options": {}
       },
       "id": "mongo-001",
-      "name": "MongoDB - Guardar plan",
+      "name": "Archivar plan anterior",
       "type": "n8n-nodes-base.mongoDb",
       "typeVersion": 1,
-      "position": [1120, 220]
+      "position": [1300, 220],
+      "credentials": {
+        "mongoDb": { "id": "mongo-cred", "name": "MongoDB FitPocket" }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insertOne",
+        "collection": "plans",
+        "fields": "={\n  \"userId\": { \"$oid\": \"{{ $('Preparar documento').first().json.userId }}\" },\n  \"version\": {{ $('Preparar documento').first().json.version }},\n  \"estado\": \"activo\",\n  \"meta\": {{ JSON.stringify($('Preparar documento').first().json.meta) }},\n  \"rutina\": {{ JSON.stringify($('Preparar documento').first().json.rutina) }},\n  \"dieta\": {{ JSON.stringify($('Preparar documento').first().json.dieta) }},\n  \"createdAt\": \"{{ new Date().toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "mongo-002",
+      "name": "Guardar plan nuevo",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [1500, 220],
+      "credentials": {
+        "mongoDb": { "id": "mongo-cred", "name": "MongoDB FitPocket" }
+      }
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ { ok: true, mensaje: 'Plan generado correctamente', planId: $json._id } }}"
+        "responseBody": "={\n  \"ok\": true,\n  \"plan\": {{ JSON.stringify($('Preparar documento').first().json.plan) }}\n}"
       },
       "id": "resp-001",
-      "name": "Responder OK",
+      "name": "Responder con plan",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [1340, 220]
+      "position": [1700, 220]
     },
     {
       "parameters": {
         "respondWith": "json",
         "responseCode": 400,
-        "responseBody": "={ \"ok\": false, \"error\": \"Faltan campos obligatorios: userId, objetivo o diasDispo\" }"
+        "responseBody": "={ \"ok\": false, \"error\": \"Faltan campos obligatorios\" }"
       },
       "id": "resp-002",
       "name": "Responder Error 400",
@@ -132,18 +167,24 @@
     },
     "Validar campos": {
       "main": [
-        [{ "node": "Claude API - Generar plan", "type": "main", "index": 0 }],
+        [{ "node": "Groq API - Generar plan", "type": "main", "index": 0 }],
         [{ "node": "Responder Error 400", "type": "main", "index": 0 }]
       ]
     },
-    "Claude API - Generar plan": {
-      "main": [[{ "node": "Parsear respuesta Claude", "type": "main", "index": 0 }]]
+    "Groq API - Generar plan": {
+      "main": [[{ "node": "Parsear respuesta Groq", "type": "main", "index": 0 }]]
     },
-    "Parsear respuesta Claude": {
-      "main": [[{ "node": "MongoDB - Guardar plan", "type": "main", "index": 0 }]]
+    "Parsear respuesta Groq": {
+      "main": [[{ "node": "Preparar documento", "type": "main", "index": 0 }]]
     },
-    "MongoDB - Guardar plan": {
-      "main": [[{ "node": "Responder OK", "type": "main", "index": 0 }]]
+    "Preparar documento": {
+      "main": [[{ "node": "Archivar plan anterior", "type": "main", "index": 0 }]]
+    },
+    "Archivar plan anterior": {
+      "main": [[{ "node": "Guardar plan nuevo", "type": "main", "index": 0 }]]
+    },
+    "Guardar plan nuevo": {
+      "main": [[{ "node": "Responder con plan", "type": "main", "index": 0 }]]
     }
   },
   "active": true,
