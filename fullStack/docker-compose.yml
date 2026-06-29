@@ -1,15 +1,47 @@
 services:
-
   mongodb:
     image: mongo:4.4
     container_name: fitpocket-mongo
     restart: unless-stopped
     ports:
-      - "27018:27017"
+      - "27017:27017"      # Compass se conecta a localhost:27017
     volumes:
       - mongo-data:/data/db
     environment:
       MONGO_INITDB_DATABASE: fitpocket
+
+  backend:
+    build:
+      context: ./backend   # ajustá esto según donde esté tu Dockerfile
+      dockerfile: Dockerfile
+    container_name: fitpocket-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongodb:27017/fitpocket  # interno: ok
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: fitpocket-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:3000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
   n8n:
     image: n8nio/n8n
