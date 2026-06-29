@@ -6,14 +6,21 @@
         "httpMethod": "POST",
         "path": "nuevo-usuario",
         "responseMode": "lastNode",
-        "options": {}
+        "options": {},
+        "authentication": "headerAuth"
       },
       "id": "wh-001",
       "name": "Webhook Registro",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [240, 300],
-      "webhookId": "fitpocket-nuevo-usuario"
+      "webhookId": "fitpocket-nuevo-usuario",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "fitpocket-webhook-secret",
+          "name": "FitPocket Webhook Secret"
+        }
+      }
     },
     {
       "parameters": {
@@ -96,7 +103,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Archivar plan activo anterior y calcular versión\n// N8N no puede hacer updateOne directamente con lógica condicional\n// así que preparamos el documento a insertar con versión 1 por defecto\n// El backend ya no guarda — solo N8N guarda\n\nconst data = $input.first().json;\n\nreturn [{\n  json: {\n    userId:  data.userId,\n    version: 1,\n    estado:  'activo',\n    meta:    data.plan.meta,\n    rutina:  data.plan.rutina,\n    dieta:   data.plan.dieta,\n    plan:    data.plan\n  }\n}];"
+        "jsCode": "const data = $input.first().json;\n\nreturn [{\n  json: {\n    userId:  data.userId,\n    version: 1,\n    estado:  'activo',\n    meta:    data.plan.meta,\n    rutina:  data.plan.rutina,\n    dieta:   data.plan.dieta,\n    plan:    data.plan\n  }\n}];"
       },
       "id": "code-002",
       "name": "Preparar documento",

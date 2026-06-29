@@ -25,7 +25,6 @@ exports.generarPlan = async (req, res) => {
       nivel:            perfil.nivel || 'principiante'
     }
 
-    // N8N se encarga de: llamar a Groq + archivar plan anterior + guardar plan nuevo
     let respuestaN8N
     try {
       respuestaN8N = await dispararPlan(userId.toString(), perfilCompleto)
@@ -35,7 +34,6 @@ exports.generarPlan = async (req, res) => {
       return res.status(503).json({ error: 'El servicio de generación no está disponible. Intentá de nuevo.' })
     }
 
-    // devolver al frontend lo que vino de N8N
     return res.json({
       ok:   true,
       plan: respuestaN8N.plan

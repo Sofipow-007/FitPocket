@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 const dispararPlan = async (userId, perfil) => {
-  const webhookUrl = process.env.N8N_WEBHOOK_URL || process.env.WEBHOOK_URL
+  const webhookUrl = process.env.N8N_WEBHOOK_URL
 
   if (!webhookUrl) {
     throw new Error('No está configurada la URL del webhook de n8n')
@@ -14,7 +14,8 @@ const dispararPlan = async (userId, perfil) => {
     }, {
       timeout: 60000,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Webhook-Secret': process.env.N8N_WEBHOOK_SECRET
       }
     })
 

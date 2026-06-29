@@ -67,9 +67,8 @@ La rutina y la dieta deben tener los 7 días de la semana.
 Los días que el usuario no entrena, el campo ejercicios va vacío [].
 `
 
-    // primera llamada a Groq
     let completion = await client.chat.completions.create({
-        model: 'llama-3.3-70b-versatile', // modelo gratuito y potente de Groq
+        model: 'llama-3.3-70b-versatile',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.7,
         max_tokens: 4096
@@ -77,20 +76,17 @@ Los días que el usuario no entrena, el campo ejercicios va vacío [].
 
     let texto = completion.choices[0].message.content
 
-    // limpiar markdown si lo incluyó igual
     texto = texto
         .replace(/```json/g, '')
         .replace(/```/g, '')
         .trim()
 
-    // intentar parsear — si falla, reintentar una vez
     let plan
     try {
         plan = JSON.parse(texto)
     } catch (e) {
         console.log('JSON inválido, reintentando...')
 
-        // segundo intento con instrucción más estricta
         completion = await client.chat.completions.create({
             model: 'llama-3.3-70b-versatile',
             messages: [
@@ -98,7 +94,7 @@ Los días que el usuario no entrena, el campo ejercicios va vacío [].
                 { role: 'assistant', content: texto },
                 { role: 'user', content: 'El JSON que devolviste no es válido. Respondé solo con el JSON puro, sin ningún texto extra ni markdown.' }
             ],
-            temperature: 0.3, // más bajo en el reintento para respuesta más precisa
+            temperature: 0.3,
             max_tokens: 4096
         })
 
@@ -107,7 +103,7 @@ Los días que el usuario no entrena, el campo ejercicios va vacío [].
             .replace(/```/g, '')
             .trim()
 
-        plan = JSON.parse(texto) // si falla de nuevo, lanza el error al controller
+        plan = JSON.parse(texto)
     }
 
     return plan
