@@ -4,6 +4,7 @@ const auth = require('../middleware/auth')
 const userControl = require('../controllers/userController')
 
 router.get('/perfil', auth, userControl.getInfo)
+router.get('/todos', auth, userControl.getAllUsers)
 router.put('/actualizar', auth, userControl.actualizarPerfil)
 router.delete('/:email', auth, userControl.borrarPerfil)
 

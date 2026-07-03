@@ -1,200 +1,246 @@
 {
-  "name": "FitPocket - WF1 Generacion de plan",
+  "name": "FitPocket - WF1 Generacion de plan (Groq)",
   "nodes": [
     {
       "parameters": {
         "httpMethod": "POST",
         "path": "nuevo-usuario",
-        "responseMode": "lastNode",
-        "options": {},
-        "authentication": "headerAuth"
+        "authentication": "jwtAuth",
+        "responseMode": "responseNode",
+        "options": {}
       },
-      "id": "wh-001",
+      "id": "1e4877e7-5665-40db-8fe0-d2356c84fa1f",
       "name": "Webhook Registro",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [240, 300],
+      "position": [
+        768,
+        2624
+      ],
       "webhookId": "fitpocket-nuevo-usuario",
       "credentials": {
-        "httpHeaderAuth": {
-          "id": "fitpocket-webhook-secret",
-          "name": "FitPocket Webhook Secret"
+        "jwtAuth": {
+          "id": "WmZFEkl96Yh7TF1i",
+          "name": "JWT Auth account"
         }
       }
     },
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
           "conditions": [
             {
               "id": "cond-userId",
               "leftValue": "={{ $json.body.userId }}",
               "rightValue": "",
-              "operator": { "type": "string", "operation": "notEmpty" }
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
             },
             {
               "id": "cond-objetivo",
               "leftValue": "={{ $json.body.perfil.objetivo }}",
               "rightValue": "",
-              "operator": { "type": "string", "operation": "notEmpty" }
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
             },
             {
               "id": "cond-diasDispo",
               "leftValue": "={{ $json.body.perfil.diasDispo }}",
               "rightValue": "",
-              "operator": { "type": "array", "operation": "notEmpty" }
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
             }
           ],
           "combinator": "and"
-        }
+        },
+        "options": {}
       },
-      "id": "if-001",
+      "id": "3e22bd59-8887-4228-9097-1063da1cef63",
       "name": "Validar campos",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [460, 300]
+      "position": [
+        992,
+        2624
+      ]
     },
     {
       "parameters": {
+        "method": "POST",
         "url": "https://api.groq.com/openai/v1/chat/completions",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "Content-Type", "value": "application/json" }
-          ]
-        },
-        "sendBody": true,
-        "contentType": "json",
-        "body": {
-          "model": "llama-3.3-70b-versatile",
-          "max_tokens": 4096,
-          "temperature": 0.7,
-          "messages": [
             {
-              "role": "system",
-              "content": "Sos un entrenador personal y nutricionista experto. Respondés ÚNICAMENTE con JSON válido puro, sin texto adicional, sin markdown, sin bloques de código."
-            },
-            {
-              "role": "user",
-              "content": "=Generá un plan de fitness y nutrición para:\nPeso: {{ $('Webhook Registro').first().json.body.perfil.peso }}kg\nAltura: {{ $('Webhook Registro').first().json.body.perfil.altura }}cm\nEdad: {{ $('Webhook Registro').first().json.body.perfil.edad }} años\nSexo: {{ $('Webhook Registro').first().json.body.perfil.sexo }}\nObjetivo: {{ $('Webhook Registro').first().json.body.perfil.objetivo }}\nNivel: {{ $('Webhook Registro').first().json.body.perfil.nivel }}\nDías disponibles: {{ $('Webhook Registro').first().json.body.perfil.diasDispo.join(', ') }}\nMinutos por sesión: {{ $('Webhook Registro').first().json.body.perfil.minutosPorSesion }}\nTipo de dieta: {{ $('Webhook Registro').first().json.body.perfil.tipoDieta }}\nPresupuesto mensual: ${{ $('Webhook Registro').first().json.body.perfil.presupuesto }}\nLimitaciones: {{ $('Webhook Registro').first().json.body.perfil.limitaciones.length > 0 ? $('Webhook Registro').first().json.body.perfil.limitaciones.join(', ') : 'ninguna' }}\n\nEstructura JSON exacta requerida:\n{\"meta\":{\"objetivo\":\"string\",\"duracionSemanas\":number,\"caloriasObjetivoDia\":number,\"nivelDificultad\":\"string\",\"justificacion\":\"string\"},\"rutina\":[{\"dia\":\"string\",\"tipo\":\"string\",\"duracionMinutos\":number,\"ejercicios\":[{\"nombre\":\"string\",\"series\":number,\"repeticiones\":\"string\",\"descansoSegundos\":number,\"nota\":\"string\"}]}],\"dieta\":[{\"dia\":\"string\",\"desayuno\":{\"descripcion\":\"string\",\"calorias\":number},\"almuerzo\":{\"descripcion\":\"string\",\"calorias\":number},\"merienda\":{\"descripcion\":\"string\",\"calorias\":number},\"cena\":{\"descripcion\":\"string\",\"calorias\":number},\"costoEstimadoDia\":number}]}\n\nLa rutina y dieta deben tener los 7 días. Los días sin entrenamiento tienen ejercicios en []."
+              "name": "Content-Type",
+              "value": "application/json"
             }
           ]
         },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
         "options": {}
       },
-      "id": "http-001",
+      "id": "9a2bb2a2-2868-40c2-8ede-a6906eeda824",
       "name": "Groq API - Generar plan",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [680, 220]
+      "position": [
+        1216,
+        2544
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EN4uN8pbvgT7tw4U",
+          "name": "Header Auth account"
+        }
+      }
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.first().json.choices[0].message.content;\n\nconst clean = raw\n  .replace(/```json\\n?/g, '')\n  .replace(/```/g, '')\n  .trim();\n\nlet plan;\ntry {\n  plan = JSON.parse(clean);\n} catch(e) {\n  throw new Error('Groq no devolvio JSON valido: ' + clean.substring(0, 200));\n}\n\nconst webhookData = $('Webhook Registro').first().json.body;\n\nreturn [{\n  json: {\n    userId: webhookData.userId,\n    plan: {\n      meta:   plan.meta,\n      rutina: plan.rutina,\n      dieta:  plan.dieta\n    }\n  }\n}];"
+        "jsCode": "// Groq responde en formato OpenAI: choices[0].message.content\nconst raw = $input.first().json.choices[0].message.content;\n\nconst clean = raw\n  .replace(/```json\\n?/g, '')\n  .replace(/```/g, '')\n  .trim();\n\nlet plan;\ntry {\n  plan = JSON.parse(clean);\n} catch(e) {\n  throw new Error('Groq no devolvio JSON valido: ' + clean.substring(0, 200));\n}\n\nreturn [{\n  json: {\n    ok: true,\n    plan: {\n      meta:   plan.meta,\n      rutina: plan.rutina,\n      dieta:  plan.dieta\n    }\n  }\n}];"
       },
-      "id": "code-001",
+      "id": "4e4c0624-cbd0-40c1-bfab-207385c6c8bf",
       "name": "Parsear respuesta Groq",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [900, 220]
+      "position": [
+        1440,
+        2544
+      ]
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json;\n\nreturn [{\n  json: {\n    userId:  data.userId,\n    version: 1,\n    estado:  'activo',\n    meta:    data.plan.meta,\n    rutina:  data.plan.rutina,\n    dieta:   data.plan.dieta,\n    plan:    data.plan\n  }\n}];"
+        "jsCode": "return [{ json: { ok: false, error: 'Faltan campos obligatorios' } }];"
       },
-      "id": "code-002",
-      "name": "Preparar documento",
+      "id": "10994c20-00cc-489d-8591-c5925fff2d9f",
+      "name": "Crear error 400",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1100, 220]
-    },
-    {
-      "parameters": {
-        "operation": "updateOne",
-        "collection": "plans",
-        "filter": "={ \"userId\": { \"$oid\": \"{{ $json.userId }}\" }, \"estado\": \"activo\" }",
-        "update": "={ \"$set\": { \"estado\": \"archivado\" } }",
-        "options": {}
-      },
-      "id": "mongo-001",
-      "name": "Archivar plan anterior",
-      "type": "n8n-nodes-base.mongoDb",
-      "typeVersion": 1,
-      "position": [1300, 220],
-      "credentials": {
-        "mongoDb": { "id": "mongo-cred", "name": "MongoDB FitPocket" }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "insertOne",
-        "collection": "plans",
-        "fields": "={\n  \"userId\": { \"$oid\": \"{{ $('Preparar documento').first().json.userId }}\" },\n  \"version\": {{ $('Preparar documento').first().json.version }},\n  \"estado\": \"activo\",\n  \"meta\": {{ JSON.stringify($('Preparar documento').first().json.meta) }},\n  \"rutina\": {{ JSON.stringify($('Preparar documento').first().json.rutina) }},\n  \"dieta\": {{ JSON.stringify($('Preparar documento').first().json.dieta) }},\n  \"createdAt\": \"{{ new Date().toISOString() }}\"\n}",
-        "options": {}
-      },
-      "id": "mongo-002",
-      "name": "Guardar plan nuevo",
-      "type": "n8n-nodes-base.mongoDb",
-      "typeVersion": 1,
-      "position": [1500, 220],
-      "credentials": {
-        "mongoDb": { "id": "mongo-cred", "name": "MongoDB FitPocket" }
-      }
+      "position": [
+        1216,
+        2752
+      ]
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={\n  \"ok\": true,\n  \"plan\": {{ JSON.stringify($('Preparar documento').first().json.plan) }}\n}"
+        "responseBody": "={{ $json }}",
+        "options": {}
       },
-      "id": "resp-001",
-      "name": "Responder con plan",
+      "id": "535cee8d-2ef0-4246-bee0-b87dda3a86c1",
+      "name": "Responder final",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [1700, 220]
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseCode": 400,
-        "responseBody": "={ \"ok\": false, \"error\": \"Faltan campos obligatorios\" }"
-      },
-      "id": "resp-002",
-      "name": "Responder Error 400",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1,
-      "position": [680, 420]
+      "position": [
+        1648,
+        2656
+      ]
     }
   ],
+  "pinData": {},
   "connections": {
     "Webhook Registro": {
-      "main": [[{ "node": "Validar campos", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Validar campos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Validar campos": {
       "main": [
-        [{ "node": "Groq API - Generar plan", "type": "main", "index": 0 }],
-        [{ "node": "Responder Error 400", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Groq API - Generar plan",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Crear error 400",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Groq API - Generar plan": {
-      "main": [[{ "node": "Parsear respuesta Groq", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Parsear respuesta Groq",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Parsear respuesta Groq": {
-      "main": [[{ "node": "Preparar documento", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Responder final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Preparar documento": {
-      "main": [[{ "node": "Archivar plan anterior", "type": "main", "index": 0 }]]
-    },
-    "Archivar plan anterior": {
-      "main": [[{ "node": "Guardar plan nuevo", "type": "main", "index": 0 }]]
-    },
-    "Guardar plan nuevo": {
-      "main": [[{ "node": "Responder con plan", "type": "main", "index": 0 }]]
+    "Crear error 400": {
+      "main": [
+        [
+          {
+            "node": "Responder final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": true,
-  "settings": { "executionOrder": "v1" },
-  "tags": [{ "name": "fitpocket" }]
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "122a7e96-774c-4521-9d6c-8b56ef9ad2fc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bb5829251cdff977f8c6ca07e6ed8f7527dbd44211d47739c7142b7cb31ee779"
+  },
+  "nodeGroups": [],
+  "id": "w7ALPyBCocCKRXrU",
+  "tags": [
+    {
+      "updatedAt": "2026-06-25T23:22:43.158Z",
+      "createdAt": "2026-06-25T23:22:43.158Z",
+      "id": "rtQpnLjpfs7PVAtl",
+      "name": "fitpocket"
+    }
+  ]
 }

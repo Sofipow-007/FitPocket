@@ -56,7 +56,7 @@ export default function CargandoPlan() {
 
       try {
         const response = await fetch("http://localhost:3000/plan/generar", {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
