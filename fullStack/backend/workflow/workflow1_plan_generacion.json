@@ -5,25 +5,18 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "nuevo-usuario",
-        "authentication": "jwtAuth",
         "responseMode": "responseNode",
         "options": {}
       },
-      "id": "1e4877e7-5665-40db-8fe0-d2356c84fa1f",
+      "id": "fc110033-0197-4b92-a843-8bd42cde3014",
       "name": "Webhook Registro",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        768,
-        2624
+        3840,
+        4272
       ],
-      "webhookId": "fitpocket-nuevo-usuario",
-      "credentials": {
-        "jwtAuth": {
-          "id": "WmZFEkl96Yh7TF1i",
-          "name": "JWT Auth account"
-        }
-      }
+      "webhookId": "fitpocket-nuevo-usuario"
     },
     {
       "parameters": {
@@ -68,13 +61,26 @@
         },
         "options": {}
       },
-      "id": "3e22bd59-8887-4228-9097-1063da1cef63",
+      "id": "e67eaaa7-8071-4d78-9cd6-0baa4ae35490",
       "name": "Validar campos",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        992,
-        2624
+        4064,
+        4272
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const p = $('Webhook Registro').first().json.body.perfil;\nconst userId = $('Webhook Registro').first().json.body.userId;\n\nconst limitaciones = (p.limitaciones && p.limitaciones.length > 0)\n  ? p.limitaciones.join(', ')\n  : 'ninguna';\n\nconst prompt = `Generá un plan de fitness y nutrición para:\nPeso: ${p.peso}kg\nAltura: ${p.altura}cm\nEdad: ${p.edad} años\nSexo: ${p.sexo}\nObjetivo: ${p.objetivo}\nNivel: ${p.nivel}\nDías disponibles: ${p.diasDispo.join(', ')}\nMinutos por sesión: ${p.minutosPorSesion}\nTipo de dieta: ${p.tipoDieta}\nPresupuesto mensual: $${p.presupuesto}\nLimitaciones: ${limitaciones}\n\nEstructura JSON exacta requerida:\n{\"meta\":{\"objetivo\":\"string\",\"duracionSemanas\":number,\"caloriasObjetivoDia\":number,\"nivelDificultad\":\"string\",\"justificacion\":\"string\"},\"rutina\":[{\"dia\":\"string\",\"tipo\":\"string\",\"duracionMinutos\":number,\"ejercicios\":[{\"nombre\":\"string\",\"series\":number,\"repeticiones\":\"string\",\"descansoSegundos\":number,\"nota\":\"string\"}]}],\"dieta\":[{\"dia\":\"string\",\"desayuno\":{\"descripcion\":\"string\",\"calorias\":number},\"almuerzo\":{\"descripcion\":\"string\",\"calorias\":number},\"merienda\":{\"descripcion\":\"string\",\"calorias\":number},\"cena\":{\"descripcion\":\"string\",\"calorias\":number},\"costoEstimadoDia\":number}]}\n\nLa rutina y dieta deben tener los 7 días. Los días sin entrenamiento tienen ejercicios en [].`;\n\nconst body = {\n  model: 'llama-3.3-70b-versatile',\n  max_tokens: 4096,\n  temperature: 0.7,\n  messages: [\n    {\n      role: 'system',\n      content: 'Sos un entrenador personal y nutricionista experto. Respondés ÚNICAMENTE con JSON válido puro, sin texto adicional, sin markdown, sin bloques de código.'\n    },\n    {\n      role: 'user',\n      content: prompt\n    }\n  ]\n};\n\nreturn [{ json: { userId, groqBody: body } }];"
+      },
+      "id": "f76ec308-744e-4bf2-a551-d6af40dbd093",
+      "name": "Armar body para Groq",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4288,
+        4192
       ]
     },
     {
@@ -83,30 +89,18 @@
         "url": "https://api.groq.com/openai/v1/chat/completions",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {}
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.groqBody) }}",
         "options": {}
       },
-      "id": "9a2bb2a2-2868-40c2-8ede-a6906eeda824",
+      "id": "3cd107e3-a44a-4376-b47a-230a8ede8ec3",
       "name": "Groq API - Generar plan",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1216,
-        2544
+        4512,
+        4192
       ],
       "credentials": {
         "httpHeaderAuth": {
@@ -117,28 +111,28 @@
     },
     {
       "parameters": {
-        "jsCode": "// Groq responde en formato OpenAI: choices[0].message.content\nconst raw = $input.first().json.choices[0].message.content;\n\nconst clean = raw\n  .replace(/```json\\n?/g, '')\n  .replace(/```/g, '')\n  .trim();\n\nlet plan;\ntry {\n  plan = JSON.parse(clean);\n} catch(e) {\n  throw new Error('Groq no devolvio JSON valido: ' + clean.substring(0, 200));\n}\n\nreturn [{\n  json: {\n    ok: true,\n    plan: {\n      meta:   plan.meta,\n      rutina: plan.rutina,\n      dieta:  plan.dieta\n    }\n  }\n}];"
+        "jsCode": "const raw = $input.first().json.choices[0].message.content;\n\nconst clean = raw\n  .replace(/```json\\n?/g, '')\n  .replace(/```/g, '')\n  .trim();\n\nlet plan;\ntry {\n  plan = JSON.parse(clean);\n} catch(e) {\n  throw new Error('Groq no devolvio JSON valido: ' + clean.substring(0, 200));\n}\n\nreturn [{\n  json: {\n    ok: true,\n    plan: {\n      meta:   plan.meta,\n      rutina: plan.rutina,\n      dieta:  plan.dieta\n    }\n  }\n}];"
       },
-      "id": "4e4c0624-cbd0-40c1-bfab-207385c6c8bf",
+      "id": "1b1cdb93-f109-4387-934e-1d88fe8ef406",
       "name": "Parsear respuesta Groq",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1440,
-        2544
+        4736,
+        4192
       ]
     },
     {
       "parameters": {
         "jsCode": "return [{ json: { ok: false, error: 'Faltan campos obligatorios' } }];"
       },
-      "id": "10994c20-00cc-489d-8591-c5925fff2d9f",
+      "id": "80f063b8-96df-4e55-ae1c-15b2e7b3b6cd",
       "name": "Crear error 400",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1216,
-        2752
+        4288,
+        4400
       ]
     },
     {
@@ -147,13 +141,13 @@
         "responseBody": "={{ $json }}",
         "options": {}
       },
-      "id": "535cee8d-2ef0-4246-bee0-b87dda3a86c1",
+      "id": "cf418f45-17b3-454c-9d95-46ae67823d57",
       "name": "Responder final",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        1648,
-        2656
+        4960,
+        4304
       ]
     }
   ],
@@ -174,7 +168,7 @@
       "main": [
         [
           {
-            "node": "Groq API - Generar plan",
+            "node": "Armar body para Groq",
             "type": "main",
             "index": 0
           }
@@ -182,6 +176,17 @@
         [
           {
             "node": "Crear error 400",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Armar body para Groq": {
+      "main": [
+        [
+          {
+            "node": "Groq API - Generar plan",
             "type": "main",
             "index": 0
           }
@@ -228,7 +233,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "122a7e96-774c-4521-9d6c-8b56ef9ad2fc",
+  "versionId": "54d3d48a-d41a-40e6-862a-ae8eced50257",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "bb5829251cdff977f8c6ca07e6ed8f7527dbd44211d47739c7142b7cb31ee779"
