@@ -3,24 +3,25 @@
   grid-template-columns: 1fr 1fr;
   height: 100%;        /* ocupa toda la pantalla */
   width: 100%;
+  padding-top: 96px;    /* despeja el Navbar fixed */
 }
 
 .login-left {
-  background-color: var(--bg-superficies); /* panel izquierdo */
+  background-color: var(--bg2); /* panel izquierdo */
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 3rem;
-  color: var(--texto-primario);
+  color: var(--ink);
 }
 
 .login-right {
-  background-color: var(--bg-inputs); /* panel derecho */
+  background-color: var(--bg3); /* panel derecho */
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 3rem;
-  color: var(--texto-primario);
+  color: var(--ink);
 }
 
 @media (max-width: 768px) {
