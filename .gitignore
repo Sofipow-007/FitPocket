@@ -138,3 +138,7 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .gstack/
+
+# Local-only Claude context (not for remote repo)
+CLAUDE.md
+PRODUCT.md
