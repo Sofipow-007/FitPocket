@@ -159,7 +159,8 @@
     "yaTenes":       "Already have an account?",
     "iniciarSesion": "Sign in",
     "errorRegistro": "Registration error",
-    "errorConexion": "Connection error. Try again later."
+    "errorConexion": "Connection error. Try again later.",
+    "errorCamposRequeridos": "Fill in all fields to continue."
   },
   "ob2": {
     "titulo":        "What do you want to achieve?",

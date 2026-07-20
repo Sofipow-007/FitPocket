@@ -159,7 +159,8 @@
     "yaTenes":       "¿Ya tenés cuenta?",
     "iniciarSesion": "Iniciá sesión",
     "errorRegistro": "Error en el registro",
-    "errorConexion": "Error de conexión. Intentá más tarde."
+    "errorConexion": "Error de conexión. Intentá más tarde.",
+    "errorCamposRequeridos": "Completá todos los campos para continuar."
   },
   "ob2": {
     "titulo":        "¿Qué querés lograr?",

@@ -68,6 +68,10 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    if (!nombre.trim() || !email.trim() || !password) {
+      setError(t("register.errorCamposRequeridos"));
+      return;
+    }
     setLoading(true);
     try {
       const res  = await fetch("http://localhost:3000/auth/register", {
@@ -113,7 +117,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
         <p className="text-sm text-zinc-500 mb-7">{t("register.subtitulo")}</p>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
 
           <div className="flex flex-col gap-1.5">
             <label htmlFor="reg-nombre" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
