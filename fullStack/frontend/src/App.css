@@ -51,3 +51,11 @@
 .main-content > * {
   width: 100%;
 }
+
+/* Dev-only preview panel — hidden on narrow viewports where it
+   overlaps page content (e.g. the HomeGuest hero stats row). */
+@media (max-width: 480px) {
+  .dev-panel {
+    display: none !important; /* overrides the panel's inline display:flex */
+  }
+}

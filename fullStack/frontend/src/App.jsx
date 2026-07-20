@@ -23,7 +23,7 @@ function DevPanel() {
   const hide = ["/dashboard", "/cargando-plan"].some(p => pathname.startsWith(p));
   if (hide) return null;
   return (
-    <div style={{
+    <div className="dev-panel" style={{
       position: "fixed", bottom: 20, right: 20, zIndex: 9999,
       background: "rgba(6,6,14,0.92)", border: "1px solid rgba(255,255,255,0.12)",
       borderRadius: 14, padding: "10px 14px", display: "flex", flexDirection: "column", gap: 6,
