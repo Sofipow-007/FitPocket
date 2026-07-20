@@ -37,6 +37,21 @@
       "jue": "Jue", "vie": "Vie", "sab": "Sáb", "dom": "Dom"
     }
   },
+  "plan": {
+    "volver":            "Volver al dashboard",
+    "titulo":            "Tu plan completo",
+    "objetivo":          "Objetivo",
+    "dias":              "Días de la semana",
+    "entrenamiento":     "Entrenamiento",
+    "descanso":          "Descanso",
+    "descansoDia":       "Día de descanso. Recuperate bien.",
+    "dietaDia":          "Dieta de este día",
+    "costoEstimado":     "Costo estimado del día",
+    "cambiarEjercicio":  "Cambiar ejercicio",
+    "reemplazado":       "reemplazado",
+    "sinPlan":           "Generá tu plan para ver el detalle",
+    "errorConexion":     "No se pudo cargar tu plan. Revisá tu conexión."
+  },
   "ejercicios": {
     "push":    { "muscles": "Pecho · Tríceps · Hombros",             "tip": "Controlá el descenso. Pausa en el pecho antes de empujar." },
     "pull":    { "muscles": "Espalda · Bíceps · Romboides",          "tip": "Retracción escapular al inicio. Codos cerca del cuerpo." },

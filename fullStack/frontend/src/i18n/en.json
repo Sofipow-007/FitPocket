@@ -37,6 +37,21 @@
       "jue": "Thu", "vie": "Fri", "sab": "Sat", "dom": "Sun"
     }
   },
+  "plan": {
+    "volver":            "Back to dashboard",
+    "titulo":            "Your full plan",
+    "objetivo":          "Goal",
+    "dias":              "Days of the week",
+    "entrenamiento":     "Training",
+    "descanso":          "Rest",
+    "descansoDia":       "Rest day. Recover well.",
+    "dietaDia":          "This day's diet",
+    "costoEstimado":     "Estimated cost for the day",
+    "cambiarEjercicio":  "Swap exercise",
+    "reemplazado":       "swapped",
+    "sinPlan":           "Generate your plan to see the details",
+    "errorConexion":     "Could not load your plan. Check your connection."
+  },
   "ejercicios": {
     "push":    { "muscles": "Chest · Triceps · Shoulders",      "tip": "Control the descent. Pause at the chest before pushing." },
     "pull":    { "muscles": "Back · Biceps · Rhomboids",        "tip": "Scapular retraction at the start. Keep elbows close." },

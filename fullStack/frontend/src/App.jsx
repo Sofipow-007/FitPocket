@@ -12,15 +12,17 @@ const Onboarding3  = lazy(() => import("./pages/Onboarding3/Onboarding3"));
 const Onboarding4  = lazy(() => import("./pages/Onboarding4/Onboarding4"));
 const CargandoPlan = lazy(() => import("./pages/CargandoPlan/CargandoPlan"));
 const Dashboard    = lazy(() => import("./pages/Dashboard/Dashboard"));
+const PlanDetalle  = lazy(() => import("./pages/PlanDetalle/PlanDetalle"));
 
 const DEV_PAGES = [
   { path: "/dashboard?preview=true", label: "Dashboard" },
   { path: "/cargando-plan",          label: "Cargando plan" },
+  { path: "/plan?preview=true",      label: "Plan detalle" },
 ];
 
 function DevPanel() {
   const { pathname } = useLocation();
-  const hide = ["/dashboard", "/cargando-plan"].some(p => pathname.startsWith(p));
+  const hide = ["/dashboard", "/cargando-plan", "/plan"].some(p => pathname.startsWith(p));
   if (hide) return null;
   return (
     <div className="dev-panel" style={{
@@ -54,7 +56,7 @@ function DevPanel() {
 function GlobalLangToggle() {
   const { i18n }    = useTranslation();
   const { pathname } = useLocation();
-  if (pathname.startsWith("/dashboard")) return null;
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/plan")) return null;
   const set = (lang) => { i18n.changeLanguage(lang); localStorage.setItem("idioma", lang); };
   return (
     <div className="g-lang" role="group" aria-label="Idioma">
@@ -81,6 +83,7 @@ function App() {
               <Route path="/onboarding/4"  element={<Onboarding4 />} />
               <Route path="/cargando-plan" element={<CargandoPlan />} />
               <Route path="/dashboard"     element={<Dashboard />} />
+              <Route path="/plan"          element={<PlanDetalle />} />
             </Routes>
           </Suspense>
         </main>

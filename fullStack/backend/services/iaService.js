@@ -46,7 +46,16 @@ El JSON debe tener exactamente esta estructura:
           "series": número,
           "repeticiones": "string",
           "descansoSegundos": número,
-          "nota": "string"
+          "nota": "string",
+          "alternativas": [
+            {
+              "nombre": "string",
+              "series": número,
+              "repeticiones": "string",
+              "descansoSegundos": número,
+              "nota": "string"
+            }
+          ]
         }
       ]
     }
@@ -65,6 +74,11 @@ El JSON debe tener exactamente esta estructura:
 
 La rutina y la dieta deben tener los 7 días de la semana.
 Los días que el usuario no entrena, el campo ejercicios va vacío [].
+
+Para cada ejercicio, incluí 1 o 2 "alternativas": ejercicios que trabajen el
+mismo grupo muscular y sirvan para el mismo objetivo, para que el usuario
+pueda reemplazarlo si no tiene el equipo o prefiere variar. Si no se te
+ocurre una alternativa razonable, dejá el array vacío [].
 `
 
     let completion = await client.chat.completions.create({
