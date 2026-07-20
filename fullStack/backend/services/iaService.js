@@ -1,13 +1,12 @@
-const Anthropic = require('@anthropic-ai/sdk')
+const Groq = require('groq-sdk')
 
-const client = new Anthropic({
-  apiKey: process.env.CLAUDE_API_KEY
+const client = new Groq({
+    apiKey: process.env.GROQ_API_KEY
 })
 
 const generarPlan = async (perfil) => {
 
-  // arma el prompt con todos los datos del perfil
-  const prompt = `
+    const prompt = `
 Sos un entrenador personal y nutricionista experto.
 Generá un plan de entrenamiento y alimentación personalizado
 basado en los siguientes datos del usuario:
@@ -68,48 +67,46 @@ La rutina y la dieta deben tener los 7 días de la semana.
 Los días que el usuario no entrena, el campo ejercicios va vacío [].
 `
 
-  // primera llamada a Claude
-  let respuesta = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 4096,
-    messages: [{ role: 'user', content: prompt }]
-  })
-
-  let texto = respuesta.content[0].text
-
-  // limpiar markdown si Claude lo incluyó igual
-  texto = texto
-    .replace(/```json/g, '')
-    .replace(/```/g, '')
-    .trim()
-
-  // intentar parsear — si falla, reintentar una vez
-  let plan
-  try {
-    plan = JSON.parse(texto)
-  } catch (e) {
-    console.log('JSON inválido, reintentando...')
-
-    // segundo intento con instrucción más estricta
-    respuesta = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 4096,
-      messages: [
-        { role: 'user', content: prompt },
-        { role: 'assistant', content: texto },
-        { role: 'user', content: 'El JSON que devolviste no es válido. Respondé solo con el JSON puro, sin ningún texto extra.' }
-      ]
+    let completion = await client.chat.completions.create({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7,
+        max_tokens: 4096
     })
 
-    texto = respuesta.content[0].text
-      .replace(/```json/g, '')
-      .replace(/```/g, '')
-      .trim()
+    let texto = completion.choices[0].message.content
 
-    plan = JSON.parse(texto) // si falla de nuevo, lanza el error
-  }
+    texto = texto
+        .replace(/```json/g, '')
+        .replace(/```/g, '')
+        .trim()
 
-  return plan
+    let plan
+    try {
+        plan = JSON.parse(texto)
+    } catch (e) {
+        console.log('JSON inválido, reintentando...')
+
+        completion = await client.chat.completions.create({
+            model: 'llama-3.3-70b-versatile',
+            messages: [
+                { role: 'user', content: prompt },
+                { role: 'assistant', content: texto },
+                { role: 'user', content: 'El JSON que devolviste no es válido. Respondé solo con el JSON puro, sin ningún texto extra ni markdown.' }
+            ],
+            temperature: 0.3,
+            max_tokens: 4096
+        })
+
+        texto = completion.choices[0].message.content
+            .replace(/```json/g, '')
+            .replace(/```/g, '')
+            .trim()
+
+        plan = JSON.parse(texto)
+    }
+
+    return plan
 }
 
 module.exports = { generarPlan }

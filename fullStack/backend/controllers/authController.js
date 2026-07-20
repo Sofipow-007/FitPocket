@@ -42,7 +42,7 @@ exports.register = async (req, res) => {
         });
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Error en el servidor');
+        res.status(500).json({ msg: 'Error en el servidor' });
     }
 };
 
@@ -74,6 +74,6 @@ exports.login = async (req, res) => {
         });
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Error en el servidor');
+        res.status(500).json({ msg: 'Error en el servidor' });
     }
 };

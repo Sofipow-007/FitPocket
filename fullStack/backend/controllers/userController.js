@@ -85,6 +85,16 @@ exports.borrarPerfil = async (req, res) => {
     }
 }
 
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find().select('-passwordHash')
+        res.json({ ok: true, users })
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Error en el servidor')
+    }
+}
+
 exports.completarOnboarding = async (req, res) => {
     try {
         const {

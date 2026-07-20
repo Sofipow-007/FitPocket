@@ -5,6 +5,7 @@ const userControl = require('../controllers/userController')
 const roles = require('../middleware/roles')
 
 router.get('/perfil', auth, userControl.getInfo)
+router.get('/todos', auth, userControl.getAllUsers)
 router.put('/actualizar', auth, userControl.actualizarPerfil)
 router.delete('/borrar', auth, roles('admin'), userControl.borrarPerfil)
 
