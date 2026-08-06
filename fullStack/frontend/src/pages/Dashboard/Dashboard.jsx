@@ -5,6 +5,8 @@ import logo from "../../assets/fitpocketlogo(inverted).png";
 import { normalize } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PERFIL, MOCK_PLAN } from "../../mocks/planMock";
+import ChecklistTab from "./ChecklistTab";
+import ProgresoTab from "./ProgresoTab";
 import "./Dashboard.css";
 
 const DIAS_SEMANA      = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
@@ -44,6 +46,14 @@ function getNextSession(rutina) {
   return null;
 }
 
+function getFechaDeIdx(idx) {
+  const hoy = new Date();
+  const diffToMon = (hoy.getDay() + 6) % 7;
+  const d = new Date(hoy);
+  d.setDate(hoy.getDate() - diffToMon + idx);
+  return d.toISOString().split("T")[0];
+}
+
 /* ── Icons ── */
 const IconLogout = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
@@ -59,7 +69,6 @@ const IconBolt = () => (
     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
   </svg>
 );
-
 const IconChevron = () => (
   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2"
     strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -80,9 +89,12 @@ export default function Dashboard() {
   const [searchParams]   = useSearchParams();
   const isPreview        = searchParams.get("preview") === "true";
 
+  const [tab,        setTab]        = useState("home");
   const [loading,    setLoading]    = useState(!isPreview);
   const [perfil,     setPerfil]     = useState(isPreview ? MOCK_PERFIL : null);
   const [plan,       setPlan]       = useState(isPreview ? MOCK_PLAN   : null);
+  const [adherencia, setAdherencia] = useState(null);
+  const [checkinHoy, setCheckinHoy] = useState(null);
   const [error,      setError]      = useState("");
   const [expandedEx, setExpandedEx] = useState(null);
 
@@ -92,26 +104,38 @@ export default function Dashboard() {
     if (!token) { navigate("/"); return; }
     const headers = { Authorization: `Bearer ${token}` };
     Promise.all([
-      fetch("http://localhost:3000/users/perfil", { headers }).then(r => r.ok ? r.json() : null),
-      fetch("http://localhost:3000/plan/actual",  { headers }).then(r => r.ok ? r.json() : null),
+      fetch("http://localhost:3000/users/perfil",   { headers }).then(r => r.ok ? r.json() : null),
+      fetch("http://localhost:3000/plan/actual",     { headers }).then(r => r.ok ? r.json() : null),
+      fetch("http://localhost:3000/checkins/semana", { headers }).then(r => r.ok ? r.json() : null),
+      fetch("http://localhost:3000/checkins/hoy",    { headers }).then(r => r.ok ? r.json() : null),
     ])
-      .then(([p, pl]) => { setPerfil(p); setPlan(pl); })
+      .then(([p, pl, adh, hoy]) => {
+        setPerfil(p);
+        setPlan(pl);
+        if (adh) setAdherencia(adh);
+        if (hoy) setCheckinHoy(hoy.checkin);
+      })
       .catch(() => setError("No se pudo cargar tu información. Revisá tu conexión."))
       .finally(() => setLoading(false));
   }, [navigate, isPreview]);
 
-  const todayIdx      = JS_TO_IDX[new Date().getDay()];
-  const hoy           = DIAS_SEMANA[todayIdx];
-  const nombre        = perfil?.nombre?.split(" ")[0] ?? "";
-  const imc           = calcImc(perfil?.perfil?.peso, perfil?.perfil?.altura);
-  const calorias      = plan?.meta?.caloriasObjetivoDia ?? null;
+  const todayIdx         = JS_TO_IDX[new Date().getDay()];
+  const hoy              = DIAS_SEMANA[todayIdx];
+  const nombre           = perfil?.nombre?.split(" ")[0] ?? "";
+  const imc              = calcImc(perfil?.perfil?.peso, perfil?.perfil?.altura);
+  const calorias         = plan?.meta?.caloriasObjetivoDia ?? null;
   const proximaSesionIdx = getNextSession(plan?.rutina);
-  const rutina        = plan?.rutina ?? [];
-  const hoyRutina     = rutina.find(r => normalize(r.dia) === normalize(hoy));
-  const hoyEntrena    = (hoyRutina?.ejercicios?.length ?? 0) > 0;
-  const hoyDieta      = plan?.dieta?.find(d => normalize(d.dia) === normalize(hoy));
-  const minutos       = perfil?.perfil?.minutosPorSesion;
-  const nivel         = perfil?.perfil?.nivel;
+  const rutina           = plan?.rutina ?? [];
+  const hoyRutina        = rutina.find(r => normalize(r.dia) === normalize(hoy));
+  const hoyEntrena       = (hoyRutina?.ejercicios?.length ?? 0) > 0;
+  const hoyDieta         = plan?.dieta?.find(d => normalize(d.dia) === normalize(hoy));
+  const minutos          = perfil?.perfil?.minutosPorSesion;
+  const nivel            = perfil?.perfil?.nivel;
+
+  const pct = adherencia?.porcentaje ?? null;
+  const pctColor = pct == null ? undefined
+    : pct >= 70 ? "#00E887"
+    : pct >= 50 ? "#F59E0B" : "#EF4444";
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -121,10 +145,8 @@ export default function Dashboard() {
   return (
     <div className="db-page">
 
-      {/* ── Navbar: perfil | logo | controles ── */}
+      {/* ── Navbar ── */}
       <nav className="db-nav">
-
-        {/* Left: perfil */}
         <div className="db-nav__perfil">
           <div className="db-nav__avatar" aria-hidden="true">
             {nombre?.[0]?.toUpperCase() ?? "U"}
@@ -134,11 +156,7 @@ export default function Dashboard() {
             {nivel && <span className="db-nav__nivel">{nivel}</span>}
           </div>
         </div>
-
-        {/* Center: logo */}
         <img src={logo} alt="FitPocket" className="db-nav__logo" />
-
-        {/* Right: controles */}
         <div className="db-nav__right">
           <div className="db-lang" role="group" aria-label="Idioma">
             <button
@@ -158,6 +176,17 @@ export default function Dashboard() {
 
       <main className="db-main">
 
+        {/* ── Tabs ── */}
+        <div className="db-tabs" role="tablist">
+          {[["home", "Inicio"], ["checklist", "Checklist"], ["progreso", "Progreso"]].map(([id, label]) => (
+            <button key={id} role="tab" aria-selected={tab === id}
+              className={`db-tab${tab === id ? " db-tab--on" : ""}`}
+              onClick={() => setTab(id)}>
+              {label}
+            </button>
+          ))}
+        </div>
+
         {/* ── Skeleton ── */}
         {loading && (
           <div className="db-skeleton-wrap" aria-busy="true" aria-label="Cargando...">
@@ -172,12 +201,18 @@ export default function Dashboard() {
 
         {!loading && error && <p className="db-error" role="alert">{t("dashboard.errorConexion")}</p>}
 
-        {!loading && !error && (
+        {!loading && !error && tab === "home" && (
           <>
-            {/* ══ HERO — 2 columnas ══ */}
-            <section className="db-hero">
+            {/* ── Banner alerta ── */}
+            {pct != null && pct < 50 && (
+              <div className="db-alerta-banner" role="alert">
+                <span>⚠️</span>
+                <span>Tu adherencia esta semana es baja. El lunes tu plan se ajustará automáticamente.</span>
+              </div>
+            )}
 
-              {/* Col izquierda: saludo + números + CTA */}
+            {/* ══ HERO ══ */}
+            <section className="db-hero">
               <div className="db-hero__left">
                 <div>
                   <h1 className="db-hero__greeting">
@@ -201,6 +236,13 @@ export default function Dashboard() {
                     <span className="db-strip__val">{imc ?? "—"}</span>
                     <span className="db-strip__label">{t("dashboard.imc")}</span>
                   </div>
+                  <span className="db-strip__sep" aria-hidden="true" />
+                  <div className="db-strip__item">
+                    <span className="db-strip__val" style={{ color: pctColor }}>
+                      {pct != null ? `${pct}%` : "—"}
+                    </span>
+                    <span className="db-strip__label">adherencia</span>
+                  </div>
                 </div>
 
                 <button
@@ -211,7 +253,7 @@ export default function Dashboard() {
                 </button>
               </div>
 
-              {/* Col derecha: bloque de hoy */}
+              {/* Bloque de hoy */}
               <div className={`db-today${hoyEntrena ? " db-today--activo" : " db-today--descanso"}`}>
                 <div className="db-today__head">
                   <span className="db-today__estado">
@@ -270,22 +312,28 @@ export default function Dashboard() {
               </div>
             </section>
 
-            {/* ══ SEMANA — tira de puntos ══ */}
+            {/* ══ SEMANA ══ */}
             <section className="db-section" id="db-semana">
               <h2 className="db-section__title">{t("dashboard.semana")}</h2>
               <div className="db-week" role="list" aria-label={t("dashboard.semana")}>
                 {DIAS_SEMANA.map((dia, idx) => {
-                  const diaData = rutina.find(r => normalize(r.dia) === normalize(dia));
-                  const entrena = (diaData?.ejercicios?.length ?? 0) > 0;
-                  const esHoy   = dia === hoy;
+                  const diaData  = rutina.find(r => normalize(r.dia) === normalize(dia));
+                  const entrena  = (diaData?.ejercicios?.length ?? 0) > 0;
+                  const esHoy    = dia === hoy;
+                  const fecha    = getFechaDeIdx(idx);
+                  const checkin  = adherencia?.semana?.find(s => s.fecha === fecha)?.checkin;
+                  const dotColor = !entrena
+                    ? "rgba(255,255,255,0.12)"
+                    : !checkin
+                    ? "rgba(255,255,255,0.15)"
+                    : checkin.puntajeTotal >= 1.5 ? "#00E887"
+                    : checkin.puntajeTotal >= 0.5 ? "#F59E0B" : "#EF4444";
+
                   return (
-                    <div
-                      key={dia}
-                      role="listitem"
-                      className={`db-wday${esHoy ? " db-wday--hoy" : ""}${entrena ? " db-wday--entrena" : ""}`}
-                    >
+                    <div key={dia} role="listitem"
+                      className={`db-wday${esHoy ? " db-wday--hoy" : ""}${entrena ? " db-wday--entrena" : ""}`}>
                       <span className="db-wday__nom">{t(DIAS_CORTOS_KEYS[idx])}</span>
-                      <span className="db-wday__dot" aria-hidden="true" />
+                      <span className="db-wday__dot" style={{ background: dotColor }} aria-hidden="true" />
                       {esHoy && <span className="db-wday__hoy-tag">{t("dashboard.hoy")}</span>}
                     </div>
                   );
@@ -293,7 +341,7 @@ export default function Dashboard() {
               </div>
             </section>
 
-            {/* ══ DIETA — timeline vertical ══ */}
+            {/* ══ DIETA ══ */}
             <section className="db-section">
               <h2 className="db-section__title">{t("dashboard.dietaHoy")}</h2>
               <div className="db-timeline">
@@ -324,6 +372,25 @@ export default function Dashboard() {
             </section>
           </>
         )}
+
+        {!loading && !error && tab === "checklist" && (
+          <ChecklistTab
+            checkinHoy={checkinHoy}
+            onGuardado={(c) => {
+              setCheckinHoy(c);
+              // refrescar adherencia
+              const token = localStorage.getItem("token");
+              fetch("http://localhost:3000/checkins/semana", {
+                headers: { Authorization: `Bearer ${token}` }
+              }).then(r => r.ok ? r.json() : null).then(adh => { if (adh) setAdherencia(adh); });
+            }}
+          />
+        )}
+
+        {!loading && !error && tab === "progreso" && (
+          <ProgresoTab adherencia={adherencia} perfil={perfil} />
+        )}
+
       </main>
     </div>
   );

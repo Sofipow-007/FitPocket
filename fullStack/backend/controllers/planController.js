@@ -1,4 +1,4 @@
-const { dispararPlan } = require('../services/webhookService')
+const { generarPlan } = require('../services/iaService')
 const User = require('../models/User')
 const Plan = require('../models/Plan')
 
@@ -12,60 +12,32 @@ exports.generarPlan = async (req, res) => {
 
     const perfil = user.perfil || {}
     if (!perfil.objetivo || !(perfil.diasDispo?.length)) {
-      return res.status(400).json({ error: 'Falta el perfil del usuario' })
+      return res.status(400).json({ error: 'Falta completar el perfil antes de generar un plan' })
     }
 
     const perfilCompleto = {
       ...perfil,
-      diasDispo:        perfil.diasDispo || [],
-      tipoDieta:        perfil.tipoDieta || 'normal',
-      limitaciones:     perfil.limitaciones || [],
+      diasDispo:        perfil.diasDispo        || [],
+      tipoDieta:        perfil.tipoDieta        || 'normal',
+      limitaciones:     perfil.limitaciones     || [],
       minutosPorSesion: perfil.minutosPorSesion || 45,
-      presupuesto:      perfil.presupuesto || 15000,
-      nivel:            perfil.nivel || 'principiante'
+      presupuesto:      perfil.presupuesto      || 15000,
+      nivel:            perfil.nivel            || 'principiante'
     }
 
-    let respuestaN8N
-    try {
-      respuestaN8N = await dispararPlan(userId.toString(), perfilCompleto)
-      console.log('Respuesta webhook n8n:', JSON.stringify(respuestaN8N, null, 2))
+    const planGenerado = await generarPlan(perfilCompleto)
 
-      if (!respuestaN8N?.plan) throw new Error('N8N no devolvió un plan')
-    } catch (n8nError) {
-      console.error('N8N no disponible:', n8nError.message)
-      return res.status(503).json({ error: 'El servicio de generación no está disponible. Intentá de nuevo.' })
-    }
+    await Plan.updateMany({ userId, estado: 'activo' }, { $set: { estado: 'archivado' } })
 
-    const planData = typeof respuestaN8N.plan === 'string'
-      ? JSON.parse(respuestaN8N.plan)
-      : respuestaN8N.plan
-
-    const planToSave = {
+    const savedPlan = await Plan.create({
       userId,
-      meta: {
-        objetivo: perfilCompleto.objetivo,
-        nivel: perfilCompleto.nivel,
-        tipoDieta: perfilCompleto.tipoDieta,
-        diasDisponibles: perfilCompleto.diasDispo || [],
-        minutosPorSesion: perfilCompleto.minutosPorSesion,
-        presupuesto: perfilCompleto.presupuesto
-      },
-      rutina: Array.isArray(planData.rutina) ? planData.rutina : [],
-      dieta: Array.isArray(planData.dieta) ? planData.dieta : []
-    }
+      estado: 'activo',
+      meta:   planGenerado.meta,
+      rutina: planGenerado.rutina,
+      dieta:  planGenerado.dieta
+    })
 
-    try {
-      await Plan.updateMany({ userId, estado: 'activo' }, { estado: 'archivado' })
-      const savedPlan = await Plan.create(planToSave)
-
-      return res.json({
-        ok: true,
-        plan: savedPlan
-      })
-    } catch (dbError) {
-      console.error('Error al guardar el plan en MongoDB:', dbError)
-      return res.status(500).json({ error: 'No se pudo guardar el plan generado' })
-    }
+    return res.json({ ok: true, plan: savedPlan })
 
   } catch (error) {
     console.error('Error al generar el plan:', error)
