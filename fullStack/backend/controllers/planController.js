@@ -1,4 +1,4 @@
-const { dispararPlan } = require('../services/webhookService')
+const { generarPlan } = require('../services/iaService')
 const User = require('../models/User')
 const Plan = require('../models/Plan')
 
@@ -17,31 +17,32 @@ exports.generarPlan = async (req, res) => {
 
     const perfilCompleto = {
       ...perfil,
-      diasDispo:        perfil.diasDispo || [],
-      tipoDieta:        perfil.tipoDieta || 'normal',
-      limitaciones:     perfil.limitaciones || [],
+      diasDispo: perfil.diasDispo || [],
+      tipoDieta: perfil.tipoDieta || 'normal',
+      limitaciones: perfil.limitaciones || [],
       minutosPorSesion: perfil.minutosPorSesion || 45,
-      presupuesto:      perfil.presupuesto || 15000,
-      nivel:            perfil.nivel || 'principiante'
+      presupuesto: perfil.presupuesto || 15000,
+      nivel: perfil.nivel || 'principiante'
     }
 
-    let respuestaN8N
+    // Llamar a Groq directamente a través de iaService
+
     try {
-      respuestaN8N = await dispararPlan(userId.toString(), perfilCompleto)
-      console.log('Respuesta webhook n8n:', JSON.stringify(respuestaN8N, null, 2))
-
-      if (!respuestaN8N?.plan) throw new Error('N8N no devolvió un plan')
-    } catch (n8nError) {
-      console.error('N8N no disponible:', n8nError.message)
-      return res.status(503).json({ error: 'El servicio de generación no está disponible. Intentá de nuevo.' })
+      planData = await generarPlan(perfilCompleto)
+      
+      if (!planData) throw new Error('iaService no devolvió un plan')
+    } catch (iaError) {
+      console.error('Error al generar plan con Groq:', iaError.message)
+      return res.status(503).json({ error: 'El servicio de IA no está disponible. Intentá de nuevo.' })
     }
 
-    const planData = typeof respuestaN8N.plan === 'string'
-      ? JSON.parse(respuestaN8N.plan)
-      : respuestaN8N.plan
+    await Plan.updateMany({ userId, estado: 'activo' }, { estado: 'archivado' })
 
-    const planToSave = {
+    // Guardar plan nuevo en MongoDB
+
+    const savedPlan = await Plan.create({
       userId,
+      estado: 'activo',
       meta: {
         objetivo: perfilCompleto.objetivo,
         nivel: perfilCompleto.nivel,
@@ -52,20 +53,12 @@ exports.generarPlan = async (req, res) => {
       },
       rutina: Array.isArray(planData.rutina) ? planData.rutina : [],
       dieta: Array.isArray(planData.dieta) ? planData.dieta : []
-    }
+    })
 
-    try {
-      await Plan.updateMany({ userId, estado: 'activo' }, { estado: 'archivado' })
-      const savedPlan = await Plan.create(planToSave)
-
-      return res.json({
-        ok: true,
-        plan: savedPlan
-      })
-    } catch (dbError) {
-      console.error('Error al guardar el plan en MongoDB:', dbError)
-      return res.status(500).json({ error: 'No se pudo guardar el plan generado' })
-    }
+    return res.json({
+      ok: true,
+      plan: savedPlan
+    })
 
   } catch (error) {
     console.error('Error al generar el plan:', error)
