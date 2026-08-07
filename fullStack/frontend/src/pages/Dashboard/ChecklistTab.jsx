@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './ChecklistTab.css'
 
 const OPCIONES = [
   { id: 'completado', label: 'Completado', color: '#00E887' },
