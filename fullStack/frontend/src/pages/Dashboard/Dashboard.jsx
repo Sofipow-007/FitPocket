@@ -382,7 +382,7 @@ export default function Dashboard() {
               const token = localStorage.getItem("token");
               fetch("http://localhost:3000/checkin/semana", {
                 headers: { Authorization: `Bearer ${token}` }
-              }).then(r => r.ok ? r.json() : null).then(adh => { if (adh) setAdherencia(adh); });
+              }).then(r => r.ok ? r.json() : null).then(adh => { if (adh) setAdherencia(adh); }).catch(() => {});
             }}
           />
         )}
