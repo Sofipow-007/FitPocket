@@ -106,8 +106,8 @@ export default function Dashboard() {
     Promise.all([
       fetch("http://localhost:3000/users/perfil",   { headers }).then(r => r.ok ? r.json() : null),
       fetch("http://localhost:3000/plan/actual",     { headers }).then(r => r.ok ? r.json() : null),
-      fetch("http://localhost:3000/checkins/semana", { headers }).then(r => r.ok ? r.json() : null),
-      fetch("http://localhost:3000/checkins/hoy",    { headers }).then(r => r.ok ? r.json() : null),
+      fetch("http://localhost:3000/checkin/semana", { headers }).then(r => r.ok ? r.json() : null),
+      fetch("http://localhost:3000/checkin/hoy",    { headers }).then(r => r.ok ? r.json() : null),
     ])
       .then(([p, pl, adh, hoy]) => {
         setPerfil(p);
@@ -380,7 +380,7 @@ export default function Dashboard() {
               setCheckinHoy(c);
               // refrescar adherencia
               const token = localStorage.getItem("token");
-              fetch("http://localhost:3000/checkins/semana", {
+              fetch("http://localhost:3000/checkin/semana", {
                 headers: { Authorization: `Bearer ${token}` }
               }).then(r => r.ok ? r.json() : null).then(adh => { if (adh) setAdherencia(adh); });
             }}

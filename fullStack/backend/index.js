@@ -19,7 +19,7 @@ server.use('/users', require('./routes/userRoutes'));
 server.use('/plan', require('./routes/planRoutes'))
 const PORT = process.env.PORT || 3001;
 
-server.use('/checkins', require('./routes/checkinRoutes'))
+server.use('/checkin', require('./routes/checkinRoutes'))
 
 server.listen(PORT, () => {
     console.log(`Servidor de FitPocket corriendo en puerto ${PORT}`);
