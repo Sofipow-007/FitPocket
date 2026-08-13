@@ -18,12 +18,19 @@ const planSchema = new mongoose.Schema({
     meta: {
         objetivo: String,
         nivel: String,
+        duracionSemanas: Number,
+        caloriasObjetivoDia: Number,
+        nivelDificultad: ['principiante', 'intermedio', 'avanzado'],
+        justificacion: String,
         tipoDieta: String,
         diasDisponibles: [String],
-        minutosPorSesion: Number
+        minutosPorSesion: Number,
+        presupuestoMensual: Number
     },
     rutina: [{
         dia: String,
+        tipo: String,
+        duracionMinutos: Number,
         ejercicios: mongoose.Schema.Types.Mixed
     }],
     dieta: [{
