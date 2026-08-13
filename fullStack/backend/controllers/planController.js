@@ -37,6 +37,8 @@ exports.generarPlan = async (req, res) => {
       dieta:  planGenerado.dieta
     })
 
+    console.log('Plan generado y guardado exitosamente para el usuario. ', savedPlan)
+
     return res.json({ ok: true, plan: savedPlan })
 
   } catch (error) {

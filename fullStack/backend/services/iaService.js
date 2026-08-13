@@ -34,6 +34,10 @@ El JSON debe tener exactamente esta estructura:
     "caloriasObjetivoDia": número,
     "nivelDificultad": "principiante|intermedio|avanzado",
     "justificacion": "string explicando el plan"
+    "tipoDieta": "string",
+    "diasDisponibles": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
+    "minutosPorSesion": número,
+    "presupuestoMensual": número
   },
   "rutina": [
     {
@@ -63,10 +67,12 @@ El JSON debe tener exactamente esta estructura:
   "dieta": [
     {
       "dia": "Lunes",
-      "desayuno": { "descripcion": "string", "calorias": número },
-      "almuerzo": { "descripcion": "string", "calorias": número },
-      "merienda": { "descripcion": "string", "calorias": número },
-      "cena": { "descripcion": "string", "calorias": número },
+      "comida": {
+        "desayuno": { "descripcion": "string", "calorias": número },
+        "almuerzo": { "descripcion": "string", "calorias": número },
+        "merienda": { "descripcion": "string", "calorias": número },
+        "cena": { "descripcion": "string", "calorias": número }
+      },
       "costoEstimadoDia": número
     }
   ]

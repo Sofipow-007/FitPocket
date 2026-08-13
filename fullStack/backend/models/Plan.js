@@ -28,7 +28,8 @@ const planSchema = new mongoose.Schema({
     }],
     dieta: [{
         dia: String,
-        comida: mongoose.Schema.Types.Mixed
+        comida: mongoose.Schema.Types.Mixed,
+        costoEstimadoDia: Number
     }]
 }, {
     timestamps: true
