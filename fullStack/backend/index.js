@@ -1,67 +1,23 @@
-const { generarPlan } = require('../services/iaService')
-const User = require('../models/User')
-const Plan = require('../models/Plan')
+require('dotenv').config();
 
-exports.generarPlan = async (req, res) => {
-  try {
-    const userId = req.user?.userId
-    if (!userId) return res.status(401).json({ error: 'Token inválido o faltante' })
+const express = require('express')
+const cors = require('cors')
+const connectDB = require('./config/db')
 
-    const user = await User.findById(userId)
-    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' })
+const server = express()
 
-    const perfil = user.perfil || {}
-    if (!perfil.objetivo || !(perfil.diasDispo?.length)) {
-      return res.status(400).json({ error: 'Falta completar el perfil antes de generar un plan' })
-    }
+connectDB()
 
-    const perfilCompleto = {
-      ...perfil,
-      diasDispo:        perfil.diasDispo        || [],
-      tipoDieta:        perfil.tipoDieta        || 'normal',
-      limitaciones:     perfil.limitaciones     || [],
-      minutosPorSesion: perfil.minutosPorSesion || 45,
-      presupuesto:      perfil.presupuesto      || 15000,
-      nivel:            perfil.nivel            || 'principiante'
-    }
+server.use(cors())
+server.use(express.json())
 
-    let planGenerado
-    try {
-      planGenerado = await generarPlan(perfilCompleto)
-      if (!planGenerado) throw new Error('iaService no devolvió un plan')
-    } catch (iaError) {
-      console.error('Error al generar plan con Groq:', iaError.message)
-      return res.status(503).json({ error: 'El servicio de IA no está disponible. Intentá de nuevo.' })
-    }
+server.use('/auth',    require('./routes/authRoutes'))
+server.use('/users',   require('./routes/userRoutes'))
+server.use('/plan',    require('./routes/planRoutes'))
+server.use('/checkins', require('./routes/checkinRoutes'))
 
-    await Plan.updateMany({ userId, estado: 'activo' }, { $set: { estado: 'archivado' } })
+const PORT = process.env.PORT || 3001;
 
-    const savedPlan = await Plan.create({
-      userId,
-      estado: 'activo',
-      meta:   planGenerado.meta,
-      rutina: planGenerado.rutina,
-      dieta:  planGenerado.dieta
-    })
-
-    console.log('Plan generado y guardado exitosamente para el usuario. ', savedPlan)
-
-    return res.json({ ok: true, plan: savedPlan })
-
-  } catch (error) {
-    console.error('Error al generar el plan:', error)
-    return res.status(500).json({ error: 'Error interno del servidor' })
-  }
-}
-
-exports.getPlanActual = async (req, res) => {
-  try {
-    const userId = req.user.userId
-    const plan = await Plan.findOne({ userId, estado: 'activo' })
-    if (!plan) return res.status(404).json({ error: 'Sin plan activo' })
-    res.json(plan)
-  } catch (error) {
-    console.error('Error al obtener el plan actual:', error)
-    return res.status(500).json({ error: 'Error interno del servidor' })
-  }
-}
+server.listen(PORT, () => {
+    console.log(`Servidor de FitPocket corriendo en puerto ${PORT}`);
+});
