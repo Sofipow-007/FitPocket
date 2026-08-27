@@ -20,7 +20,7 @@ const planSchema = new mongoose.Schema({
         nivel: String,
         duracionSemanas: Number,
         caloriasObjetivoDia: Number,
-        nivelDificultad: ['principiante', 'intermedio', 'avanzado'],
+        nivelDificultad: { type: String, enum: ['principiante', 'intermedio', 'avanzado'] },
         justificacion: String,
         tipoDieta: String,
         diasDisponibles: [String],
