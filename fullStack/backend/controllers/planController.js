@@ -17,12 +17,12 @@ exports.generarPlan = async (req, res) => {
 
     const perfilCompleto = {
       ...perfil,
-      diasDispo:        perfil.diasDispo        || [],
-      tipoDieta:        perfil.tipoDieta        || 'normal',
-      limitaciones:     perfil.limitaciones     || [],
+      diasDispo: perfil.diasDispo        || [],
+      tipoDieta: perfil.tipoDieta        || 'normal',
+      limitaciones: perfil.limitaciones     || [],
       minutosPorSesion: perfil.minutosPorSesion || 45,
-      presupuesto:      perfil.presupuesto      || 15000,
-      nivel:            perfil.nivel            || 'principiante'
+      presupuesto: perfil.presupuesto || 15000,
+      nivel: perfil.nivel || 'principiante'
     }
 
     const planGenerado = await generarPlan(perfilCompleto)
@@ -30,16 +30,40 @@ exports.generarPlan = async (req, res) => {
     await Plan.updateMany({ userId, estado: 'activo' }, { $set: { estado: 'archivado' } })
 
     const savedPlan = await Plan.create({
+    // Llamar a Groq directamente a través de iaService
+
+    try {
+      planData = await generarPlan(perfilCompleto)
+      
+      if (!planData) throw new Error('iaService no devolvió un plan')
+    } catch (iaError) {
+      console.error('Error al generar plan con Groq:', iaError.message)
+      return res.status(503).json({ error: 'El servicio de IA no está disponible. Intentá de nuevo.' })
+    }
+
+    await Plan.updateMany({ userId, estado: 'activo' }, { estado: 'archivado' })
+
+    // Guardar plan nuevo en MongoDB
+
+    const savedPlan = await Plan.create({
       userId,
       estado: 'activo',
-      meta:   planGenerado.meta,
-      rutina: planGenerado.rutina,
-      dieta:  planGenerado.dieta
+      meta: {
+        objetivo: perfilCompleto.objetivo,
+        nivel: perfilCompleto.nivel,
+        tipoDieta: perfilCompleto.tipoDieta,
+        diasDisponibles: perfilCompleto.diasDispo || [],
+        minutosPorSesion: perfilCompleto.minutosPorSesion,
+        presupuesto: perfilCompleto.presupuesto
+      },
+      rutina: Array.isArray(planData.rutina) ? planData.rutina : [],
+      dieta: Array.isArray(planData.dieta) ? planData.dieta : []
     })
 
-    console.log('Plan generado y guardado exitosamente para el usuario. ', savedPlan)
-
-    return res.json({ ok: true, plan: savedPlan })
+    return res.json({
+      ok: true,
+      plan: savedPlan
+    })
 
   } catch (error) {
     console.error('Error al generar el plan:', error)
