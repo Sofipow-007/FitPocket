@@ -88,10 +88,10 @@ ocurre una alternativa razonable, dejá el array vacío [].
 `
 
   let completion = await client.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'qwen/qwen3.6-27b',
     messages: [{ role: 'user', content: prompt }],
     temperature: 0.7,
-    max_tokens: 4096
+    max_tokens: 8000
   })
 
   let texto = completion.choices[0].message.content
@@ -108,14 +108,14 @@ ocurre una alternativa razonable, dejá el array vacío [].
     console.log('JSON inválido, reintentando...')
 
     completion = await client.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: 'qwen/qwen3.6-27b',
       messages: [
         { role: 'user', content: prompt },
         { role: 'assistant', content: texto },
         { role: 'user', content: 'El JSON que devolviste no es válido. Respondé solo con el JSON puro, sin ningún texto extra ni markdown.' }
       ],
       temperature: 0.3,
-      max_tokens: 4096
+      max_tokens: 8000
     })
 
     texto = completion.choices[0].message.content
