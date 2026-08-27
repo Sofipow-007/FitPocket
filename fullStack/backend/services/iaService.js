@@ -1,132 +1,45 @@
 const Groq = require('groq-sdk')
 
-const client = new Groq({
-  apiKey: process.env.GROQ_API_KEY
-})
+const client = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
 const generarPlan = async (perfil) => {
+  const dias = perfil.diasDispo.join(', ')
 
-  const prompt = `
-Sos un entrenador personal y nutricionista experto.
-Generá un plan de entrenamiento y alimentación personalizado
-basado en los siguientes datos del usuario:
+  const prompt = `Sos entrenador personal y nutricionista. Generá un plan en JSON puro (sin markdown) con esta estructura exacta:
+{"meta":{"objetivo":"","duracionSemanas":0,"caloriasObjetivoDia":0,"nivelDificultad":"","justificacion":"","tipoDieta":"","diasDisponibles":[],"minutosPorSesion":0,"presupuestoMensual":0},"rutina":[{"dia":"","tipo":"","duracionMinutos":0,"ejercicios":[{"nombre":"","series":0,"repeticiones":"","descansoSegundos":0,"nota":"","alternativas":[]}]}],"dieta":[{"dia":"","comida":{"desayuno":{"descripcion":"","calorias":0},"almuerzo":{"descripcion":"","calorias":0},"merienda":{"descripcion":"","calorias":0},"cena":{"descripcion":"","calorias":0}},"costoEstimadoDia":0}]}
 
-- Peso: ${perfil.peso} kg
-- Altura: ${perfil.altura} cm
-- Edad: ${perfil.edad} años
-- Sexo: ${perfil.sexo}
-- Objetivo: ${perfil.objetivo}
-- Nivel de experiencia: ${perfil.nivel}
-- Días disponibles: ${perfil.diasDispo.join(', ')}
-- Minutos por sesión: ${perfil.minutosPorSesion}
-- Tipo de dieta: ${perfil.tipoDieta}
-- Presupuesto mensual para comida: $${perfil.presupuesto}
-- Limitaciones físicas: ${perfil.limitaciones.length > 0 ? perfil.limitaciones.join(', ') : 'ninguna'}
+Datos del usuario:
+- Peso: ${perfil.peso}kg, Altura: ${perfil.altura}cm, Edad: ${perfil.edad}, Sexo: ${perfil.sexo}
+- Objetivo: ${perfil.objetivo}, Nivel: ${perfil.nivel}
+- Días disponibles: ${dias} (solo estos días van en rutina)
+- Minutos/sesión: ${perfil.minutosPorSesion}, Dieta: ${perfil.tipoDieta}
+- Presupuesto: $${perfil.presupuesto}/mes
+- Limitaciones: ${perfil.limitaciones.length ? perfil.limitaciones.join(', ') : 'ninguna'}
 
-Respondé ÚNICAMENTE con un JSON válido, sin texto adicional,
-sin markdown, sin bloques de código. Solo el JSON puro.
+La dieta incluye los 7 días. La rutina solo los días disponibles. Máximo 2 alternativa por ejercicio. Solo JSON puro.`
 
-El JSON debe tener exactamente esta estructura:
-{
-  "meta": {
-    "objetivo": "string",
-    "duracionSemanas": número,
-    "caloriasObjetivoDia": número,
-    "nivelDificultad": "principiante|intermedio|avanzado",
-    "justificacion": "string explicando el plan"
-    "tipoDieta": "string",
-    "diasDisponibles": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
-    "minutosPorSesion": número,
-    "presupuestoMensual": número
-  },
-  "rutina": [
-    {
-      "dia": "Lunes",
-      "tipo": "string",
-      "duracionMinutos": número,
-      "ejercicios": [
-        {
-          "nombre": "string",
-          "series": número,
-          "repeticiones": "string",
-          "descansoSegundos": número,
-          "nota": "string",
-          "alternativas": [
-            {
-              "nombre": "string",
-              "series": número,
-              "repeticiones": "string",
-              "descansoSegundos": número,
-              "nota": "string"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "dieta": [
-    {
-      "dia": "Lunes",
-      "comida": {
-        "desayuno": { "descripcion": "string", "calorias": número },
-        "almuerzo": { "descripcion": "string", "calorias": número },
-        "merienda": { "descripcion": "string", "calorias": número },
-        "cena": { "descripcion": "string", "calorias": número }
-      },
-      "costoEstimadoDia": número
-    }
-  ]
-}
-
-La rutina y la dieta deben tener los 7 días de la semana.
-Los días que el usuario no entrena, el campo ejercicios va vacío [].
-
-Para cada ejercicio, incluí 1 o 2 "alternativas": ejercicios que trabajen el
-mismo grupo muscular y sirvan para el mismo objetivo, para que el usuario
-pueda reemplazarlo si no tiene el equipo o prefiere variar. Si no se te
-ocurre una alternativa razonable, dejá el array vacío [].
-`
-
-  let completion = await client.chat.completions.create({
+  const call = (msgs, temp) => client.chat.completions.create({
     model: 'qwen/qwen3.6-27b',
-    messages: [{ role: 'user', content: prompt }],
-    temperature: 0.7,
-    max_tokens: 8000
+    messages: msgs,
+    temperature: temp,
+    max_tokens: 3000
   })
 
-  let texto = completion.choices[0].message.content
+  let res = await call([{ role: 'user', content: prompt }], 0.7)
+  let texto = res.choices[0].message.content.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/```json/g, '').replace(/```/g, '').trim()
 
-  texto = texto
-    .replace(/```json/g, '')
-    .replace(/```/g, '')
-    .trim()
-
-  let plan
   try {
-    plan = JSON.parse(texto)
-  } catch (e) {
+    return JSON.parse(texto)
+  } catch {
     console.log('JSON inválido, reintentando...')
-
-    completion = await client.chat.completions.create({
-      model: 'qwen/qwen3.6-27b',
-      messages: [
-        { role: 'user', content: prompt },
-        { role: 'assistant', content: texto },
-        { role: 'user', content: 'El JSON que devolviste no es válido. Respondé solo con el JSON puro, sin ningún texto extra ni markdown.' }
-      ],
-      temperature: 0.3,
-      max_tokens: 8000
-    })
-
-    texto = completion.choices[0].message.content
-      .replace(/```json/g, '')
-      .replace(/```/g, '')
-      .trim()
-
-    plan = JSON.parse(texto)
+    res = await call([
+      { role: 'user', content: prompt },
+      { role: 'assistant', content: texto },
+      { role: 'user', content: 'Devolvé solo el JSON puro, sin texto extra.' }
+    ], 0.3)
+    texto = res.choices[0].message.content.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/```json/g, '').replace(/```/g, '').trim()
+    return JSON.parse(texto)
   }
-
-  return plan
 }
 
 module.exports = { generarPlan }

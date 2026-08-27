@@ -36,6 +36,10 @@ exports.generarPlan = async (req, res) => {
 
     await Plan.updateMany({ userId, estado: 'activo' }, { $set: { estado: 'archivado' } })
 
+    if (planGenerado.meta?.nivelDificultad) {
+      planGenerado.meta.nivelDificultad = planGenerado.meta.nivelDificultad.toLowerCase()
+    }
+
     const savedPlan = await Plan.create({
       userId,
       estado: 'activo',
