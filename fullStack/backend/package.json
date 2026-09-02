@@ -6,7 +6,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "install:ollama": "winget install Ollama.Ollama",
-    "pull:modelo": "ollama pull llama3.2"
+    "pull:modelo": "ollama pull llama3"
   },
   "keywords": [],
   "author": "",
