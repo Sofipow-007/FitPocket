@@ -1,41 +1,43 @@
-const SEMANAS = ['Hace 4 sem', 'Hace 3 sem', 'Hace 2 sem', 'Esta sem']
-
 export default function ProgresoTab({ adherencia, perfil }) {
-  const peso = perfil?.perfil?.peso ?? null
+  const peso   = perfil?.perfil?.peso ?? null
+  const semana = adherencia?.semana ?? []
 
-  // Por ahora la adherencia semanal la tomamos como dato actual
-  // Cuando haya histórico, esto vendrá de la API
-  const barras = [
-    { label: SEMANAS[0], valor: 0 },
-    { label: SEMANAS[1], valor: 0 },
-    { label: SEMANAS[2], valor: 0 },
-    { label: SEMANAS[3], valor: adherencia?.porcentaje ?? 0 },
-  ]
-
-  const maxBar = 100
+  // Barras por día de la semana actual (dato real, viene de /checkins/semana).
+  // Todavía no hay histórico de semanas anteriores, así que no se inventan
+  // ceros: un día sin checkin se muestra vacío ('—'), no como 0%.
+  const barras = semana.map(({ fecha, checkin }) => ({
+    label: new Date(`${fecha}T00:00:00`).toLocaleDateString('es-AR', { weekday: 'short' }),
+    valor: checkin ? Math.round((checkin.puntajeTotal / 2) * 100) : null,
+  }))
 
   return (
     <div className="prog-wrap">
       {/* Adherencia — barras */}
       <section className="prog-section">
-        <h3 className="prog-title">Adherencia semanal</h3>
-        <div className="prog-barras">
-          {barras.map(({ label, valor }) => {
-            const color = valor >= 70 ? '#00E887' : valor >= 50 ? '#F59E0B' : valor > 0 ? '#EF4444' : 'rgba(255,255,255,0.1)'
-            return (
-              <div key={label} className="prog-barra-col">
-                <div className="prog-barra-track">
-                  <div
-                    className="prog-barra-fill"
-                    style={{ height: `${(valor / maxBar) * 100}%`, background: color }}
-                  />
+        <h3 className="prog-title">Adherencia de esta semana</h3>
+        {barras.length > 0 ? (
+          <div className="prog-barras">
+            {barras.map(({ label, valor }, i) => {
+              const color = valor == null
+                ? 'rgba(255,255,255,0.1)'
+                : valor >= 70 ? '#00E887' : valor >= 50 ? '#F59E0B' : '#EF4444'
+              return (
+                <div key={`${label}-${i}`} className="prog-barra-col">
+                  <div className="prog-barra-track">
+                    <div
+                      className="prog-barra-fill"
+                      style={{ height: `${valor ?? 0}%`, background: color }}
+                    />
+                  </div>
+                  <span className="prog-barra-val">{valor != null ? `${valor}%` : '—'}</span>
+                  <span className="prog-barra-label">{label}</span>
                 </div>
-                <span className="prog-barra-val">{valor > 0 ? `${valor}%` : '—'}</span>
-                <span className="prog-barra-label">{label}</span>
-              </div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        ) : (
+          <p className="prog-empty">Todavía no tenés registros de adherencia.</p>
+        )}
       </section>
 
       {/* Peso */}
