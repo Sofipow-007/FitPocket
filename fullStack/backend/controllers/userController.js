@@ -1,4 +1,6 @@
 const User = require('../models/User')
+const Plan = require('../models/Plan')
+const Checkin = require('../models/Checkin')
 const { calcularDVH, calcularDVV } = require('../utils/digitosVerificadores')
 const { encrypt, decrypt } = require('../utils/crypto')
 
@@ -76,6 +78,9 @@ exports.borrarPerfil = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado" })
         }
+
+        await Plan.deleteMany({ userId: user._id })
+        await Checkin.deleteMany({ userId: user._id })
 
         res.json({
             message: 'Usuario eliminado correctamente',

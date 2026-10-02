@@ -5,9 +5,9 @@ const userControl = require('../controllers/userController')
 const roles = require('../middleware/roles')
 
 router.get('/perfil', auth, userControl.getInfo)
-router.get('/todos', auth, userControl.getAllUsers)
+router.get('/todos', auth, roles('admin'), userControl.getAllUsers)
 router.put('/actualizar', auth, userControl.actualizarPerfil)
-router.delete('/borrar', auth, roles('admin'), userControl.borrarPerfil)
+router.delete('/borrar', auth, userControl.borrarPerfil)
 
 //ruta del onboarding
 router.post('/onboarding', auth, userControl.completarOnboarding)
