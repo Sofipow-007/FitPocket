@@ -21,7 +21,7 @@ export default function ChecklistTab({ checkinHoy, onGuardado }) {
     setError('')
     const token = localStorage.getItem('token')
     try {
-      const res  = await fetch('http://localhost:3000/checkin', {
+      const res  = await fetch('http://localhost:3000/checkins', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body:    JSON.stringify({ rutina, dieta })
