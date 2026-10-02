@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 import { API_URL } from "../../lib/api";
-import { normalize } from "../../lib/utils";
+import { normalize, fechaLocal } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PERFIL, MOCK_PLAN } from "../../mocks/planMock";
 import ChecklistTab from "./ChecklistTab";
@@ -52,7 +52,7 @@ function getFechaDeIdx(idx) {
   const diffToMon = (hoy.getDay() + 6) % 7;
   const d = new Date(hoy);
   d.setDate(hoy.getDate() - diffToMon + idx);
-  return d.toISOString().split("T")[0];
+  return fechaLocal(d);
 }
 
 /* ── Icons ── */
@@ -249,7 +249,7 @@ export default function Dashboard() {
 
                 <div className="db-strip">
                   <div className="db-strip__item db-strip__item--orange">
-                    <span className="db-strip__val">—</span>
+                    <span className="db-strip__val">{adherencia?.racha ?? "—"}</span>
                     <span className="db-strip__label">{t("dashboard.racha")}</span>
                   </div>
                   <span className="db-strip__sep" aria-hidden="true" />
