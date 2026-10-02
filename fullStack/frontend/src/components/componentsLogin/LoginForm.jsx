@@ -2,6 +2,7 @@ import "./LoginForm.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { API_URL } from "../../lib/api";
 
 export default function LoginForm() {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ export default function LoginForm() {
     setError("");
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/auth/login", {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

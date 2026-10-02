@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { API_URL } from "../../lib/api";
 import "./CargandoPlan.css";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 
@@ -50,7 +51,7 @@ export default function CargandoPlan() {
       }
 
       try {
-        const response = await fetch("http://localhost:3000/plan/generar", {
+        const response = await fetch(`${API_URL}/plan/generar`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

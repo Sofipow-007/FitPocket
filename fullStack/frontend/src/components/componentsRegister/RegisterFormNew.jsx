@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { API_URL } from "../../lib/api";
 import "./RegisterFormNew.css";
 
 /* ── Icons ─────────────────────────────────────────────────────── */
@@ -74,7 +75,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
     }
     setLoading(true);
     try {
-      const res  = await fetch("http://localhost:3000/auth/register", {
+      const res  = await fetch(`${API_URL}/auth/register`, {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nombre, email, password }),
       });

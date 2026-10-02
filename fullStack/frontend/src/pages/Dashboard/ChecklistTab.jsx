@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { API_URL } from '../../lib/api'
 import './ChecklistTab.css'
 
 const OPCIONES = [
@@ -21,7 +22,7 @@ export default function ChecklistTab({ checkinHoy, onGuardado }) {
     setError('')
     const token = localStorage.getItem('token')
     try {
-      const res  = await fetch('http://localhost:3000/checkins', {
+      const res  = await fetch(`${API_URL}/checkins`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body:    JSON.stringify({ rutina, dieta })

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/fitpocketlogo(inverted).png";
+import { API_URL } from "../../lib/api";
 import { normalize } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PERFIL, MOCK_PLAN } from "../../mocks/planMock";
@@ -104,10 +105,10 @@ export default function Dashboard() {
     if (!token) { navigate("/"); return; }
     const headers = { Authorization: `Bearer ${token}` };
     Promise.all([
-      fetch("http://localhost:3000/users/perfil",   { headers }).then(r => r.ok ? r.json() : null),
-      fetch("http://localhost:3000/plan/actual",     { headers }).then(r => r.ok ? r.json() : null),
-      fetch("http://localhost:3000/checkins/semana", { headers }).then(r => r.ok ? r.json() : null),
-      fetch("http://localhost:3000/checkins/hoy",    { headers }).then(r => r.ok ? r.json() : null),
+      fetch(`${API_URL}/users/perfil`,   { headers }).then(r => r.ok ? r.json() : null),
+      fetch(`${API_URL}/plan/actual`,     { headers }).then(r => r.ok ? r.json() : null),
+      fetch(`${API_URL}/checkins/semana`, { headers }).then(r => r.ok ? r.json() : null),
+      fetch(`${API_URL}/checkins/hoy`,    { headers }).then(r => r.ok ? r.json() : null),
     ])
       .then(([p, pl, adh, hoy]) => {
         setPerfil(p);
@@ -380,7 +381,7 @@ export default function Dashboard() {
               setCheckinHoy(c);
               // refrescar adherencia
               const token = localStorage.getItem("token");
-              fetch("http://localhost:3000/checkins/semana", {
+              fetch(`${API_URL}/checkins/semana`, {
                 headers: { Authorization: `Bearer ${token}` }
               }).then(r => r.ok ? r.json() : null).then(adh => { if (adh) setAdherencia(adh); }).catch(() => {});
             }}

@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/fitpocketlogo(inverted).png";
+import { API_URL } from "../../lib/api";
 import { normalize } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PLAN } from "../../mocks/planMock";
@@ -61,7 +62,7 @@ export default function PlanDetalle() {
     if (isPreview) return;
     const token = localStorage.getItem("token");
     if (!token) { navigate("/"); return; }
-    fetch("http://localhost:3000/plan/actual", { headers: { Authorization: `Bearer ${token}` } })
+    fetch(`${API_URL}/plan/actual`, { headers: { Authorization: `Bearer ${token}` } })
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(setPlan)
       .catch(() => setError("No se pudo cargar tu plan. Revisá tu conexión."))

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { API_URL } from "../../lib/api";
 import "./OnboardingForm4.css";
 
 const IconArrowLeft = () => (
@@ -73,7 +74,7 @@ export default function OnboardingForm4() {
     setLoading(true);
     setApiError("");
     try {
-      const res  = await fetch("http://localhost:3000/users/onboarding", {
+      const res  = await fetch(`${API_URL}/users/onboarding`, {
         method:  "POST",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
         body:    JSON.stringify(perfil),
