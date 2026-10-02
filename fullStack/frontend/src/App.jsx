@@ -89,7 +89,7 @@ function App() {
             </Routes>
           </Suspense>
         </main>
-        <DevPanel />
+        {import.meta.env.DEV && <DevPanel />}
       </div>
     </BrowserRouter>
   );
