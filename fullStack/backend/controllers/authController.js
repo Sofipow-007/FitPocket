@@ -4,10 +4,24 @@ const jwt = require('jsonwebtoken');
 const { calcularDVH } = require('../utils/digitosVerificadores');
 const { encrypt, decrypt } = require('../utils/crypto');
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 // POST /auth/register
 exports.register = async (req, res) => {
     try {
-        const { nombre, email, password } = req.body;
+        const nombre = typeof req.body.nombre === 'string' ? req.body.nombre.trim() : '';
+        const email = typeof req.body.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+        const { password } = req.body;
+
+        if (!nombre) {
+            return res.status(400).json({ msg: 'El nombre es obligatorio' });
+        }
+        if (!EMAIL_REGEX.test(email)) {
+            return res.status(400).json({ msg: 'El email no es válido' });
+        }
+        if (typeof password !== 'string' || password.length < 8) {
+            return res.status(400).json({ msg: 'La contraseña debe tener al menos 8 caracteres' });
+        }
 
         let user = await User.findOne({ email });
         if (user) {
@@ -49,7 +63,8 @@ exports.register = async (req, res) => {
 // POST /auth/login
 exports.login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const email = typeof req.body.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+        const { password } = req.body;
 
         const user = await User.findOne({ email });
         if (!user) {
