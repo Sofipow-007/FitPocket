@@ -33,9 +33,9 @@ const MINUTOS = [
 
 const DIETAS = [
   { value: "normal",      tKey: "ob3.dieta.normal"      },
-  { value: "vegetariano", tKey: "ob3.dieta.vegetariano" },
-  { value: "vegano",      tKey: "ob3.dieta.vegano"      },
-  { value: "sinGluten",   tKey: "ob3.dieta.sinGluten"   },
+  { value: "vegetariana", tKey: "ob3.dieta.vegetariano" },
+  { value: "vegana",      tKey: "ob3.dieta.vegano"      },
+  { value: "singluten",   tKey: "ob3.dieta.sinGluten"   },
 ];
 
 export default function OnboardingForm3() {
