@@ -35,6 +35,17 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
+/* En mobile, position:fixed arriba a la derecha tapaba "Empezar gratis"/
+   "Entrar" en la landing y el "Paso X de 4" del header del onboarding.
+   Se mueve abajo a la derecha, donde no hay otro elemento fijo. */
+@media (max-width: 480px) {
+  .g-lang {
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
 .App {
   display: flex;
   flex-direction: column;
