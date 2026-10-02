@@ -214,7 +214,7 @@ export default function HomeGuestHero() {
           <div className="bento-card bg-[#0F0F16] border border-white/7 rounded-3xl p-6 flex flex-col justify-between cursor-default">
             <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500">{t("home.bento.adherenciaAvg")}</span>
             <div>
-              <div className="font-[Space_Grotesk,sans-serif] font-extrabold text-6xl text-gradient-orange leading-none">74%</div>
+              <div className="font-[Space_Grotesk,sans-serif] font-extrabold text-6xl text-gradient-orange leading-none">{t("home.bento.progresoValor")}</div>
               <p className="text-zinc-500 text-sm mt-2">{t("home.bento.adherenciaSub")}</p>
             </div>
           </div>

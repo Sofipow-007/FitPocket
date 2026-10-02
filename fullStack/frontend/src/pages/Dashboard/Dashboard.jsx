@@ -233,7 +233,7 @@ export default function Dashboard() {
             {pct != null && pct < 50 && (
               <div className="db-alerta-banner" role="alert">
                 <span>⚠️</span>
-                <span>Tu adherencia esta semana es baja. El lunes tu plan se ajustará automáticamente.</span>
+                <span>Tu adherencia esta semana es baja.</span>
               </div>
             )}
 

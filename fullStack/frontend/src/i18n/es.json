@@ -66,8 +66,8 @@
     "hero": {
       "titulo1": "ENTRENÁS",
       "titulo2": "MEJOR.",
-      "desc":    "Obtené tu rutina y alimentación personalizada según tu cuerpo, objetivos y presupuesto. Tu plan se adapta automáticamente si tu adherencia baja.",
-      "planes":  "+2 400 planes generados esta semana",
+      "desc":    "Obtené tu rutina y alimentación personalizada según tu cuerpo, objetivos y presupuesto.",
+      "planes":  "Tu plan en menos de 1 minuto",
       "scroll":  "scroll"
     },
     "bento": {
@@ -86,22 +86,23 @@
           { "day": "Vie", "work": "Cardio + Core",   "dur": "40m" }
         ]
       },
-      "adherenciaAvg": "Adherencia promedio",
-      "adherenciaSub": "Usuarios que siguen el plan +2 semanas",
+      "adherenciaAvg": "Tu progreso",
+      "progresoValor": "Diario",
+      "adherenciaSub": "Seguís tu rutina y tu dieta día a día desde el dashboard",
       "setupLabel":    "Setup",
       "setupSub":      "Para tener tu plan completo listo",
       "proceso":       "El proceso",
       "pasos": [
         { "n": "01", "titulo": "Onboarding",    "desc": "Datos, objetivo y disponibilidad" },
         { "n": "02", "titulo": "Tu plan listo", "desc": "Rutina + dieta personalizada en segundos" },
-        { "n": "03", "titulo": "Seguís",        "desc": "El plan se adapta automáticamente" }
+        { "n": "03", "titulo": "Seguís",        "desc": "Registrás tu progreso día a día" }
       ],
-      "adaptaLabel":  "Se adapta solo",
-      "adaptaTitulo": "Auto-ajuste",
-      "adaptaDesc":   "Si tu adherencia baja del 50%, el plan se regenera automáticamente",
+      "adaptaLabel":  "Te avisamos",
+      "adaptaTitulo": "Alertas",
+      "adaptaDesc":   "Si tu adherencia baja, te lo mostramos en el dashboard",
       "stats": [
         { "val": "7",    "unit": "días",   "desc": "Plan completo" },
-        { "val": "50%",  "unit": "umbral", "desc": "Regeneración auto" },
+        { "val": "2",    "unit": "en 1",   "desc": "Rutina + dieta" },
         { "val": "100%", "unit": "gratis", "desc": "Sin tarjeta" }
       ]
     },

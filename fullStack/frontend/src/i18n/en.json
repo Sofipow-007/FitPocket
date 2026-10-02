@@ -66,8 +66,8 @@
     "hero": {
       "titulo1": "TRAIN",
       "titulo2": "BETTER.",
-      "desc":    "Get your personalized routine and nutrition plan based on your body, goals and budget. Your plan automatically adapts if your adherence drops.",
-      "planes":  "+2 400 plans generated this week",
+      "desc":    "Get your personalized routine and nutrition plan based on your body, goals and budget.",
+      "planes":  "Your plan in under 1 minute",
       "scroll":  "scroll"
     },
     "bento": {
@@ -86,22 +86,23 @@
           { "day": "Fri", "work": "Cardio + Core",   "dur": "40m" }
         ]
       },
-      "adherenciaAvg": "Average adherence",
-      "adherenciaSub": "Users who follow the plan for 2+ weeks",
+      "adherenciaAvg": "Your progress",
+      "progresoValor": "Daily",
+      "adherenciaSub": "Track your routine and diet day by day from the dashboard",
       "setupLabel":    "Setup",
       "setupSub":      "To have your complete plan ready",
       "proceso":       "The process",
       "pasos": [
         { "n": "01", "titulo": "Onboarding",       "desc": "Data, goal and availability" },
         { "n": "02", "titulo": "Your plan ready",  "desc": "Personalized routine + diet in seconds" },
-        { "n": "03", "titulo": "Keep going",       "desc": "The plan adapts automatically" }
+        { "n": "03", "titulo": "Keep going",       "desc": "Log your progress day by day" }
       ],
-      "adaptaLabel":  "Adapts on its own",
-      "adaptaTitulo": "Auto-adjust",
-      "adaptaDesc":   "If your adherence drops below 50%, the plan is automatically regenerated",
+      "adaptaLabel":  "We've got you",
+      "adaptaTitulo": "Alerts",
+      "adaptaDesc":   "If your adherence drops, we show it right on your dashboard",
       "stats": [
         { "val": "7",    "unit": "days",      "desc": "Complete plan" },
-        { "val": "50%",  "unit": "threshold", "desc": "Auto-regeneration" },
+        { "val": "2",    "unit": "in 1",      "desc": "Routine + diet" },
         { "val": "100%", "unit": "free",      "desc": "No credit card" }
       ]
     },
