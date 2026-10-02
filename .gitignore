@@ -143,3 +143,4 @@ vite.config.ts.timestamp-*
 # Local-only Claude context (not for remote repo)
 CLAUDE.md
 PRODUCT.md
+PLAN_FitPocket_revision_final.md
