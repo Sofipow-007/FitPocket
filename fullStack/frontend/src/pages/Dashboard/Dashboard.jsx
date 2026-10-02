@@ -88,12 +88,13 @@ export default function Dashboard() {
   const navigate         = useNavigate();
   const { t, i18n }      = useTranslation();
   const [searchParams]   = useSearchParams();
-  const isPreview        = searchParams.get("preview") === "true";
+  const isPreview        = import.meta.env.DEV && searchParams.get("preview") === "true";
 
   const [tab,        setTab]        = useState("home");
   const [loading,    setLoading]    = useState(!isPreview);
   const [perfil,     setPerfil]     = useState(isPreview ? MOCK_PERFIL : null);
   const [plan,       setPlan]       = useState(isPreview ? MOCK_PLAN   : null);
+  const [sinPlan,    setSinPlan]    = useState(false);
   const [adherencia, setAdherencia] = useState(null);
   const [checkinHoy, setCheckinHoy] = useState(null);
   const [error,      setError]      = useState("");
@@ -102,19 +103,33 @@ export default function Dashboard() {
   useEffect(() => {
     if (isPreview) return;
     const token = localStorage.getItem("token");
-    if (!token) { navigate("/"); return; }
+    if (!token) { navigate("/login", { replace: true }); return; }
     const headers = { Authorization: `Bearer ${token}` };
+
+    const irAlLogin = () => {
+      localStorage.removeItem("token");
+      navigate("/login", { replace: true });
+    };
+
     Promise.all([
-      fetch(`${API_URL}/users/perfil`,   { headers }).then(r => r.ok ? r.json() : null),
-      fetch(`${API_URL}/plan/actual`,     { headers }).then(r => r.ok ? r.json() : null),
-      fetch(`${API_URL}/checkins/semana`, { headers }).then(r => r.ok ? r.json() : null),
-      fetch(`${API_URL}/checkins/hoy`,    { headers }).then(r => r.ok ? r.json() : null),
+      fetch(`${API_URL}/users/perfil`,   { headers }),
+      fetch(`${API_URL}/plan/actual`,     { headers }),
+      fetch(`${API_URL}/checkins/semana`, { headers }),
+      fetch(`${API_URL}/checkins/hoy`,    { headers }),
     ])
-      .then(([p, pl, adh, hoy]) => {
-        setPerfil(p);
-        setPlan(pl);
-        if (adh) setAdherencia(adh);
-        if (hoy) setCheckinHoy(hoy.checkin);
+      .then(async ([rPerfil, rPlan, rAdh, rHoy]) => {
+        if ([rPerfil, rPlan, rAdh, rHoy].some(r => r.status === 401)) {
+          irAlLogin();
+          return;
+        }
+        setPerfil(rPerfil.ok ? await rPerfil.json() : null);
+        setSinPlan(rPlan.status === 404);
+        setPlan(rPlan.ok ? await rPlan.json() : null);
+        if (rAdh.ok) setAdherencia(await rAdh.json());
+        if (rHoy.ok) {
+          const hoyData = await rHoy.json();
+          setCheckinHoy(hoyData.checkin);
+        }
       })
       .catch(() => setError("No se pudo cargar tu información. Revisá tu conexión."))
       .finally(() => setLoading(false));
@@ -202,7 +217,17 @@ export default function Dashboard() {
 
         {!loading && error && <p className="db-error" role="alert">{t("dashboard.errorConexion")}</p>}
 
-        {!loading && !error && tab === "home" && (
+        {!loading && !error && tab === "home" && sinPlan && (
+          <div className="db-sin-plan">
+            <h2>Todavía no tenés un plan</h2>
+            <p>Completá tu perfil para generar tu rutina y tu dieta personalizada.</p>
+            <button className="db-sin-plan__btn" onClick={() => navigate("/onboarding")}>
+              Completar mi perfil
+            </button>
+          </div>
+        )}
+
+        {!loading && !error && tab === "home" && !sinPlan && (
           <>
             {/* ── Banner alerta ── */}
             {pct != null && pct < 50 && (

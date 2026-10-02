@@ -635,6 +635,40 @@
   100% { opacity: 0.5; }
 }
 
+/* ── Sin plan ── */
+.db-sin-plan {
+  margin-top: 60px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.db-sin-plan h2 {
+  font-size: 1.25rem;
+  color: var(--ink, #F4F4FF);
+  margin: 0;
+}
+.db-sin-plan p {
+  font-size: 0.9rem;
+  color: var(--ink2, #A8A8C2);
+  margin: 0 0 8px;
+  max-width: 320px;
+}
+.db-sin-plan__btn {
+  background: var(--green, #00E887);
+  color: #06060E;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: var(--r-md, 12px);
+  padding: 12px 24px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.db-sin-plan__btn:hover { opacity: 0.9; }
+.db-sin-plan__btn:focus-visible { outline: 2px solid var(--green, #00E887); outline-offset: 2px; }
+
 /* ── Error ── */
 .db-error {
   margin-top: 60px;

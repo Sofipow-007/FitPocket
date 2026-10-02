@@ -49,7 +49,7 @@ export default function PlanDetalle() {
   const navigate       = useNavigate();
   const { t, i18n }    = useTranslation();
   const [searchParams] = useSearchParams();
-  const isPreview      = searchParams.get("preview") === "true";
+  const isPreview      = import.meta.env.DEV && searchParams.get("preview") === "true";
 
   const [loading,  setLoading]  = useState(!isPreview);
   const [plan,     setPlan]     = useState(isPreview ? MOCK_PLAN : null);
@@ -61,9 +61,16 @@ export default function PlanDetalle() {
   useEffect(() => {
     if (isPreview) return;
     const token = localStorage.getItem("token");
-    if (!token) { navigate("/"); return; }
+    if (!token) { navigate("/login", { replace: true }); return; }
     fetch(`${API_URL}/plan/actual`, { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(r => {
+        if (r.status === 401) {
+          localStorage.removeItem("token");
+          navigate("/login", { replace: true });
+          return Promise.reject();
+        }
+        return r.ok ? r.json() : Promise.reject();
+      })
       .then(setPlan)
       .catch(() => setError("No se pudo cargar tu plan. Revisá tu conexión."))
       .finally(() => setLoading(false));

@@ -2,6 +2,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
+import RutaPrivada from "./components/RutaPrivada";
+import RutaPublica from "./components/RutaPublica";
 
 const HomeGuest    = lazy(() => import("./pages/HomeGuest/HomeGuest"));
 const Register     = lazy(() => import("./pages/Register/Register"));
@@ -74,16 +76,16 @@ function App() {
         <main className="main-content">
           <Suspense fallback={<div className="loading-page">Cargando...</div>}>
             <Routes>
-              <Route path="/"              element={<HomeGuest />} />
-              <Route path="/register"      element={<Register />} />
-              <Route path="/login"         element={<Login />} />
-              <Route path="/onboarding"    element={<Onboarding1 />} />
-              <Route path="/onboarding/2"  element={<Onboarding2 />} />
-              <Route path="/onboarding/3"  element={<Onboarding3 />} />
-              <Route path="/onboarding/4"  element={<Onboarding4 />} />
-              <Route path="/cargando-plan" element={<CargandoPlan />} />
-              <Route path="/dashboard"     element={<Dashboard />} />
-              <Route path="/plan"          element={<PlanDetalle />} />
+              <Route path="/"              element={<RutaPublica><HomeGuest /></RutaPublica>} />
+              <Route path="/register"      element={<RutaPublica><Register /></RutaPublica>} />
+              <Route path="/login"         element={<RutaPublica><Login /></RutaPublica>} />
+              <Route path="/onboarding"    element={<RutaPrivada><Onboarding1 /></RutaPrivada>} />
+              <Route path="/onboarding/2"  element={<RutaPrivada><Onboarding2 /></RutaPrivada>} />
+              <Route path="/onboarding/3"  element={<RutaPrivada><Onboarding3 /></RutaPrivada>} />
+              <Route path="/onboarding/4"  element={<RutaPrivada><Onboarding4 /></RutaPrivada>} />
+              <Route path="/cargando-plan" element={<RutaPrivada><CargandoPlan /></RutaPrivada>} />
+              <Route path="/dashboard"     element={<RutaPrivada allowPreview><Dashboard /></RutaPrivada>} />
+              <Route path="/plan"          element={<RutaPrivada allowPreview><PlanDetalle /></RutaPrivada>} />
             </Routes>
           </Suspense>
         </main>
