@@ -6,10 +6,6 @@ const schemaBitacora = new mongoose.Schema({
         ref: 'User',
         default: null
     },
-    email: {
-        type: String,
-        default: null
-    },
     accion: {
         type: String,
         required: true

@@ -18,14 +18,16 @@ module.exports = (req, res, next) => {
         const ruta = `${req.method} ${req.baseUrl}${req.path}`;
         const accion = ACCIONES[ruta] || ruta;
 
+        // No se guarda el email en texto plano ni el body de error completo
+        // (podría traer datos del usuario): solo el mensaje de error, que es
+        // un texto fijo definido por el backend, no un dato del request.
         Bitacora.create({
             userId: req.user?.userId || null,
-            email: req.body?.email || null,
             accion,
             metodo: req.method,
             ruta: `${req.baseUrl}${req.path}`,
             ip: req.ip,
-            detalles: res.statusCode >= 400 ? JSON.stringify(body) : null,
+            detalles: res.statusCode >= 400 ? (body?.error || body?.msg || body?.message || null) : null,
             statusCode: res.statusCode
         }).catch(err => console.error('Error bitácora:', err));
 

@@ -10,6 +10,7 @@ connectDB()
 
 server.use(cors())
 server.use(express.json())
+server.use(require('./middleware/bitacora'))
 
 server.use('/auth',    require('./routes/authRoutes'))
 server.use('/users',   require('./routes/userRoutes'))
