@@ -8,8 +8,8 @@ exports.registrarCheckin = async (req, res) => {
     const userId = req.user.userId
     const { rutina, dieta } = req.body
 
-    if (!rutina || !dieta) {
-      return res.status(400).json({ error: 'Falta rutina o dieta' })
+    if (!(rutina in PUNTAJE) || !(dieta in PUNTAJE)) {
+      return res.status(400).json({ error: 'Estado inválido' })
     }
 
     const fecha = new Date().toISOString().split('T')[0]
@@ -29,7 +29,7 @@ exports.registrarCheckin = async (req, res) => {
         dieta:   { estado: dieta,  puntaje: puntajeDieta  },
         puntajeTotal: puntajeRutina + puntajeDieta
       },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      { upsert: true, returnDocument: 'after', runValidators: true, setDefaultsOnInsert: true }
     )
 
     res.json({ ok: true, checkin })
