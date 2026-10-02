@@ -76,7 +76,10 @@ const schemaUser = new mongoose.Schema({
         },
         limitaciones: [{
             type: String
-        }]
+        }],
+        aclaracion: {
+            type: String
+        }
     },
     dvh: {
         type: Number,

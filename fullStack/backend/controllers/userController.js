@@ -9,6 +9,9 @@ function decryptUser(user) {
     if (obj.perfil?.limitaciones?.length) {
         obj.perfil.limitaciones = obj.perfil.limitaciones.map(l => decrypt(l))
     }
+    if (obj.perfil?.aclaracion) {
+        obj.perfil.aclaracion = decrypt(obj.perfil.aclaracion)
+    }
     return obj
 }
 
@@ -102,7 +105,7 @@ exports.completarOnboarding = async (req, res) => {
             objetivo, nivel, diasDispo,
             minutosPorSesion, tipoDieta,
             presupuesto, limitaciones,
-            diasDisponibles
+            diasDisponibles, aclaracion
         } = req.body
 
         const user = await User.findById(req.user.userId)
@@ -120,6 +123,7 @@ exports.completarOnboarding = async (req, res) => {
             minutosPorSesion, tipoDieta,
             presupuesto,
             limitaciones: (limitaciones || []).map(l => encrypt(l)),
+            aclaracion: aclaracion ? encrypt(aclaracion) : undefined,
         }
 
         // DVH recalculado con valores en texto plano

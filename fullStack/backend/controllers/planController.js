@@ -1,6 +1,17 @@
 const { generarPlan } = require('../services/iaService')
 const User = require('../models/User')
 const Plan = require('../models/Plan')
+const { decrypt } = require('../utils/crypto')
+
+// Desencripta un campo sin tirar la request abajo si CRYPTO_KEY cambió
+// o el valor no estaba encriptado (datos viejos).
+const decryptSeguro = (texto) => {
+  try {
+    return decrypt(texto)
+  } catch {
+    return texto
+  }
+}
 
 exports.generarPlan = async (req, res) => {
   try {
@@ -10,7 +21,7 @@ exports.generarPlan = async (req, res) => {
     const user = await User.findById(userId)
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' })
 
-    const perfil = user.perfil || {}
+    const perfil = user.perfil ? user.perfil.toObject() : {}
     if (!perfil.objetivo || !(perfil.diasDispo?.length)) {
       return res.status(400).json({ error: 'Falta completar el perfil antes de generar un plan' })
     }
@@ -19,7 +30,10 @@ exports.generarPlan = async (req, res) => {
       ...perfil,
       diasDispo:        perfil.diasDispo        || [],
       tipoDieta:        perfil.tipoDieta        || 'normal',
-      limitaciones:     perfil.limitaciones     || [],
+      // limitaciones y aclaración se guardan encriptadas (son datos de salud);
+      // acá se desencriptan para que la IA reciba texto plano.
+      limitaciones:     (perfil.limitaciones || []).map(decryptSeguro),
+      aclaracion:       perfil.aclaracion ? decryptSeguro(perfil.aclaracion) : '',
       minutosPorSesion: perfil.minutosPorSesion || 45,
       presupuesto:      perfil.presupuesto      || 15000,
       nivel:            perfil.nivel            || 'principiante'

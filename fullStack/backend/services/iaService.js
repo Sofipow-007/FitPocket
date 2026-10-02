@@ -40,7 +40,9 @@ Datos:
 - Días disponibles: ${dias} (solo estos días van en rutina)
 - Minutos/sesión: ${perfil.minutosPorSesion}, Dieta: ${perfil.tipoDieta}
 - Limitaciones: ${perfil.limitaciones.length ? perfil.limitaciones.join(', ') : 'ninguna'}
+- Aclaración del usuario: ${perfil.aclaracion || 'ninguna'}
 
+No incluyas ejercicios contraindicados para las limitaciones indicadas.
 Solo los días disponibles en rutina. Máximo 2 alternativas por ejercicio. Solo JSON puro.`
 
   let res = await call([{ role: 'user', content: promptRutina }], 0.7)
