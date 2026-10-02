@@ -68,7 +68,7 @@ export default function CargandoPlan() {
           setEstado("exito");
           setProgreso(100);
           setPasoActual(PASOS.length - 1);
-          window.setTimeout(() => navigate("/"), 1200);
+          window.setTimeout(() => navigate("/dashboard", { replace: true }), 1200);
         }
       } catch (err) {
         if (isMounted) {
