@@ -71,6 +71,15 @@ exports.getAdherenciaSemana = async (req, res) => {
     )
     const diasDeEntreno = diasEntreno.size
 
+    // los días anteriores al primer plan del usuario no cuentan: sin esto
+    // alguien que arrancó hoy y cumplió todo veía 20% y "adherencia baja"
+    const primerPlan = plan && await Plan.findOne({ userId }).sort({ createdAt: 1 })
+    const desde = primerPlan ? fechaLocal(primerPlan.createdAt) : null
+    const esDiaDeEntreno = (fecha) => diasEntreno.has(normalize(
+      new Date(fecha + 'T00:00:00').toLocaleDateString('es-AR', { weekday: 'long' })
+    ))
+    const diasVigentes = dias.filter(fecha => !desde || fecha >= desde)
+
     const checkins = await Checkin.find({ userId, fecha: { $in: dias } })
 
     const porFecha = {}
@@ -86,19 +95,18 @@ exports.getAdherenciaSemana = async (req, res) => {
     // indica descanso no pierde puntos por eso.
     let puntos = 0
     let diasConCheckin = 0
-    dias.forEach(fecha => {
+    diasVigentes.forEach(fecha => {
       const c = porFecha[fecha]
       if (!c) return
       diasConCheckin++
       puntos += c.dieta?.puntaje ?? 0
-      const diaSemana = new Date(`${fecha}T00:00:00`).toLocaleDateString('es-AR', { weekday: 'long' })
-      if (diasEntreno.has(normalize(diaSemana))) {
+      if (esDiaDeEntreno(fecha)) {
         puntos += c.rutina?.puntaje ?? 0
       }
     })
 
-    const maximo = diasDeEntreno + 7
-    const porcentaje = Math.round((puntos / maximo) * 100)
+    const maximo = diasVigentes.filter(esDiaDeEntreno).length + diasVigentes.length
+    const porcentaje = maximo > 0 ? Math.round((puntos / maximo) * 100) : 0
 
     // racha: días consecutivos hacia atrás (desde hoy) con puntajeTotal > 0
     let racha = 0
@@ -108,7 +116,7 @@ exports.getAdherenciaSemana = async (req, res) => {
       racha++
     }
 
-    res.json({ semana, porcentaje, diasConCheckin, diasDeEntreno, racha })
+    res.json({ semana, porcentaje, diasConCheckin, diasDeEntreno, diasContados: diasVigentes.length, racha })
   } catch (error) {
     res.status(500).json({ error: 'Error interno del servidor' })
   }

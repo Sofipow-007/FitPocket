@@ -217,7 +217,7 @@ export default function Dashboard() {
 
         {!loading && error && <p className="db-error" role="alert">{t("dashboard.errorConexion")}</p>}
 
-        {!loading && !error && tab === "home" && sinPlan && (
+        {!loading && !error && tab !== "progreso" && sinPlan && (
           <div className="db-sin-plan">
             <h2>Todavía no tenés un plan</h2>
             <p>Completá tu perfil para generar tu rutina y tu dieta personalizada.</p>
@@ -230,7 +230,7 @@ export default function Dashboard() {
         {!loading && !error && tab === "home" && !sinPlan && (
           <>
             {/* ── Banner alerta ── */}
-            {pct != null && pct < 50 && (
+            {pct != null && pct < 50 && (adherencia?.diasContados ?? 7) >= 3 && (
               <div className="db-alerta-banner" role="alert">
                 <span>⚠️</span>
                 <span>Tu adherencia esta semana es baja.</span>
@@ -399,7 +399,7 @@ export default function Dashboard() {
           </>
         )}
 
-        {!loading && !error && tab === "checklist" && (
+        {!loading && !error && tab === "checklist" && !sinPlan && (
           <ChecklistTab
             checkinHoy={checkinHoy}
             onGuardado={(c) => {
