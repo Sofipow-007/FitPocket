@@ -231,7 +231,7 @@
     "anterior":  "Back",
     "siguiente": "Next",
     "errorDias": "Select at least one available day.",
-    "errorPresupuesto": "The budget cannot be negative."
+    "errorPresupuesto": "The budget must be greater than 0. Leave the field empty if you prefer not to say."
   },
   "ob4": {
     "titulo":           "Anything we should know?",

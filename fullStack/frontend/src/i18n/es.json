@@ -231,7 +231,7 @@
     "anterior":  "Anterior",
     "siguiente": "Siguiente",
     "errorDias": "Seleccioná al menos un día disponible.",
-    "errorPresupuesto": "El presupuesto no puede ser negativo."
+    "errorPresupuesto": "El presupuesto tiene que ser mayor a 0. Si no querés indicarlo, dejá el campo vacío."
   },
   "ob4": {
     "titulo":           "¿Algo que debamos saber?",

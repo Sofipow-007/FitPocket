@@ -65,7 +65,8 @@ export default function OnboardingForm3() {
 
   const handleSiguiente = () => {
     if (dias.length === 0) { setError(t("ob3.errorDias")); return; }
-    if (presupuesto && !(parseFloat(presupuesto) >= 0)) { setError(t("ob3.errorPresupuesto")); return; }
+    // opcional: vacío vale, pero si se carga tiene que ser un monto real
+    if (presupuesto !== "" && !(parseFloat(presupuesto) > 0)) { setError(t("ob3.errorPresupuesto")); return; }
     setError("");
     localStorage.setItem("ob_paso3", JSON.stringify({
       diasDispo:         dias,
@@ -156,7 +157,7 @@ export default function OnboardingForm3() {
             placeholder="0"
             value={presupuesto}
             onChange={e => setPresupuesto(e.target.value)}
-            min="0"
+            min="1"
           />
         </div>
       </div>
