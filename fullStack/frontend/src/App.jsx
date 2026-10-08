@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 import RutaPrivada from "./components/RutaPrivada";
@@ -15,44 +15,6 @@ const Onboarding4  = lazy(() => import("./pages/Onboarding4/Onboarding4"));
 const CargandoPlan = lazy(() => import("./pages/CargandoPlan/CargandoPlan"));
 const Dashboard    = lazy(() => import("./pages/Dashboard/Dashboard"));
 const PlanDetalle  = lazy(() => import("./pages/PlanDetalle/PlanDetalle"));
-
-const DEV_PAGES = [
-  { path: "/dashboard?preview=true", label: "Dashboard" },
-  { path: "/plan?preview=true",      label: "Plan detalle" },
-];
-
-function DevPanel() {
-  const { pathname } = useLocation();
-  const hide = ["/dashboard", "/cargando-plan", "/plan"].some(p => pathname.startsWith(p));
-  if (hide) return null;
-  return (
-    <div className="dev-panel" style={{
-      position: "fixed", bottom: 20, right: 20, zIndex: "var(--z-dev)",
-      background: "rgba(6,6,14,0.92)", border: "1px solid rgba(255,255,255,0.12)",
-      borderRadius: 14, padding: "10px 14px", display: "flex", flexDirection: "column", gap: 6,
-      backdropFilter: "blur(12px)", boxShadow: "0 4px 24px rgba(0,0,0,0.5)",
-    }}>
-      <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontWeight: 700, letterSpacing: "0.08em", marginBottom: 2 }}>
-        PREVIEW
-      </span>
-      {DEV_PAGES.map(({ path, label }) => (
-        <Link
-          key={path}
-          to={path}
-          style={{
-            fontSize: 13, fontWeight: 600, color: "#00E887", textDecoration: "none",
-            padding: "5px 10px", borderRadius: 8, background: "rgba(0,232,135,0.08)",
-            transition: "background 150ms",
-          }}
-          onMouseEnter={e => e.currentTarget.style.background = "rgba(0,232,135,0.18)"}
-          onMouseLeave={e => e.currentTarget.style.background = "rgba(0,232,135,0.08)"}
-        >
-          → {label}
-        </Link>
-      ))}
-    </div>
-  );
-}
 
 function GlobalLangToggle() {
   const { t, i18n } = useTranslation();
@@ -90,7 +52,6 @@ function App() {
             </Routes>
           </Suspense>
         </main>
-        {import.meta.env.DEV && <DevPanel />}
       </div>
     </BrowserRouter>
   );
