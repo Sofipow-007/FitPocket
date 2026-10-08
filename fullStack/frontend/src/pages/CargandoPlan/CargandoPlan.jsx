@@ -46,7 +46,7 @@ export default function CargandoPlan() {
       return;
     }
 
-    const total = 14000;
+    const total = 30000;
     const interval = 120;
     let elapsed = 0;
 
