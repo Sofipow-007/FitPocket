@@ -5,6 +5,30 @@ import { API_URL } from "../../lib/api";
 import "./CargandoPlan.css";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 
+// Un solo pedido en vuelo por pestaña: en dev, StrictMode monta el componente
+// dos veces y sin esto se generaban (y cobraban a Groq) dos planes por usuario.
+let generacionEnCurso = null;
+
+const pedirPlan = (token) => {
+  if (!generacionEnCurso) {
+    generacionEnCurso = fetch(`${API_URL}/plan/generar`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(async (response) => ({
+        ok: response.ok,
+        data: await response.json().catch(() => ({})),
+      }))
+      .finally(() => {
+        generacionEnCurso = null;
+      });
+  }
+  return generacionEnCurso;
+};
+
 export default function CargandoPlan() {
   const navigate = useNavigate();
   const { t }        = useTranslation();
@@ -51,17 +75,9 @@ export default function CargandoPlan() {
       }
 
       try {
-        const response = await fetch(`${API_URL}/plan/generar`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const { ok, data } = await pedirPlan(token);
 
-        const data = await response.json().catch(() => ({}));
-
-        if (!response.ok) {
+        if (!ok) {
           throw new Error(data.error || "No se pudo generar el plan");
         }
 
