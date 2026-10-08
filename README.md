@@ -1,6 +1,10 @@
 # FitPocket
 Coach Personal Fitness
 
+## Documentación
+
+La documentación del proyecto (descripción, requisitos, diseño, base de datos y backend) está en la carpeta [`documentacion/`](documentacion/README.md).
+
 ## Stack
 
 - **Frontend**: React 19 + Vite, React Router, Tailwind, i18next (es/en). `fullStack/frontend/`
