@@ -9,7 +9,7 @@ import logo from "../../assets/fitpocketlogo(inverted).png";
 // dos veces y sin esto se generaban (y cobraban a Groq) dos planes por usuario.
 let generacionEnCurso = null;
 
-const pedirPlan = (token) => {
+const pedirPlan = (token, idioma) => {
   if (!generacionEnCurso) {
     generacionEnCurso = fetch(`${API_URL}/plan/generar`, {
       method: "POST",
@@ -17,6 +17,7 @@ const pedirPlan = (token) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({ idioma }),
     })
       .then(async (response) => ({
         ok: response.ok,
@@ -31,7 +32,7 @@ const pedirPlan = (token) => {
 
 export default function CargandoPlan() {
   const navigate = useNavigate();
-  const { t }        = useTranslation();
+  const { t, i18n }  = useTranslation();
   const PASOS        = t("cargando.pasos", { returnObjects: true });
   const [reducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const [pasoActual, setPasoActual] = useState(reducedMotion ? 2 : 0);
@@ -71,7 +72,7 @@ export default function CargandoPlan() {
       }
 
       try {
-        const { ok, data } = await pedirPlan(token);
+        const { ok, data } = await pedirPlan(token, i18n.language);
 
         if (!ok) {
           throw new Error(data.error || t("cargando.errorGenerico"));
@@ -96,7 +97,7 @@ export default function CargandoPlan() {
     return () => {
       isMounted = false;
     };
-  }, [navigate, t, PASOS.length]);
+  }, [navigate, t, i18n, PASOS.length]);
 
   return (
     <div className="cp-page">

@@ -16,6 +16,32 @@ const decryptSeguro = (texto) => {
 // 'Miércoles' y 'miercoles' son el mismo día
 const normalizarDia = (dia) => String(dia || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase()
 
+// Red de seguridad sobre lo que devuelve la IA: términos que no pueden aparecer
+// en el nombre de un ejercicio según la limitación del usuario.
+const PROHIBIDOS = {
+  lumbar:       /salt|jump|burpee|peso muerto(?! rumano)|deadlift|buenos d[ií]as|good morning/i,
+  rodilla:      /salt|jump|burpee|sentadilla profunda|deep squat|pistol|zancada con salto|sprint|carrera|running/i,
+  hombro:       /tras nuca|behind the neck|fondos en paralelas|dips/i,
+  hipertension: /hiit|burpee|sprint|tabata|al fallo|m[aá]xim/i
+}
+
+// Reemplaza un ejercicio contraindicado por su primera alternativa permitida; si no tiene, lo quita.
+const filtrarContraindicados = (rutina, limitaciones) => {
+  const reglas = limitaciones.map(l => PROHIBIDOS[l]).filter(Boolean)
+  if (reglas.length === 0) return rutina
+  const prohibido = (nombre) => reglas.some(re => re.test(String(nombre || '')))
+  return rutina.map(dia => ({
+    ...dia,
+    ejercicios: (dia.ejercicios || []).flatMap(ej => {
+      const alternativas = (ej.alternativas || []).filter(alt => !prohibido(alt.nombre))
+      if (!prohibido(ej.nombre)) return [{ ...ej, alternativas }]
+      if (alternativas.length === 0) return []
+      const [reemplazo, ...resto] = alternativas
+      return [{ ...reemplazo, alternativas: resto }]
+    })
+  }))
+}
+
 exports.generarPlan = async (req, res) => {
   try {
     const userId = req.user?.userId
@@ -39,13 +65,23 @@ exports.generarPlan = async (req, res) => {
       aclaracion:       perfil.aclaracion ? decryptSeguro(perfil.aclaracion) : '',
       minutosPorSesion: perfil.minutosPorSesion || 45,
       presupuesto:      perfil.presupuesto      || 15000,
-      nivel:            perfil.nivel            || 'principiante'
+      nivel:            perfil.nivel            || 'principiante',
+      idioma:           req.body?.idioma === 'en' ? 'en' : 'es'
     }
+
+    const diasElegidos = new Set(perfilCompleto.diasDispo.map(normalizarDia))
+    const diasCubiertos = (plan) => new Set((plan?.rutina || []).map(r => normalizarDia(r.dia)).filter(d => diasElegidos.has(d))).size
 
     let planGenerado
     try {
       planGenerado = await generarPlan(perfilCompleto)
       if (!planGenerado) throw new Error('iaService no devolvió un plan')
+      // si la IA se salteó algún día elegido, se le pide el plan una vez más
+      if (diasCubiertos(planGenerado) < diasElegidos.size) {
+        console.log('La rutina no cubre todos los días elegidos, reintentando...')
+        const segundo = await generarPlan(perfilCompleto)
+        if (diasCubiertos(segundo) > diasCubiertos(planGenerado)) planGenerado = segundo
+      }
     } catch (iaError) {
       console.error('Error al generar plan con Groq:', iaError.message)
       return res.status(503).json({ error: 'El servicio de IA no está disponible. Intentá de nuevo.' })
@@ -53,13 +89,15 @@ exports.generarPlan = async (req, res) => {
 
     await Plan.updateMany({ userId, estado: 'activo' }, { $set: { estado: 'archivado' } })
 
-    if (planGenerado.meta?.nivelDificultad) {
-      planGenerado.meta.nivelDificultad = planGenerado.meta.nivelDificultad.toLowerCase()
-    }
+    // nivelDificultad tiene enum en el modelo: si la IA devolvía otra cosa ("Intermediate",
+    // "intermedio-avanzado") el guardado fallaba con 500. Se usa el nivel del propio usuario.
+    if (planGenerado.meta) planGenerado.meta.nivelDificultad = perfilCompleto.nivel
     // el prompt pide entrenar solo los días disponibles, pero eso lo decide el modelo:
     // acá se garantiza descartando cualquier día que el usuario no eligió
-    const diasElegidos = new Set(perfilCompleto.diasDispo.map(normalizarDia))
-    planGenerado.rutina = (planGenerado.rutina || []).filter(r => diasElegidos.has(normalizarDia(r.dia)))
+    planGenerado.rutina = filtrarContraindicados(
+      (planGenerado.rutina || []).filter(r => diasElegidos.has(normalizarDia(r.dia))),
+      perfilCompleto.limitaciones
+    ).filter(r => r.ejercicios.length > 0)
     if (planGenerado.rutina.length === 0) {
       console.error('Error al generar plan con Groq: la rutina no trae ningún día disponible')
       return res.status(503).json({ error: 'El servicio de IA no está disponible. Intentá de nuevo.' })
