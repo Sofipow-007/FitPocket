@@ -60,8 +60,9 @@ function GlobalLangToggle() {
   const { pathname } = useLocation();
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/plan")) return null;
   const set = (lang) => { i18n.changeLanguage(lang); localStorage.setItem("idioma", lang); };
+  const enOnboarding = pathname.startsWith("/onboarding");
   return (
-    <div className="g-lang" role="group" aria-label="Idioma">
+    <div className={`g-lang${enOnboarding ? " g-lang--onboarding" : ""}`} role="group" aria-label="Idioma">
       <button className={`g-lang__btn${i18n.language === "es" ? " g-lang__btn--on" : ""}`} onClick={() => set("es")}>ES</button>
       <button className={`g-lang__btn${i18n.language === "en" ? " g-lang__btn--on" : ""}`} onClick={() => set("en")}>EN</button>
     </div>

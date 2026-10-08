@@ -44,6 +44,16 @@
     bottom: 16px;
     right: 16px;
   }
+
+  /* El onboarding tiene "Anterior"/"Siguiente"/"Generar mi plan" abajo, así que
+     ahí el selector va arriba al centro, entre el logo y el "Paso X de 4". */
+  .g-lang--onboarding {
+    top: 14px;
+    bottom: auto;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .App {
