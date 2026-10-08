@@ -9,7 +9,7 @@ import { useEffect, useRef } from "react";
  *   .reveal { opacity: 0; transform: translateY(24px); transition: ... }
  *   .reveal.revealed { opacity: 1; transform: translateY(0); }
  */
-export default function useScrollReveal(options = {}) {
+export default function useScrollReveal({ threshold = 0.15, rootMargin = "0px 0px -40px 0px" } = {}) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -24,14 +24,14 @@ export default function useScrollReveal(options = {}) {
         }
       },
       {
-        threshold: options.threshold ?? 0.15,
-        rootMargin: options.rootMargin ?? "0px 0px -40px 0px",
+        threshold,
+        rootMargin,
       }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [threshold, rootMargin]);
 
   return ref;
 }
