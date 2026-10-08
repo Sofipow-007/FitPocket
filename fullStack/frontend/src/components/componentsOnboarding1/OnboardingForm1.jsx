@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./OnboardingForm1.css";
@@ -16,31 +16,51 @@ function getIMCCategory(imc) {
   return             { label: "Obesidad",    color: "var(--err)" };
 }
 
+// Mismos límites que los atributos min/max de los inputs.
+const RANGOS = {
+  edad:   [10, 99],
+  peso:   [30, 300],
+  altura: [100, 250],
+};
+
+const fueraDeRango = (valor, [min, max]) => !(valor >= min && valor <= max);
+
+// Lo guardado al tocar "Siguiente", para no perderlo al volver con "Anterior".
+const leerGuardado = () => {
+  try {
+    return JSON.parse(localStorage.getItem("ob_paso1")) || {};
+  } catch {
+    return {};
+  }
+};
+
 export default function OnboardingForm1() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [edad,   setEdad]   = useState("");
-  const [peso,   setPeso]   = useState("");
-  const [altura, setAltura] = useState("");
-  const [sexo,   setSexo]   = useState("");
-  const [imc,    setImc]    = useState(null);
+  const [guardado] = useState(leerGuardado);
+  const [edad,   setEdad]   = useState(guardado.edad   ? String(guardado.edad)   : "");
+  const [peso,   setPeso]   = useState(guardado.peso   ? String(guardado.peso)   : "");
+  const [altura, setAltura] = useState(guardado.altura ? String(guardado.altura) : "");
+  const [sexo,   setSexo]   = useState(guardado.sexo ?? "");
   const [error,  setError]  = useState("");
 
-  useEffect(() => {
-    const p = parseFloat(peso);
-    const h = parseFloat(altura);
-    if (p > 0 && h > 0) {
-      setImc(parseFloat((p / Math.pow(h / 100, 2)).toFixed(1)));
-    } else {
-      setImc(null);
-    }
-  }, [peso, altura]);
+  const p = parseFloat(peso);
+  const h = parseFloat(altura);
+  const imc = p > 0 && h > 0 ? parseFloat((p / Math.pow(h / 100, 2)).toFixed(1)) : null;
 
   const categoria = imc ? getIMCCategory(imc) : null;
 
   const handleSiguiente = () => {
     if (!edad || !peso || !altura || !sexo) {
       setError(t("onboarding1.errorCampos"));
+      return;
+    }
+    if (
+      fueraDeRango(parseInt(edad), RANGOS.edad) ||
+      fueraDeRango(parseFloat(peso), RANGOS.peso) ||
+      fueraDeRango(parseFloat(altura), RANGOS.altura)
+    ) {
+      setError(t("onboarding1.errorRango"));
       return;
     }
     setError("");

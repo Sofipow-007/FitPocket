@@ -38,13 +38,23 @@ const DIETAS = [
   { value: "singluten",   tKey: "ob3.dieta.sinGluten"   },
 ];
 
+// Lo guardado al tocar "Siguiente", para no perderlo al volver con "Anterior".
+const leerGuardado = () => {
+  try {
+    return JSON.parse(localStorage.getItem("ob_paso3")) || {};
+  } catch {
+    return {};
+  }
+};
+
 export default function OnboardingForm3() {
   const navigate = useNavigate();
   const { t }    = useTranslation();
-  const [dias,       setDias]       = useState([]);
-  const [minutos,    setMinutos]    = useState(60);
-  const [dieta,      setDieta]      = useState("normal");
-  const [presupuesto,setPresupuesto]= useState("");
+  const [guardado] = useState(leerGuardado);
+  const [dias,       setDias]       = useState(guardado.diasDispo ?? []);
+  const [minutos,    setMinutos]    = useState(guardado.minutosPorSesion ?? 60);
+  const [dieta,      setDieta]      = useState(guardado.tipoDieta ?? "normal");
+  const [presupuesto,setPresupuesto]= useState(guardado.presupuesto ? String(guardado.presupuesto) : "");
   const [error,      setError]      = useState("");
 
   const toggleDia = (id) => {
@@ -55,6 +65,7 @@ export default function OnboardingForm3() {
 
   const handleSiguiente = () => {
     if (dias.length === 0) { setError(t("ob3.errorDias")); return; }
+    if (presupuesto && !(parseFloat(presupuesto) >= 0)) { setError(t("ob3.errorPresupuesto")); return; }
     setError("");
     localStorage.setItem("ob_paso3", JSON.stringify({
       diasDispo:         dias,

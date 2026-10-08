@@ -146,7 +146,8 @@
     "imcEstimado":  "Estimated BMI",
     "ingresaDatos": "Enter your data",
     "siguiente":    "Next",
-    "errorCampos":  "Complete all fields to continue."
+    "errorCampos":  "Complete all fields to continue.",
+    "errorRango":   "Check your data: age between 10 and 99, weight between 30 and 300 kg, height between 100 and 250 cm."
   },
   "register": {
     "volver":      "Back to home",
@@ -225,7 +226,8 @@
     },
     "anterior":  "Back",
     "siguiente": "Next",
-    "errorDias": "Select at least one available day."
+    "errorDias": "Select at least one available day.",
+    "errorPresupuesto": "The budget cannot be negative."
   },
   "ob4": {
     "titulo":           "Anything we should know?",

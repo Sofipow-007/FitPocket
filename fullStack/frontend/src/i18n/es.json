@@ -146,7 +146,8 @@
     "imcEstimado":  "IMC estimado",
     "ingresaDatos": "Ingresá tus datos",
     "siguiente":    "Siguiente",
-    "errorCampos":  "Completá todos los campos para continuar."
+    "errorCampos":  "Completá todos los campos para continuar.",
+    "errorRango":   "Revisá los datos: edad entre 10 y 99 años, peso entre 30 y 300 kg, altura entre 100 y 250 cm."
   },
   "register": {
     "volver":      "Volver al inicio",
@@ -225,7 +226,8 @@
     },
     "anterior":  "Anterior",
     "siguiente": "Siguiente",
-    "errorDias": "Seleccioná al menos un día disponible."
+    "errorDias": "Seleccioná al menos un día disponible.",
+    "errorPresupuesto": "El presupuesto no puede ser negativo."
   },
   "ob4": {
     "titulo":           "¿Algo que debamos saber?",

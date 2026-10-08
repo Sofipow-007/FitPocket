@@ -53,11 +53,21 @@ const NIVELES = [
   { id: "avanzado",     tKey: "ob2.nivel.avanzado"     },
 ];
 
+// Lo guardado al tocar "Siguiente", para no perderlo al volver con "Anterior".
+const leerGuardado = () => {
+  try {
+    return JSON.parse(localStorage.getItem("ob_paso2")) || {};
+  } catch {
+    return {};
+  }
+};
+
 export default function OnboardingForm2() {
   const navigate    = useNavigate();
   const { t }       = useTranslation();
-  const [objetivo, setObjetivo] = useState(null);
-  const [nivel,    setNivel]    = useState("principiante");
+  const [guardado] = useState(leerGuardado);
+  const [objetivo, setObjetivo] = useState(guardado.objetivo ?? null);
+  const [nivel,    setNivel]    = useState(guardado.nivel ?? "principiante");
 
   const [error, setError] = useState("");
 
