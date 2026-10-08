@@ -50,10 +50,24 @@
 .pd-nav__back:hover { color: var(--ink, #F4F4FF); background: rgba(255, 255, 255, 0.05); }
 .pd-nav__back:focus-visible { outline: 2px solid var(--green, var(--green)); outline-offset: 2px; }
 
+.pd-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: center;
+}
+
 .pd-nav__logo {
   height: 36px;
   width: auto;
-  justify-self: center;
+}
+
+.pd-nav__brand-text {
+  font-family: var(--heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
 }
 
 .pd-lang {
@@ -459,4 +473,12 @@
   .pd-sk { animation: none; }
   .pd-ex__chevron { transition: none; }
   .pd-ex__swap-btn { transition: none; }
+}
+
+/* Header angosto: el nombre no debe tocar a los controles de los costados */
+@media (max-width: 640px) {
+  .pd-nav { column-gap: 12px; }
+  .pd-nav__brand { gap: 6px; }
+  .pd-nav__logo { height: 28px; }
+  .pd-nav__brand-text { font-size: 0.9375rem; }
 }

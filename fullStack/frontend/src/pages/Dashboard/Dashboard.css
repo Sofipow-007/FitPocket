@@ -32,10 +32,24 @@
 }
 
 /* Logo — centrado en la columna del medio */
+.db-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: center;
+}
+
 .db-nav__logo {
   height: 36px;
   width: auto;
-  justify-self: center;
+}
+
+.db-nav__brand-text {
+  font-family: var(--heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
 }
 
 /* Left: perfil */
@@ -749,3 +763,11 @@
 .prog-peso-val { display: block; font-size: 2rem; font-weight: 800; color: #fff; }
 .prog-peso-sub { color: rgba(255,255,255,0.62); font-size: 0.85rem; }
 .prog-empty { color: rgba(255,255,255,0.62); font-size: 0.9rem; }
+
+/* Header angosto: el nombre no debe tocar a los controles de los costados */
+@media (max-width: 640px) {
+  .db-nav { column-gap: 12px; }
+  .db-nav__brand { gap: 6px; }
+  .db-nav__logo { height: 28px; }
+  .db-nav__brand-text { font-size: 0.9375rem; }
+}

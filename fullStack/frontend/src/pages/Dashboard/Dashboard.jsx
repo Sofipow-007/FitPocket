@@ -172,7 +172,10 @@ export default function Dashboard() {
             {nivel && <span className="db-nav__nivel">{nivel}</span>}
           </div>
         </div>
-        <img src={logo} alt="FitPocket" className="db-nav__logo" />
+        <div className="db-nav__brand">
+          <img src={logo} alt="" className="db-nav__logo" />
+          <span className="db-nav__brand-text">FitPocket</span>
+        </div>
         <div className="db-nav__right">
           <div className="db-lang" role="group" aria-label={t("comun.idioma")}>
             <button

@@ -116,7 +116,10 @@ export default function PlanDetalle() {
         >
           <IconBack /> <span>{t("plan.volver")}</span>
         </button>
-        <img src={logo} alt="FitPocket" className="pd-nav__logo" />
+        <div className="pd-nav__brand">
+          <img src={logo} alt="" className="pd-nav__logo" />
+          <span className="pd-nav__brand-text">FitPocket</span>
+        </div>
         <div className="pd-lang" role="group" aria-label={t("comun.idioma")}>
           <button
             className={`pd-lang__btn${i18n.language === "es" ? " pd-lang__btn--on" : ""}`}
