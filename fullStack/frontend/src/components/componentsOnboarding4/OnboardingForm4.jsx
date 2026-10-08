@@ -84,7 +84,7 @@ export default function OnboardingForm4() {
       localStorage.removeItem("ob_paso1");
       localStorage.removeItem("ob_paso2");
       localStorage.removeItem("ob_paso3");
-      navigate("/cargando-plan");
+      navigate("/cargando-plan", { replace: true });
     } catch {
       setApiError(t("ob4.errorConexion"));
     } finally {

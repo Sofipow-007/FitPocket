@@ -6,7 +6,11 @@
       "Optimizing days and routines...",
       "Adjusting nutrition to your budget...",
       "Finalizing your personalized plan..."
-    ]
+    ],
+    "errorTitulo":   "We couldn't generate your plan",
+    "reintentar":    "Retry",
+    "errorSesion":   "No active session. Sign in to generate your plan.",
+    "errorGenerico": "An unexpected error occurred while generating the plan."
   },
   "dashboard": {
     "saludo": {
@@ -111,7 +115,7 @@
       "subtitulo": "No credit card · No commitments · 3 minutes",
       "btn":       "Start free"
     },
-    "footer": "© 2025 FitPocket · All rights reserved"
+    "footer": "© 2026 FitPocket · All rights reserved"
   },
   "authModal": {
     "ariaLabel":  "Sign in",

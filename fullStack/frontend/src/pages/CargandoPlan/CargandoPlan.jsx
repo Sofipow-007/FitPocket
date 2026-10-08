@@ -33,18 +33,14 @@ export default function CargandoPlan() {
   const navigate = useNavigate();
   const { t }        = useTranslation();
   const PASOS        = t("cargando.pasos", { returnObjects: true });
-  const [pasoActual, setPasoActual] = useState(0);
-  const [progreso, setProgreso] = useState(0);
+  const [reducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const [pasoActual, setPasoActual] = useState(reducedMotion ? 2 : 0);
+  const [progreso, setProgreso] = useState(reducedMotion ? 50 : 0);
   const [estado, setEstado] = useState("generando");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion) {
-      setProgreso(50);
-      setPasoActual(2);
-      return;
-    }
+    if (reducedMotion) return;
 
     const total = 30000;
     const interval = 120;
@@ -58,7 +54,7 @@ export default function CargandoPlan() {
     }, interval);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [reducedMotion, PASOS.length]);
 
   useEffect(() => {
     let isMounted = true;
@@ -69,7 +65,7 @@ export default function CargandoPlan() {
       if (!token) {
         if (isMounted) {
           setEstado("error");
-          setError("No hay sesión activa. Iniciá sesión para generar tu plan.");
+          setError(t("cargando.errorSesion"));
         }
         return;
       }
@@ -78,7 +74,7 @@ export default function CargandoPlan() {
         const { ok, data } = await pedirPlan(token);
 
         if (!ok) {
-          throw new Error(data.error || "No se pudo generar el plan");
+          throw new Error(data.error || t("cargando.errorGenerico"));
         }
 
         if (isMounted) {
@@ -90,7 +86,7 @@ export default function CargandoPlan() {
       } catch (err) {
         if (isMounted) {
           setEstado("error");
-          setError(err.message || "Ocurrió un error inesperado al generar el plan.");
+          setError(err.message || t("cargando.errorGenerico"));
         }
       }
     };
@@ -100,7 +96,7 @@ export default function CargandoPlan() {
     return () => {
       isMounted = false;
     };
-  }, [navigate]);
+  }, [navigate, t, PASOS.length]);
 
   return (
     <div className="cp-page">
@@ -136,7 +132,7 @@ export default function CargandoPlan() {
 
         <p className="cp-step">
           {estado === "error"
-            ? "No pudimos generar tu plan"
+            ? t("cargando.errorTitulo")
             : PASOS[pasoActual]}
         </p>
 
@@ -148,7 +144,7 @@ export default function CargandoPlan() {
             onClick={() => window.location.reload()}
             style={{ marginTop: "1rem", padding: "0.75rem 1.25rem", border: "none", borderRadius: "999px", background: "#00E887", color: "#07111f", fontWeight: 700, cursor: "pointer" }}
           >
-            Reintentar
+            {t("cargando.reintentar")}
           </button>
         )}
 

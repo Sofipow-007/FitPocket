@@ -1,7 +1,8 @@
 /* ── Checklist ── */
 .cl-wrap { padding: 1.5rem 1rem; max-width: 520px; margin: 0 auto; }
 .cl-title { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
-.cl-sub { color: rgba(255,255,255,0.45); font-size: 0.9rem; margin-bottom: 2rem; text-transform: capitalize; }
+.cl-sub { color: rgba(255,255,255,0.45); font-size: 0.9rem; margin-bottom: 2rem; }
+.cl-sub::first-letter { text-transform: uppercase; }
 .cl-seccion { margin-bottom: 1.75rem; }
 .cl-seccion__label { display: block; color: rgba(255,255,255,0.7); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; }
 .cl-opciones { display: flex; gap: 0.6rem; flex-wrap: wrap; }
