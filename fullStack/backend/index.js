@@ -17,7 +17,15 @@ server.use('/users',   require('./routes/userRoutes'))
 server.use('/plan',    require('./routes/planRoutes'))
 server.use('/checkins', require('./routes/checkinRoutes'))
 
-const PORT = process.env.PORT || 3001;
+// Body con JSON mal formado: sin esto Express devuelve HTML con el stack trace
+server.use((err, req, res, next) => {
+  if (err.type === 'entity.parse.failed') {
+    return res.status(400).json({ error: 'JSON inválido' })
+  }
+  next(err)
+})
+
+const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
     console.log(`Servidor de FitPocket corriendo en puerto ${PORT}`);
