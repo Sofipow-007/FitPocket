@@ -201,8 +201,8 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
           <div className="flex-1 h-px bg-white/5" />
         </div>
 
-        {/* ── BOTÓN DE PRUEBA — Ir directo al Onboarding ── */}
-        <button
+        {/* ── BOTÓN DE PRUEBA — Ir directo al Onboarding (solo en desarrollo) ── */}
+        {import.meta.env.DEV && <button
           type="button"
           onClick={() => onGoOnboarding?.() ?? navigate("/onboarding")}
           className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold
@@ -211,7 +211,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
         >
           <IconFlask />
           [DEV] Ver Onboarding directamente
-        </button>
+        </button>}
 
         {/* Footer links */}
         <p className="text-xs text-zinc-400 text-center mt-4">
