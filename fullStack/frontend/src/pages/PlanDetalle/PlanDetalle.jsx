@@ -69,6 +69,7 @@ export default function PlanDetalle() {
           navigate("/login", { replace: true });
           return Promise.reject();
         }
+        if (r.status === 404) return null; // sin plan activo: no es un error de conexión
         return r.ok ? r.json() : Promise.reject();
       })
       .then(setPlan)
