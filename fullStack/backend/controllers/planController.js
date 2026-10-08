@@ -13,6 +13,9 @@ const decryptSeguro = (texto) => {
   }
 }
 
+// 'Miércoles' y 'miercoles' son el mismo día
+const normalizarDia = (dia) => String(dia || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase()
+
 exports.generarPlan = async (req, res) => {
   try {
     const userId = req.user?.userId
@@ -53,6 +56,15 @@ exports.generarPlan = async (req, res) => {
     if (planGenerado.meta?.nivelDificultad) {
       planGenerado.meta.nivelDificultad = planGenerado.meta.nivelDificultad.toLowerCase()
     }
+    // el prompt pide entrenar solo los días disponibles, pero eso lo decide el modelo:
+    // acá se garantiza descartando cualquier día que el usuario no eligió
+    const diasElegidos = new Set(perfilCompleto.diasDispo.map(normalizarDia))
+    planGenerado.rutina = (planGenerado.rutina || []).filter(r => diasElegidos.has(normalizarDia(r.dia)))
+    if (planGenerado.rutina.length === 0) {
+      console.error('Error al generar plan con Groq: la rutina no trae ningún día disponible')
+      return res.status(503).json({ error: 'El servicio de IA no está disponible. Intentá de nuevo.' })
+    }
+
     // el prompt de rutina no recibe el presupuesto, así que la IA lo inventaba
     if (planGenerado.meta) planGenerado.meta.presupuestoMensual = perfilCompleto.presupuesto
 
