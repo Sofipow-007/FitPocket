@@ -53,6 +53,8 @@ exports.generarPlan = async (req, res) => {
     if (planGenerado.meta?.nivelDificultad) {
       planGenerado.meta.nivelDificultad = planGenerado.meta.nivelDificultad.toLowerCase()
     }
+    // el prompt de rutina no recibe el presupuesto, así que la IA lo inventaba
+    if (planGenerado.meta) planGenerado.meta.presupuestoMensual = perfilCompleto.presupuesto
 
     const savedPlan = await Plan.create({
       userId,
