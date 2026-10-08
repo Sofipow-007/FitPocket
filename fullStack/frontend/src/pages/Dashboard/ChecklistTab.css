@@ -1,7 +1,7 @@
 /* ── Checklist ── */
 .cl-wrap { padding: 1.5rem 1rem; max-width: 520px; margin: 0 auto; }
 .cl-title { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
-.cl-sub { color: rgba(255,255,255,0.45); font-size: 0.9rem; margin-bottom: 2rem; }
+.cl-sub { color: rgba(255,255,255,0.62); font-size: 0.9rem; margin-bottom: 2rem; }
 .cl-sub::first-letter { text-transform: uppercase; }
 .cl-seccion { margin-bottom: 1.75rem; }
 .cl-seccion__label { display: block; color: rgba(255,255,255,0.7); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; }
@@ -12,5 +12,5 @@
 .cl-btn--readonly { cursor: default; }
 .cl-guardar { width: 100%; padding: 0.9rem; background: linear-gradient(135deg, #F97316 0%, #A855F7 100%); color: #07111f; font-size: 1rem; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; margin-top: 0.5rem; }
 .cl-guardar:disabled { opacity: 0.4; cursor: not-allowed; }
-.cl-guardado { color: #00E887; font-weight: 600; margin-top: 0.5rem; }
+.cl-guardado { color: var(--green); font-weight: 600; margin-top: 0.5rem; }
 .cl-error { color: #fca5a5; font-size: 0.88rem; margin-top: 0.5rem; }

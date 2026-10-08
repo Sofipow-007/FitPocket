@@ -90,7 +90,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
     }
   };
 
-  const inputBase = "w-full bg-[#161620] border border-white/10 rounded-xl text-white text-sm px-4 py-3 transition-all duration-150 placeholder:text-zinc-600 reg-input";
+  const inputBase = "w-full bg-[#161620] border border-white/10 rounded-xl text-white text-sm px-4 py-3 transition-all duration-150 placeholder:text-zinc-400 reg-input";
 
   return (
     <div className="w-full max-w-[440px] mx-auto reg-card-anim">
@@ -98,7 +98,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
       {/* Back */}
       <button
         onClick={() => onLogoClick?.() ?? navigate("/")}
-        className="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-orange-400 transition-colors mb-6 cursor-pointer"
+        className="flex items-center gap-1.5 min-h-11 text-sm text-zinc-400 hover:text-orange-400 transition-colors mb-4 cursor-pointer"
       >
         <IconArrowLeft /> {t("register.volver")}
       </button>
@@ -115,13 +115,13 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
         <h1 className="font-[Space_Grotesk,sans-serif] font-extrabold text-[1.75rem] text-white tracking-tight mb-1">
           {t("register.titulo")}
         </h1>
-        <p className="text-sm text-zinc-500 mb-7">{t("register.subtitulo")}</p>
+        <p className="text-sm text-zinc-400 mb-7">{t("register.subtitulo")}</p>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="reg-nombre" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
+            <label htmlFor="reg-nombre" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
               {t("register.nombre")}
             </label>
             <input id="reg-nombre" type="text" className={inputBase} placeholder={t("register.placeholder.nombre")}
@@ -129,7 +129,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="reg-email" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
+            <label htmlFor="reg-email" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
               {t("register.email")}
             </label>
             <input id="reg-email" type="email" className={inputBase} placeholder="tu@email.com"
@@ -137,7 +137,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="reg-password" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
+            <label htmlFor="reg-password" className="text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
               {t("register.contrasena")}
             </label>
             <div className="relative">
@@ -154,8 +154,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
                 type="button"
                 onClick={() => setShowPassword(v => !v)}
                 aria-label={showPassword ? t("register.ocultar") : t("register.mostrar")}
-                tabIndex={-1}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer"
+                className="absolute right-0 top-1/2 -translate-y-1/2 size-11 flex items-center justify-center text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
               >
                 {showPassword ? <IconEyeOff /> : <IconEye />}
               </button>
@@ -198,7 +197,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
         {/* Divider */}
         <div className="flex items-center gap-3 my-4">
           <div className="flex-1 h-px bg-white/5" />
-          <span className="text-xs text-zinc-600">o</span>
+          <span className="text-xs text-zinc-400">o</span>
           <div className="flex-1 h-px bg-white/5" />
         </div>
 
@@ -215,14 +214,14 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
         </button>
 
         {/* Footer links */}
-        <p className="text-xs text-zinc-600 text-center mt-4">
+        <p className="text-xs text-zinc-400 text-center mt-4">
           {t("register.terminos")}{" "}
-          <button type="button" className="text-zinc-500 underline underline-offset-2 hover:text-zinc-300 cursor-pointer transition-colors">
+          <button type="button" className="text-zinc-400 underline underline-offset-2 hover:text-zinc-300 cursor-pointer transition-colors">
             {t("register.terminosLink")}
           </button>
         </p>
 
-        <div className="flex items-center justify-center gap-1.5 mt-3 text-sm text-zinc-600">
+        <div className="flex items-center justify-center gap-1.5 mt-3 text-sm text-zinc-400">
           <span>{t("register.yaTenes")}</span>
           <button
             type="button"

@@ -14,7 +14,7 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: var(--r-xl);
-  z-index: 200;
+  z-index: var(--z-nav);
 }
 
 .nav__logo {

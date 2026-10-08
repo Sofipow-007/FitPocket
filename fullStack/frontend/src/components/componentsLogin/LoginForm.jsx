@@ -41,20 +41,24 @@ export default function LoginForm() {
 
   return (
     <div className="login-form">
-      <h2>{t("login.titulo")}</h2>
+      <h1>{t("login.titulo")}</h1>
       <p>{t("login.subtitulo")}</p>
       <form onSubmit={handleSubmit}>
-        <label>{t("login.email")}</label>
+        <label htmlFor="login-email">{t("login.email")}</label>
         <input
+          id="login-email"
           type="email"
+          autoComplete="email"
           placeholder={t("login.email")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <label>{t("login.password")}</label>
+        <label htmlFor="login-password">{t("login.password")}</label>
         <input
+          id="login-password"
           type="password"
+          autoComplete="current-password"
           placeholder={t("login.password")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}

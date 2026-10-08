@@ -190,11 +190,11 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <main className="db-main">
+      <div className="db-main">
 
         {/* ── Tabs ── */}
         <div className="db-tabs" role="tablist">
-          {[["home", "Inicio"], ["checklist", "Checklist"], ["progreso", "Progreso"]].map(([id, label]) => (
+          {[["home", t("dashboard.tabs.inicio")], ["checklist", t("dashboard.tabs.checklist")], ["progreso", t("dashboard.tabs.progreso")]].map(([id, label]) => (
             <button key={id} role="tab" aria-selected={tab === id}
               className={`db-tab${tab === id ? " db-tab--on" : ""}`}
               onClick={() => setTab(id)}>
@@ -417,7 +417,7 @@ export default function Dashboard() {
           <ProgresoTab adherencia={adherencia} perfil={perfil} />
         )}
 
-      </main>
+      </div>
     </div>
   );
 }

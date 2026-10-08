@@ -37,6 +37,7 @@
     "errorGenerico": "An unexpected error occurred while generating the plan."
   },
   "dashboard": {
+    "tabs": { "inicio": "Home", "checklist": "Checklist", "progreso": "Progress" },
     "sinPlanTitulo": "You don't have a plan yet",
     "sinPlanTexto": "Complete your profile to generate your personalized routine and diet.",
     "sinPlanCta": "Complete my profile",

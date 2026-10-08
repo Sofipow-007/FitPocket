@@ -163,3 +163,21 @@
   .cp-step-item__dot { transition: none; }
   .cp-step-item__text { transition: none; }
 }
+
+/* ── Error y reintento ── */
+.cp-step--error {
+  color: #ff6b6b;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+.cp-retry {
+  margin-top: 1rem;
+  min-height: 44px;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: var(--r-full);
+  background: var(--green);
+  color: var(--bg);
+  font-weight: 700;
+  cursor: pointer;
+}

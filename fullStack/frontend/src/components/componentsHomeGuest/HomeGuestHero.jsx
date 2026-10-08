@@ -71,7 +71,7 @@ function PlanMockup() {
           />
           <span className="w-7 font-bold text-zinc-400 flex-shrink-0">{d.day}</span>
           <span className={`flex-1 font-medium ${d.today ? "text-white" : "text-zinc-300"}`}>{d.work}</span>
-          <span className="text-zinc-500 text-[11px]">{d.dur}</span>
+          <span className="text-zinc-400 text-[11px]">{d.dur}</span>
           {d.done && (
             <span className="w-4 h-4 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
               <IconCheck />
@@ -83,7 +83,7 @@ function PlanMockup() {
         </div>
       ))}
       <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/5">
-        <span className="text-[11px] text-zinc-500 flex-shrink-0">{t("home.bento.mockup.adherenciaLabel")}</span>
+        <span className="text-[11px] text-zinc-400 flex-shrink-0">{t("home.bento.mockup.adherenciaLabel")}</span>
         <div className="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
           <div className="h-full rounded-full mockup-bar-fill" style={{ width: "74%" }} />
         </div>
@@ -116,14 +116,14 @@ export default function HomeGuestHero() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setLoginOpen(true)}
-            className="shrink-0 whitespace-nowrap px-3 sm:px-4 py-2 text-[13px] sm:text-sm text-zinc-400 border border-white/10 rounded-full
+            className="shrink-0 whitespace-nowrap min-h-11 px-3 sm:px-4 py-2 text-[13px] sm:text-sm text-zinc-400 border border-white/10 rounded-full
               hover:border-orange-500/40 hover:text-orange-400 transition-all duration-150 cursor-pointer"
           >
             {t("home.entrar")}
           </button>
           <button
             onClick={() => navigate("/register")}
-            className="shrink-0 whitespace-nowrap px-3 sm:px-4 py-2 text-[13px] sm:text-sm font-semibold text-black bg-orange-500 rounded-full
+            className="shrink-0 whitespace-nowrap min-h-11 px-3 sm:px-4 py-2 text-[13px] sm:text-sm font-semibold text-black bg-orange-500 rounded-full
               hover:bg-orange-400 transition-all duration-150 cursor-pointer btn-glow"
           >
             {t("home.empezarGratis")}
@@ -165,7 +165,7 @@ export default function HomeGuestHero() {
           </div>
 
           {/* Social proof */}
-          <div className="flex items-center gap-3 animate-float-up text-sm text-zinc-500" style={{ animationDelay: "0.4s" }}>
+          <div className="flex items-center gap-3 animate-float-up text-sm text-zinc-400" style={{ animationDelay: "0.4s" }}>
             <div className="flex -space-x-2">
               {["SO","MG","LR"].map(i => (
                 <div key={i} className="w-8 h-8 rounded-full bg-zinc-800 border-2 border-[#050508]
@@ -181,7 +181,7 @@ export default function HomeGuestHero() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40">
-          <span className="text-[11px] uppercase tracking-widest text-zinc-500">{t("home.hero.scroll")}</span>
+          <span className="text-[11px] uppercase tracking-widest text-zinc-400">{t("home.hero.scroll")}</span>
           <div className="w-px h-8 bg-gradient-to-b from-zinc-500 to-transparent" />
         </div>
       </section>
@@ -212,31 +212,31 @@ export default function HomeGuestHero() {
 
           {/* Card — Adherencia */}
           <div className="bento-card bg-[#0F0F16] border border-white/7 rounded-3xl p-6 flex flex-col justify-between cursor-default">
-            <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500">{t("home.bento.adherenciaAvg")}</span>
+            <span className="text-sm font-semibold text-zinc-400">{t("home.bento.adherenciaAvg")}</span>
             <div>
               <div className="font-[Space_Grotesk,sans-serif] font-extrabold text-6xl text-gradient-orange leading-none">{t("home.bento.progresoValor")}</div>
-              <p className="text-zinc-500 text-sm mt-2">{t("home.bento.adherenciaSub")}</p>
+              <p className="text-zinc-400 text-sm mt-2">{t("home.bento.adherenciaSub")}</p>
             </div>
           </div>
 
           {/* Card — Setup rápido */}
           <div className="bento-card bg-orange-500 rounded-3xl p-6 flex flex-col justify-between cursor-default">
-            <span className="text-xs font-semibold uppercase tracking-widest text-orange-900/70">{t("home.bento.setupLabel")}</span>
+            <span className="text-sm font-semibold text-black/80">{t("home.bento.setupLabel")}</span>
             <div>
               <div className="font-[Space_Grotesk,sans-serif] font-extrabold text-6xl text-black leading-none">3 min</div>
-              <p className="text-black/60 text-sm mt-2">{t("home.bento.setupSub")}</p>
+              <p className="text-black/80 text-sm mt-2">{t("home.bento.setupSub")}</p>
             </div>
           </div>
 
           {/* Card — Cómo funciona */}
           <div className="bento-card md:col-span-2 bg-[#0F0F16] border border-white/7 rounded-3xl p-6 cursor-default">
-            <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4 block">{t("home.bento.proceso")}</span>
+            <span className="text-sm font-semibold text-zinc-400 mb-4 block">{t("home.bento.proceso")}</span>
             <div className="grid grid-cols-3 gap-4">
               {pasos.map(s => (
                 <div key={s.n} className="flex flex-col gap-2">
                   <span className="font-[Space_Grotesk,sans-serif] font-extrabold text-2xl text-orange-500/50">{s.n}</span>
                   <span className="font-semibold text-white text-sm">{s.titulo}</span>
-                  <span className="text-zinc-500 text-xs leading-relaxed">{s.desc}</span>
+                  <span className="text-zinc-400 text-xs leading-relaxed">{s.desc}</span>
                 </div>
               ))}
             </div>
@@ -244,13 +244,13 @@ export default function HomeGuestHero() {
 
           {/* Card — Adaptación */}
           <div className="bento-card bg-[#120E1F] border border-purple-500/15 rounded-3xl p-6 flex flex-col justify-between cursor-default">
-            <span className="text-xs font-semibold uppercase tracking-widest text-purple-400">{t("home.bento.adaptaLabel")}</span>
+            <span className="text-sm font-semibold text-purple-400">{t("home.bento.adaptaLabel")}</span>
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <IconSpark />
                 <span className="font-[Space_Grotesk,sans-serif] font-extrabold text-2xl text-white">{t("home.bento.adaptaTitulo")}</span>
               </div>
-              <p className="text-zinc-500 text-sm">{t("home.bento.adaptaDesc")}</p>
+              <p className="text-zinc-400 text-sm">{t("home.bento.adaptaDesc")}</p>
             </div>
           </div>
 
@@ -261,7 +261,7 @@ export default function HomeGuestHero() {
                 <div className="font-[Space_Grotesk,sans-serif] font-extrabold text-3xl text-white">
                   {s.val}<span className="text-orange-400 text-lg ml-0.5">{s.unit}</span>
                 </div>
-                <div className="text-zinc-500 text-xs mt-1">{s.desc}</div>
+                <div className="text-zinc-400 text-xs mt-1">{s.desc}</div>
               </div>
             ))}
           </div>
@@ -294,7 +294,7 @@ export default function HomeGuestHero() {
 
       {/* ── Footer ── */}
       <footer className="border-t border-white/5 py-8 text-center">
-        <p className="text-xs text-zinc-600">{t("home.footer")}</p>
+        <p className="text-xs text-zinc-400">{t("home.footer")}</p>
       </footer>
 
       <AuthModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />

@@ -37,6 +37,7 @@
     "errorGenerico": "Ocurrió un error inesperado al generar el plan."
   },
   "dashboard": {
+    "tabs": { "inicio": "Inicio", "checklist": "Checklist", "progreso": "Progreso" },
     "sinPlanTitulo": "Todavía no tenés un plan",
     "sinPlanTexto": "Completá tu perfil para generar tu rutina y tu dieta personalizada.",
     "sinPlanCta": "Completar mi perfil",

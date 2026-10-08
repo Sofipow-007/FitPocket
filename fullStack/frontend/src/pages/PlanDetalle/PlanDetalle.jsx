@@ -129,7 +129,7 @@ export default function PlanDetalle() {
         </div>
       </nav>
 
-      <main className="pd-main">
+      <div className="pd-main">
         {loading && (
           <div className="pd-skeleton-wrap" aria-busy="true" aria-label={t("comun.cargando")}>
             <div className="pd-sk pd-sk--title" />
@@ -272,7 +272,7 @@ export default function PlanDetalle() {
             </section>
           </>
         )}
-      </main>
+      </div>
     </div>
   );
 }

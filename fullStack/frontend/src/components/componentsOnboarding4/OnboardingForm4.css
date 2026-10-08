@@ -45,7 +45,7 @@
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0;
-  color: var(--ink4);
+  color: var(--ink3);
   font-size: 0.7rem;
 }
 
@@ -119,11 +119,11 @@
   outline: none;
   border-color: var(--border-focus);
 }
-.ob4-textarea::placeholder { color: var(--ink4); }
+.ob4-textarea::placeholder { color: var(--ink3); }
 
 .ob4-char-count {
   font-size: 0.72rem;
-  color: var(--ink4);
+  color: var(--ink3);
   text-align: right;
 }
 

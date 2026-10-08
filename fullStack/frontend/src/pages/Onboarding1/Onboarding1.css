@@ -28,7 +28,7 @@
 .ob-header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: var(--z-header);
   background: rgba(6,6,14,0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);

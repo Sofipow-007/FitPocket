@@ -3,7 +3,7 @@
   position: fixed;
   top: 16px;
   right: 20px;
-  z-index: 9000;
+  z-index: var(--z-lang);
   display: flex;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -22,12 +22,12 @@
   color: rgba(255, 255, 255, 0.55);
   cursor: pointer;
   letter-spacing: 0.06em;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--sans);
   transition: color 150ms, background 150ms;
 }
 
 .g-lang__btn--on {
-  color: #00E887;
+  color: var(--green);
   background: rgba(0, 232, 135, 0.12);
 }
 

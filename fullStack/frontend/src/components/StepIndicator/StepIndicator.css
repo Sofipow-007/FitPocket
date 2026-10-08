@@ -49,7 +49,7 @@
 .step-indicator__circle--pending {
   background: var(--bg3);
   border: 1px solid var(--bg4);
-  color: var(--ink4);
+  color: var(--ink3);
 }
 
 .step-indicator__circle--active {
@@ -69,7 +69,7 @@
 .step-indicator__name {
   font-size: 14px;
   font-family: var(--sans, "DM Sans", sans-serif);
-  color: var(--ink4);
+  color: var(--ink3);
   transition: color 0.3s ease;
 }
 

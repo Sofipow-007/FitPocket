@@ -9,7 +9,7 @@
     radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
   background-size: auto, auto, 28px 28px;
   color: var(--ink, #F4F4FF);
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--sans);
 }
 
 /* ══════════════════════════════════════════════
@@ -18,7 +18,7 @@
 .pd-nav {
   position: sticky;
   top: 0;
-  z-index: 30;
+  z-index: var(--z-sticky);
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -48,7 +48,7 @@
 }
 .pd-nav__back svg { width: 16px; height: 16px; }
 .pd-nav__back:hover { color: var(--ink, #F4F4FF); background: rgba(255, 255, 255, 0.05); }
-.pd-nav__back:focus-visible { outline: 2px solid var(--green, #00E887); outline-offset: 2px; }
+.pd-nav__back:focus-visible { outline: 2px solid var(--green, var(--green)); outline-offset: 2px; }
 
 .pd-nav__logo {
   height: 36px;
@@ -75,9 +75,9 @@
   letter-spacing: 0.06em;
   transition: color 150ms, background 150ms;
 }
-.pd-lang__btn--on { color: var(--green, #00E887); background: rgba(0, 232, 135, 0.1); }
+.pd-lang__btn--on { color: var(--green, var(--green)); background: rgba(0, 232, 135, 0.1); }
 .pd-lang__btn:hover:not(.pd-lang__btn--on) { color: rgba(255, 255, 255, 0.62); }
-.pd-lang__btn:focus-visible { outline: 2px solid var(--green, #00E887); outline-offset: -2px; }
+.pd-lang__btn:focus-visible { outline: 2px solid var(--green, var(--green)); outline-offset: -2px; }
 
 /* ── Main ── */
 .pd-main {
@@ -87,7 +87,7 @@
 }
 
 .pd-title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -103,7 +103,7 @@
   font-weight: 500;
 }
 .pd-subtitle strong {
-  color: var(--green, #00E887);
+  color: var(--green, var(--green));
   text-transform: capitalize;
   font-weight: 700;
 }
@@ -134,7 +134,7 @@
   transition: background 150ms;
 }
 .pd-day:hover { background: rgba(255, 255, 255, 0.04); }
-.pd-day:focus-visible { outline: 2px solid var(--green, #00E887); outline-offset: 2px; }
+.pd-day:focus-visible { outline: 2px solid var(--green, var(--green)); outline-offset: 2px; }
 
 .pd-day__nom {
   font-size: 10px;
@@ -164,9 +164,9 @@
 .pd-day--activo {
   background: rgba(0, 232, 135, 0.08);
 }
-.pd-day--activo .pd-day__nom { color: var(--green, #00E887); }
+.pd-day--activo .pd-day__nom { color: var(--green, var(--green)); }
 .pd-day--activo .pd-day__dot {
-  background: var(--green, #00E887);
+  background: var(--green, var(--green));
   width: 10px;
   height: 10px;
   box-shadow: 0 0 10px rgba(0, 232, 135, 0.65);
@@ -184,7 +184,7 @@
 .pd-section:first-of-type { margin-top: 0; }
 
 .pd-section__title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
@@ -201,7 +201,7 @@
 }
 
 .pd-day-head__tipo {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: 18px;
   font-weight: 700;
   color: var(--ink, #F4F4FF);
@@ -261,10 +261,10 @@
 }
 .pd-ex__row:hover { background: rgba(255, 255, 255, 0.03); }
 .pd-ex--open .pd-ex__row { background: rgba(0, 232, 135, 0.05); }
-.pd-ex__row:focus-visible { outline: 2px solid var(--green, #00E887); outline-offset: -2px; }
+.pd-ex__row:focus-visible { outline: 2px solid var(--green, var(--green)); outline-offset: -2px; }
 
 .pd-ex__n {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: 11px;
   font-weight: 700;
   color: rgba(0, 232, 135, 0.82);
@@ -288,7 +288,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--blue, #4F8EF7);
+  color: var(--blue, var(--blue));
   background: rgba(79, 142, 247, 0.12);
   border-radius: 999px;
   padding: 2px 7px;
@@ -367,7 +367,7 @@
   min-height: 44px;
   background: rgba(79, 142, 247, 0.1);
   border: 1px solid rgba(79, 142, 247, 0.28);
-  color: var(--blue, #4F8EF7);
+  color: var(--blue, var(--blue));
   font-size: 12px;
   font-weight: 700;
   padding: 7px 16px;
@@ -379,7 +379,7 @@
 .pd-ex__swap-btn svg { width: 13px; height: 13px; }
 .pd-ex__swap-btn:hover { background: rgba(79, 142, 247, 0.18); transform: translateY(-1px); }
 .pd-ex__swap-btn:active { transform: translateY(0); }
-.pd-ex__swap-btn:focus-visible { outline: 2px solid var(--blue, #4F8EF7); outline-offset: 2px; }
+.pd-ex__swap-btn:focus-visible { outline: 2px solid var(--blue, var(--blue)); outline-offset: 2px; }
 
 /* ══════════════════════════════════════════════
    DIETA — timeline (mismo lenguaje que Dashboard)
@@ -400,14 +400,14 @@
   flex-shrink: 0;
 }
 
-.pd-tl-row__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green, #00E887); flex-shrink: 0; }
+.pd-tl-row__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green, var(--green)); flex-shrink: 0; }
 .pd-tl-row__line { width: 1px; flex: 1; min-height: 14px; background: rgba(255, 255, 255, 0.07); margin-top: 6px; }
 
 .pd-tl-row__content { flex: 1; min-width: 0; padding-bottom: 22px; }
 .pd-tl-row:last-child .pd-tl-row__content { padding-bottom: 0; }
 
 .pd-tl-row__head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
-.pd-tl-row__label { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: rgba(255, 255, 255, 0.82); letter-spacing: -0.01em; }
+.pd-tl-row__label { font-family: var(--heading); font-size: 13px; font-weight: 700; color: rgba(255, 255, 255, 0.82); letter-spacing: -0.01em; }
 .pd-tl-row__kcal { font-size: 11px; font-weight: 600; color: rgba(0, 232, 135, 0.82); font-variant-numeric: tabular-nums; }
 .pd-tl-row__desc { font-size: 13px; color: rgba(255, 255, 255, 0.82); margin: 0; line-height: 1.55; }
 

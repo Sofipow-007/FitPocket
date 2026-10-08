@@ -136,13 +136,13 @@ export default function CargandoPlan() {
             : PASOS[pasoActual]}
         </p>
 
-        {error && <p className="cp-step" style={{ color: "#ff6b6b", fontSize: "0.95rem", marginTop: "0.5rem" }}>{error}</p>}
+        {error && <p className="cp-step cp-step--error" role="alert">{error}</p>}
 
         {estado === "error" && (
           <button
             type="button"
             onClick={() => window.location.reload()}
-            style={{ marginTop: "1rem", padding: "0.75rem 1.25rem", border: "none", borderRadius: "999px", background: "#00E887", color: "#07111f", fontWeight: 700, cursor: "pointer" }}
+            className="cp-retry"
           >
             {t("cargando.reintentar")}
           </button>

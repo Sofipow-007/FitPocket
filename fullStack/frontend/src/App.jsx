@@ -27,7 +27,7 @@ function DevPanel() {
   if (hide) return null;
   return (
     <div className="dev-panel" style={{
-      position: "fixed", bottom: 20, right: 20, zIndex: 9999,
+      position: "fixed", bottom: 20, right: 20, zIndex: "var(--z-dev)",
       background: "rgba(6,6,14,0.92)", border: "1px solid rgba(255,255,255,0.12)",
       borderRadius: 14, padding: "10px 14px", display: "flex", flexDirection: "column", gap: 6,
       backdropFilter: "blur(12px)", boxShadow: "0 4px 24px rgba(0,0,0,0.5)",

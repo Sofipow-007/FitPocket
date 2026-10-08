@@ -43,18 +43,10 @@
   box-shadow: 0 12px 40px rgba(0,0,0,0.5);
 }
 
-/* ── Gradient text ─────────────────────────────────────────────── */
-.text-gradient-orange {
-  background: linear-gradient(135deg, #F97316 0%, #FBBF24 50%, #F97316 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+/* ── Acento del título: color sólido (antes era texto con gradiente) ── */
+.text-gradient-orange,
 .text-gradient-full {
-  background: linear-gradient(135deg, #F97316 0%, #A855F7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #F97316;
 }
 
 /* ── CTA glow ──────────────────────────────────────────────────── */

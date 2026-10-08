@@ -10,7 +10,7 @@
     radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
   background-size: auto, auto, 28px 28px;
   color: var(--ink, #F4F4FF);
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--sans);
 }
 
 /* ══════════════════════════════════════════════
@@ -19,7 +19,7 @@
 .db-nav {
   position: sticky;
   top: 0;
-  z-index: 30;
+  z-index: var(--z-sticky);
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: 14px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.92);
@@ -118,7 +118,7 @@
 }
 
 .db-lang__btn--on {
-  color: var(--green, #00E887);
+  color: var(--green, var(--green));
   background: rgba(0, 232, 135, 0.1);
 }
 
@@ -166,7 +166,7 @@
 }
 
 .db-section__title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
@@ -194,7 +194,7 @@
 }
 
 .db-hero__greeting {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: clamp(1.65rem, 3.5vw, 2.4rem);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -225,7 +225,7 @@
 }
 
 .db-strip__val {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: 20px;
   font-weight: 700;
   color: var(--ink, #F4F4FF);
@@ -256,7 +256,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--green, #00E887);
+  background: var(--green, var(--green));
   color: #06060E;
   border: none;
   border-radius: 12px;
@@ -265,7 +265,7 @@
   font-weight: 700;
   cursor: pointer;
   letter-spacing: 0.01em;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   align-self: flex-start;
   transition: opacity 150ms, transform 120ms;
 }
@@ -306,7 +306,7 @@
 }
 
 .db-today__estado {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: 15px;
   font-weight: 700;
   color: var(--ink, #F4F4FF);
@@ -314,7 +314,7 @@
 }
 
 .db-today--activo .db-today__estado {
-  color: var(--green, #00E887);
+  color: var(--green, var(--green));
 }
 
 .db-today__meta {
@@ -347,7 +347,7 @@
 }
 
 .db-today__ej-n {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: 10px;
   font-weight: 700;
   color: rgba(0, 232, 135, 0.82);
@@ -418,11 +418,11 @@
 }
 
 .db-wday--hoy .db-wday__nom {
-  color: var(--green, #00E887);
+  color: var(--green, var(--green));
 }
 
 .db-wday--hoy.db-wday--entrena .db-wday__dot {
-  background: var(--green, #00E887);
+  background: var(--green, var(--green));
   width: 10px;
   height: 10px;
   box-shadow: 0 0 10px rgba(0, 232, 135, 0.65);
@@ -461,7 +461,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--green, #00E887);
+  background: var(--green, var(--green));
   flex-shrink: 0;
 }
 
@@ -491,7 +491,7 @@
 }
 
 .db-tl-row__label {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--heading);
   font-size: 13px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.82);
@@ -656,7 +656,7 @@
   max-width: 320px;
 }
 .db-sin-plan__btn {
-  background: var(--green, #00E887);
+  background: var(--green, var(--green));
   color: #06060E;
   font-weight: 700;
   font-size: 0.9rem;
@@ -667,7 +667,7 @@
   min-height: 44px;
 }
 .db-sin-plan__btn:hover { opacity: 0.9; }
-.db-sin-plan__btn:focus-visible { outline: 2px solid var(--green, #00E887); outline-offset: 2px; }
+.db-sin-plan__btn:focus-visible { outline: 2px solid var(--green, var(--green)); outline-offset: 2px; }
 
 /* ── Error ── */
 .db-error {
@@ -729,8 +729,8 @@
 
 /* ── Tabs ── */
 .db-tabs { display: flex; gap: 0.25rem; padding: 0 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.db-tab { background: none; border: none; color: rgba(255,255,255,0.45); font-size: 0.9rem; font-weight: 600; padding: 0.65rem 1rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .2s, border-color .2s; }
-.db-tab--on { color: #fff; border-bottom-color: #00E887; }
+.db-tab { background: none; border: none; color: rgba(255,255,255,0.62); font-size: 0.9rem; font-weight: 600; padding: 0.65rem 1rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .2s, border-color .2s; }
+.db-tab--on { color: #fff; border-bottom-color: var(--green); }
 
 /* ── Alerta banner ── */
 .db-alerta-banner { display: flex; align-items: center; gap: 0.75rem; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.35); border-radius: 12px; padding: 0.85rem 1.25rem; margin-bottom: 1.25rem; color: #fca5a5; font-size: 0.9rem; }
@@ -744,8 +744,8 @@
 .prog-barra-track { flex: 1; width: 100%; background: rgba(255,255,255,0.06); border-radius: 6px; display: flex; align-items: flex-end; overflow: hidden; }
 .prog-barra-fill { width: 100%; border-radius: 6px; transition: height 0.6s ease; }
 .prog-barra-val { color: #fff; font-size: 0.8rem; font-weight: 700; }
-.prog-barra-label { color: rgba(255,255,255,0.4); font-size: 0.7rem; text-align: center; }
+.prog-barra-label { color: rgba(255,255,255,0.62); font-size: 0.7rem; text-align: center; }
 .prog-peso-card { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 1.25rem 1.5rem; }
 .prog-peso-val { display: block; font-size: 2rem; font-weight: 800; color: #fff; }
-.prog-peso-sub { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
-.prog-empty { color: rgba(255,255,255,0.35); font-size: 0.9rem; }
+.prog-peso-sub { color: rgba(255,255,255,0.62); font-size: 0.85rem; }
+.prog-empty { color: rgba(255,255,255,0.62); font-size: 0.9rem; }

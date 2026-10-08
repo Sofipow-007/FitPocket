@@ -40,8 +40,8 @@
   /* Text */
   --ink:  #F4F4FF;
   --ink2: #A8A8C2;
-  --ink3: #6A6A84;
-  --ink4: #3A3A52;
+  --ink3: #8C8CA8; /* texto secundario: 5,2:1 sobre --bg4, 6,1:1 sobre --bg */
+  --ink4: #3A3A52; /* solo decorativo (líneas, puntos): no usar como color de texto */
 
   /* Semantic */
   --ok:    #00E887;
@@ -63,6 +63,14 @@
   --r-full: 9999px;
 
   /* Transitions */
+  /* capas, de abajo hacia arriba */
+  --z-sticky:  30;
+  --z-header:  50;
+  --z-nav:     200;
+  --z-modal:   500;
+  --z-lang:    600;
+  --z-dev:     700;
+
   --t-fast: 150ms ease;
   --t-base: 250ms ease;
   --t-slow: 400ms ease;
@@ -244,5 +252,44 @@ input, select, textarea { font-family: var(--sans); }
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* ── Foco de teclado ──
+   :where() no suma especificidad: cada componente puede definir su propio anillo. */
+:where(button, a, select, summary, [role="tab"], [tabindex]):focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+:where(input, textarea):focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 1px;
+}
+
+/* ── Áreas táctiles ──
+   PRODUCT.md pide 44x44 px. Se aplica en pantallas táctiles y angostas,
+   donde estos controles medían entre 16 y 40 px. */
+@media (pointer: coarse), (max-width: 640px) {
+  .ob2-chip,
+  .ob3-chip,
+  .ob4-chip,
+  .db-today__ej-row {
+    min-height: 44px;
+  }
+
+  .g-lang__btn,
+  .db-lang__btn,
+  .pd-lang__btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .nav__logo,
+  .db-nav__logout,
+  .pd-nav__back,
+  .ob-header__logo {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
   }
 }
