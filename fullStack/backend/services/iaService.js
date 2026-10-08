@@ -3,11 +3,11 @@ const Groq = require('groq-sdk')
 const client = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
 const call = (msgs, temp) => client.chat.completions.create({
-  model: 'qwen/qwen3.6-27b',
+  model: 'openai/gpt-oss-120b',
   messages: msgs,
   temperature: temp,
   max_tokens: 3500,
-  reasoning_effort: 'none'
+  reasoning_effort: 'low'
 })
 
 const limpiar = (texto) => texto
@@ -43,7 +43,7 @@ Datos:
 - Aclaración del usuario: ${perfil.aclaracion || 'ninguna'}
 
 No incluyas ejercicios contraindicados para las limitaciones indicadas.
-Solo los días disponibles en rutina. Máximo 2 alternativas por ejercicio. Solo JSON puro.`
+Solo los días disponibles en rutina. Máximo 2 alternativas por ejercicio. Solo JSON puro, minificado en una sola línea, sin saltos de línea ni indentación.`
 
   let res = await call([{ role: 'user', content: promptRutina }], 0.7)
   const parte1 = await parsearConRetry(promptRutina, limpiar(res.choices[0].message.content))
@@ -57,7 +57,7 @@ Datos:
 - Presupuesto: $${perfil.presupuesto}/mes
 - Limitaciones: ${perfil.limitaciones.length ? perfil.limitaciones.join(', ') : 'ninguna'}
 
-Los 7 días de la semana. Solo JSON puro.`
+Los 7 días de la semana. Solo JSON puro, minificado en una sola línea, sin saltos de línea ni indentación.`
 
   res = await call([{ role: 'user', content: promptDieta }], 0.7)
   const parte2 = await parsearConRetry(promptDieta, limpiar(res.choices[0].message.content))

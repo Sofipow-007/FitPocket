@@ -5,7 +5,7 @@ Coach Personal Fitness
 
 - **Frontend**: React 19 + Vite, React Router, Tailwind, i18next (es/en). `fullStack/frontend/`
 - **Backend**: Node + Express 5, MongoDB Atlas vía Mongoose, JWT + bcrypt. `fullStack/backend/`
-- **IA**: Groq (`llama-3.3-70b-versatile` / modelo configurado en `backend/services/iaService.js`)
+- **IA**: Groq (`openai/gpt-oss-120b`, configurado en `backend/services/iaService.js`)
 
 ## Requisitos
 
