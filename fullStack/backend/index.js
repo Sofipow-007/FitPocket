@@ -27,6 +27,12 @@ server.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => {
+// En Express 5 el error de listen (por ejemplo, puerto ocupado) llega a este callback:
+// sin chequearlo, el proceso quedaba vivo diciendo "corriendo" sin escuchar nada.
+server.listen(PORT, (error) => {
+    if (error) {
+        console.error(`No se pudo iniciar el servidor en el puerto ${PORT}: ${error.message}`);
+        process.exit(1);
+    }
     console.log(`Servidor de FitPocket corriendo en puerto ${PORT}`);
 });
