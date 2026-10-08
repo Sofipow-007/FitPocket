@@ -62,7 +62,6 @@ export default function LoginForm() {
 
         {error && <p className="login-error" role="alert">{error}</p>}
 
-        <a href="#" className="forgot-password">{t("login.olvidaste")}</a>
         <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? t("login.ingresando") : t("login.ingresar")}
         </button>
