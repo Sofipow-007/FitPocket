@@ -107,7 +107,7 @@ export default function HomeGuestHero() {
 
       {/* ── Navbar ── */}
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-5xl z-50
-        flex items-center justify-between px-5 py-3
+        flex items-center justify-between gap-2 px-3 sm:px-5 py-3
         bg-[#0F0F16]/85 backdrop-blur-xl border border-white/8 rounded-2xl">
         <div className="flex items-center gap-2.5">
           <img src={logo} alt="" className="h-8 w-auto" />
@@ -116,14 +116,14 @@ export default function HomeGuestHero() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setLoginOpen(true)}
-            className="px-4 py-2 text-sm text-zinc-400 border border-white/10 rounded-full
+            className="shrink-0 whitespace-nowrap px-3 sm:px-4 py-2 text-[13px] sm:text-sm text-zinc-400 border border-white/10 rounded-full
               hover:border-orange-500/40 hover:text-orange-400 transition-all duration-150 cursor-pointer"
           >
             {t("home.entrar")}
           </button>
           <button
             onClick={() => navigate("/register")}
-            className="px-4 py-2 text-sm font-semibold text-black bg-orange-500 rounded-full
+            className="shrink-0 whitespace-nowrap px-3 sm:px-4 py-2 text-[13px] sm:text-sm font-semibold text-black bg-orange-500 rounded-full
               hover:bg-orange-400 transition-all duration-150 cursor-pointer btn-glow"
           >
             {t("home.empezarGratis")}
