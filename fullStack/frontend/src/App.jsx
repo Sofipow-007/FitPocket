@@ -8,6 +8,8 @@ import RutaPublica from "./components/RutaPublica";
 const HomeGuest    = lazy(() => import("./pages/HomeGuest/HomeGuest"));
 const Register     = lazy(() => import("./pages/Register/Register"));
 const Login        = lazy(() => import("./pages/Login/Login"));
+const Recuperar    = lazy(() => import("./pages/Recuperar/Recuperar"));
+const Restablecer  = lazy(() => import("./pages/Recuperar/Restablecer"));
 const Onboarding1  = lazy(() => import("./pages/Onboarding1/Onboarding1"));
 const Onboarding2  = lazy(() => import("./pages/Onboarding2/Onboarding2"));
 const Onboarding3  = lazy(() => import("./pages/Onboarding3/Onboarding3"));
@@ -42,6 +44,9 @@ function App() {
               <Route path="/"              element={<RutaPublica><HomeGuest /></RutaPublica>} />
               <Route path="/register"      element={<RutaPublica><Register /></RutaPublica>} />
               <Route path="/login"         element={<RutaPublica><Login /></RutaPublica>} />
+              <Route path="/recuperar"     element={<RutaPublica><Recuperar /></RutaPublica>} />
+              {/* sin RutaPublica: el enlace del mail tiene que abrir aunque haya una sesión vieja guardada */}
+              <Route path="/restablecer"   element={<Restablecer />} />
               <Route path="/onboarding"    element={<RutaPrivada><Onboarding1 /></RutaPrivada>} />
               <Route path="/onboarding/2"  element={<RutaPrivada><Onboarding2 /></RutaPrivada>} />
               <Route path="/onboarding/3"  element={<RutaPrivada><Onboarding3 /></RutaPrivada>} />

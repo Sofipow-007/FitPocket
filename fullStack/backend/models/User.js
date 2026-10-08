@@ -17,6 +17,13 @@ const schemaUser = new mongoose.Schema({
         required: true
     },
 
+    // Recuperación de contraseña: del token solo se guarda el hash
+    resetTokenHash:     { type: String },
+    resetTokenExpira:   { type: Date },
+    resetPedidoEn:      { type: Date },
+    // Las sesiones (JWT) emitidas antes de esta fecha dejan de valer
+    passwordCambiadaEn: { type: Date },
+
     rol: {
         type: String,
         enum: ['usuario', 'admin'],

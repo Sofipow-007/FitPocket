@@ -1,4 +1,34 @@
 {
+  "restablecer": {
+    "titulo": "Choose your new password",
+    "subtitulo": "Saving it signs you in right away and closes sessions open on other devices.",
+    "nueva": "New password",
+    "repetir": "Repeat the password",
+    "ayuda": "At least 8 characters.",
+    "mostrar": "Show passwords",
+    "guardar": "Save and sign in",
+    "guardando": "Saving...",
+    "errorCorta": "The password must be at least 8 characters.",
+    "errorDistintas": "The two passwords don't match.",
+    "errorConexion": "We couldn't reach the server. Try again.",
+    "invalidoTitulo": "This link no longer works",
+    "invalidoTexto": "It expired, was already used or is incomplete. Request a new one and use it within 30 minutes.",
+    "pedirOtro": "Request a new link"
+  },
+  "recuperar": {
+    "titulo": "Reset your password",
+    "subtitulo": "Enter your account email and we'll send you a link to choose a new password.",
+    "email": "Email",
+    "placeholderEmail": "you@email.com",
+    "enviar": "Send me the link",
+    "enviando": "Sending...",
+    "volverLogin": "Back to sign in",
+    "errorEmail": "Enter a valid email.",
+    "errorConexion": "We couldn't reach the server. Try again.",
+    "enviadoTitulo": "Check your inbox",
+    "enviadoTexto": "If {{email}} has a FitPocket account, we sent a link to reset the password.",
+    "enviadoAyuda": "The link expires in 30 minutes. If you don't see it, check your spam folder; you can request another one after a minute."
+  },
   "progreso": {
     "adherenciaTitulo": "This week's adherence",
     "sinRegistros": "You don't have adherence records yet.",
@@ -148,6 +178,7 @@
     "footer": "© 2026 FitPocket · All rights reserved"
   },
   "authModal": {
+    "olvidaste": "Forgot your password?",
     "ariaLabel":  "Sign in",
     "cerrar":     "Close",
     "titulo":     "Welcome back",

@@ -199,3 +199,11 @@
     padding: 32px 24px 28px;
   }
 }
+
+/* ── Enlace de recuperación ── */
+.auth-modal__forgot {
+  align-self: flex-start;
+  min-height: 44px;
+  margin-top: -8px;
+  font-size: 0.85rem;
+}

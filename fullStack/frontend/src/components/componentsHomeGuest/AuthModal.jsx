@@ -125,6 +125,14 @@ export default function AuthModal({ isOpen, onClose }) {
             </div>
           </div>
 
+          <button
+            type="button"
+            className="auth-modal__link auth-modal__forgot"
+            onClick={() => { onClose(); navigate("/recuperar"); }}
+          >
+            {t("authModal.olvidaste")}
+          </button>
+
           {error && <div className="auth-modal__error" role="alert">{error}</div>}
 
           <button type="submit" className="auth-modal__btn" disabled={loading}>

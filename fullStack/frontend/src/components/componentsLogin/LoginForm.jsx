@@ -1,6 +1,6 @@
 import "./LoginForm.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 
@@ -66,6 +66,7 @@ export default function LoginForm() {
 
         {error && <p className="login-error" role="alert">{error}</p>}
 
+        <Link to="/recuperar" className="forgot-password">{t("login.olvidaste")}</Link>
         <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? t("login.ingresando") : t("login.ingresar")}
         </button>

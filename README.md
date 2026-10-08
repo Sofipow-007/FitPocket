@@ -31,6 +31,9 @@ Variables de entorno (`fullStack/backend/.env`):
 | `CRYPTO_KEY` | Clave para encriptar datos sensibles del perfil (nombre, limitaciones, aclaración). **Sin esta variable, el backend usa una clave por defecto — no usar así en producción.** |
 | `GROQ_API_KEY` | API key de Groq para generar rutina y dieta |
 | `PORT` | Puerto del servidor (default 3000) |
+| `FRONTEND_URL` | URL del frontend, para armar el enlace de recuperación de contraseña (default `http://localhost:5173`) |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | Servidor de correo para enviar ese enlace. Sirve cualquier SMTP (Gmail con contraseña de aplicación, Brevo, etc.). **Si faltan, no se envía ningún mail y el enlace se imprime en la consola del backend.** |
+| `MAIL_FROM` | Remitente de los mails (default: `SMTP_USER`) |
 
 Si tu IP no está en la whitelist de MongoDB Atlas (Network Access), el servidor arranca pero no puede conectar a la base — vas a ver `Could not connect to any servers` o `ENOTFOUND` en la consola.
 
