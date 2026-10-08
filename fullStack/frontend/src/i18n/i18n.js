@@ -13,4 +13,9 @@ i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false }
 });
 
+// lectores de pantalla y el navegador usan <html lang> para pronunciar y traducir
+const syncLang = (lng) => { document.documentElement.lang = lng; };
+syncLang(i18n.language);
+i18n.on('languageChanged', syncLang);
+
 export default i18n;

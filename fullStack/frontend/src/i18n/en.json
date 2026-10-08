@@ -1,4 +1,28 @@
 {
+  "progreso": {
+    "adherenciaTitulo": "This week's adherence",
+    "sinRegistros": "You don't have adherence records yet.",
+    "pesoTitulo": "Logged weight",
+    "pesoInicial": "Starting weight from your profile",
+    "sinPeso": "No weight data logged."
+  },
+  "checklist": {
+    "titulo": "How did today go?",
+    "rutina": "🏋️ Training routine",
+    "dieta": "🥗 Today's diet",
+    "completado": "Done",
+    "parcial": "Partly",
+    "noHice": "Skipped",
+    "guardar": "Save day",
+    "guardando": "Saving...",
+    "yaRegistrado": "✓ You already logged today.",
+    "errorOpciones": "Pick both options before saving.",
+    "errorGuardar": "Couldn't save. Try again."
+  },
+  "comun": {
+    "idioma": "Language",
+    "cargando": "Loading..."
+  },
   "cargando": {
     "pasos": [
       "Analyzing your physical profile...",
@@ -13,6 +37,11 @@
     "errorGenerico": "An unexpected error occurred while generating the plan."
   },
   "dashboard": {
+    "sinPlanTitulo": "You don't have a plan yet",
+    "sinPlanTexto": "Complete your profile to generate your personalized routine and diet.",
+    "sinPlanCta": "Complete my profile",
+    "adherenciaBaja": "Your adherence this week is low.",
+    "adherencia": "adherence",
     "saludo": {
       "manana": "Good morning",
       "tarde":  "Good afternoon",

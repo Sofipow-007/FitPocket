@@ -117,7 +117,7 @@ export default function PlanDetalle() {
           <IconBack /> <span>{t("plan.volver")}</span>
         </button>
         <img src={logo} alt="FitPocket" className="pd-nav__logo" />
-        <div className="pd-lang" role="group" aria-label="Idioma">
+        <div className="pd-lang" role="group" aria-label={t("comun.idioma")}>
           <button
             className={`pd-lang__btn${i18n.language === "es" ? " pd-lang__btn--on" : ""}`}
             onClick={() => { i18n.changeLanguage("es"); localStorage.setItem("idioma", "es"); }}
@@ -131,7 +131,7 @@ export default function PlanDetalle() {
 
       <main className="pd-main">
         {loading && (
-          <div className="pd-skeleton-wrap" aria-busy="true" aria-label="Cargando...">
+          <div className="pd-skeleton-wrap" aria-busy="true" aria-label={t("comun.cargando")}>
             <div className="pd-sk pd-sk--title" />
             <div className="pd-sk pd-sk--tabs" />
             <div className="pd-sk pd-sk--block" />

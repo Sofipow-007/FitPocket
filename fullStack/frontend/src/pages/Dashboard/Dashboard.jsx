@@ -174,7 +174,7 @@ export default function Dashboard() {
         </div>
         <img src={logo} alt="FitPocket" className="db-nav__logo" />
         <div className="db-nav__right">
-          <div className="db-lang" role="group" aria-label="Idioma">
+          <div className="db-lang" role="group" aria-label={t("comun.idioma")}>
             <button
               className={`db-lang__btn${i18n.language === "es" ? " db-lang__btn--on" : ""}`}
               onClick={() => { i18n.changeLanguage("es"); localStorage.setItem("idioma", "es"); }}
@@ -205,7 +205,7 @@ export default function Dashboard() {
 
         {/* ── Skeleton ── */}
         {loading && (
-          <div className="db-skeleton-wrap" aria-busy="true" aria-label="Cargando...">
+          <div className="db-skeleton-wrap" aria-busy="true" aria-label={t("comun.cargando")}>
             <div className="db-sk-hero">
               <div className="db-sk db-sk--title" />
               <div className="db-sk db-sk--today" />
@@ -219,10 +219,10 @@ export default function Dashboard() {
 
         {!loading && !error && tab !== "progreso" && sinPlan && (
           <div className="db-sin-plan">
-            <h2>Todavía no tenés un plan</h2>
-            <p>Completá tu perfil para generar tu rutina y tu dieta personalizada.</p>
+            <h2>{t("dashboard.sinPlanTitulo")}</h2>
+            <p>{t("dashboard.sinPlanTexto")}</p>
             <button className="db-sin-plan__btn" onClick={() => navigate("/onboarding")}>
-              Completar mi perfil
+              {t("dashboard.sinPlanCta")}
             </button>
           </div>
         )}
@@ -233,7 +233,7 @@ export default function Dashboard() {
             {pct != null && pct < 50 && (adherencia?.diasContados ?? 7) >= 3 && (
               <div className="db-alerta-banner" role="alert">
                 <span>⚠️</span>
-                <span>Tu adherencia esta semana es baja.</span>
+                <span>{t("dashboard.adherenciaBaja")}</span>
               </div>
             )}
 
@@ -267,7 +267,7 @@ export default function Dashboard() {
                     <span className="db-strip__val" style={{ color: pctColor }}>
                       {pct != null ? `${pct}%` : "—"}
                     </span>
-                    <span className="db-strip__label">adherencia</span>
+                    <span className="db-strip__label">{t("dashboard.adherencia")}</span>
                   </div>
                 </div>
 

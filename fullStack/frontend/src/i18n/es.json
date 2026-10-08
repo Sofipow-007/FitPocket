@@ -1,4 +1,28 @@
 {
+  "progreso": {
+    "adherenciaTitulo": "Adherencia de esta semana",
+    "sinRegistros": "Todavía no tenés registros de adherencia.",
+    "pesoTitulo": "Peso registrado",
+    "pesoInicial": "Peso inicial registrado en tu perfil",
+    "sinPeso": "No hay datos de peso registrados."
+  },
+  "checklist": {
+    "titulo": "¿Cómo te fue hoy?",
+    "rutina": "🏋️ Rutina de entrenamiento",
+    "dieta": "🥗 Dieta del día",
+    "completado": "Completado",
+    "parcial": "Parcial",
+    "noHice": "No hice",
+    "guardar": "Guardar día",
+    "guardando": "Guardando...",
+    "yaRegistrado": "✓ Ya registraste el día de hoy.",
+    "errorOpciones": "Seleccioná ambas opciones antes de guardar.",
+    "errorGuardar": "No se pudo guardar. Intentá de nuevo."
+  },
+  "comun": {
+    "idioma": "Idioma",
+    "cargando": "Cargando..."
+  },
   "cargando": {
     "pasos": [
       "Analizando tu perfil físico...",
@@ -13,6 +37,11 @@
     "errorGenerico": "Ocurrió un error inesperado al generar el plan."
   },
   "dashboard": {
+    "sinPlanTitulo": "Todavía no tenés un plan",
+    "sinPlanTexto": "Completá tu perfil para generar tu rutina y tu dieta personalizada.",
+    "sinPlanCta": "Completar mi perfil",
+    "adherenciaBaja": "Tu adherencia esta semana es baja.",
+    "adherencia": "adherencia",
     "saludo": {
       "manana": "Buenos días",
       "tarde":  "Buenas tardes",

@@ -55,13 +55,13 @@ function DevPanel() {
 }
 
 function GlobalLangToggle() {
-  const { i18n }    = useTranslation();
+  const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/plan")) return null;
   const set = (lang) => { i18n.changeLanguage(lang); localStorage.setItem("idioma", lang); };
   const enOnboarding = pathname.startsWith("/onboarding");
   return (
-    <div className={`g-lang${enOnboarding ? " g-lang--onboarding" : ""}`} role="group" aria-label="Idioma">
+    <div className={`g-lang${enOnboarding ? " g-lang--onboarding" : ""}`} role="group" aria-label={t("comun.idioma")}>
       <button className={`g-lang__btn${i18n.language === "es" ? " g-lang__btn--on" : ""}`} onClick={() => set("es")}>ES</button>
       <button className={`g-lang__btn${i18n.language === "en" ? " g-lang__btn--on" : ""}`} onClick={() => set("en")}>EN</button>
     </div>
@@ -69,12 +69,13 @@ function GlobalLangToggle() {
 }
 
 function App() {
+  const { t } = useTranslation();
   return (
     <BrowserRouter>
       <div className="App">
         <GlobalLangToggle />
         <main className="main-content">
-          <Suspense fallback={<div className="loading-page">Cargando...</div>}>
+          <Suspense fallback={<div className="loading-page">{t("comun.cargando")}</div>}>
             <Routes>
               <Route path="/"              element={<RutaPublica><HomeGuest /></RutaPublica>} />
               <Route path="/register"      element={<RutaPublica><Register /></RutaPublica>} />

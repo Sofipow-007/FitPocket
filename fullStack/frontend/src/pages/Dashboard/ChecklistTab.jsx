@@ -1,14 +1,16 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { API_URL } from '../../lib/api'
 import './ChecklistTab.css'
 
 const OPCIONES = [
-  { id: 'completado', label: 'Completado', color: '#00E887' },
-  { id: 'parcial',    label: 'Parcial',    color: '#F59E0B' },
-  { id: 'no_hice',   label: 'No hice',    color: '#EF4444' },
+  { id: 'completado', tKey: 'checklist.completado', color: 'var(--green)' },
+  { id: 'parcial',    tKey: 'checklist.parcial',    color: 'var(--warn)' },
+  { id: 'no_hice',    tKey: 'checklist.noHice',     color: 'var(--err)' },
 ]
 
 export default function ChecklistTab({ checkinHoy, onGuardado }) {
+  const { t, i18n } = useTranslation()
   const yaRegistro = !!checkinHoy
 
   const [rutina,  setRutina]  = useState(checkinHoy?.rutina?.estado  ?? null)
@@ -17,7 +19,7 @@ export default function ChecklistTab({ checkinHoy, onGuardado }) {
   const [error,   setError]   = useState('')
 
   const handleGuardar = async () => {
-    if (!rutina || !dieta) { setError('Seleccioná ambas opciones antes de guardar.'); return }
+    if (!rutina || !dieta) { setError(t('checklist.errorOpciones')); return }
     setLoading(true)
     setError('')
     const token = localStorage.getItem('token')
@@ -31,7 +33,7 @@ export default function ChecklistTab({ checkinHoy, onGuardado }) {
       if (!res.ok) throw new Error(data.error)
       onGuardado?.(data.checkin)
     } catch (e) {
-      setError(e.message || 'No se pudo guardar. Intentá de nuevo.')
+      setError(e.message || t('checklist.errorGuardar'))
     } finally {
       setLoading(false)
     }
@@ -39,15 +41,15 @@ export default function ChecklistTab({ checkinHoy, onGuardado }) {
 
   return (
     <div className="cl-wrap">
-      <h2 className="cl-title">¿Cómo te fue hoy?</h2>
+      <h2 className="cl-title">{t('checklist.titulo')}</h2>
       <p className="cl-sub">
-        {new Intl.DateTimeFormat('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
+        {new Intl.DateTimeFormat(i18n.language === 'en' ? 'en-US' : 'es-AR', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
       </p>
 
       {['rutina', 'dieta'].map(campo => {
         const val    = campo === 'rutina' ? rutina : dieta
         const setter = campo === 'rutina' ? setRutina : setDieta
-        const label  = campo === 'rutina' ? '🏋️ Rutina de entrenamiento' : '🥗 Dieta del día'
+        const label  = campo === 'rutina' ? t('checklist.rutina') : t('checklist.dieta')
         return (
           <div key={campo} className="cl-seccion">
             <span className="cl-seccion__label">{label}</span>
@@ -60,7 +62,7 @@ export default function ChecklistTab({ checkinHoy, onGuardado }) {
                   onClick={() => !yaRegistro && setter(op.id)}
                   disabled={yaRegistro}
                 >
-                  {op.label}
+                  {t(op.tKey)}
                 </button>
               ))}
             </div>
@@ -71,10 +73,10 @@ export default function ChecklistTab({ checkinHoy, onGuardado }) {
       {error && <p className="cl-error" role="alert">{error}</p>}
 
       {yaRegistro ? (
-        <p className="cl-guardado">✓ Ya registraste el día de hoy.</p>
+        <p className="cl-guardado">{t('checklist.yaRegistrado')}</p>
       ) : (
         <button className="cl-guardar" onClick={handleGuardar} disabled={loading || !rutina || !dieta}>
-          {loading ? 'Guardando...' : 'Guardar día'}
+          {loading ? t('checklist.guardando') : t('checklist.guardar')}
         </button>
       )}
     </div>
