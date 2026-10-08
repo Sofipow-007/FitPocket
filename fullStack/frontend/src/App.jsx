@@ -18,7 +18,6 @@ const PlanDetalle  = lazy(() => import("./pages/PlanDetalle/PlanDetalle"));
 
 const DEV_PAGES = [
   { path: "/dashboard?preview=true", label: "Dashboard" },
-  { path: "/cargando-plan",          label: "Cargando plan" },
   { path: "/plan?preview=true",      label: "Plan detalle" },
 ];
 
