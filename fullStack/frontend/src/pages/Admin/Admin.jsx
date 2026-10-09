@@ -71,7 +71,7 @@ function ConfirmarBorrado({ usuario, borrando, error, onCancel, onConfirm }) {
           {t("admin.confirmarTexto")}
         </p>
         <p className="ad-dialog__user">
-          <span className="ad-dialog__user-nombre">{usuario.nombre}</span>
+          {usuario.nombre && <span className="ad-dialog__user-nombre">{usuario.nombre}</span>}
           <span className="ad-dialog__user-email">{usuario.email}</span>
         </p>
 
@@ -146,7 +146,7 @@ export default function Admin() {
   const filtrados = useMemo(() => {
     const q = normalize(busqueda.trim());
     if (!q) return users;
-    return users.filter(u => normalize(u.nombre).includes(q) || normalize(u.email).includes(q));
+    return users.filter(u => normalize(u.nombre ?? "").includes(q) || normalize(u.email).includes(q));
   }, [users, busqueda]);
 
   const abrirBorrado = (usuario, e) => {
@@ -294,7 +294,10 @@ export default function Admin() {
                 {filtrados.map(u => (
                   <tr key={u._id} role="row">
                     <th scope="row" role="rowheader" className="ad-cell-nombre" data-label={t("admin.col.nombre")}>
-                      <span className="ad-valor">{u.nombre}</span>
+                      {/* nombre null: el backend no pudo descifrarlo (cuenta creada con otra clave) */}
+                      <span className={`ad-valor${u.nombre ? "" : " ad-valor--falta"}`}>
+                        {u.nombre ?? t("admin.sinNombre")}
+                      </span>
                     </th>
                     <td role="cell" className="ad-cell-email" data-label={t("admin.col.email")}>
                       <span className="ad-valor">{u.email}</span>

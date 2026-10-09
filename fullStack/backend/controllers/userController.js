@@ -94,6 +94,17 @@ exports.borrarPerfil = async (req, res) => {
     }
 }
 
+// Un nombre cifrado con otra CRYPTO_KEY (cuenta creada desde otro entorno) no se puede leer.
+// Se devuelve null en vez de tirar: una cuenta ilegible no puede dejar al admin sin listado,
+// y tiene que poder verla por email para darla de baja.
+function nombreLegible(nombreCifrado) {
+    try {
+        return decrypt(nombreCifrado)
+    } catch {
+        return null
+    }
+}
+
 // GET /users/todos — solo admin
 // Devuelve únicamente lo que muestra el panel: nada de perfil físico, hashes ni tokens.
 exports.getAllUsers = async (req, res) => {
@@ -106,7 +117,7 @@ exports.getAllUsers = async (req, res) => {
             ok: true,
             users: users.map(u => ({
                 _id: u._id,
-                nombre: decrypt(u.nombre),
+                nombre: nombreLegible(u.nombre),
                 email: u.email,
                 rol: u.rol,
                 createdAt: u.createdAt,

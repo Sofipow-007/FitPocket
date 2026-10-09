@@ -367,6 +367,7 @@
     "vacio":            "There are no registered users yet.",
     "sinResultados":    "No user matches \"{{q}}\".",
     "limpiar":          "Clear search",
-    "reintentar":       "Try again"
+    "reintentar":       "Try again",
+    "sinNombre":        "Name unavailable"
   }
 }

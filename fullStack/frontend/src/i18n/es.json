@@ -367,6 +367,7 @@
     "vacio":            "Todavía no hay usuarios registrados.",
     "sinResultados":    "Ningún usuario coincide con \"{{q}}\".",
     "limpiar":          "Limpiar búsqueda",
-    "reintentar":       "Reintentar"
+    "reintentar":       "Reintentar",
+    "sinNombre":        "Nombre no disponible"
   }
 }

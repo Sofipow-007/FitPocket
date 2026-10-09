@@ -273,6 +273,7 @@
 .ad-table tbody tr:hover { background: rgba(255, 255, 255, 0.025); }
 
 .ad-cell-nombre { font-weight: 600; color: var(--ink); }
+.ad-valor--falta { font-weight: 400; font-style: italic; color: var(--ink3); }
 .ad-cell-email  { color: var(--ink2); }
 .ad-cell-fecha  { color: var(--ink2); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .ad-table tbody .ad-cell-acciones { text-align: right; }
