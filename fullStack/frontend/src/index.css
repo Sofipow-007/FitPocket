@@ -284,6 +284,7 @@ input, select, textarea { font-family: var(--sans); }
   }
 
   .nav__logo,
+  .db-nav__admin,
   .db-nav__logout,
   .pd-nav__back,
   .ob-header__logo {

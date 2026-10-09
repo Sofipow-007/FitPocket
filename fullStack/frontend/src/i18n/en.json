@@ -329,5 +329,44 @@
     "registrarse":       "Sign up",
     "errorConexion":     "Connection error. Try again later.",
     "errorCredenciales": "Invalid email or password"
+  },
+  "admin": {
+    "link":              "Admin",
+    "titulo":            "Users",
+    "total_one":         "{{count}} registered user",
+    "total_other":       "{{count}} registered users",
+    "filtrados":         "{{n}} of {{total}}",
+    "buscarLabel":       "Search users",
+    "buscarPlaceholder": "Name or email",
+    "col": {
+      "nombre":     "Name",
+      "email":      "Email",
+      "rol":        "Role",
+      "alta":       "Joined",
+      "onboarding": "Onboarding",
+      "acciones":   "Actions"
+    },
+    "rol": {
+      "admin":   "Admin",
+      "usuario": "User"
+    },
+    "onboarding": {
+      "completo":  "Complete",
+      "pendiente": "Pending"
+    },
+    "borrar":           "Delete",
+    "borrarA":          "Delete {{email}}",
+    "confirmarTitulo":  "Delete this account?",
+    "confirmarTexto":   "The account, its plans and its check-ins will be removed. This can't be undone.",
+    "cancelar":         "Cancel",
+    "borrarDefinitivo": "Delete permanently",
+    "borrando":         "Deleting...",
+    "borrado":          "The account {{email}} was deleted.",
+    "errorBorrado":     "The account couldn't be deleted. Try again.",
+    "errorConexion":    "The list couldn't be loaded. Check your connection and reload the page.",
+    "vacio":            "There are no registered users yet.",
+    "sinResultados":    "No user matches \"{{q}}\".",
+    "limpiar":          "Clear search",
+    "reintentar":       "Try again"
   }
 }

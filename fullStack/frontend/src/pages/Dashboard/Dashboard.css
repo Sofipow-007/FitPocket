@@ -140,6 +140,25 @@
   color: rgba(255, 255, 255, 0.62);
 }
 
+/* Acceso al panel de administración (solo rol admin) */
+.db-nav__admin {
+  background: rgba(79, 142, 247, 0.08);
+  border: 1px solid rgba(79, 142, 247, 0.35);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8FB6FA;
+  cursor: pointer;
+  transition: color 150ms, border-color 150ms, background 150ms;
+}
+
+.db-nav__admin:hover {
+  color: var(--ink);
+  border-color: rgba(79, 142, 247, 0.6);
+  background: rgba(79, 142, 247, 0.16);
+}
+
 /* Logout */
 .db-nav__logout {
   display: flex;
@@ -732,6 +751,11 @@
 
   .db-nav__logout {
     padding: 7px 8px;
+  }
+
+  /* con el link de admin los controles no entran junto al nombre de marca */
+  .db-nav:has(.db-nav__admin) .db-nav__brand-text {
+    display: none;
   }
 }
 

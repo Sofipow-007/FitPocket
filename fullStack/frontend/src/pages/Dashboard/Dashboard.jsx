@@ -187,6 +187,11 @@ export default function Dashboard() {
               onClick={() => { i18n.changeLanguage("en"); localStorage.setItem("idioma", "en"); }}
             >EN</button>
           </div>
+          {perfil?.rol === "admin" && (
+            <button className="db-nav__admin" onClick={() => navigate("/admin")}>
+              {t("admin.link")}
+            </button>
+          )}
           <button className="db-nav__logout" onClick={handleLogout} aria-label={t("dashboard.salir")}>
             <IconLogout /><span>{t("dashboard.salir")}</span>
           </button>

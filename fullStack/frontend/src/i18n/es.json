@@ -329,5 +329,44 @@
     "registrarse":       "Registrarse",
     "errorConexion":     "Error de conexión. Intentá más tarde.",
     "errorCredenciales": "Email o contraseña incorrectos"
+  },
+  "admin": {
+    "link":              "Admin",
+    "titulo":            "Usuarios",
+    "total_one":         "{{count}} usuario registrado",
+    "total_other":       "{{count}} usuarios registrados",
+    "filtrados":         "{{n}} de {{total}}",
+    "buscarLabel":       "Buscar usuario",
+    "buscarPlaceholder": "Nombre o email",
+    "col": {
+      "nombre":     "Nombre",
+      "email":      "Email",
+      "rol":        "Rol",
+      "alta":       "Alta",
+      "onboarding": "Onboarding",
+      "acciones":   "Acciones"
+    },
+    "rol": {
+      "admin":   "Admin",
+      "usuario": "Usuario"
+    },
+    "onboarding": {
+      "completo":  "Completo",
+      "pendiente": "Pendiente"
+    },
+    "borrar":           "Borrar",
+    "borrarA":          "Borrar a {{email}}",
+    "confirmarTitulo":  "¿Borrar esta cuenta?",
+    "confirmarTexto":   "Se eliminan la cuenta, sus planes y sus check-ins. No se puede deshacer.",
+    "cancelar":         "Cancelar",
+    "borrarDefinitivo": "Borrar definitivamente",
+    "borrando":         "Borrando...",
+    "borrado":          "Se borró la cuenta de {{email}}.",
+    "errorBorrado":     "No se pudo borrar la cuenta. Probá de nuevo.",
+    "errorConexion":    "No se pudo cargar el listado. Revisá tu conexión y recargá la página.",
+    "vacio":            "Todavía no hay usuarios registrados.",
+    "sinResultados":    "Ningún usuario coincide con \"{{q}}\".",
+    "limpiar":          "Limpiar búsqueda",
+    "reintentar":       "Reintentar"
   }
 }

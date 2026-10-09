@@ -17,11 +17,12 @@ const Onboarding4  = lazy(() => import("./pages/Onboarding4/Onboarding4"));
 const CargandoPlan = lazy(() => import("./pages/CargandoPlan/CargandoPlan"));
 const Dashboard    = lazy(() => import("./pages/Dashboard/Dashboard"));
 const PlanDetalle  = lazy(() => import("./pages/PlanDetalle/PlanDetalle"));
+const Admin        = lazy(() => import("./pages/Admin/Admin"));
 
 function GlobalLangToggle() {
   const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
-  if (pathname.startsWith("/dashboard") || pathname.startsWith("/plan")) return null;
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/plan") || pathname.startsWith("/admin")) return null;
   const set = (lang) => { i18n.changeLanguage(lang); localStorage.setItem("idioma", lang); };
   const enOnboarding = pathname.startsWith("/onboarding");
   return (
@@ -54,6 +55,8 @@ function App() {
               <Route path="/cargando-plan" element={<RutaPrivada><CargandoPlan /></RutaPrivada>} />
               <Route path="/dashboard"     element={<RutaPrivada allowPreview><Dashboard /></RutaPrivada>} />
               <Route path="/plan"          element={<RutaPrivada allowPreview><PlanDetalle /></RutaPrivada>} />
+              {/* el rol lo valida el backend: Admin redirige a /dashboard si responde 403 */}
+              <Route path="/admin"         element={<RutaPrivada allowPreview><Admin /></RutaPrivada>} />
             </Routes>
           </Suspense>
         </main>
