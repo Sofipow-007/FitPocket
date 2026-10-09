@@ -8,14 +8,18 @@ const ACCIONES = {
     'DELETE /users/borrar': 'Eliminación de cuenta',
     'POST /users/onboarding': 'Completar onboarding',
     'POST /plan/generar': 'Generación de plan',
-    'GET /plan/actual': 'Consulta de plan activo'
+    'GET /plan/actual': 'Consulta de plan activo',
+    'GET /users/todos': 'Listado de usuarios (admin)',
+    'DELETE /users/:id': 'Eliminación de usuario por admin'
 };
 
 module.exports = (req, res, next) => {
     const original = res.json.bind(res);
 
     res.json = (body) => {
-        const ruta = `${req.method} ${req.baseUrl}${req.path}`;
+        // req.route.path conserva el patrón (/:id): así las rutas con parámetros
+        // también tienen nombre. En `ruta` se guarda la URL real, con el id afectado.
+        const ruta = `${req.method} ${req.baseUrl}${req.route?.path || req.path}`;
         const accion = ACCIONES[ruta] || ruta;
 
         // No se guarda el email en texto plano ni el body de error completo

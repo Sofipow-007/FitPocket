@@ -8,6 +8,8 @@ router.get('/perfil', auth, userControl.getInfo)
 router.get('/todos', auth, roles('admin'), userControl.getAllUsers)
 router.put('/actualizar', auth, userControl.actualizarPerfil)
 router.delete('/borrar', auth, userControl.borrarPerfil)
+// solo admin: borra la cuenta de otro usuario (va después de /borrar para no pisarla)
+router.delete('/:id', auth, roles('admin'), userControl.borrarUsuario)
 
 //ruta del onboarding
 router.post('/onboarding', auth, userControl.completarOnboarding)

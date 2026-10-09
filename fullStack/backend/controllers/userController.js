@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const User = require('../models/User')
 const Plan = require('../models/Plan')
 const Checkin = require('../models/Checkin')
@@ -93,10 +94,55 @@ exports.borrarPerfil = async (req, res) => {
     }
 }
 
+// GET /users/todos — solo admin
+// Devuelve únicamente lo que muestra el panel: nada de perfil físico, hashes ni tokens.
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await User.find().select('-passwordHash')
-        res.json({ ok: true, users })
+        const users = await User.find()
+            .select('nombre email rol createdAt perfil.objetivo')
+            .sort({ createdAt: -1 })
+
+        res.json({
+            ok: true,
+            users: users.map(u => ({
+                _id: u._id,
+                nombre: decrypt(u.nombre),
+                email: u.email,
+                rol: u.rol,
+                createdAt: u.createdAt,
+                onboardingCompleto: Boolean(u.perfil?.objetivo),
+            })),
+        })
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Error en el servidor')
+    }
+}
+
+// DELETE /users/:id — solo admin
+// Un admin no puede borrar a otro admin ni a sí mismo: así nunca queda el sistema sin admin.
+exports.borrarUsuario = async (req, res) => {
+    try {
+        const { id } = req.params
+        if (!mongoose.isValidObjectId(id)) {
+            return res.status(400).json({ error: 'Id de usuario inválido' })
+        }
+
+        // El filtro por rol va en la misma operación que el borrado:
+        // no hay ventana entre chequear el rol y borrar.
+        const user = await User.findOneAndDelete({ _id: id, rol: { $ne: 'admin' } })
+
+        if (!user) {
+            const existe = await User.exists({ _id: id })
+            return existe
+                ? res.status(403).json({ error: 'No se puede borrar a un administrador' })
+                : res.status(404).json({ error: 'Usuario no encontrado' })
+        }
+
+        await Plan.deleteMany({ userId: user._id })
+        await Checkin.deleteMany({ userId: user._id })
+
+        res.json({ ok: true, email: user.email })
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Error en el servidor')
