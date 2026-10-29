@@ -1,9 +1,18 @@
 const { verificarTodo, recalcularTodo } = require('../services/integridadService')
+const { eventos, EVENTOS } = require('../services/eventos')
 
 // GET /integridad/verificar
 exports.verificar = async (req, res) => {
     try {
         const resultado = await verificarTodo()
+        if (!resultado.ok) {
+            const alteradas = resultado.colecciones.filter(c => !c.ok)
+            eventos.emitir(EVENTOS.INTEGRIDAD_ALTERADA, {
+                userId: req.user.userId,
+                colecciones: alteradas.map(c => c.coleccion),
+                registrosAlterados: alteradas.reduce((n, c) => n + c.filasAlteradas.length, 0),
+            })
+        }
         res.json(resultado)
     } catch (error) {
         console.error(error.message)

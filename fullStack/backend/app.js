@@ -1,9 +1,13 @@
 const express = require('express')
 const cors = require('cors')
+const { registrarSuscriptores } = require('./services/suscriptores')
 
 // La app se arma acá sin conectar a la base ni escuchar el puerto,
 // así los tests la pueden importar con Supertest.
 const app = express()
+
+// Observer: bitácora de eventos de negocio y alertas de adherencia
+registrarSuscriptores()
 
 app.use(cors())
 app.use(express.json())

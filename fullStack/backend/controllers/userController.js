@@ -3,6 +3,7 @@ const User = require('../models/User')
 const Plan = require('../models/Plan')
 const Checkin = require('../models/Checkin')
 const { encrypt, decrypt } = require('../utils/crypto')
+const { eventos, EVENTOS } = require('../services/eventos')
 
 // Desencripta nombre y limitaciones antes de devolver al cliente
 function decryptUser(user) {
@@ -77,6 +78,7 @@ exports.borrarPerfil = async (req, res) => {
 
         await Plan.deleteMany({ userId: user._id })
         await Checkin.deleteMany({ userId: user._id })
+        eventos.emitir(EVENTOS.USUARIO_BORRADO, { userId: null, userIdBorrado: user._id, porAdmin: false })
 
         res.json({
             message: 'Usuario eliminado correctamente',
@@ -149,6 +151,7 @@ exports.borrarUsuario = async (req, res) => {
 
         await Plan.deleteMany({ userId: user._id })
         await Checkin.deleteMany({ userId: user._id })
+        eventos.emitir(EVENTOS.USUARIO_BORRADO, { userId: req.user.userId, userIdBorrado: user._id, porAdmin: true })
 
         res.json({ ok: true, email: user.email })
     } catch (error) {

@@ -2,6 +2,7 @@ const { generarPlan } = require('../services/iaService')
 const User = require('../models/User')
 const Plan = require('../models/Plan')
 const { decrypt } = require('../utils/crypto')
+const { eventos, EVENTOS } = require('../services/eventos')
 
 // Desencripta un campo sin tirar la request abajo si CRYPTO_KEY cambió
 // o el valor no estaba encriptado (datos viejos).
@@ -115,6 +116,7 @@ exports.generarPlan = async (req, res) => {
     })
 
     console.log('Plan generado y guardado exitosamente para el usuario. ', savedPlan)
+    eventos.emitir(EVENTOS.PLAN_GENERADO, { userId, planId: savedPlan._id })
 
     return res.json({ ok: true, plan: savedPlan })
 

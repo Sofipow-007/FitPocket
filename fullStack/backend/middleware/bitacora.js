@@ -16,7 +16,10 @@ const ACCIONES = {
     'PUT /permisos/familias/:id': 'Edición de familia',
     'PUT /permisos/usuarios/:id': 'Asignación de permisos a usuario',
     'GET /integridad/verificar': 'Verificación de integridad',
-    'POST /integridad/recalcular': 'Recálculo de dígitos verificadores'
+    'POST /integridad/recalcular': 'Recálculo de dígitos verificadores',
+    'POST /checkins/': 'Registro de checkin',
+    'GET /checkins/semana': 'Consulta de adherencia semanal',
+    'GET /checkins/mes': 'Consulta de adherencia mensual'
 };
 
 module.exports = (req, res, next) => {
