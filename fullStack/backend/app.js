@@ -13,6 +13,7 @@ app.use('/auth',    require('./routes/authRoutes'))
 app.use('/users',   require('./routes/userRoutes'))
 app.use('/plan',    require('./routes/planRoutes'))
 app.use('/checkins', require('./routes/checkinRoutes'))
+app.use('/permisos', require('./routes/permisosRoutes'))
 
 // Body con JSON mal formado: sin esto Express devuelve HTML con el stack trace
 app.use((err, req, res, next) => {

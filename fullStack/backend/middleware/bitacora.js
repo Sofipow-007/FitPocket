@@ -10,7 +10,11 @@ const ACCIONES = {
     'POST /plan/generar': 'Generación de plan',
     'GET /plan/actual': 'Consulta de plan activo',
     'GET /users/todos': 'Listado de usuarios (admin)',
-    'DELETE /users/:id': 'Eliminación de usuario por admin'
+    'DELETE /users/:id': 'Eliminación de usuario por admin',
+    'GET /users/permisos': 'Consulta de permisos propios',
+    'POST /permisos/familias': 'Creación de familia',
+    'PUT /permisos/familias/:id': 'Edición de familia',
+    'PUT /permisos/usuarios/:id': 'Asignación de permisos a usuario'
 };
 
 module.exports = (req, res, next) => {

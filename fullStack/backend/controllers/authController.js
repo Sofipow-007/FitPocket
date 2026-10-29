@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const { enviarMailDeReset } = require('../services/mailService');
 const { calcularDVH } = require('../utils/digitosVerificadores');
 const { encrypt, decrypt } = require('../utils/crypto');
+const { familiaBase, FAMILIA_USUARIO } = require('../services/permisosService');
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -41,11 +42,15 @@ exports.register = async (req, res) => {
         const rol = 'usuario';
         const dvh = calcularDVH([email, nombre, rol]);
 
+        // Toda cuenta nueva arranca con la familia Usuario: sin ella no tendría permisos para nada
+        const familiaUsuario = await familiaBase(FAMILIA_USUARIO);
+
         user = new User({
             nombre: encrypt(nombre),   // nombre encriptado en BD
             email,
             passwordHash,
             rol,
+            familias: [familiaUsuario._id],
             perfil: {},
             dvh,
         });

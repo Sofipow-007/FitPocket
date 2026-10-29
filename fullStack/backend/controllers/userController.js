@@ -105,12 +105,12 @@ function nombreLegible(nombreCifrado) {
     }
 }
 
-// GET /users/todos — solo admin
+// GET /users/todos — patente usuarios.listar
 // Devuelve únicamente lo que muestra el panel: nada de perfil físico, hashes ni tokens.
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find()
-            .select('nombre email rol createdAt perfil.objetivo')
+            .select('nombre email rol familias patentes createdAt perfil.objetivo')
             .sort({ createdAt: -1 })
 
         res.json({
@@ -120,6 +120,8 @@ exports.getAllUsers = async (req, res) => {
                 nombre: nombreLegible(u.nombre),
                 email: u.email,
                 rol: u.rol,
+                familias: u.familias,
+                patentes: u.patentes,
                 createdAt: u.createdAt,
                 onboardingCompleto: Boolean(u.perfil?.objetivo),
             })),
@@ -130,7 +132,7 @@ exports.getAllUsers = async (req, res) => {
     }
 }
 
-// DELETE /users/:id — solo admin
+// DELETE /users/:id — patente usuarios.borrar
 // Un admin no puede borrar a otro admin ni a sí mismo: así nunca queda el sistema sin admin.
 exports.borrarUsuario = async (req, res) => {
     try {
@@ -203,7 +205,7 @@ exports.completarOnboarding = async (req, res) => {
     }
 }
 
-// GET /users/verificar-integridad — solo admin
+// GET /users/verificar-integridad — patente integridad.verificar
 // Calcula el DVV (suma de todos los DVH) y verifica integridad global
 exports.verificarIntegridad = async (req, res) => {
     try {

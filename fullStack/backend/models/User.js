@@ -24,11 +24,23 @@ const schemaUser = new mongoose.Schema({
     // Las sesiones (JWT) emitidas antes de esta fecha dejan de valer
     passwordCambiadaEn: { type: Date },
 
+    // Se deriva de las familias (tiene "Administrador" → 'admin'); se conserva
+    // porque lo usan el front, el DVH y el chequeo de "no borrar admins".
     rol: {
         type: String,
         enum: ['usuario', 'admin'],
         default: 'usuario'
     },
+
+    // Permisos: familias asignadas y patentes sueltas. Los efectivos son la unión recursiva.
+    familias: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Familia'
+    }],
+    patentes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Patente'
+    }],
 
     perfil: {
         peso: {

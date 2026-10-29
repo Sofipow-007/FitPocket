@@ -15,4 +15,16 @@ function calcularDVV(registros) {
     return suma % 100000;
 }
 
-module.exports = { calcularDVH, calcularDVV };
+// DVH de un usuario con los mismos campos que usa la app
+// (register: email, nombre, rol; después del onboarding se suman peso, altura y edad).
+function dvhDeUsuario(user, nombrePlano) {
+    const { peso, altura, edad } = user.perfil || {};
+    const hizoOnboarding = peso != null || altura != null || edad != null;
+    return calcularDVH(
+        hizoOnboarding
+            ? [user.email, nombrePlano, user.rol, peso, altura, edad]
+            : [user.email, nombrePlano, user.rol]
+    );
+}
+
+module.exports = { calcularDVH, calcularDVV, dvhDeUsuario };
