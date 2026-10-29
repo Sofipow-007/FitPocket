@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import "./RegisterFormNew.css";
+import { invalidarTodo } from "../../lib/apiCache";
 
 /* ── Icons ─────────────────────────────────────────────────────── */
 const IconArrowLeft = () => (
@@ -82,6 +83,7 @@ export default function RegisterFormNew({ onLoginClick, onLogoClick, onGoOnboard
       const data = await res.json();
       if (!res.ok) { setError(data.msg || t("register.errorRegistro")); return; }
       localStorage.setItem("token", data.token);
+      invalidarTodo();
       navigate("/onboarding");
     } catch {
       setError(t("register.errorConexion"));

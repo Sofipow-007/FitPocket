@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/fitpocketlogo(inverted).png";
-import { API_URL } from "../../lib/api";
 import { normalize, fechaLocal } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PERFIL, MOCK_PLAN } from "../../mocks/planMock";
 import ConPermiso from "../../components/ConPermiso";
 import AyudaTip from "../../components/Ayuda/AyudaTip";
-import { invalidarPermisos } from "../../hooks/usePermisos";
+import { pedirConCache, invalidar, invalidarTodo, actualizarCache } from "../../lib/apiCache";
 import ChecklistTab from "./ChecklistTab";
 import ProgresoTab from "./ProgresoTab";
 import "./Dashboard.css";
@@ -113,32 +112,25 @@ export default function Dashboard() {
     if (isPreview) return;
     const token = localStorage.getItem("token");
     if (!token) { navigate("/login", { replace: true }); return; }
-    const headers = { Authorization: `Bearer ${token}` };
 
     const irAlLogin = () => {
       localStorage.removeItem("token");
+      invalidarTodo();
       navigate("/login", { replace: true });
     };
 
-    Promise.all([
-      fetch(`${API_URL}/users/perfil`,   { headers }),
-      fetch(`${API_URL}/plan/actual`,     { headers }),
-      fetch(`${API_URL}/checkins/semana`, { headers }),
-      fetch(`${API_URL}/checkins/hoy`,    { headers }),
-    ])
-      .then(async ([rPerfil, rPlan, rAdh, rHoy]) => {
+    // Salen de la caché (lib/apiCache) si están frescos: volver desde /plan no repite pedidos
+    Promise.all(["perfil", "plan", "semana", "hoy"].map(pedirConCache))
+      .then(([rPerfil, rPlan, rAdh, rHoy]) => {
         if ([rPerfil, rPlan, rAdh, rHoy].some(r => r.status === 401)) {
           irAlLogin();
           return;
         }
-        setPerfil(rPerfil.ok ? await rPerfil.json() : null);
+        setPerfil(rPerfil.status === 200 ? rPerfil.datos : null);
         setSinPlan(rPlan.status === 404);
-        setPlan(rPlan.ok ? await rPlan.json() : null);
-        if (rAdh.ok) setAdherencia(await rAdh.json());
-        if (rHoy.ok) {
-          const hoyData = await rHoy.json();
-          setCheckinHoy(hoyData.checkin);
-        }
+        setPlan(rPlan.status === 200 ? rPlan.datos : null);
+        if (rAdh.status === 200) setAdherencia(rAdh.datos);
+        if (rHoy.status === 200) setCheckinHoy(rHoy.datos?.checkin ?? null);
       })
       .catch(() => setError("No se pudo cargar tu información. Revisá tu conexión."))
       .finally(() => setLoading(false));
@@ -162,9 +154,21 @@ export default function Dashboard() {
     : pct >= 70 ? "#00E887"
     : pct >= 50 ? "#F59E0B" : "#EF4444";
 
+  // Precarga: mientras el usuario mira el dashboard se baja el código de "Ver mi plan",
+  // así al tocarlo la pantalla abre sin esperar el chunk (el plan ya está en la caché)
+  useEffect(() => {
+    const precargar = () => import("../PlanDetalle/PlanDetalle");
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(precargar, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(precargar, 1500);
+    return () => clearTimeout(id);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
-    invalidarPermisos();
+    invalidarTodo();
     navigate("/");
   };
 
@@ -434,11 +438,10 @@ export default function Dashboard() {
             checkinHoy={checkinHoy}
             onGuardado={(c) => {
               setCheckinHoy(c);
-              // refrescar adherencia
-              const token = localStorage.getItem("token");
-              fetch(`${API_URL}/checkins/semana`, {
-                headers: { Authorization: `Bearer ${token}` }
-              }).then(r => r.ok ? r.json() : null).then(adh => { if (adh) setAdherencia(adh); }).catch(() => {});
+              actualizarCache("hoy", 200, { checkin: c });
+              // la adherencia cambió: se descarta la guardada y se pide de nuevo
+              invalidar("semana");
+              pedirConCache("semana").then(r => { if (r.status === 200) setAdherencia(r.datos); }).catch(() => {});
             }}
           />
         )}

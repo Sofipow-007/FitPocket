@@ -2,12 +2,12 @@ import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/fitpocketlogo(inverted).png";
-import { API_URL } from "../../lib/api";
 import { normalize } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PLAN } from "../../mocks/planMock";
 import "./PlanDetalle.css";
 import AyudaTip from "../../components/Ayuda/AyudaTip";
+import { pedirConCache, invalidarTodo } from "../../lib/apiCache";
 
 const DIAS_SEMANA = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 const DIAS_CORTOS_KEYS = [
@@ -69,15 +69,17 @@ export default function PlanDetalle() {
     if (isPreview) return;
     const token = localStorage.getItem("token");
     if (!token) { navigate("/login", { replace: true }); return; }
-    fetch(`${API_URL}/plan/actual`, { headers: { Authorization: `Bearer ${token}` } })
+    // Viniendo del dashboard el plan ya está en la caché: la pantalla abre sin pedido
+    pedirConCache("plan")
       .then(r => {
         if (r.status === 401) {
           localStorage.removeItem("token");
+          invalidarTodo();
           navigate("/login", { replace: true });
           return Promise.reject();
         }
         if (r.status === 404) return null; // sin plan activo: no es un error de conexión
-        return r.ok ? r.json() : Promise.reject();
+        return r.status === 200 ? r.datos : Promise.reject();
       })
       .then(setPlan)
       .catch(() => setError("No se pudo cargar tu plan. Revisá tu conexión."))

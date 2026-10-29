@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { API_URL } from '../../lib/api'
 import ConPermiso from '../../components/ConPermiso'
 import DialogoConfirmacion from '../../components/DialogoConfirmacion/DialogoConfirmacion'
-import { invalidarPermisos } from '../../hooks/usePermisos'
+import { invalidarTodo } from '../../lib/apiCache'
 
 // "Tu cuenta" al final de Progreso: el único lugar de la app donde el usuario
 // puede borrar su propia cuenta (DELETE /users/borrar, patente cuenta.borrar).
@@ -26,7 +26,7 @@ export default function CuentaSeccion({ perfil }) {
 
   const salir = () => {
     localStorage.removeItem('token')
-    invalidarPermisos()
+    invalidarTodo()
     navigate('/', { replace: true })
   }
 

@@ -13,6 +13,19 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // React, el router e i18next cambian muy poco: en un chunk aparte el navegador
+        // los conserva en caché aunque cambie el código de la app
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (/[\/]node_modules[\/](react|react-dom|scheduler|react-router|react-router-dom|use-sync-external-store)[\/]/.test(id)) return "vendor-react";
+          if (/[\/]node_modules[\/](i18next|react-i18next)[\/]/.test(id)) return "vendor-i18n";
+        },
+      },
+    },
+  },
   server: {
     host: '0.0.0.0',
     port: 5173,

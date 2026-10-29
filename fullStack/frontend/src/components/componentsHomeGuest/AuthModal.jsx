@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import "./AuthModal.css";
+import { invalidarTodo } from "../../lib/apiCache";
 
 const IconEyeOpen = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -55,6 +56,7 @@ export default function AuthModal({ isOpen, onClose }) {
       const data = await res.json();
       if (!res.ok) { setError(data.msg || t("authModal.errorCredenciales")); return; }
       localStorage.setItem("token", data.token);
+      invalidarTodo();
       onClose();
       navigate("/dashboard");
     } catch {
