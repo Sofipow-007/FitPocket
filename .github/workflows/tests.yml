@@ -1,0 +1,83 @@
+# Corre las pruebas de backend y frontend en cada push y PR a development y main.
+# Las pruebas del backend usan Mongo en memoria y la IA simulada: no necesitan
+# secretos, ni Atlas, ni GROQ_API_KEY.
+name: Tests
+
+on:
+  push:
+    branches: [development, main]
+  pull_request:
+    branches: [development, main]
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (Jest + Supertest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: fullStack/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: fullStack/backend/package-lock.json
+      # el binario de Mongo que baja mongodb-memory-server (~100 MB) se guarda entre corridas
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/mongodb-binaries
+          key: mongodb-binaries-${{ runner.os }}-${{ hashFiles('fullStack/backend/package-lock.json') }}
+      - run: npm ci
+      - run: npm run test:cobertura
+
+  frontend:
+    name: Frontend (lint + Vitest + build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: fullStack/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: fullStack/frontend/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+  rendimiento:
+    name: Rendimiento (informativo)
+    needs: backend
+    runs-on: ubuntu-latest
+    # Las máquinas compartidas de GitHub varían mucho en velocidad: el resultado se
+    # guarda como artefacto pero no frena el merge. El umbral se valida en local.
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: fullStack/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: fullStack/backend/package-lock.json
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/mongodb-binaries
+          key: mongodb-binaries-${{ runner.os }}-${{ hashFiles('fullStack/backend/package-lock.json') }}
+      - run: npm ci
+      - run: npm run test:perf
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rendimiento
+          path: documentacion/pruebas/rendimiento.*
