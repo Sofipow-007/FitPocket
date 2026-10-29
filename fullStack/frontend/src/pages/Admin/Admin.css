@@ -186,6 +186,8 @@
   font-weight: 600;
   color: var(--green);
 }
+/* vacío no ocupa lugar; el nodo queda montado para que el lector de pantalla anuncie el cambio */
+.ad-aviso:empty { min-height: 0; margin: 0 0 16px; }
 
 /* ── Estados ── */
 .ad-error {
@@ -431,6 +433,236 @@
   gap: 10px;
 }
 .ad-dialog__actions .ad-btn { min-height: 44px; padding: 0 18px; font-size: 14px; }
+
+/* ══════════════════════════════════════════════
+   PESTAÑAS — mismo patrón que el Dashboard
+══════════════════════════════════════════════ */
+.ad-title { margin-bottom: 20px; }
+
+.ad-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ad-tabs::-webkit-scrollbar { display: none; }
+
+.ad-tab {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0 16px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+.ad-tab:hover { color: var(--ink); }
+.ad-tab--on { color: var(--ink); border-bottom-color: var(--green); }
+.ad-tab:focus-visible { outline-offset: -2px; border-radius: var(--r-sm) var(--r-sm) 0 0; }
+
+.ad-subtitle {
+  font-family: var(--heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.ad-intro {
+  max-width: 62ch;
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink2);
+}
+
+.ad-section + .ad-section {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ad-sk--alto { height: 120px; }
+
+.ad-btn--primary {
+  background: var(--green);
+  border-color: var(--green);
+  color: #06060E;
+}
+.ad-btn--primary:hover:not(:disabled) { background: #00C974; border-color: #00C974; }
+
+/* ── Familias ── */
+.ad-fams {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+.ad-fam {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  background: var(--bg2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-lg);
+  min-width: 0;
+}
+/* el editor necesita todo el ancho */
+.ad-fam--editando { grid-column: 1 / -1; border-color: var(--border-hover); margin-bottom: 12px; }
+.ad-fams .ad-fam--editando { margin-bottom: 0; }
+
+.ad-fam__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ad-fam__nombre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.ad-fam__desc { font-size: 14px; line-height: 1.5; color: var(--ink2); }
+.ad-fam__meta { font-size: 13px; color: var(--ink3); }
+
+.ad-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ad-chip {
+  padding: 3px 8px;
+  background: var(--bg3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-sm);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--ink2);
+}
+
+/* ── Formularios ── */
+.ad-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.ad-form__fila {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 14px;
+}
+.ad-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ad-field--angosto { max-width: 420px; }
+.ad-field__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.ad-field__ayuda { font-size: 13px; line-height: 1.5; color: var(--ink2); }
+
+.ad-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  background: var(--bg3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-md);
+  color: var(--ink);
+  font-size: 15px;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.ad-input:hover:not(:disabled) { border-color: var(--border-hover); }
+.ad-input:focus-visible { border-color: var(--border-focus); }
+.ad-input:disabled { opacity: 0.55; cursor: not-allowed; }
+select.ad-input { cursor: pointer; }
+select.ad-input option { background: var(--bg2); color: var(--ink); }
+
+.ad-fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.ad-fieldset legend { margin-bottom: 8px; padding: 0; }
+
+.ad-checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 6px;
+}
+.ad-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 12px;
+  background: var(--bg3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.ad-check:hover { border-color: var(--border-hover); }
+.ad-check:has(input:checked) { border-color: rgba(0, 232, 135, 0.4); background: var(--green-t); }
+.ad-check:has(input:focus-visible) { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+.ad-check input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.ad-check input:focus-visible { outline: none; }
+.ad-check__texto { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ad-check__codigo {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.ad-check__desc { font-size: 12px; line-height: 1.4; color: var(--ink2); }
+
+.ad-efectivas { display: flex; flex-direction: column; gap: 8px; }
+
+.ad-form__error {
+  padding: 10px 12px;
+  background: var(--err-t);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--r-sm);
+  color: var(--ad-danger-ink);
+  font-size: 13px;
+}
+.ad-form__acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 760px) {
+  .ad-fams { grid-template-columns: 1fr; }
+  .ad-form__fila { grid-template-columns: 1fr; }
+  .ad-checks { grid-template-columns: 1fr; }
+  .ad-form__acciones { flex-direction: column-reverse; }
+  .ad-form__acciones .ad-btn { width: 100%; }
+  .ad-header .ad-btn--primary { width: 100%; }
+}
 
 /* ══════════════════════════════════════════════
    RESPONSIVE — la tabla pasa a tarjetas

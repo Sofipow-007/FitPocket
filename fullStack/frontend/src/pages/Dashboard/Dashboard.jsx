@@ -6,6 +6,8 @@ import { API_URL } from "../../lib/api";
 import { normalize, fechaLocal } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PERFIL, MOCK_PLAN } from "../../mocks/planMock";
+import ConPermiso from "../../components/ConPermiso";
+import { invalidarPermisos } from "../../hooks/usePermisos";
 import ChecklistTab from "./ChecklistTab";
 import ProgresoTab from "./ProgresoTab";
 import "./Dashboard.css";
@@ -155,6 +157,7 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    invalidarPermisos();
     navigate("/");
   };
 
@@ -187,11 +190,11 @@ export default function Dashboard() {
               onClick={() => { i18n.changeLanguage("en"); localStorage.setItem("idioma", "en"); }}
             >EN</button>
           </div>
-          {perfil?.rol === "admin" && (
-            <button className="db-nav__admin" onClick={() => navigate("/admin")}>
+          <ConPermiso patente="usuarios.listar">
+            <button className="db-nav__admin" onClick={() => navigate(isPreview ? "/admin?preview=true" : "/admin")}>
               {t("admin.link")}
             </button>
-          )}
+          </ConPermiso>
           <button className="db-nav__logout" onClick={handleLogout} aria-label={t("dashboard.salir")}>
             <IconLogout /><span>{t("dashboard.salir")}</span>
           </button>
