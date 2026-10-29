@@ -368,6 +368,333 @@
     "sinResultados":    "No user matches \"{{q}}\".",
     "limpiar":          "Clear search",
     "reintentar":       "Try again",
-    "sinNombre":        "Name unavailable"
+    "sinNombre":        "Name unavailable",
+    "panel": "Administration",
+    "tabs": {
+      "usuarios": "Users",
+      "familias": "Families & permissions",
+      "integridad": "Integrity",
+      "bitacora": "Audit log",
+      "backup": "Backup"
+    },
+    "patentesDesc": {
+      "plan_ver": "View own plan and adherence",
+      "plan_generar": "Generate or regenerate the plan with AI",
+      "checkin_registrar": "Complete the daily checklist",
+      "perfil_editar": "Edit profile and onboarding",
+      "cuenta_borrar": "Delete own account",
+      "usuarios_listar": "View the user list",
+      "usuarios_borrar": "Delete other users' accounts",
+      "bitacora_ver": "View the audit log",
+      "integridad_verificar": "Verify check digits",
+      "integridad_recalcular": "Recalculate check digits",
+      "backup_ejecutar": "Create a database backup",
+      "familias_gestionar": "Create and edit families and assign permissions"
+    },
+    "familias": {
+      "titulo": "Families",
+      "intro": "A family groups permissions and can include other families. A user gets every permission from their families.",
+      "nueva": "New family",
+      "editar": "Edit",
+      "editarA": "Edit the {{nombre}} family",
+      "base": "Built-in",
+      "incluye": "Includes:",
+      "patentesPropias": "Own permissions",
+      "totalPermisos_one": "{{count}} permission in total",
+      "totalPermisos_other": "{{count}} permissions in total",
+      "nombre": "Name",
+      "nombreProtegido": "Built-in families can't be renamed.",
+      "descripcion": "Description",
+      "incluyeFamilias": "Includes families",
+      "sinIncluibles": "There are no other families that can be included.",
+      "patentes": "Permissions",
+      "guardar": "Save family",
+      "guardando": "Saving...",
+      "creada": "The {{nombre}} family was created.",
+      "actualizada": "Changes to {{nombre}} were saved.",
+      "errorNombre": "Enter a name for the family.",
+      "errorGuardar": "Couldn't save. Make sure the name isn't taken and try again.",
+      "errorCarga": "Couldn't load the families. Check your connection.",
+      "asignarTitulo": "User permissions",
+      "asignarIntro": "Pick a user to change their families or grant individual permissions. Changes apply immediately.",
+      "usuario": "User",
+      "elegirUsuario": "Pick a user",
+      "vos": "you",
+      "noPropios": "You can't change your own permissions. Ask another administrator to do it.",
+      "familiasAsignadas": "Families",
+      "patentesSueltas": "Individual permissions",
+      "efectivas_one": "Will have {{count}} permission",
+      "efectivas_other": "Will have {{count}} permissions",
+      "sinPermisos": "Without permissions they won't be able to use the app.",
+      "guardarAsignacion": "Save permissions",
+      "asignado": "Permissions for {{email}} were updated.",
+      "errorAsignar": "Couldn't save the permissions. Try again."
+    },
+    "integridad": {
+      "titulo": "Data integrity",
+      "intro": "Each record stores a horizontal check digit (DVH) computed from its fields, and each collection stores a vertical one (DVV): the sum of its DVHs. If someone changes, adds or deletes data outside the app, they stop matching.",
+      "verificar": "Verify",
+      "verificando": "Verifying...",
+      "recalcular": "Recalculate",
+      "recalculando": "Recalculating...",
+      "sinVerificar": "You haven't verified in this session yet. Press Verify to check users, plans and check-ins.",
+      "resumenOk": "All good: no altered data.",
+      "resumenMal_one": "Found {{count}} altered record.",
+      "resumenMal_other": "Found {{count}} altered records.",
+      "resumenMal_zero": "Records were added or deleted outside the app.",
+      "verificadoEn": "Verified on {{fecha}}",
+      "avisoOk": "Verification finished: all good.",
+      "avisoAlterada": "Verification finished: some data was altered.",
+      "avisoRecalculado": "Check digits were recalculated.",
+      "errorVerificar": "Couldn't verify integrity. Check your connection.",
+      "errorRecalcular": "Couldn't recalculate. Try again.",
+      "tablaCaption": "Verification result per collection",
+      "col": {
+        "coleccion": "Collection",
+        "registros": "Records",
+        "alteradas": "Altered",
+        "dvvGuardado": "Stored DVV",
+        "dvvCalculado": "Computed DVV",
+        "estado": "Status"
+      },
+      "colecciones": {
+        "users": "Users",
+        "plans": "Plans",
+        "checkins": "Check-ins"
+      },
+      "ok": "OK",
+      "alterada": "Altered",
+      "filasTitulo_one": "{{count}} altered record",
+      "filasTitulo_other": "{{count}} altered records",
+      "dvhDiferencia": "Stored DVH {{guardado}} · computed {{calculado}}",
+      "confirmarTitulo": "Recalculate check digits?",
+      "confirmarTexto": "The current data becomes the valid baseline, including records now flagged as altered. Only do this after reviewing what changed, or after a migration or a restore."
+    },
+    "bitacora": {
+      "titulo": "Audit log",
+      "intro": "Every request to the app and every important event (plan generated, check-in, user deleted) is recorded. Passwords and emails are never stored: the email is shown from the account. Records older than {{dias}} days are deleted automatically.",
+      "total_one": "{{count}} record",
+      "total_other": "{{count}} records",
+      "filtros": "Audit log filters",
+      "email": "User",
+      "emailPlaceholder": "Email or part of it",
+      "accion": "Action",
+      "todas": "All",
+      "desde": "From",
+      "hasta": "To",
+      "estado": "Result",
+      "todos": "All",
+      "estados": {
+        "ok": "Successful (2xx)",
+        "cliente": "Rejected (4xx)",
+        "servidor": "Server errors (5xx)"
+      },
+      "filtrar": "Filter",
+      "limpiar": "Clear filters",
+      "error": "Couldn't load the audit log. Check your connection.",
+      "vacia": "There are no records yet.",
+      "sinResultados": "No records match the filters.",
+      "caption": "Audit log, page {{pagina}} of {{paginas}}",
+      "col": {
+        "fecha": "Date",
+        "usuario": "User",
+        "accion": "Action",
+        "ruta": "Route",
+        "estado": "Result",
+        "detalles": "Details"
+      },
+      "sinSesion": "Not signed in",
+      "evento": "Event",
+      "paginacion": "Audit log pages",
+      "anterior": "Previous",
+      "siguiente": "Next",
+      "pagina": "Page {{pagina}} of {{paginas}}"
+    },
+    "backup": {
+      "titulo": "Database backup",
+      "intro": "Saves a copy of every collection on the server (backups/backup_DATE, one file per collection). The last {{retencion}} are kept: creating a new one deletes the oldest.",
+      "generar": "Create backup",
+      "generando": "Creating...",
+      "generado": "Backup {{nombre}} created with {{documentos}} documents.",
+      "errorGenerar": "Couldn't create the backup. Try again.",
+      "disponibles": "Available backups",
+      "errorListar": "Couldn't load the backup list.",
+      "vacio": "There are no backups on the server yet.",
+      "ultimo": "Latest",
+      "incompleto": "Incomplete",
+      "resumen": "{{colecciones}} collections · {{documentos}} documents · {{tamanio}}",
+      "restoreTitulo": "Restore a backup",
+      "restoreTexto": "Restoring replaces the current content of each collection with the backup's, so it isn't done from the web: it runs on the server and asks for confirmation. When it finishes it recalculates the check digits.",
+      "restoreAyuda": "Without a name it restores the latest backup. With --si it doesn't ask (for automation)."
+    }
+  },
+  "ayuda": {
+    "titulo": "Help",
+    "intro": "Short answers to the most common questions about your plan, your progress and your account.",
+    "volver": "Back",
+    "link": "Help",
+    "masEnAyuda": "More in Help",
+    "secciones": [
+      {
+        "id": "plan",
+        "titulo": "Your plan",
+        "preguntas": [
+          {
+            "id": "generar-plan",
+            "p": "How is my plan generated?",
+            "r": [
+              "When you finish the 4 onboarding steps, FitPocket sends your data (weight, height, age, goal, level, available days and minutes, diet type, budget, limitations and notes) to an artificial intelligence model, which builds a routine and a 7-day diet.",
+              "The routine only uses the days you picked. If you marked a limitation (for example knee or lower back), besides asking the AI, the app checks the routine and removes or replaces contraindicated exercises.",
+              "It takes from a few seconds to a couple of minutes. The plan is written in the language you had selected when it was generated."
+            ]
+          },
+          {
+            "id": "cambiar-ejercicio",
+            "p": "How do I swap an exercise I can't or don't want to do?",
+            "r": [
+              "In \"View my plan\", tap the exercise to open it. If the AI suggested alternatives, a \"Swap exercise\" button appears: each tap shows the next option and goes back to the original after the last one.",
+              "The swap only lasts while you're looking at the plan: it isn't saved, and the original exercise shows up again next time."
+            ]
+          },
+          {
+            "id": "checklist",
+            "p": "How does the daily checklist work?",
+            "r": [
+              "Each day you mark how your routine and your diet went: Done (1 point), Partly (half a point) or Skipped (0). Then tap Save day.",
+              "It's recorded once per day: after saving it stays fixed until the next day. Your adherence and streak are calculated from it."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "progreso",
+        "titulo": "Your progress",
+        "preguntas": [
+          {
+            "id": "adherencia",
+            "p": "What is adherence and how is it calculated?",
+            "r": [
+              "It's how much of your plan you followed in the last 7 days, as a percentage.",
+              "The diet adds points every day; the routine only on days your plan has a workout (if the plan says rest, you don't lose points for resting). The percentage is what you scored over the maximum possible. Days before your first plan don't count.",
+              "If it drops below 50% with at least 3 days counted, the dashboard warns you."
+            ]
+          },
+          {
+            "id": "racha",
+            "p": "What is the streak?",
+            "r": [
+              "The number of consecutive days, counting back from today, in which you saved the checklist and scored at least some points.",
+              "It counts from today: if you haven't saved today yet, it shows 0 until you do. A day without a check-in, or with everything on \"Skipped\", breaks it."
+            ]
+          },
+          {
+            "id": "imc",
+            "p": "What is BMI?",
+            "r": [
+              "Body mass index: your weight in kilograms divided by your height in meters squared. It's calculated from the data you entered during onboarding.",
+              "As a general reference: under 18.5 is underweight, 18.5 to 24.9 is normal, 25 to 29.9 overweight and 30 or more obesity. It's only a guide: it doesn't tell muscle from fat and doesn't replace a professional's opinion."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cuenta",
+        "titulo": "Your account and your data",
+        "preguntas": [
+          {
+            "id": "recuperar-contrasena",
+            "p": "I forgot my password. How do I recover it?",
+            "r": [
+              "Tap \"Sign in\" and then \"Forgot your password?\". Enter your account email and you'll get a link to choose a new one.",
+              "The link expires in 30 minutes and works only once. Changing it signs you out on other devices. If it doesn't arrive, check your spam folder."
+            ]
+          },
+          {
+            "id": "datos-encriptados",
+            "p": "Which of my data is stored encrypted?",
+            "r": [
+              "Your name, your physical limitations and the note you wrote during onboarding are stored encrypted (AES-256): they can't be read in the database without the server's key.",
+              "Your password is never stored: only a hash (bcrypt) that can check it but can't recover it. For the recovery link, only a hash is stored too.",
+              "The activity log doesn't store passwords or emails, and every record has a check digit that reveals if someone changes it outside the app."
+            ]
+          },
+          {
+            "id": "borrar-cuenta",
+            "p": "How do I delete my account?",
+            "r": [
+              "On the dashboard, open the Progress tab and scroll to \"Your account\": that's where \"Delete my account\" is. It asks for confirmation before deleting anything.",
+              "Your account, all your plans and all your checklist records are deleted. It can't be undone."
+            ]
+          },
+          {
+            "id": "idioma",
+            "p": "How do I change the language?",
+            "r": [
+              "With the ES / EN buttons: they are at the top right and, on a phone, some screens show them at the bottom right. The app switches instantly and remembers your choice.",
+              "Your plan stays in the language it was generated in."
+            ]
+          }
+        ]
+      }
+    ],
+    "admin": {
+      "id": "admin",
+      "titulo": "For administrators",
+      "preguntas": [
+        {
+          "id": "admin-familias",
+          "p": "What are permissions and families?",
+          "r": [
+            "A permission allows one specific action (for example usuarios.borrar). A family groups permissions and other families too: Administrador includes Usuario.",
+            "What someone can do is the sum of their families and individual permissions. Changes apply immediately, without the person signing in again. You can't change your own permissions."
+          ]
+        },
+        {
+          "id": "admin-integridad",
+          "p": "What do I do if the integrity check flags altered data?",
+          "r": [
+            "It means those records were changed, added or deleted outside the app (for example, by editing the database directly). Check the audit log to see what happened and who did it.",
+            "Recalculate accepts the current data as valid: only use it after reviewing, or after a migration or a restore."
+          ]
+        },
+        {
+          "id": "admin-backup",
+          "p": "How do I create and restore a backup?",
+          "r": [
+            "The button in the Backup tab saves a copy of every collection on the server. You can also run node scripts/backup.js from the console.",
+            "Restoring is done from the console (node scripts/restore.js): it asks for confirmation and recalculates the check digits when it finishes."
+          ]
+        }
+      ]
+    },
+    "tips": {
+      "racha": "Consecutive days, counting from today, in which you saved the checklist and scored some points.",
+      "rachaEtiqueta": "What the streak is",
+      "imc": "Body mass index: weight divided by height squared. 18.5 to 24.9 is the normal range. It's only a guide.",
+      "imcEtiqueta": "What BMI is",
+      "adherencia": "How much of your plan you followed in the last 7 days. The diet counts every day and the routine only on workout days.",
+      "adherenciaEtiqueta": "How adherence is calculated",
+      "checklist": "Done is worth 1 point, Partly half and Skipped 0. It's saved once per day and drives your adherence and streak.",
+      "checklistEtiqueta": "How the checklist works",
+      "cambiarEjercicio": "Shows the next alternative the AI suggested. It's only for now: the swap isn't saved to your plan.",
+      "cambiarEjercicioEtiqueta": "What swap exercise does",
+      "usuarios": "Every registered account. Deleting one also deletes its plans and check-ins. Administrators can't be deleted from here.",
+      "familias": "A family groups permissions and can include other families. What a user can do is the sum of their families and individual permissions.",
+      "integridad": "Detects data changed outside the app by comparing each record's check digit (DVH) and each collection's (DVV).",
+      "bitacora": "Record of every request to the app and of important events. It doesn't store passwords or emails.",
+      "backup": "Copy of every collection on the server. Restoring runs from the console and recalculates the check digits.",
+      "seccionEtiqueta": "Help about {{seccion}}"
+    }
+  },
+  "cuenta": {
+    "titulo": "Your account",
+    "borrar": "Delete my account",
+    "adminNoPuede": "As an administrator you can't delete your own account. Ask another administrator.",
+    "confirmarTitulo": "Delete your account?",
+    "confirmarTexto": "Your account, all your plans and all your checklist records will be deleted. This can't be undone.",
+    "confirmarBoton": "Yes, delete my account",
+    "borrando": "Deleting...",
+    "errorBorrar": "Couldn't delete the account. Check your connection and try again.",
+    "errorAdmin": "An administrator can't delete their own account."
   }
 }

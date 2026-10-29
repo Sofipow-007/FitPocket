@@ -2,6 +2,7 @@ const { generarPlan } = require('../services/iaService')
 const User = require('../models/User')
 const Plan = require('../models/Plan')
 const { decrypt } = require('../utils/crypto')
+const { eventos, EVENTOS } = require('../services/eventos')
 
 // Desencripta un campo sin tirar la request abajo si CRYPTO_KEY cambió
 // o el valor no estaba encriptado (datos viejos).
@@ -47,10 +48,10 @@ exports.generarPlan = async (req, res) => {
     const userId = req.user?.userId
     if (!userId) return res.status(401).json({ error: 'Token inválido o faltante' })
 
-    const user = await User.findById(userId)
+    const user = await User.findById(userId).select('perfil').lean()
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' })
 
-    const perfil = user.perfil ? user.perfil.toObject() : {}
+    const perfil = user.perfil ?? {}
     if (!perfil.objetivo || !(perfil.diasDispo?.length)) {
       return res.status(400).json({ error: 'Falta completar el perfil antes de generar un plan' })
     }
@@ -114,7 +115,9 @@ exports.generarPlan = async (req, res) => {
       dieta:  planGenerado.dieta
     })
 
-    console.log('Plan generado y guardado exitosamente para el usuario. ', savedPlan)
+    // solo el id: el plan completo son datos de salud del usuario y no van a los logs
+    console.log(`Plan generado: ${savedPlan._id}`)
+    eventos.emitir(EVENTOS.PLAN_GENERADO, { userId, planId: savedPlan._id })
 
     return res.json({ ok: true, plan: savedPlan })
 
@@ -127,11 +130,19 @@ exports.generarPlan = async (req, res) => {
 exports.getPlanActual = async (req, res) => {
   try {
     const userId = req.user.userId
-    const plan = await Plan.findOne({ userId, estado: 'activo' })
+    const plan = await Plan.findOne({ userId, estado: 'activo' }).select('-dvh -__v').lean()
     if (!plan) return res.status(404).json({ error: 'Sin plan activo' })
+    // El navegador puede reusar la respuesta un minuto (solo para este usuario: private + Vary).
+    // Después de generar un plan, el front pide el nuevo con cache: "reload".
+    res.set('Cache-Control', 'private, max-age=60')
+    res.vary('Authorization')
     res.json(plan)
   } catch (error) {
     console.error('Error al obtener el plan actual:', error)
     return res.status(500).json({ error: 'Error interno del servidor' })
   }
 }
+
+// Se exportan para las pruebas unitarias
+exports.filtrarContraindicados = filtrarContraindicados
+exports.normalizarDia = normalizarDia

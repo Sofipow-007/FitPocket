@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
+import { invalidarTodo } from "../../lib/apiCache";
 
 export default function LoginForm() {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ export default function LoginForm() {
       }
 
       localStorage.setItem("token", data.token);
+      invalidarTodo();
       navigate("/dashboard");
     } catch {
       setError(t("login.errorConexion"));

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import CuentaSeccion from './CuentaSeccion'
 
 export default function ProgresoTab({ adherencia, perfil }) {
   const { t, i18n } = useTranslation()
@@ -55,6 +56,8 @@ export default function ProgresoTab({ adherencia, perfil }) {
           <p className="prog-empty">{t('progreso.sinPeso')}</p>
         )}
       </section>
+
+      <CuentaSeccion perfil={perfil} />
     </div>
   )
 }

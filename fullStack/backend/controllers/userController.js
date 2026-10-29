@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const User = require('../models/User')
 const Plan = require('../models/Plan')
 const Checkin = require('../models/Checkin')
-const { calcularDVH, calcularDVV } = require('../utils/digitosVerificadores')
 const { encrypt, decrypt } = require('../utils/crypto')
+const { eventos, EVENTOS } = require('../services/eventos')
 
 // Desencripta nombre y limitaciones antes de devolver al cliente
 function decryptUser(user) {
@@ -20,7 +20,11 @@ function decryptUser(user) {
 
 exports.getInfo = async (req, res) => {
     try {
-        const user = await User.findById(req.user.userId).select('-passwordHash')
+        // Solo lectura: lean() devuelve un objeto plano (más rápido que un documento de Mongoose).
+        // Se excluye todo lo interno: hashes, datos de recuperación y dígito verificador.
+        const user = await User.findById(req.user.userId)
+            .select('-passwordHash -resetTokenHash -resetTokenExpira -resetPedidoEn -passwordCambiadaEn -dvh -__v')
+            .lean()
         if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado" })
         }
@@ -51,11 +55,7 @@ exports.actualizarPerfil = async (req, res) => {
         }
 
         user.perfil = perfilNuevo
-        user.dvh = calcularDVH([
-            user.email, nombrePlano, user.rol,
-            perfilNuevo.peso, perfilNuevo.altura, perfilNuevo.edad,
-        ])
-        await user.save()
+        await user.save() // el DVH lo recalcula el modelo
 
         const resultado = user.toObject()
         delete resultado.passwordHash
@@ -72,16 +72,23 @@ exports.actualizarPerfil = async (req, res) => {
     }
 }
 
+// DELETE /users/borrar — patente cuenta.borrar
+// Un admin no puede borrar su propia cuenta (igual que no puede borrar a otro admin):
+// así el sistema nunca queda sin administradores.
 exports.borrarPerfil = async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.user.userId)
+        const user = await User.findOneAndDelete({ _id: req.user.userId, rol: { $ne: 'admin' } })
 
         if (!user) {
-            return res.status(404).json({ message: "Usuario no encontrado" })
+            const existe = await User.exists({ _id: req.user.userId })
+            return existe
+                ? res.status(403).json({ error: 'Un administrador no puede borrar su propia cuenta' })
+                : res.status(404).json({ error: 'Usuario no encontrado' })
         }
 
         await Plan.deleteMany({ userId: user._id })
         await Checkin.deleteMany({ userId: user._id })
+        eventos.emitir(EVENTOS.USUARIO_BORRADO, { userId: null, userIdBorrado: user._id, porAdmin: false })
 
         res.json({
             message: 'Usuario eliminado correctamente',
@@ -105,13 +112,14 @@ function nombreLegible(nombreCifrado) {
     }
 }
 
-// GET /users/todos — solo admin
+// GET /users/todos — patente usuarios.listar
 // Devuelve únicamente lo que muestra el panel: nada de perfil físico, hashes ni tokens.
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find()
-            .select('nombre email rol createdAt perfil.objetivo')
+            .select('nombre email rol familias patentes createdAt perfil.objetivo')
             .sort({ createdAt: -1 })
+            .lean()
 
         res.json({
             ok: true,
@@ -120,6 +128,8 @@ exports.getAllUsers = async (req, res) => {
                 nombre: nombreLegible(u.nombre),
                 email: u.email,
                 rol: u.rol,
+                familias: u.familias,
+                patentes: u.patentes,
                 createdAt: u.createdAt,
                 onboardingCompleto: Boolean(u.perfil?.objetivo),
             })),
@@ -130,7 +140,7 @@ exports.getAllUsers = async (req, res) => {
     }
 }
 
-// DELETE /users/:id — solo admin
+// DELETE /users/:id — patente usuarios.borrar
 // Un admin no puede borrar a otro admin ni a sí mismo: así nunca queda el sistema sin admin.
 exports.borrarUsuario = async (req, res) => {
     try {
@@ -152,6 +162,7 @@ exports.borrarUsuario = async (req, res) => {
 
         await Plan.deleteMany({ userId: user._id })
         await Checkin.deleteMany({ userId: user._id })
+        eventos.emitir(EVENTOS.USUARIO_BORRADO, { userId: req.user.userId, userIdBorrado: user._id, porAdmin: true })
 
         res.json({ ok: true, email: user.email })
     } catch (error) {
@@ -175,7 +186,6 @@ exports.completarOnboarding = async (req, res) => {
             return res.status(404).json({ error: "Usuario no encontrado" })
         }
 
-        const nombrePlano = decrypt(user.nombre)
         const diasFinales = diasDispo ?? diasDisponibles
 
         user.perfil = {
@@ -188,35 +198,11 @@ exports.completarOnboarding = async (req, res) => {
             aclaracion: aclaracion ? encrypt(aclaracion) : undefined,
         }
 
-        // DVH recalculado con valores en texto plano
-        user.dvh = calcularDVH([
-            user.email, nombrePlano, user.rol,
-            peso, altura, edad,
-        ])
-
-        await user.save()
+        await user.save() // el DVH lo recalcula el modelo
 
         res.json({ ok: true, mensaje: "Perfil guardado, generando plan" })
     }
     catch (error) {
         res.status(500).json({ error: error.message })
-    }
-}
-
-// GET /users/verificar-integridad — solo admin
-// Calcula el DVV (suma de todos los DVH) y verifica integridad global
-exports.verificarIntegridad = async (req, res) => {
-    try {
-        const users = await User.find({}).select('dvh email nombre')
-        const dvv = calcularDVV(users)
-        res.json({
-            ok: true,
-            totalUsuarios: users.length,
-            dvv,
-        })
-    }
-    catch (error) {
-        console.error(error.message)
-        res.status(500).send('Error en el servidor')
     }
 }

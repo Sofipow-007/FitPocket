@@ -10,7 +10,23 @@ const ACCIONES = {
     'POST /plan/generar': 'Generación de plan',
     'GET /plan/actual': 'Consulta de plan activo',
     'GET /users/todos': 'Listado de usuarios (admin)',
-    'DELETE /users/:id': 'Eliminación de usuario por admin'
+    'DELETE /users/:id': 'Eliminación de usuario por admin',
+    'GET /users/permisos': 'Consulta de permisos propios',
+    'POST /permisos/familias': 'Creación de familia',
+    'PUT /permisos/familias/:id': 'Edición de familia',
+    'PUT /permisos/usuarios/:id': 'Asignación de permisos a usuario',
+    'GET /integridad/verificar': 'Verificación de integridad',
+    'POST /integridad/recalcular': 'Recálculo de dígitos verificadores',
+    'POST /checkins/': 'Registro de checkin',
+    'GET /checkins/semana': 'Consulta de adherencia semanal',
+    'GET /checkins/mes': 'Consulta de adherencia mensual',
+    'GET /bitacora/': 'Consulta de bitácora',
+    'GET /bitacora/acciones': 'Consulta de acciones de la bitácora',
+    'GET /permisos/patentes': 'Consulta de patentes',
+    'GET /permisos/familias': 'Consulta de familias',
+    'GET /checkins/hoy': 'Consulta de checkin del día',
+    'POST /backup/': 'Generación de backup',
+    'GET /backup/': 'Listado de backups'
 };
 
 module.exports = (req, res, next) => {

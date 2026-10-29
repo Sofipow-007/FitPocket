@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 import "./Recuperar.css";
+import { invalidarTodo } from "../../lib/apiCache";
 
 // Paso 2 de la recuperación: elegir la contraseña nueva con el enlace del mail.
 export default function Restablecer() {
@@ -37,6 +38,7 @@ export default function Restablecer() {
       if (!res.ok || !data.token) throw new Error();
       // la sesión anterior (si había) ya no sirve: se reemplaza por la nueva
       localStorage.setItem("token", data.token);
+      invalidarTodo();
       navigate("/dashboard", { replace: true });
     } catch {
       setError(t("restablecer.errorConexion"));

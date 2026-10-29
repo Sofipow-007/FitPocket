@@ -1,0 +1,141 @@
+/* ─ Ayuda – preguntas frecuentes ─ */
+
+.ay-page {
+  min-height: 100dvh;
+  background-color: var(--bg, #06060E);
+  background-image:
+    radial-gradient(ellipse at 88% 0%, rgba(0, 232, 135, 0.06) 0%, transparent 40%),
+    radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+  background-size: auto, 28px 28px;
+  color: var(--ink, #F4F4FF);
+  font-family: var(--sans);
+}
+
+/* NAV — mismo patrón que PlanDetalle y Admin. La tercera columna queda vacía:
+   ahí se superpone el selector de idioma global. */
+.ay-nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 24px;
+  height: 60px;
+  background: rgba(6, 6, 14, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.ay-nav__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-self: start;
+  padding: 6px 8px;
+  margin-left: -8px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 150ms, background 150ms;
+}
+.ay-nav__back svg { width: 16px; height: 16px; }
+.ay-nav__back:hover { color: var(--ink); background: rgba(255, 255, 255, 0.05); }
+.ay-nav__brand { display: flex; align-items: center; gap: 8px; justify-self: center; }
+.ay-nav__logo { height: 36px; width: auto; }
+.ay-nav__brand-text { font-family: var(--heading); font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+
+.ay-main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 44px 32px 80px;
+}
+
+.ay-header { margin-bottom: 36px; }
+.ay-title {
+  font-family: var(--heading);
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+.ay-intro { font-size: 15px; line-height: 1.6; color: var(--ink2); max-width: 60ch; }
+
+.ay-seccion + .ay-seccion { margin-top: 36px; }
+.ay-seccion__titulo {
+  font-family: var(--heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.ay-preguntas { display: flex; flex-direction: column; gap: 8px; }
+
+.ay-pregunta {
+  background: var(--bg2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-lg);
+  scroll-margin-top: 76px; /* que el nav sticky no tape la pregunta al llegar por #ancla */
+  transition: border-color var(--t-fast);
+}
+.ay-pregunta[open] { border-color: var(--border-hover); }
+
+.ay-pregunta__p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 52px;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--r-lg);
+}
+.ay-pregunta__p::-webkit-details-marker { display: none; }
+.ay-pregunta__p::after {
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--ink3);
+  border-bottom: 2px solid var(--ink3);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform var(--t-fast);
+}
+.ay-pregunta[open] .ay-pregunta__p::after { transform: rotate(225deg) translateY(-2px); }
+.ay-pregunta__p:hover { color: var(--ink); background: rgba(255, 255, 255, 0.02); }
+.ay-pregunta__p:focus-visible { outline: 2px solid var(--border-focus); outline-offset: -2px; }
+
+.ay-pregunta__r {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 18px 18px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink2);
+  max-width: 68ch;
+}
+
+@media (max-width: 640px) {
+  .ay-nav { padding: 0 16px; }
+  .ay-nav__back { min-width: 44px; min-height: 44px; justify-content: center; }
+  .ay-nav__back span { display: none; }
+  /* abajo queda lugar para el selector ES/EN, que en mobile flota abajo a la derecha */
+  .ay-main { padding: 28px 16px 96px; }
+  .ay-pregunta__p { padding: 14px 16px; }
+  .ay-pregunta__r { padding: 0 16px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ay-pregunta__p::after { transition: none; }
+}

@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/fitpocketlogo(inverted).png";
-import { API_URL } from "../../lib/api";
 import { normalize, fechaLocal } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PERFIL, MOCK_PLAN } from "../../mocks/planMock";
+import ConPermiso from "../../components/ConPermiso";
+import AyudaTip from "../../components/Ayuda/AyudaTip";
+import { pedirConCache, invalidar, invalidarTodo, actualizarCache } from "../../lib/apiCache";
 import ChecklistTab from "./ChecklistTab";
 import ProgresoTab from "./ProgresoTab";
 import "./Dashboard.css";
@@ -84,6 +86,12 @@ const COMIDAS = [
   { key: "cena",     tKey: "dashboard.cena",     dot: "#A855F7" },
 ];
 
+const IconAyuda = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" /><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+);
+
 export default function Dashboard() {
   const navigate         = useNavigate();
   const { t, i18n }      = useTranslation();
@@ -104,32 +112,25 @@ export default function Dashboard() {
     if (isPreview) return;
     const token = localStorage.getItem("token");
     if (!token) { navigate("/login", { replace: true }); return; }
-    const headers = { Authorization: `Bearer ${token}` };
 
     const irAlLogin = () => {
       localStorage.removeItem("token");
+      invalidarTodo();
       navigate("/login", { replace: true });
     };
 
-    Promise.all([
-      fetch(`${API_URL}/users/perfil`,   { headers }),
-      fetch(`${API_URL}/plan/actual`,     { headers }),
-      fetch(`${API_URL}/checkins/semana`, { headers }),
-      fetch(`${API_URL}/checkins/hoy`,    { headers }),
-    ])
-      .then(async ([rPerfil, rPlan, rAdh, rHoy]) => {
+    // Salen de la caché (lib/apiCache) si están frescos: volver desde /plan no repite pedidos
+    Promise.all(["perfil", "plan", "semana", "hoy"].map(pedirConCache))
+      .then(([rPerfil, rPlan, rAdh, rHoy]) => {
         if ([rPerfil, rPlan, rAdh, rHoy].some(r => r.status === 401)) {
           irAlLogin();
           return;
         }
-        setPerfil(rPerfil.ok ? await rPerfil.json() : null);
+        setPerfil(rPerfil.status === 200 ? rPerfil.datos : null);
         setSinPlan(rPlan.status === 404);
-        setPlan(rPlan.ok ? await rPlan.json() : null);
-        if (rAdh.ok) setAdherencia(await rAdh.json());
-        if (rHoy.ok) {
-          const hoyData = await rHoy.json();
-          setCheckinHoy(hoyData.checkin);
-        }
+        setPlan(rPlan.status === 200 ? rPlan.datos : null);
+        if (rAdh.status === 200) setAdherencia(rAdh.datos);
+        if (rHoy.status === 200) setCheckinHoy(rHoy.datos?.checkin ?? null);
       })
       .catch(() => setError("No se pudo cargar tu información. Revisá tu conexión."))
       .finally(() => setLoading(false));
@@ -153,8 +154,21 @@ export default function Dashboard() {
     : pct >= 70 ? "#00E887"
     : pct >= 50 ? "#F59E0B" : "#EF4444";
 
+  // Precarga: mientras el usuario mira el dashboard se baja el código de "Ver mi plan",
+  // así al tocarlo la pantalla abre sin esperar el chunk (el plan ya está en la caché)
+  useEffect(() => {
+    const precargar = () => import("../PlanDetalle/PlanDetalle");
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(precargar, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(precargar, 1500);
+    return () => clearTimeout(id);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
+    invalidarTodo();
     navigate("/");
   };
 
@@ -187,11 +201,14 @@ export default function Dashboard() {
               onClick={() => { i18n.changeLanguage("en"); localStorage.setItem("idioma", "en"); }}
             >EN</button>
           </div>
-          {perfil?.rol === "admin" && (
-            <button className="db-nav__admin" onClick={() => navigate("/admin")}>
+          <Link to="/ayuda" className="db-nav__ayuda" aria-label={t("ayuda.link")} title={t("ayuda.link")}>
+            <IconAyuda />
+          </Link>
+          <ConPermiso patente="usuarios.listar">
+            <button className="db-nav__admin" onClick={() => navigate(isPreview ? "/admin?preview=true" : "/admin")}>
               {t("admin.link")}
             </button>
-          )}
+          </ConPermiso>
           <button className="db-nav__logout" onClick={handleLogout} aria-label={t("dashboard.salir")}>
             <IconLogout /><span>{t("dashboard.salir")}</span>
           </button>
@@ -258,7 +275,10 @@ export default function Dashboard() {
                 <div className="db-strip">
                   <div className="db-strip__item db-strip__item--orange">
                     <span className="db-strip__val">{adherencia?.racha ?? "—"}</span>
-                    <span className="db-strip__label">{t("dashboard.racha")}</span>
+                    <span className="db-strip__label">
+                      {t("dashboard.racha")}
+                      <AyudaTip etiqueta={t("ayuda.tips.rachaEtiqueta")} texto={t("ayuda.tips.racha")} ancla="racha" lado="izq" />
+                    </span>
                   </div>
                   <span className="db-strip__sep" aria-hidden="true" />
                   <div className="db-strip__item">
@@ -268,14 +288,20 @@ export default function Dashboard() {
                   <span className="db-strip__sep" aria-hidden="true" />
                   <div className="db-strip__item db-strip__item--purple">
                     <span className="db-strip__val">{imc ?? "—"}</span>
-                    <span className="db-strip__label">{t("dashboard.imc")}</span>
+                    <span className="db-strip__label">
+                      {t("dashboard.imc")}
+                      <AyudaTip etiqueta={t("ayuda.tips.imcEtiqueta")} texto={t("ayuda.tips.imc")} ancla="imc" />
+                    </span>
                   </div>
                   <span className="db-strip__sep" aria-hidden="true" />
                   <div className="db-strip__item">
                     <span className="db-strip__val" style={{ color: pctColor }}>
                       {pct != null ? `${pct}%` : "—"}
                     </span>
-                    <span className="db-strip__label">{t("dashboard.adherencia")}</span>
+                    <span className="db-strip__label">
+                      {t("dashboard.adherencia")}
+                      <AyudaTip etiqueta={t("ayuda.tips.adherenciaEtiqueta")} texto={t("ayuda.tips.adherencia")} ancla="adherencia" lado="der" />
+                    </span>
                   </div>
                 </div>
 
@@ -412,11 +438,10 @@ export default function Dashboard() {
             checkinHoy={checkinHoy}
             onGuardado={(c) => {
               setCheckinHoy(c);
-              // refrescar adherencia
-              const token = localStorage.getItem("token");
-              fetch(`${API_URL}/checkins/semana`, {
-                headers: { Authorization: `Bearer ${token}` }
-              }).then(r => r.ok ? r.json() : null).then(adh => { if (adh) setAdherencia(adh); }).catch(() => {});
+              actualizarCache("hoy", 200, { checkin: c });
+              // la adherencia cambió: se descarta la guardada y se pide de nuevo
+              invalidar("semana");
+              pedirConCache("semana").then(r => { if (r.status === 200) setAdherencia(r.datos); }).catch(() => {});
             }}
           />
         )}

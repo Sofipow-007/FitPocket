@@ -18,6 +18,7 @@ const CargandoPlan = lazy(() => import("./pages/CargandoPlan/CargandoPlan"));
 const Dashboard    = lazy(() => import("./pages/Dashboard/Dashboard"));
 const PlanDetalle  = lazy(() => import("./pages/PlanDetalle/PlanDetalle"));
 const Admin        = lazy(() => import("./pages/Admin/Admin"));
+const Ayuda        = lazy(() => import("./pages/Ayuda/Ayuda"));
 
 function GlobalLangToggle() {
   const { t, i18n } = useTranslation();
@@ -57,6 +58,8 @@ function App() {
               <Route path="/plan"          element={<RutaPrivada allowPreview><PlanDetalle /></RutaPrivada>} />
               {/* el rol lo valida el backend: Admin redirige a /dashboard si responde 403 */}
               <Route path="/admin"         element={<RutaPrivada allowPreview><Admin /></RutaPrivada>} />
+              {/* pública a propósito: recuperar la contraseña y qué datos se guardan le sirven también a quien no entró */}
+              <Route path="/ayuda"         element={<Ayuda />} />
             </Routes>
           </Suspense>
         </main>

@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { enviarMailDeReset } = require('../services/mailService');
-const { calcularDVH } = require('../utils/digitosVerificadores');
 const { encrypt, decrypt } = require('../utils/crypto');
+const { familiaBase, FAMILIA_USUARIO } = require('../services/permisosService');
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -29,25 +29,26 @@ exports.register = async (req, res) => {
             return res.status(400).json({ msg: 'La contraseña debe tener al menos 8 caracteres' });
         }
 
-        let user = await User.findOne({ email });
-        if (user) {
+        if (await User.exists({ email })) {
             return res.status(400).json({ msg: 'El usuario ya existe' });
         }
 
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
-        // DVH calculado sobre valores en texto plano antes de encriptar
+        // El DVH lo calcula el modelo al guardar (plugin de dígitos verificadores)
         const rol = 'usuario';
-        const dvh = calcularDVH([email, nombre, rol]);
 
-        user = new User({
+        // Toda cuenta nueva arranca con la familia Usuario: sin ella no tendría permisos para nada
+        const familiaUsuario = await familiaBase(FAMILIA_USUARIO);
+
+        const user = new User({
             nombre: encrypt(nombre),   // nombre encriptado en BD
             email,
             passwordHash,
             rol,
+            familias: [familiaUsuario._id],
             perfil: {},
-            dvh,
         });
 
         await user.save();
@@ -72,7 +73,12 @@ exports.login = async (req, res) => {
         const email = typeof req.body.email === 'string' ? req.body.email.trim().toLowerCase() : '';
         const { password } = req.body;
 
-        const user = await User.findOne({ email });
+        // Un password que no es texto (ej. {"$ne": null}) hacía tirar a bcrypt y respondía 500
+        if (!email || typeof password !== 'string' || !password) {
+            return res.status(400).json({ msg: 'Credenciales inválidas' });
+        }
+
+        const user = await User.findOne({ email }).select('nombre email rol passwordHash').lean();
         if (!user) {
             return res.status(400).json({ msg: 'Credenciales inválidas' });
         }

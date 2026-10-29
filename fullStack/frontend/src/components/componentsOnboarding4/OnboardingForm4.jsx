@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import "./OnboardingForm4.css";
+import { invalidar } from "../../lib/apiCache";
 
 const IconArrowLeft = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -81,6 +82,7 @@ export default function OnboardingForm4() {
       });
       const data = await res.json();
       if (!res.ok) { setApiError(data.error || t("ob4.errorGuardar")); return; }
+      invalidar("perfil", "plan"); // perfil editado: lo guardado en la caché quedó viejo
       localStorage.removeItem("ob_paso1");
       localStorage.removeItem("ob_paso2");
       localStorage.removeItem("ob_paso3");

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
+import { invalidar } from "../../lib/apiCache";
 import "./CargandoPlan.css";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 
@@ -19,10 +20,11 @@ const pedirPlan = (token, idioma) => {
       },
       body: JSON.stringify({ idioma }),
     })
-      .then(async (response) => ({
-        ok: response.ok,
-        data: await response.json().catch(() => ({})),
-      }))
+      .then(async (response) => {
+        // plan nuevo: el plan y la adherencia guardados en la caché ya no sirven
+        if (response.ok) invalidar("plan", "semana", "hoy");
+        return { ok: response.ok, data: await response.json().catch(() => ({})) };
+      })
       .finally(() => {
         generacionEnCurso = null;
       });

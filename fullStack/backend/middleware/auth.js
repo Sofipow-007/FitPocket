@@ -21,11 +21,11 @@ module.exports = async (req, res, next) => {
     // haya cambiado: se confirma que el usuario exista y que el token sea posterior al cambio.
     let user;
     try {
-        user = await User.findById(decoded.userId).select('passwordCambiadaEn rol');
+        user = await User.findById(decoded.userId).select('passwordCambiadaEn rol').lean();
         if (!user) {
             return res.status(401).json({ msg: 'Token inválido' });
         }
-        if (user.passwordCambiadaEn && decoded.iat * 1000 < user.passwordCambiadaEn.getTime()) {
+        if (user.passwordCambiadaEn && decoded.iat * 1000 < new Date(user.passwordCambiadaEn).getTime()) {
             return res.status(401).json({ msg: 'Token inválido' });
         }
     } catch (error) {

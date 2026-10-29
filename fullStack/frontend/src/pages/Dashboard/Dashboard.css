@@ -795,3 +795,54 @@
   .db-nav__logo { height: 28px; }
   .db-nav__brand-text { font-size: 0.9375rem; }
 }
+
+/* Link a Ayuda en el nav */
+.db-nav__ayuda {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.78);
+  transition: color 150ms, background 150ms;
+}
+.db-nav__ayuda svg { width: 18px; height: 18px; }
+.db-nav__ayuda:hover { color: var(--ink); background: rgba(255, 255, 255, 0.05); }
+@media (pointer: coarse), (max-width: 640px) {
+  .db-nav__ayuda { width: 44px; height: 44px; }
+}
+
+/* "?" al lado de racha, IMC y adherencia */
+.db-strip__label { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ── Progreso: tu cuenta ── */
+.prog-cuenta { padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.prog-cuenta__fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+.prog-cuenta__datos { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.prog-cuenta__nombre { font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+.prog-cuenta__email { font-size: 14px; color: var(--ink2); overflow-wrap: anywhere; }
+.prog-cuenta__nota { font-size: 13px; line-height: 1.5; color: var(--ink2); max-width: 32ch; }
+.prog-cuenta__borrar {
+  min-height: 44px;
+  padding: 0 16px;
+  background: none;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: var(--r-sm);
+  color: #FF8A8A; /* 8,5:1 sobre el fondo */
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.prog-cuenta__borrar:hover { background: var(--err-t); border-color: rgba(239, 68, 68, 0.6); color: var(--ink); }
+.prog-cuenta__borrar:focus-visible { outline: 2px solid #FF8A8A; outline-offset: 2px; }
+@media (max-width: 640px) {
+  .prog-cuenta__borrar { width: 100%; }
+}

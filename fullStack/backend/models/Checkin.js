@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const digitosVerificadores = require('./plugins/digitosVerificadores');
 
 const ESTADOS = ['completado', 'parcial', 'no_hice'];
 
@@ -18,5 +19,8 @@ const checkinSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 checkinSchema.index({ userId: 1, fecha: 1 }, { unique: true });
+
+// Agrega `dvh` y mantiene el DVH y el DVV en cada escritura
+checkinSchema.plugin(digitosVerificadores, { coleccion: 'checkins' });
 
 module.exports = mongoose.model('Checkin', checkinSchema);
