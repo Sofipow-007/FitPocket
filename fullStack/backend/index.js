@@ -1,7 +1,17 @@
 require('dotenv').config();
 
 const connectDB = require('./config/db')
+const { crearEstrategiaIA } = require('./services/ia/iaFactory')
 const app = require('./app')
+
+// Un IA_PROVIDER mal escrito se avisa al arrancar y no recién cuando alguien genera un plan
+try {
+    const ia = crearEstrategiaIA()
+    console.log(`Proveedor de IA: ${ia.nombre}`)
+} catch (error) {
+    console.error(error.message)
+    process.exit(1)
+}
 
 connectDB()
 

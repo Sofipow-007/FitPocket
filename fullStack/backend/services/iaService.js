@@ -1,44 +1,8 @@
-const Groq = require('groq-sdk')
+const { obtenerEstrategiaIA } = require('./ia/iaFactory')
 
-const client = new Groq({ apiKey: process.env.GROQ_API_KEY })
-
-// El plan gratuito de Groq permite 8000 tokens por minuto y un plan gasta ~4000:
-// con dos o tres usuarios a la vez Groq responde 429. En vez de mostrarle el error
-// al usuario, se espera lo que Groq indica y se vuelve a pedir.
-const ESPERA_TOTAL_MAX_MS = 90000
-const ESPERA_POR_INTENTO_MAX_MS = 30000
-const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms))
-
-const segundosDeEspera = (error) => {
-  const headers = error?.headers
-  const valor = typeof headers?.get === 'function' ? headers.get('retry-after') : headers?.['retry-after']
-  const segundos = Number(valor)
-  return Number.isFinite(segundos) && segundos > 0 ? segundos : 15
-}
-
-// "Request too large" también llega como 429, pero esperar no lo arregla.
-const esLimitePorMinuto = (error) => error?.status === 429 && !/too large/i.test(error?.message || '')
-
-const call = async (msgs, temp) => {
-  let esperado = 0
-  for (;;) {
-    try {
-      return await client.chat.completions.create({
-        model: 'openai/gpt-oss-120b',
-        messages: msgs,
-        temperature: temp,
-        max_tokens: 3500,
-        reasoning_effort: 'low'
-      })
-    } catch (error) {
-      const ms = Math.min(segundosDeEspera(error) * 1000 + 500, ESPERA_POR_INTENTO_MAX_MS)
-      if (!esLimitePorMinuto(error) || esperado + ms > ESPERA_TOTAL_MAX_MS) throw error
-      console.log(`Groq al límite de tokens por minuto, reintentando en ${Math.round(ms / 1000)} s...`)
-      esperado += ms
-      await esperar(ms)
-    }
-  }
-}
+// iaService arma los prompts y procesa las respuestas; quién las genera
+// (Groq, Ollama, ...) lo decide la estrategia que crea iaFactory según IA_PROVIDER.
+const completar = (mensajes, temperatura) => obtenerEstrategiaIA().completar(mensajes, temperatura)
 
 const limpiar = (texto) => texto
   .replace(/<think>[\s\S]*?<\/think>/g, '')
@@ -51,10 +15,10 @@ const parsearConRetry = async (prompt, textoInicial) => {
     return JSON.parse(textoInicial)
   } catch {
     console.log('JSON inválido, reintentando...')
-    const res = await call([
+    const texto = await completar([
       { role: 'user', content: prompt + '\n\nIMPORTANTE: Respondé ÚNICAMENTE con el JSON, sin ningún texto antes ni después.' }
     ], 0.3)
-    return JSON.parse(limpiar(res.choices[0].message.content))
+    return JSON.parse(limpiar(texto))
   }
 }
 
@@ -98,8 +62,8 @@ ${reglas}` : ''}
 La rutina tiene que tener exactamente estos días, uno por cada día disponible: ${dias}.${idioma}
 Solo los días disponibles en rutina. Máximo 2 alternativas por ejercicio. Solo JSON puro, minificado en una sola línea, sin saltos de línea ni indentación.`
 
-  let res = await call([{ role: 'user', content: promptRutina }], 0.7)
-  const parte1 = await parsearConRetry(promptRutina, limpiar(res.choices[0].message.content))
+  const textoRutina = await completar([{ role: 'user', content: promptRutina }], 0.7)
+  const parte1 = await parsearConRetry(promptRutina, limpiar(textoRutina))
 
   const promptDieta = `Sos nutricionista. Generá SOLO la "dieta" de 7 días en JSON puro con esta estructura:
 {"dieta":[{"dia":"","comida":{"desayuno":{"descripcion":"","calorias":0},"almuerzo":{"descripcion":"","calorias":0},"merienda":{"descripcion":"","calorias":0},"cena":{"descripcion":"","calorias":0}},"costoEstimadoDia":0}]}
@@ -112,8 +76,8 @@ Datos:
 
 Los 7 días de la semana, con "dia" en español (lunes a domingo).${idioma} Solo JSON puro, minificado en una sola línea, sin saltos de línea ni indentación.`
 
-  res = await call([{ role: 'user', content: promptDieta }], 0.7)
-  const parte2 = await parsearConRetry(promptDieta, limpiar(res.choices[0].message.content))
+  const textoDieta = await completar([{ role: 'user', content: promptDieta }], 0.7)
+  const parte2 = await parsearConRetry(promptDieta, limpiar(textoDieta))
 
   return {
     meta:   parte1.meta,
