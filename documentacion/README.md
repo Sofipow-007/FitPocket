@@ -18,7 +18,7 @@ Las carpetas están numeradas en el orden sugerido de lectura. El nombre sin suf
 ## 1-proyecto
 
 - **`Documentacion-FitPocket.pdf`**: empezar por acá. Describe el proyecto, los usuarios, las funcionalidades, los requisitos con su estado, las tecnologías y los diagramas. Actualizada en octubre de 2026.
-- `Documentacion-FitPocket.docx`: la misma documentación en formato editable.
+- `Documentacion-FitPocket.docx`: la misma documentación en formato editable. Ya incluye los cambios de la consigna final (secciones nuevas, requisitos RF23 a RF29 y RNF18 a RNF24, y como anexos el manual de usuario y la guía de despliegue). **El PDF todavía es la versión anterior:** hay que volver a exportarlo desde Word.
 - `Lista-de-haceres.pdf`: registro diario del equipo, del 20 de marzo al 8 de abril de 2026.
 - `cambios-a-la-documentacion.docx`: cambios a aplicar a la documentación principal para la consigna final.
 - `participantes-y-roles.docx`: integrantes del equipo y rol de cada uno.
