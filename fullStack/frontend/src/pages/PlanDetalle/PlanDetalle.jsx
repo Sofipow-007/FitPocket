@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 import { API_URL } from "../../lib/api";
@@ -7,6 +7,7 @@ import { normalize } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PLAN } from "../../mocks/planMock";
 import "./PlanDetalle.css";
+import AyudaTip from "../../components/Ayuda/AyudaTip";
 
 const DIAS_SEMANA = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 const DIAS_CORTOS_KEYS = [
@@ -42,6 +43,12 @@ const IconSwap = () => (
 const IconClock = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15.5 14" />
+  </svg>
+);
+
+const IconAyuda = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" /><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" />
   </svg>
 );
 
@@ -120,6 +127,10 @@ export default function PlanDetalle() {
           <img src={logo} alt="" className="pd-nav__logo" />
           <span className="pd-nav__brand-text">FitPocket</span>
         </div>
+        <div className="pd-nav__right">
+        <Link to="/ayuda" className="pd-nav__ayuda" aria-label={t("ayuda.link")} title={t("ayuda.link")}>
+          <IconAyuda />
+        </Link>
         <div className="pd-lang" role="group" aria-label={t("comun.idioma")}>
           <button
             className={`pd-lang__btn${i18n.language === "es" ? " pd-lang__btn--on" : ""}`}
@@ -129,6 +140,7 @@ export default function PlanDetalle() {
             className={`pd-lang__btn${i18n.language === "en" ? " pd-lang__btn--on" : ""}`}
             onClick={() => { i18n.changeLanguage("en"); localStorage.setItem("idioma", "en"); }}
           >EN</button>
+        </div>
         </div>
       </nav>
 
@@ -228,9 +240,12 @@ export default function PlanDetalle() {
                                 )}
                                 {ej.nota && <span className="pd-ex__nota">{ej.nota}</span>}
                                 {hasAlts && (
-                                  <button className="pd-ex__swap-btn" onClick={() => handleSwap(i)}>
-                                    <IconSwap /> {t("plan.cambiarEjercicio")}
-                                  </button>
+                                  <span className="pd-ex__swap-wrap">
+                                    <button className="pd-ex__swap-btn" onClick={() => handleSwap(i)}>
+                                      <IconSwap /> {t("plan.cambiarEjercicio")}
+                                    </button>
+                                    <AyudaTip etiqueta={t("ayuda.tips.cambiarEjercicioEtiqueta")} texto={t("ayuda.tips.cambiarEjercicio")} ancla="cambiar-ejercicio" lado="izq" />
+                                  </span>
                                 )}
                               </div>
                             </div>

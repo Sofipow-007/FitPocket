@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 import { API_URL } from "../../lib/api";
@@ -7,6 +7,7 @@ import { normalize, fechaLocal } from "../../lib/utils";
 import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
 import { MOCK_PERFIL, MOCK_PLAN } from "../../mocks/planMock";
 import ConPermiso from "../../components/ConPermiso";
+import AyudaTip from "../../components/Ayuda/AyudaTip";
 import { invalidarPermisos } from "../../hooks/usePermisos";
 import ChecklistTab from "./ChecklistTab";
 import ProgresoTab from "./ProgresoTab";
@@ -85,6 +86,12 @@ const COMIDAS = [
   { key: "merienda", tKey: "dashboard.merienda", dot: "#4F8EF7" },
   { key: "cena",     tKey: "dashboard.cena",     dot: "#A855F7" },
 ];
+
+const IconAyuda = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" /><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+);
 
 export default function Dashboard() {
   const navigate         = useNavigate();
@@ -190,6 +197,9 @@ export default function Dashboard() {
               onClick={() => { i18n.changeLanguage("en"); localStorage.setItem("idioma", "en"); }}
             >EN</button>
           </div>
+          <Link to="/ayuda" className="db-nav__ayuda" aria-label={t("ayuda.link")} title={t("ayuda.link")}>
+            <IconAyuda />
+          </Link>
           <ConPermiso patente="usuarios.listar">
             <button className="db-nav__admin" onClick={() => navigate(isPreview ? "/admin?preview=true" : "/admin")}>
               {t("admin.link")}
@@ -261,7 +271,10 @@ export default function Dashboard() {
                 <div className="db-strip">
                   <div className="db-strip__item db-strip__item--orange">
                     <span className="db-strip__val">{adherencia?.racha ?? "—"}</span>
-                    <span className="db-strip__label">{t("dashboard.racha")}</span>
+                    <span className="db-strip__label">
+                      {t("dashboard.racha")}
+                      <AyudaTip etiqueta={t("ayuda.tips.rachaEtiqueta")} texto={t("ayuda.tips.racha")} ancla="racha" lado="izq" />
+                    </span>
                   </div>
                   <span className="db-strip__sep" aria-hidden="true" />
                   <div className="db-strip__item">
@@ -271,14 +284,20 @@ export default function Dashboard() {
                   <span className="db-strip__sep" aria-hidden="true" />
                   <div className="db-strip__item db-strip__item--purple">
                     <span className="db-strip__val">{imc ?? "—"}</span>
-                    <span className="db-strip__label">{t("dashboard.imc")}</span>
+                    <span className="db-strip__label">
+                      {t("dashboard.imc")}
+                      <AyudaTip etiqueta={t("ayuda.tips.imcEtiqueta")} texto={t("ayuda.tips.imc")} ancla="imc" />
+                    </span>
                   </div>
                   <span className="db-strip__sep" aria-hidden="true" />
                   <div className="db-strip__item">
                     <span className="db-strip__val" style={{ color: pctColor }}>
                       {pct != null ? `${pct}%` : "—"}
                     </span>
-                    <span className="db-strip__label">{t("dashboard.adherencia")}</span>
+                    <span className="db-strip__label">
+                      {t("dashboard.adherencia")}
+                      <AyudaTip etiqueta={t("ayuda.tips.adherenciaEtiqueta")} texto={t("ayuda.tips.adherencia")} ancla="adherencia" lado="der" />
+                    </span>
                   </div>
                 </div>
 

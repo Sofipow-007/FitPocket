@@ -14,3 +14,6 @@
 .cl-guardar:disabled { opacity: 0.4; cursor: not-allowed; }
 .cl-guardado { color: var(--green); font-weight: 600; margin-top: 0.5rem; }
 .cl-error { color: #fca5a5; font-size: 0.88rem; margin-top: 0.5rem; }
+
+/* "?" al lado del título */
+.cl-title { display: flex; align-items: center; gap: 10px; }

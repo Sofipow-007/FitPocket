@@ -5,6 +5,7 @@ import { API_URL } from "../../lib/api";
 import { normalize } from "../../lib/utils";
 import usePermisos from "../../hooks/usePermisos";
 import DialogoConfirmacion from "./DialogoConfirmacion";
+import AyudaTip from "../../components/Ayuda/AyudaTip";
 
 /* ── Icons ── */
 const IconSearch = () => (
@@ -93,7 +94,7 @@ export default function UsuariosTab({ users, setUsers, loading, error, onReinten
   return (
     <>
       <header className="ad-header">
-        <h2 className="ad-subtitle">{t("admin.titulo")}</h2>
+        <h2 className="ad-subtitle">{t("admin.titulo")} <AyudaTip etiqueta={t("ayuda.tips.seccionEtiqueta", { seccion: t("admin.tabs.usuarios") })} texto={t("ayuda.tips.usuarios")} ancla="admin-familias" lado="izq" /></h2>
         {!loading && !error && (
           <p className="ad-count" aria-live="polite">
             {hayBusqueda

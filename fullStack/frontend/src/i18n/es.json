@@ -527,5 +527,163 @@
       "restoreTexto": "Restaurar reemplaza el contenido actual de cada colección por el del backup, así que no se hace desde la web: se corre en el servidor y pide confirmación. Al terminar recalcula los dígitos verificadores.",
       "restoreAyuda": "Sin nombre restaura el último backup. Con --si no pregunta (para automatizarlo)."
     }
+  },
+  "ayuda": {
+    "titulo": "Ayuda",
+    "intro": "Respuestas cortas a las dudas más comunes sobre tu plan, tu progreso y tu cuenta.",
+    "volver": "Volver",
+    "link": "Ayuda",
+    "masEnAyuda": "Más en Ayuda",
+    "secciones": [
+      {
+        "id": "plan",
+        "titulo": "Tu plan",
+        "preguntas": [
+          {
+            "id": "generar-plan",
+            "p": "¿Cómo se genera mi plan?",
+            "r": [
+              "Al terminar los 4 pasos del onboarding, FitPocket le pasa tus datos (peso, altura, edad, objetivo, nivel, días y minutos disponibles, tipo de dieta, presupuesto, limitaciones y aclaraciones) a un modelo de inteligencia artificial, que arma una rutina y una dieta de 7 días.",
+              "La rutina solo usa los días que elegiste. Si marcaste una limitación (por ejemplo rodilla o lumbar), además de pedírselo a la IA, la app revisa la rutina y saca o reemplaza los ejercicios contraindicados.",
+              "Tarda entre unos segundos y un par de minutos. El plan se escribe en el idioma que tenías elegido al generarlo."
+            ]
+          },
+          {
+            "id": "cambiar-ejercicio",
+            "p": "¿Cómo cambio un ejercicio que no puedo o no quiero hacer?",
+            "r": [
+              "En \"Ver mi plan\", tocá el ejercicio para abrirlo. Si la IA sugirió alternativas, aparece el botón \"Cambiar ejercicio\": cada toque muestra la siguiente opción y vuelve al original después de la última.",
+              "El cambio es solo para esa vez que mirás el plan: no se guarda, y al volver a abrirlo aparece el ejercicio original."
+            ]
+          },
+          {
+            "id": "checklist",
+            "p": "¿Cómo funciona el checklist diario?",
+            "r": [
+              "Cada día marcás cómo te fue con la rutina y con la dieta: Completado (vale 1 punto), Parcial (medio punto) o No hice (0). Después tocás Guardar día.",
+              "Se registra una vez por día: después de guardar queda fijo hasta el día siguiente. Con eso se calculan tu adherencia y tu racha."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "progreso",
+        "titulo": "Tu progreso",
+        "preguntas": [
+          {
+            "id": "adherencia",
+            "p": "¿Qué es la adherencia y cómo se calcula?",
+            "r": [
+              "Es qué tanto cumpliste tu plan en los últimos 7 días, en porcentaje.",
+              "La dieta suma puntos todos los días; la rutina solo los días que tu plan tiene entrenamiento (si el plan dice descanso, no perdés puntos por descansar). El porcentaje es lo que sumaste sobre lo máximo posible. Los días anteriores a tu primer plan no cuentan.",
+              "Si baja del 50% con al menos 3 días contados, el dashboard te avisa."
+            ]
+          },
+          {
+            "id": "racha",
+            "p": "¿Qué es la racha?",
+            "r": [
+              "La cantidad de días seguidos, contando desde hoy hacia atrás, en los que registraste el checklist y sumaste algún punto.",
+              "Se cuenta desde hoy: si todavía no registraste el día de hoy, marca 0 hasta que lo hagas. Un día sin registrar, o con todo en \"No hice\", la corta."
+            ]
+          },
+          {
+            "id": "imc",
+            "p": "¿Qué es el IMC?",
+            "r": [
+              "El índice de masa corporal: tu peso en kilos dividido tu altura en metros al cuadrado. Se calcula con los datos que cargaste en el onboarding.",
+              "Como referencia general: menos de 18,5 es bajo peso, de 18,5 a 24,9 es normal, de 25 a 29,9 sobrepeso y 30 o más obesidad. Es orientativo: no distingue músculo de grasa y no reemplaza la opinión de un profesional."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cuenta",
+        "titulo": "Tu cuenta y tus datos",
+        "preguntas": [
+          {
+            "id": "recuperar-contrasena",
+            "p": "Me olvidé la contraseña, ¿cómo la recupero?",
+            "r": [
+              "Tocá \"Entrar\" y después \"¿Olvidaste tu contraseña?\". Escribí el email de tu cuenta y te llega un enlace para elegir una nueva.",
+              "El enlace vence en 30 minutos y sirve una sola vez. Al cambiarla se cierran las sesiones abiertas en otros dispositivos. Si no te llega, revisá la carpeta de spam."
+            ]
+          },
+          {
+            "id": "datos-encriptados",
+            "p": "¿Qué datos míos se guardan encriptados?",
+            "r": [
+              "Tu nombre, tus limitaciones físicas y la aclaración que escribiste en el onboarding se guardan encriptados (AES-256): en la base no se pueden leer sin la clave del servidor.",
+              "Tu contraseña nunca se guarda: se guarda un hash (bcrypt) que sirve para comprobarla pero no para recuperarla. Del enlace de recuperación también se guarda solo un hash.",
+              "La bitácora de actividad no guarda contraseñas ni emails, y cada registro tiene un dígito verificador que permite detectar si alguien lo modifica por fuera de la app."
+            ]
+          },
+          {
+            "id": "borrar-cuenta",
+            "p": "¿Cómo borro mi cuenta?",
+            "r": [
+              "Por ahora se hace a pedido: escribile a un administrador de FitPocket y la borra desde su panel.",
+              "Se eliminan tu cuenta, todos tus planes y todos tus registros del checklist. No se puede deshacer."
+            ]
+          },
+          {
+            "id": "idioma",
+            "p": "¿Cómo cambio el idioma?",
+            "r": [
+              "Con los botones ES / EN arriba a la derecha. La app cambia al instante y recuerda tu elección.",
+              "Tu plan queda en el idioma en el que se generó."
+            ]
+          }
+        ]
+      }
+    ],
+    "admin": {
+      "id": "admin",
+      "titulo": "Para administradores",
+      "preguntas": [
+        {
+          "id": "admin-familias",
+          "p": "¿Qué son las patentes y las familias?",
+          "r": [
+            "Una patente es un permiso para una acción concreta (por ejemplo usuarios.borrar). Una familia agrupa patentes y también otras familias: Administrador incluye a Usuario.",
+            "Lo que alguien puede hacer es la suma de sus familias y sus patentes sueltas. Un cambio rige en el momento, sin que la persona tenga que volver a entrar. No podés cambiar tus propios permisos."
+          ]
+        },
+        {
+          "id": "admin-integridad",
+          "p": "¿Qué hago si la verificación de integridad marca datos alterados?",
+          "r": [
+            "Significa que esos registros se modificaron, agregaron o borraron por fuera de la app (por ejemplo, editando la base directamente). Revisá en la bitácora qué pasó y con quién.",
+            "Recalcular acepta los datos actuales como válidos: usalo solo después de revisar, o después de una migración o un restore."
+          ]
+        },
+        {
+          "id": "admin-backup",
+          "p": "¿Cómo hago y restauro un backup?",
+          "r": [
+            "El botón de la pestaña Backup guarda una copia de todas las colecciones en el servidor. También se puede hacer por consola con node scripts/backup.js.",
+            "El restore se hace por consola (node scripts/restore.js), pide confirmación y al terminar recalcula los dígitos verificadores."
+          ]
+        }
+      ]
+    },
+    "tips": {
+      "racha": "Días seguidos, contando desde hoy, en los que registraste el checklist y sumaste algún punto.",
+      "rachaEtiqueta": "Qué es la racha",
+      "imc": "Índice de masa corporal: peso dividido altura al cuadrado. De 18,5 a 24,9 es el rango normal. Es orientativo.",
+      "imcEtiqueta": "Qué es el IMC",
+      "adherencia": "Cuánto cumpliste tu plan en los últimos 7 días. La dieta cuenta todos los días y la rutina solo los días de entrenamiento.",
+      "adherenciaEtiqueta": "Cómo se calcula la adherencia",
+      "checklist": "Completado vale 1 punto, Parcial medio y No hice 0. Se guarda una vez por día y con eso se calculan tu adherencia y tu racha.",
+      "checklistEtiqueta": "Cómo funciona el checklist",
+      "cambiarEjercicio": "Muestra la siguiente alternativa que sugirió la IA. Es solo para esta vez: el cambio no se guarda en tu plan.",
+      "cambiarEjercicioEtiqueta": "Qué hace cambiar ejercicio",
+      "usuarios": "Todas las cuentas registradas. Borrar una elimina también sus planes y checkins. Los administradores no se pueden borrar desde acá.",
+      "familias": "Una familia agrupa permisos (patentes) y puede incluir otras familias. Lo que puede hacer un usuario es la suma de sus familias y patentes sueltas.",
+      "integridad": "Detecta datos modificados por fuera de la app comparando el dígito verificador de cada registro (DVH) y el de cada colección (DVV).",
+      "bitacora": "Registro de cada pedido a la app y de los eventos importantes. No guarda contraseñas ni emails.",
+      "backup": "Copia de todas las colecciones en el servidor. El restore se corre por consola y recalcula los dígitos verificadores.",
+      "seccionEtiqueta": "Ayuda sobre {{seccion}}"
+    }
   }
 }

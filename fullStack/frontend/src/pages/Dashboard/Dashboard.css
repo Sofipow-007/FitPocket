@@ -795,3 +795,23 @@
   .db-nav__logo { height: 28px; }
   .db-nav__brand-text { font-size: 0.9375rem; }
 }
+
+/* Link a Ayuda en el nav */
+.db-nav__ayuda {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.78);
+  transition: color 150ms, background 150ms;
+}
+.db-nav__ayuda svg { width: 18px; height: 18px; }
+.db-nav__ayuda:hover { color: var(--ink); background: rgba(255, 255, 255, 0.05); }
+@media (pointer: coarse), (max-width: 640px) {
+  .db-nav__ayuda { width: 44px; height: 44px; }
+}
+
+/* "?" al lado de racha, IMC y adherencia */
+.db-strip__label { display: inline-flex; align-items: center; gap: 6px; }

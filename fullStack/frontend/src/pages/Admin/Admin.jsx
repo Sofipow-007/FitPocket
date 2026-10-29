@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/fitpocketlogo(inverted).png";
 import { API_URL } from "../../lib/api";
@@ -15,6 +15,12 @@ import "./Admin.css";
 const IconBack = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
+  </svg>
+);
+
+const IconAyuda = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" /><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" />
   </svg>
 );
 
@@ -121,6 +127,10 @@ export default function Admin() {
           <img src={logo} alt="" className="ad-nav__logo" />
           <span className="ad-nav__brand-text">FitPocket</span>
         </div>
+        <div className="ad-nav__right">
+        <Link to="/ayuda" className="ad-nav__ayuda" aria-label={t("ayuda.link")} title={t("ayuda.link")}>
+          <IconAyuda />
+        </Link>
         <div className="ad-lang" role="group" aria-label={t("comun.idioma")}>
           <button
             className={`ad-lang__btn${i18n.language === "es" ? " ad-lang__btn--on" : ""}`}
@@ -130,6 +140,7 @@ export default function Admin() {
             className={`ad-lang__btn${i18n.language === "en" ? " ad-lang__btn--on" : ""}`}
             onClick={() => { i18n.changeLanguage("en"); localStorage.setItem("idioma", "en"); }}
           >EN</button>
+        </div>
         </div>
       </nav>
 

@@ -5,6 +5,7 @@ import { API_URL } from "../../lib/api";
 import usePermisos from "../../hooks/usePermisos";
 import { MOCK_INTEGRIDAD } from "../../mocks/adminMock";
 import DialogoConfirmacion from "./DialogoConfirmacion";
+import AyudaTip from "../../components/Ayuda/AyudaTip";
 
 const IconShield = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -101,7 +102,7 @@ export default function IntegridadTab({ isPreview }) {
     <>
       <header className="ad-header">
         <div>
-          <h2 className="ad-subtitle">{t("admin.integridad.titulo")}</h2>
+          <h2 className="ad-subtitle">{t("admin.integridad.titulo")} <AyudaTip etiqueta={t("ayuda.tips.seccionEtiqueta", { seccion: t("admin.tabs.integridad") })} texto={t("ayuda.tips.integridad")} ancla="admin-integridad" lado="izq" /></h2>
           <p className="ad-intro">{t("admin.integridad.intro")}</p>
         </div>
       </header>

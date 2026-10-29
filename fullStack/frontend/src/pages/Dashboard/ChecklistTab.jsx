@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { API_URL } from '../../lib/api'
 import './ChecklistTab.css'
+import AyudaTip from '../../components/Ayuda/AyudaTip'
 
 const OPCIONES = [
   { id: 'completado', tKey: 'checklist.completado', color: 'var(--green)' },
@@ -41,7 +42,10 @@ export default function ChecklistTab({ checkinHoy, onGuardado }) {
 
   return (
     <div className="cl-wrap">
-      <h2 className="cl-title">{t('checklist.titulo')}</h2>
+      <h2 className="cl-title">
+        {t('checklist.titulo')}
+        <AyudaTip etiqueta={t('ayuda.tips.checklistEtiqueta')} texto={t('ayuda.tips.checklist')} ancla="checklist" lado="izq" />
+      </h2>
       <p className="cl-sub">
         {new Intl.DateTimeFormat(i18n.language === 'en' ? 'en-US' : 'es-AR', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
       </p>

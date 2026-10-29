@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import { MOCK_BACKUPS } from "../../mocks/adminMock";
+import AyudaTip from "../../components/Ayuda/AyudaTip";
 
 const IconDownload = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -89,7 +90,7 @@ export default function BackupTab({ isPreview }) {
     <>
       <header className="ad-header">
         <div>
-          <h2 className="ad-subtitle">{t("admin.backup.titulo")}</h2>
+          <h2 className="ad-subtitle">{t("admin.backup.titulo")} <AyudaTip etiqueta={t("ayuda.tips.seccionEtiqueta", { seccion: t("admin.tabs.backup") })} texto={t("ayuda.tips.backup")} ancla="admin-backup" lado="izq" /></h2>
           <p className="ad-intro">{t("admin.backup.intro", { retencion })}</p>
         </div>
       </header>

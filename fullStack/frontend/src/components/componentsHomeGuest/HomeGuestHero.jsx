@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import AuthModal from "./AuthModal";
 import "./HomeGuestHero.css";
@@ -294,7 +294,10 @@ export default function HomeGuestHero() {
 
       {/* ── Footer ── */}
       <footer className="border-t border-white/5 py-8 text-center">
-        <p className="text-xs text-zinc-400">{t("home.footer")}</p>
+        <p className="text-xs text-zinc-400">
+          {t("home.footer")} ·{" "}
+          <Link to="/ayuda" className="underline underline-offset-2 hover:text-zinc-200">{t("ayuda.link")}</Link>
+        </p>
       </footer>
 
       <AuthModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />

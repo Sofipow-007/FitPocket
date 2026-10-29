@@ -1,0 +1,92 @@
+/* ─ Toggletip "?" de ayuda ─ */
+
+.ayuda-tip {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+/* el círculo visible es chico, pero el área táctil llega a 32px (con margen negativo para no mover el layout) */
+.ayuda-tip__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: -8px -6px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--ink3);
+}
+.ayuda-tip__btn span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  font-family: var(--sans);
+  transition: color var(--t-fast), background var(--t-fast);
+}
+.ayuda-tip__btn:hover,
+.ayuda-tip__btn[aria-expanded="true"] { color: var(--ink); }
+.ayuda-tip__btn[aria-expanded="true"] span { background: rgba(255, 255, 255, 0.08); }
+.ayuda-tip__btn:focus-visible { outline: 2px solid var(--border-focus); outline-offset: -4px; }
+
+.ayuda-tip__region { position: static; }
+
+.ayuda-tip__burbuja {
+  position: absolute;
+  top: calc(100% + 8px);
+  z-index: var(--z-dropdown, 50);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: max-content;
+  max-width: min(260px, calc(100vw - 32px));
+  padding: 12px 14px;
+  background: var(--bg3);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  text-align: left;
+  white-space: normal;
+  animation: ayudaTipIn 0.15s ease forwards;
+}
+.ayuda-tip--centro .ayuda-tip__burbuja { left: 50%; transform: translateX(-50%); }
+.ayuda-tip--izq .ayuda-tip__burbuja    { left: -8px; }
+.ayuda-tip--der .ayuda-tip__burbuja    { right: -8px; }
+
+@keyframes ayudaTipIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.ayuda-tip__texto {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ink2);
+}
+.ayuda-tip__mas {
+  font-size: 13px;
+  letter-spacing: normal;
+  text-transform: none;
+  font-weight: 600;
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ayuda-tip__burbuja { animation: none; }
+}

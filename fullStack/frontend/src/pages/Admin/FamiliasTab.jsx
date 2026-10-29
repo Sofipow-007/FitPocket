@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import { MOCK_PATENTES, MOCK_FAMILIAS } from "../../mocks/adminMock";
+import AyudaTip from "../../components/Ayuda/AyudaTip";
 
 const IconPlus = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -342,7 +343,7 @@ export default function FamiliasTab({ users, setUsers, cargandoUsers, isPreview 
       <section className="ad-section" aria-labelledby="ad-fam-titulo">
         <header className="ad-header">
           <div>
-            <h2 className="ad-subtitle" id="ad-fam-titulo">{t("admin.familias.titulo")}</h2>
+            <h2 className="ad-subtitle" id="ad-fam-titulo">{t("admin.familias.titulo")} <AyudaTip etiqueta={t("ayuda.tips.seccionEtiqueta", { seccion: t("admin.tabs.familias") })} texto={t("ayuda.tips.familias")} ancla="admin-familias" lado="izq" /></h2>
             <p className="ad-intro">{t("admin.familias.intro")}</p>
           </div>
           {editando !== "nueva" && (

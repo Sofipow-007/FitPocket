@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import { MOCK_BITACORA, MOCK_ACCIONES } from "../../mocks/adminMock";
+import AyudaTip from "../../components/Ayuda/AyudaTip";
 
 const FILTROS_VACIOS = { email: "", accion: "", desde: "", hasta: "", estado: "" };
 const POR_PAGINA = 25;
@@ -105,7 +106,7 @@ export default function BitacoraTab({ isPreview }) {
     <>
       <header className="ad-header">
         <div>
-          <h2 className="ad-subtitle">{t("admin.bitacora.titulo")}</h2>
+          <h2 className="ad-subtitle">{t("admin.bitacora.titulo")} <AyudaTip etiqueta={t("ayuda.tips.seccionEtiqueta", { seccion: t("admin.tabs.bitacora") })} texto={t("ayuda.tips.bitacora")} ancla="admin-integridad" lado="izq" /></h2>
           <p className="ad-intro">{t("admin.bitacora.intro", { dias: datos?.ttlDias ?? 180 })}</p>
         </div>
         {datos && !error && (
