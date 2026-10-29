@@ -29,8 +29,7 @@ exports.register = async (req, res) => {
             return res.status(400).json({ msg: 'La contraseña debe tener al menos 8 caracteres' });
         }
 
-        let user = await User.findOne({ email });
-        if (user) {
+        if (await User.exists({ email })) {
             return res.status(400).json({ msg: 'El usuario ya existe' });
         }
 
@@ -43,7 +42,7 @@ exports.register = async (req, res) => {
         // Toda cuenta nueva arranca con la familia Usuario: sin ella no tendría permisos para nada
         const familiaUsuario = await familiaBase(FAMILIA_USUARIO);
 
-        user = new User({
+        const user = new User({
             nombre: encrypt(nombre),   // nombre encriptado en BD
             email,
             passwordHash,
@@ -74,7 +73,7 @@ exports.login = async (req, res) => {
         const email = typeof req.body.email === 'string' ? req.body.email.trim().toLowerCase() : '';
         const { password } = req.body;
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select('nombre email rol passwordHash').lean();
         if (!user) {
             return res.status(400).json({ msg: 'Credenciales inválidas' });
         }

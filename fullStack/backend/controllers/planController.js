@@ -48,10 +48,10 @@ exports.generarPlan = async (req, res) => {
     const userId = req.user?.userId
     if (!userId) return res.status(401).json({ error: 'Token inválido o faltante' })
 
-    const user = await User.findById(userId)
+    const user = await User.findById(userId).select('perfil').lean()
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' })
 
-    const perfil = user.perfil ? user.perfil.toObject() : {}
+    const perfil = user.perfil ?? {}
     if (!perfil.objetivo || !(perfil.diasDispo?.length)) {
       return res.status(400).json({ error: 'Falta completar el perfil antes de generar un plan' })
     }
@@ -129,8 +129,12 @@ exports.generarPlan = async (req, res) => {
 exports.getPlanActual = async (req, res) => {
   try {
     const userId = req.user.userId
-    const plan = await Plan.findOne({ userId, estado: 'activo' })
+    const plan = await Plan.findOne({ userId, estado: 'activo' }).select('-dvh -__v').lean()
     if (!plan) return res.status(404).json({ error: 'Sin plan activo' })
+    // El navegador puede reusar la respuesta un minuto (solo para este usuario: private + Vary).
+    // Después de generar un plan, el front pide el nuevo con cache: "reload".
+    res.set('Cache-Control', 'private, max-age=60')
+    res.vary('Authorization')
     res.json(plan)
   } catch (error) {
     console.error('Error al obtener el plan actual:', error)

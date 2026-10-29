@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const compression = require('compression')
 const { registrarSuscriptores } = require('./services/suscriptores')
 
 // La app se arma acá sin conectar a la base ni escuchar el puerto,
@@ -10,6 +11,8 @@ const app = express()
 registrarSuscriptores()
 
 app.use(cors())
+// gzip de las respuestas: el plan completo pasa de 7,7 KB a 2,3 KB
+app.use(compression())
 app.use(express.json())
 app.use(require('./middleware/bitacora'))
 

@@ -20,7 +20,7 @@ exports.registrarCheckin = async (req, res) => {
     const puntajeRutina = PUNTAJE[rutina]
     const puntajeDieta  = PUNTAJE[dieta]
 
-    const plan = await Plan.findOne({ userId, estado: 'activo' })
+    const plan = await Plan.findOne({ userId, estado: 'activo' }).select('_id').lean()
 
     const checkin = await Checkin.findOneAndUpdate(
       { userId, fecha },
@@ -48,7 +48,7 @@ exports.getCheckinHoy = async (req, res) => {
   try {
     const userId = req.user.userId
     const fecha  = fechaLocal()
-    const checkin = await Checkin.findOne({ userId, fecha })
+    const checkin = await Checkin.findOne({ userId, fecha }).select('-dvh -__v').lean()
     res.json({ checkin: checkin ?? null })
   } catch (error) {
     res.status(500).json({ error: 'Error interno del servidor' })

@@ -20,7 +20,11 @@ function decryptUser(user) {
 
 exports.getInfo = async (req, res) => {
     try {
-        const user = await User.findById(req.user.userId).select('-passwordHash')
+        // Solo lectura: lean() devuelve un objeto plano (más rápido que un documento de Mongoose).
+        // Se excluye todo lo interno: hashes, datos de recuperación y dígito verificador.
+        const user = await User.findById(req.user.userId)
+            .select('-passwordHash -resetTokenHash -resetTokenExpira -resetPedidoEn -passwordCambiadaEn -dvh -__v')
+            .lean()
         if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado" })
         }
@@ -115,6 +119,7 @@ exports.getAllUsers = async (req, res) => {
         const users = await User.find()
             .select('nombre email rol familias patentes createdAt perfil.objetivo')
             .sort({ createdAt: -1 })
+            .lean()
 
         res.json({
             ok: true,
