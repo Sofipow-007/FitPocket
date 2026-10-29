@@ -372,7 +372,8 @@
     "panel": "Administración",
     "tabs": {
       "usuarios": "Usuarios",
-      "familias": "Familias y permisos"
+      "familias": "Familias y permisos",
+      "integridad": "Integridad"
     },
     "patentesDesc": {
       "plan_ver": "Ver el plan propio y la adherencia",
@@ -426,6 +427,46 @@
       "guardarAsignacion": "Guardar permisos",
       "asignado": "Se actualizaron los permisos de {{email}}.",
       "errorAsignar": "No se pudieron guardar los permisos. Probá de nuevo."
+    },
+    "integridad": {
+      "titulo": "Integridad de datos",
+      "intro": "Cada registro guarda un dígito verificador horizontal (DVH) calculado con sus campos, y cada colección guarda uno vertical (DVV): la suma de sus DVH. Si alguien modifica, agrega o borra datos por fuera de la app, dejan de coincidir.",
+      "verificar": "Verificar",
+      "verificando": "Verificando...",
+      "recalcular": "Recalcular",
+      "recalculando": "Recalculando...",
+      "sinVerificar": "Todavía no verificaste en esta sesión. Tocá Verificar para revisar usuarios, planes y check-ins.",
+      "resumenOk": "Todo en orden: no hay datos alterados.",
+      "resumenMal_one": "Se encontró {{count}} registro alterado.",
+      "resumenMal_other": "Se encontraron {{count}} registros alterados.",
+      "resumenMal_zero": "Hay registros agregados o borrados por fuera de la app.",
+      "verificadoEn": "Verificado el {{fecha}}",
+      "avisoOk": "Verificación terminada: todo en orden.",
+      "avisoAlterada": "Verificación terminada: hay datos alterados.",
+      "avisoRecalculado": "Se recalcularon los dígitos verificadores.",
+      "errorVerificar": "No se pudo verificar la integridad. Revisá tu conexión.",
+      "errorRecalcular": "No se pudo recalcular. Probá de nuevo.",
+      "tablaCaption": "Resultado de la verificación por colección",
+      "col": {
+        "coleccion": "Colección",
+        "registros": "Registros",
+        "alteradas": "Alterados",
+        "dvvGuardado": "DVV guardado",
+        "dvvCalculado": "DVV calculado",
+        "estado": "Estado"
+      },
+      "colecciones": {
+        "users": "Usuarios",
+        "plans": "Planes",
+        "checkins": "Check-ins"
+      },
+      "ok": "OK",
+      "alterada": "Alterada",
+      "filasTitulo_one": "{{count}} registro alterado",
+      "filasTitulo_other": "{{count}} registros alterados",
+      "dvhDiferencia": "DVH guardado {{guardado}} · calculado {{calculado}}",
+      "confirmarTitulo": "¿Recalcular los dígitos verificadores?",
+      "confirmarTexto": "Los datos actuales pasan a ser los válidos, incluidos los que hoy figuran como alterados. Hacelo solo después de revisar qué cambió, o después de una migración o un restore."
     }
   }
 }

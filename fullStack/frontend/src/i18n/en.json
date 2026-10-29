@@ -372,7 +372,8 @@
     "panel": "Administration",
     "tabs": {
       "usuarios": "Users",
-      "familias": "Families & permissions"
+      "familias": "Families & permissions",
+      "integridad": "Integrity"
     },
     "patentesDesc": {
       "plan_ver": "View own plan and adherence",
@@ -426,6 +427,46 @@
       "guardarAsignacion": "Save permissions",
       "asignado": "Permissions for {{email}} were updated.",
       "errorAsignar": "Couldn't save the permissions. Try again."
+    },
+    "integridad": {
+      "titulo": "Data integrity",
+      "intro": "Each record stores a horizontal check digit (DVH) computed from its fields, and each collection stores a vertical one (DVV): the sum of its DVHs. If someone changes, adds or deletes data outside the app, they stop matching.",
+      "verificar": "Verify",
+      "verificando": "Verifying...",
+      "recalcular": "Recalculate",
+      "recalculando": "Recalculating...",
+      "sinVerificar": "You haven't verified in this session yet. Press Verify to check users, plans and check-ins.",
+      "resumenOk": "All good: no altered data.",
+      "resumenMal_one": "Found {{count}} altered record.",
+      "resumenMal_other": "Found {{count}} altered records.",
+      "resumenMal_zero": "Records were added or deleted outside the app.",
+      "verificadoEn": "Verified on {{fecha}}",
+      "avisoOk": "Verification finished: all good.",
+      "avisoAlterada": "Verification finished: some data was altered.",
+      "avisoRecalculado": "Check digits were recalculated.",
+      "errorVerificar": "Couldn't verify integrity. Check your connection.",
+      "errorRecalcular": "Couldn't recalculate. Try again.",
+      "tablaCaption": "Verification result per collection",
+      "col": {
+        "coleccion": "Collection",
+        "registros": "Records",
+        "alteradas": "Altered",
+        "dvvGuardado": "Stored DVV",
+        "dvvCalculado": "Computed DVV",
+        "estado": "Status"
+      },
+      "colecciones": {
+        "users": "Users",
+        "plans": "Plans",
+        "checkins": "Check-ins"
+      },
+      "ok": "OK",
+      "alterada": "Altered",
+      "filasTitulo_one": "{{count}} altered record",
+      "filasTitulo_other": "{{count}} altered records",
+      "dvhDiferencia": "Stored DVH {{guardado}} · computed {{calculado}}",
+      "confirmarTitulo": "Recalculate check digits?",
+      "confirmarTexto": "The current data becomes the valid baseline, including records now flagged as altered. Only do this after reviewing what changed, or after a migration or a restore."
     }
   }
 }

@@ -1,9 +1,10 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import { normalize } from "../../lib/utils";
 import usePermisos from "../../hooks/usePermisos";
+import DialogoConfirmacion from "./DialogoConfirmacion";
 
 /* ── Icons ── */
 const IconSearch = () => (
@@ -17,71 +18,6 @@ const IconTrash = () => (
     <path d="M10 11v6" /><path d="M14 11v6" /><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
   </svg>
 );
-
-function ConfirmarBorrado({ usuario, borrando, error, onCancel, onConfirm }) {
-  const { t }       = useTranslation();
-  const cancelarRef = useRef(null);
-  const cajaRef     = useRef(null);
-
-  useEffect(() => { cancelarRef.current?.focus(); }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
-  }, []);
-
-  useEffect(() => {
-    const handleKey = (e) => {
-      if (e.key === "Escape" && !borrando) { onCancel(); return; }
-      if (e.key !== "Tab") return;
-      // el foco no sale del diálogo mientras está abierto
-      const botones = cajaRef.current.querySelectorAll("button:not(:disabled)");
-      if (!botones.length) return;
-      const primero = botones[0];
-      const ultimo  = botones[botones.length - 1];
-      if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
-      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero.focus(); }
-    };
-    document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
-  }, [borrando, onCancel]);
-
-  return (
-    <div
-      className="ad-overlay"
-      onClick={(e) => { if (e.target === e.currentTarget && !borrando) onCancel(); }}
-    >
-      <div
-        className="ad-dialog"
-        ref={cajaRef}
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby="ad-dialog-titulo"
-        aria-describedby="ad-dialog-texto"
-      >
-        <h2 className="ad-dialog__title" id="ad-dialog-titulo">{t("admin.confirmarTitulo")}</h2>
-        <p className="ad-dialog__text" id="ad-dialog-texto">
-          {t("admin.confirmarTexto")}
-        </p>
-        <p className="ad-dialog__user">
-          {usuario.nombre && <span className="ad-dialog__user-nombre">{usuario.nombre}</span>}
-          <span className="ad-dialog__user-email">{usuario.email}</span>
-        </p>
-
-        {error && <p className="ad-dialog__error" role="alert">{t("admin.errorBorrado")}</p>}
-
-        <div className="ad-dialog__actions">
-          <button type="button" className="ad-btn" ref={cancelarRef} onClick={onCancel} disabled={borrando}>
-            {t("admin.cancelar")}
-          </button>
-          <button type="button" className="ad-btn ad-btn--danger" onClick={onConfirm} disabled={borrando}>
-            {borrando ? t("admin.borrando") : t("admin.borrarDefinitivo")}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // Listado de usuarios: la carga la hace Admin (la comparte con la pestaña de familias)
 export default function UsuariosTab({ users, setUsers, loading, error, onReintentar, isPreview }) {
@@ -273,13 +209,22 @@ export default function UsuariosTab({ users, setUsers, loading, error, onReinten
       )}
 
       {aBorrar && (
-        <ConfirmarBorrado
-          usuario={aBorrar}
-          borrando={borrando}
-          error={errorBorrado}
+        <DialogoConfirmacion
+          titulo={t("admin.confirmarTitulo")}
+          texto={t("admin.confirmarTexto")}
+          error={errorBorrado ? t("admin.errorBorrado") : ""}
+          ocupado={borrando}
+          textoConfirmar={t("admin.borrarDefinitivo")}
+          textoOcupado={t("admin.borrando")}
+          peligro
           onCancel={cancelarBorrado}
           onConfirm={confirmarBorrado}
-        />
+        >
+          <p className="ad-dialog__user">
+            {aBorrar.nombre && <span className="ad-dialog__user-nombre">{aBorrar.nombre}</span>}
+            <span className="ad-dialog__user-email">{aBorrar.email}</span>
+          </p>
+        </DialogoConfirmacion>
       )}
     </>
   );

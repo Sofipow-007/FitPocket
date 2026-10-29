@@ -7,6 +7,7 @@ import { MOCK_USUARIOS } from "../../mocks/adminMock";
 import usePermisos from "../../hooks/usePermisos";
 import UsuariosTab from "./UsuariosTab";
 import FamiliasTab from "./FamiliasTab";
+import IntegridadTab from "./IntegridadTab";
 import "./Admin.css";
 
 const IconBack = () => (
@@ -19,6 +20,7 @@ const IconBack = () => (
 const TABS = [
   { id: "usuarios", patente: "usuarios.listar" },
   { id: "familias", patente: "familias.gestionar" },
+  { id: "integridad", patente: "integridad.verificar" },
 ];
 
 export default function Admin() {
@@ -160,6 +162,7 @@ export default function Admin() {
             {activa === "familias" && (
               <FamiliasTab users={users} setUsers={setUsers} cargandoUsers={cargandoUsers} isPreview={isPreview} />
             )}
+            {activa === "integridad" && <IntegridadTab isPreview={isPreview} />}
           </section>
         )}
       </main>

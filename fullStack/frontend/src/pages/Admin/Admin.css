@@ -664,6 +664,82 @@ select.ad-input option { background: var(--bg2); color: var(--ink); }
   .ad-header .ad-btn--primary { width: 100%; }
 }
 
+/* ── Integridad ── */
+.ad-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ad-resumen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-radius: var(--r-md);
+  border: 1px solid;
+}
+.ad-resumen--ok  { background: var(--green-t); border-color: rgba(0, 232, 135, 0.35); }
+.ad-resumen--mal { background: var(--err-t);   border-color: rgba(239, 68, 68, 0.35); }
+.ad-resumen__titulo { font-size: 15px; font-weight: 700; color: var(--ink); }
+.ad-resumen--mal .ad-resumen__titulo { color: var(--ad-danger-ink); }
+.ad-resumen__hora { font-size: 13px; color: var(--ink2); font-variant-numeric: tabular-nums; }
+
+.ad-badge--mal {
+  color: var(--ad-danger-ink);
+  border-color: rgba(239, 68, 68, 0.4);
+  background: var(--err-t);
+}
+
+.ad-table--integridad thead th:nth-child(n) { width: auto; }
+.ad-num { font-variant-numeric: tabular-nums; color: var(--ink2); }
+.ad-num--mal { color: var(--ad-danger-ink); font-weight: 700; }
+
+.ad-alteradas { margin-top: 28px; }
+.ad-alteradas__titulo {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.ad-alteradas__lista { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.ad-alterada {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "badge ref dvh" "badge id dvh";
+  align-items: center;
+  gap: 2px 12px;
+  padding: 12px 14px;
+  background: var(--bg2);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--r-md);
+}
+.ad-alterada .ad-badge { grid-area: badge; }
+.ad-alterada__ref { grid-area: ref; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+.ad-alterada__id {
+  grid-area: id;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--ink3);
+  overflow-wrap: anywhere;
+}
+.ad-alterada__dvh { grid-area: dvh; font-size: 13px; color: var(--ink2); font-variant-numeric: tabular-nums; text-align: right; }
+
+@media (max-width: 760px) {
+  .ad-acciones .ad-btn { flex: 1 1 100%; }
+  .ad-alterada {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "badge" "ref" "id" "dvh";
+    justify-items: start;
+    gap: 6px;
+  }
+  .ad-alterada__dvh { text-align: left; }
+}
+
 /* ══════════════════════════════════════════════
    RESPONSIVE — la tabla pasa a tarjetas
 ══════════════════════════════════════════════ */

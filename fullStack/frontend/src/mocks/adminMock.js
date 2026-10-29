@@ -34,3 +34,18 @@ export const MOCK_FAMILIAS = [
 
 /* En preview se navega como admin: todas las patentes. */
 export const MOCK_PERMISOS = MOCK_PATENTES.map(p => p.codigo);
+
+/* Forma de GET /integridad/verificar, con un usuario editado a mano. */
+export const MOCK_INTEGRIDAD = {
+  ok: false,
+  verificadoEn: "2026-10-28T21:40:00.000Z",
+  colecciones: [
+    {
+      coleccion: "users", totalRegistros: 6, dvvGuardado: 37383, dvvCalculado: 37412,
+      filasAlteradas: [{ id: "m4", coleccion: "users", referencia: "tomi.gimenez@example.com", dvhGuardado: 4120, dvhCalculado: 4149 }],
+      ok: false,
+    },
+    { coleccion: "plans",    totalRegistros: 4,  dvvGuardado: 6477,  dvvCalculado: 6477,  filasAlteradas: [], ok: true },
+    { coleccion: "checkins", totalRegistros: 21, dvvGuardado: 13531, dvvCalculado: 13531, filasAlteradas: [], ok: true },
+  ],
+};
