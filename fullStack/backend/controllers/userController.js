@@ -68,12 +68,18 @@ exports.actualizarPerfil = async (req, res) => {
     }
 }
 
+// DELETE /users/borrar — patente cuenta.borrar
+// Un admin no puede borrar su propia cuenta (igual que no puede borrar a otro admin):
+// así el sistema nunca queda sin administradores.
 exports.borrarPerfil = async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.user.userId)
+        const user = await User.findOneAndDelete({ _id: req.user.userId, rol: { $ne: 'admin' } })
 
         if (!user) {
-            return res.status(404).json({ message: "Usuario no encontrado" })
+            const existe = await User.exists({ _id: req.user.userId })
+            return existe
+                ? res.status(403).json({ error: 'Un administrador no puede borrar su propia cuenta' })
+                : res.status(404).json({ error: 'Usuario no encontrado' })
         }
 
         await Plan.deleteMany({ userId: user._id })

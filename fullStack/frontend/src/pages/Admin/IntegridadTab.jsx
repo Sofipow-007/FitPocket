@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import usePermisos from "../../hooks/usePermisos";
 import { MOCK_INTEGRIDAD } from "../../mocks/adminMock";
-import DialogoConfirmacion from "./DialogoConfirmacion";
+import DialogoConfirmacion from "../../components/DialogoConfirmacion/DialogoConfirmacion";
 import AyudaTip from "../../components/Ayuda/AyudaTip";
 
 const IconShield = () => (

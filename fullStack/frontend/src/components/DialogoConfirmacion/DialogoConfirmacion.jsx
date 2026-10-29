@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import "./DialogoConfirmacion.css";
 
-// Diálogo modal para confirmar una acción de admin (borrar, recalcular, ...).
+// Diálogo modal para confirmar una acción importante (borrar, recalcular, ...).
 // El foco arranca en Cancelar, Escape cierra y Tab no sale del diálogo.
 export default function DialogoConfirmacion({
   titulo, texto, children, error, ocupado,
@@ -37,30 +38,30 @@ export default function DialogoConfirmacion({
 
   return (
     <div
-      className="ad-overlay"
+      className="dlg-overlay"
       onClick={(e) => { if (e.target === e.currentTarget && !ocupado) onCancel(); }}
     >
       <div
-        className="ad-dialog"
+        className="dlg"
         ref={cajaRef}
         role="alertdialog"
         aria-modal="true"
-        aria-labelledby="ad-dialog-titulo"
-        aria-describedby="ad-dialog-texto"
+        aria-labelledby="dlg-titulo"
+        aria-describedby="dlg-texto"
       >
-        <h2 className="ad-dialog__title" id="ad-dialog-titulo">{titulo}</h2>
-        <p className="ad-dialog__text" id="ad-dialog-texto">{texto}</p>
+        <h2 className="dlg__title" id="dlg-titulo">{titulo}</h2>
+        <p className="dlg__text" id="dlg-texto">{texto}</p>
         {children}
 
-        {error && <p className="ad-dialog__error" role="alert">{error}</p>}
+        {error && <p className="dlg__error" role="alert">{error}</p>}
 
-        <div className="ad-dialog__actions">
-          <button type="button" className="ad-btn" ref={cancelarRef} onClick={onCancel} disabled={ocupado}>
+        <div className="dlg__actions">
+          <button type="button" className="dlg__btn" ref={cancelarRef} onClick={onCancel} disabled={ocupado}>
             {t("admin.cancelar")}
           </button>
           <button
             type="button"
-            className={`ad-btn ${peligro ? "ad-btn--danger" : "ad-btn--primary"}`}
+            className={`dlg__btn ${peligro ? "dlg__btn--danger" : "dlg__btn--primary"}`}
             onClick={onConfirm}
             disabled={ocupado}
           >

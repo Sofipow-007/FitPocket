@@ -358,51 +358,8 @@
 .ad-btn--danger:focus-visible { outline-color: var(--ad-danger-ink); }
 
 /* ══════════════════════════════════════════════
-   DIÁLOGO DE CONFIRMACIÓN
+   CONTENIDO DEL DIÁLOGO DE BORRADO (el diálogo es components/DialogoConfirmacion)
 ══════════════════════════════════════════════ */
-.ad-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-modal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  background: rgba(6, 6, 14, 0.78);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  animation: adOverlayIn 0.2s ease forwards;
-}
-@keyframes adOverlayIn { from { opacity: 0; } to { opacity: 1; } }
-
-.ad-dialog {
-  width: 100%;
-  max-width: 420px;
-  padding: 28px;
-  background: var(--bg2);
-  border: 1px solid var(--border-hover);
-  border-radius: var(--r-xl);
-  box-shadow: var(--shadow-lg);
-  animation: adDialogIn 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-@keyframes adDialogIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.ad-dialog__title {
-  font-family: var(--heading);
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 8px;
-}
-.ad-dialog__text {
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--ink2);
-  margin-bottom: 16px;
-}
 .ad-dialog__user {
   display: flex;
   flex-direction: column;
@@ -416,23 +373,6 @@
 }
 .ad-dialog__user-nombre { font-size: 14px; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
 .ad-dialog__user-email  { font-size: 13px; color: var(--ink2); overflow-wrap: anywhere; }
-
-.ad-dialog__error {
-  margin-bottom: 16px;
-  padding: 10px 12px;
-  background: var(--err-t);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: var(--r-sm);
-  color: var(--ad-danger-ink);
-  font-size: 13px;
-}
-
-.ad-dialog__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-.ad-dialog__actions .ad-btn { min-height: 44px; padding: 0 18px; font-size: 14px; }
 
 /* ══════════════════════════════════════════════
    PESTAÑAS — mismo patrón que el Dashboard
@@ -894,9 +834,6 @@ select.ad-input option { background: var(--bg2); color: var(--ink); }
   .ad-table tbody .ad-cell-acciones { padding-top: 12px; justify-content: stretch; }
   .ad-cell-acciones .ad-btn { width: 100%; }
 
-  .ad-dialog { padding: 22px; }
-  .ad-dialog__actions { flex-direction: column-reverse; }
-  .ad-dialog__actions .ad-btn { width: 100%; }
 }
 
 @media (pointer: coarse), (max-width: 640px) {

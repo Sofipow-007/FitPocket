@@ -622,7 +622,7 @@
             "id": "borrar-cuenta",
             "p": "How do I delete my account?",
             "r": [
-              "For now it's done on request: write to a FitPocket administrator and they'll delete it from their panel.",
+              "On the dashboard, open the Progress tab and scroll to \"Your account\": that's where \"Delete my account\" is. It asks for confirmation before deleting anything.",
               "Your account, all your plans and all your checklist records are deleted. It can't be undone."
             ]
           },
@@ -685,5 +685,16 @@
       "backup": "Copy of every collection on the server. Restoring runs from the console and recalculates the check digits.",
       "seccionEtiqueta": "Help about {{seccion}}"
     }
+  },
+  "cuenta": {
+    "titulo": "Your account",
+    "borrar": "Delete my account",
+    "adminNoPuede": "As an administrator you can't delete your own account. Ask another administrator.",
+    "confirmarTitulo": "Delete your account?",
+    "confirmarTexto": "Your account, all your plans and all your checklist records will be deleted. This can't be undone.",
+    "confirmarBoton": "Yes, delete my account",
+    "borrando": "Deleting...",
+    "errorBorrar": "Couldn't delete the account. Check your connection and try again.",
+    "errorAdmin": "An administrator can't delete their own account."
   }
 }

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { API_URL } from "../../lib/api";
 import { normalize } from "../../lib/utils";
 import usePermisos from "../../hooks/usePermisos";
-import DialogoConfirmacion from "./DialogoConfirmacion";
+import DialogoConfirmacion from "../../components/DialogoConfirmacion/DialogoConfirmacion";
 import AyudaTip from "../../components/Ayuda/AyudaTip";
 
 /* ── Icons ── */

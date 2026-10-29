@@ -622,7 +622,7 @@
             "id": "borrar-cuenta",
             "p": "¿Cómo borro mi cuenta?",
             "r": [
-              "Por ahora se hace a pedido: escribile a un administrador de FitPocket y la borra desde su panel.",
+              "En el dashboard, abrí la pestaña Progreso y bajá hasta \"Tu cuenta\": ahí está \"Borrar mi cuenta\". Te pide confirmación antes de borrar nada.",
               "Se eliminan tu cuenta, todos tus planes y todos tus registros del checklist. No se puede deshacer."
             ]
           },
@@ -685,5 +685,16 @@
       "backup": "Copia de todas las colecciones en el servidor. El restore se corre por consola y recalcula los dígitos verificadores.",
       "seccionEtiqueta": "Ayuda sobre {{seccion}}"
     }
+  },
+  "cuenta": {
+    "titulo": "Tu cuenta",
+    "borrar": "Borrar mi cuenta",
+    "adminNoPuede": "Como administrador no podés borrar tu propia cuenta. Pedíselo a otro administrador.",
+    "confirmarTitulo": "¿Borrar tu cuenta?",
+    "confirmarTexto": "Se borran tu cuenta, todos tus planes y todos tus registros del checklist. No se puede deshacer.",
+    "confirmarBoton": "Sí, borrar mi cuenta",
+    "borrando": "Borrando...",
+    "errorBorrar": "No se pudo borrar la cuenta. Revisá tu conexión y probá de nuevo.",
+    "errorAdmin": "Un administrador no puede borrar su propia cuenta."
   }
 }
