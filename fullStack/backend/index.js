@@ -1,5 +1,14 @@
 require('dotenv').config();
 
+// Antes que nada: sin las variables obligatorias el backend no arranca
+const { problemasDeEntorno } = require('./config/entorno')
+const problemas = problemasDeEntorno()
+if (problemas.length) {
+    console.error('No se puede iniciar el backend. Revisá el .env (o las variables de la plataforma):')
+    for (const p of problemas) console.error(`  - ${p}`)
+    process.exit(1)
+}
+
 const connectDB = require('./config/db')
 const { crearEstrategiaIA } = require('./services/ia/iaFactory')
 const app = require('./app')
