@@ -7,8 +7,6 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const mongoose = require('mongoose');
 const User = require('../models/User');
-const { dvhDeUsuario } = require('../utils/digitosVerificadores');
-const { decrypt } = require('../utils/crypto');
 const { familiaBase, FAMILIA_ADMIN } = require('../services/permisosService');
 
 async function main() {
@@ -39,9 +37,7 @@ async function main() {
     }
 
     user.familias = [admin._id];
-    user.rol = 'admin';
-    // El rol entra en el DVH: hay que recalcularlo
-    user.dvh = dvhDeUsuario(user, decrypt(user.nombre));
+    user.rol = 'admin'; // el rol entra en el DVH: lo recalcula el modelo al guardar
 
     await user.save();
     console.log(`${email} ahora es admin. Recargá el dashboard para ver el link "Admin".`);

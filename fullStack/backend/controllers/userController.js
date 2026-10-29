@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const User = require('../models/User')
 const Plan = require('../models/Plan')
 const Checkin = require('../models/Checkin')
-const { calcularDVH, calcularDVV } = require('../utils/digitosVerificadores')
 const { encrypt, decrypt } = require('../utils/crypto')
 
 // Desencripta nombre y limitaciones antes de devolver al cliente
@@ -51,11 +50,7 @@ exports.actualizarPerfil = async (req, res) => {
         }
 
         user.perfil = perfilNuevo
-        user.dvh = calcularDVH([
-            user.email, nombrePlano, user.rol,
-            perfilNuevo.peso, perfilNuevo.altura, perfilNuevo.edad,
-        ])
-        await user.save()
+        await user.save() // el DVH lo recalcula el modelo
 
         const resultado = user.toObject()
         delete resultado.passwordHash
@@ -177,7 +172,6 @@ exports.completarOnboarding = async (req, res) => {
             return res.status(404).json({ error: "Usuario no encontrado" })
         }
 
-        const nombrePlano = decrypt(user.nombre)
         const diasFinales = diasDispo ?? diasDisponibles
 
         user.perfil = {
@@ -190,35 +184,11 @@ exports.completarOnboarding = async (req, res) => {
             aclaracion: aclaracion ? encrypt(aclaracion) : undefined,
         }
 
-        // DVH recalculado con valores en texto plano
-        user.dvh = calcularDVH([
-            user.email, nombrePlano, user.rol,
-            peso, altura, edad,
-        ])
-
-        await user.save()
+        await user.save() // el DVH lo recalcula el modelo
 
         res.json({ ok: true, mensaje: "Perfil guardado, generando plan" })
     }
     catch (error) {
         res.status(500).json({ error: error.message })
-    }
-}
-
-// GET /users/verificar-integridad — patente integridad.verificar
-// Calcula el DVV (suma de todos los DVH) y verifica integridad global
-exports.verificarIntegridad = async (req, res) => {
-    try {
-        const users = await User.find({}).select('dvh email nombre')
-        const dvv = calcularDVV(users)
-        res.json({
-            ok: true,
-            totalUsuarios: users.length,
-            dvv,
-        })
-    }
-    catch (error) {
-        console.error(error.message)
-        res.status(500).send('Error en el servidor')
     }
 }

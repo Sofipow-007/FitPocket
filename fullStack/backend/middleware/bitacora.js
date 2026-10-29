@@ -14,7 +14,9 @@ const ACCIONES = {
     'GET /users/permisos': 'Consulta de permisos propios',
     'POST /permisos/familias': 'Creación de familia',
     'PUT /permisos/familias/:id': 'Edición de familia',
-    'PUT /permisos/usuarios/:id': 'Asignación de permisos a usuario'
+    'PUT /permisos/usuarios/:id': 'Asignación de permisos a usuario',
+    'GET /integridad/verificar': 'Verificación de integridad',
+    'POST /integridad/recalcular': 'Recálculo de dígitos verificadores'
 };
 
 module.exports = (req, res, next) => {

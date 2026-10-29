@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const digitosVerificadores = require('./plugins/digitosVerificadores');
 
 const schemaUser = new mongoose.Schema({
     nombre: {
@@ -99,13 +100,12 @@ const schemaUser = new mongoose.Schema({
         aclaracion: {
             type: String
         }
-    },
-    dvh: {
-        type: Number,
-        default: 0
     }
 }, {
     timestamps: true
 });
+
+// Agrega `dvh` y mantiene el DVH y el DVV en cada escritura
+schemaUser.plugin(digitosVerificadores, { coleccion: 'users' });
 
 module.exports = mongoose.model('User', schemaUser)

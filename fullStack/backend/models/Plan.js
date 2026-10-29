@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const digitosVerificadores = require('./plugins/digitosVerificadores');
 
 const planSchema = new mongoose.Schema({
     userId: {
@@ -41,5 +42,8 @@ const planSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
+
+// Agrega `dvh` y mantiene el DVH y el DVV en cada escritura
+planSchema.plugin(digitosVerificadores, { coleccion: 'plans' });
 
 module.exports = mongoose.model('Plan', planSchema);

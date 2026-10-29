@@ -3,8 +3,6 @@ const User = require('../models/User')
 const Patente = require('../models/Patente')
 const Familia = require('../models/Familia')
 const { permisosDeUsuario, cargarCatalogo, alcanza, rolDerivado, FAMILIA_USUARIO, FAMILIA_ADMIN } = require('../services/permisosService')
-const { dvhDeUsuario } = require('../utils/digitosVerificadores')
-const { decrypt } = require('../utils/crypto')
 
 const FAMILIAS_PROTEGIDAS = [FAMILIA_USUARIO, FAMILIA_ADMIN]
 
@@ -133,14 +131,11 @@ exports.editarFamilia = async (req, res) => {
     }
 }
 
-// Actualiza rol y DVH de un usuario a partir de sus familias actuales
+// Actualiza el rol de un usuario a partir de sus familias actuales (el DVH lo recalcula el modelo al guardar)
 async function aplicarRol(user, catalogo) {
     const rol = await rolDerivado(user.familias, catalogo)
     if (rol === user.rol) return false
     user.rol = rol
-    let nombrePlano = null
-    try { nombrePlano = decrypt(user.nombre) } catch { /* nombre ilegible: lo corrige el recálculo de dígitos */ }
-    user.dvh = dvhDeUsuario(user, nombrePlano)
     return true
 }
 

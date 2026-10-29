@@ -16,7 +16,4 @@ router.delete('/:id', auth, requierePatente('usuarios.borrar'), userControl.borr
 //ruta del onboarding
 router.post('/onboarding', auth, requierePatente('perfil.editar'), userControl.completarOnboarding)
 
-// verifica integridad de la base de datos mediante DVV
-router.get('/verificar-integridad', auth, requierePatente('integridad.verificar'), userControl.verificarIntegridad)
-
 module.exports = router;
