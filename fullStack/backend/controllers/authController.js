@@ -73,6 +73,11 @@ exports.login = async (req, res) => {
         const email = typeof req.body.email === 'string' ? req.body.email.trim().toLowerCase() : '';
         const { password } = req.body;
 
+        // Un password que no es texto (ej. {"$ne": null}) hacía tirar a bcrypt y respondía 500
+        if (!email || typeof password !== 'string' || !password) {
+            return res.status(400).json({ msg: 'Credenciales inválidas' });
+        }
+
         const user = await User.findOne({ email }).select('nombre email rol passwordHash').lean();
         if (!user) {
             return res.status(400).json({ msg: 'Credenciales inválidas' });

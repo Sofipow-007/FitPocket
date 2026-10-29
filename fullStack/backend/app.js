@@ -14,6 +14,12 @@ app.use(cors())
 // gzip de las respuestas: el plan completo pasa de 7,7 KB a 2,3 KB
 app.use(compression())
 app.use(express.json())
+// En Express 5 un pedido sin cuerpo JSON deja req.body en undefined: los controllers
+// que leen req.body.email tiraban un TypeError (500) en vez de responder 400
+app.use((req, res, next) => {
+  if (req.body === undefined) req.body = {}
+  next()
+})
 app.use(require('./middleware/bitacora'))
 
 app.use('/auth',    require('./routes/authRoutes'))

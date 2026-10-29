@@ -1,0 +1,31 @@
+{
+  "fecha": "2026-10-29T03:35:54.350Z",
+  "entorno": "Node v22.19.0, Intel(R) Core(TM) i5-10400 CPU @ 2.90GHz, Mongo en memoria",
+  "duracionS": 10,
+  "conexiones": 10,
+  "umbralP95Ms": 200,
+  "resultados": [
+    {
+      "ruta": "/plan/actual",
+      "pedidos": 2965,
+      "pedidosPorSegundo": 297,
+      "errores": 0,
+      "p50": 30.2,
+      "p95": 51.9,
+      "p99": 72.2,
+      "max": 122,
+      "ok": true
+    },
+    {
+      "ruta": "/checkins/semana",
+      "pedidos": 2439,
+      "pedidosPorSegundo": 244,
+      "errores": 0,
+      "p50": 39.1,
+      "p95": 52.5,
+      "p99": 79.9,
+      "max": 118.1,
+      "ok": true
+    }
+  ]
+}

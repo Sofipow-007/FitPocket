@@ -115,7 +115,8 @@ exports.generarPlan = async (req, res) => {
       dieta:  planGenerado.dieta
     })
 
-    console.log('Plan generado y guardado exitosamente para el usuario. ', savedPlan)
+    // solo el id: el plan completo son datos de salud del usuario y no van a los logs
+    console.log(`Plan generado: ${savedPlan._id}`)
     eventos.emitir(EVENTOS.PLAN_GENERADO, { userId, planId: savedPlan._id })
 
     return res.json({ ok: true, plan: savedPlan })
@@ -141,3 +142,7 @@ exports.getPlanActual = async (req, res) => {
     return res.status(500).json({ error: 'Error interno del servidor' })
   }
 }
+
+// Se exportan para las pruebas unitarias
+exports.filtrarContraindicados = filtrarContraindicados
+exports.normalizarDia = normalizarDia
