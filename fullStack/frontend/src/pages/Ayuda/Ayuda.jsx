@@ -31,8 +31,12 @@ export default function Ayuda() {
     const pregunta = document.getElementById(id);
     if (!pregunta) return;
     pregunta.open = true;
-    pregunta.scrollIntoView({ block: "start" });
-    pregunta.querySelector("summary")?.focus({ preventScroll: true });
+    // un frame después: en la carga directa el foco se pierde si se pide antes de que la página termine de pintarse
+    const frame = requestAnimationFrame(() => {
+      pregunta.scrollIntoView({ block: "start" });
+      pregunta.querySelector("summary")?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(frame);
   }, [hash, esAdmin]);
 
   // Volver a donde estaba; si entró directo por el link, al inicio que le corresponde

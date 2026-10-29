@@ -493,9 +493,9 @@
 .ad-btn--primary {
   background: var(--green);
   border-color: var(--green);
-  color: #06060E;
+  color: var(--bg);
 }
-.ad-btn--primary:hover:not(:disabled) { background: #00C974; border-color: #00C974; }
+.ad-btn--primary:hover:not(:disabled) { background: var(--green-dim); border-color: var(--green-dim); }
 
 /* ── Familias ── */
 .ad-fams {
@@ -781,7 +781,7 @@ select.ad-input option { background: var(--bg2); color: var(--ink); }
   font-variant-numeric: tabular-nums;
 }
 .ad-code--ok     { color: var(--green); border-color: rgba(0, 232, 135, 0.35); }
-.ad-code--aviso  { color: #FBBF24; border-color: rgba(251, 191, 36, 0.4); }
+.ad-code--aviso  { color: var(--warn); border-color: rgba(245, 158, 11, 0.4); }
 .ad-code--mal    { color: var(--ad-danger-ink); border-color: rgba(239, 68, 68, 0.4); }
 .ad-code--evento { color: #8FB6FA; border-color: rgba(79, 142, 247, 0.4); font-weight: 600; }
 

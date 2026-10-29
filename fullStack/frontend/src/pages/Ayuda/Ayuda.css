@@ -67,11 +67,11 @@
 
 .ay-seccion + .ay-seccion { margin-top: 36px; }
 .ay-seccion__titulo {
-  font-size: 0.75rem;
+  font-family: var(--heading);
+  font-size: 1.125rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink3);
+  letter-spacing: -0.01em;
+  color: var(--ink);
   margin-bottom: 12px;
 }
 
@@ -94,7 +94,7 @@
   min-height: 52px;
   padding: 14px 18px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--ink);
   cursor: pointer;
   list-style: none;
@@ -130,7 +130,8 @@
   .ay-nav { padding: 0 16px; }
   .ay-nav__back { min-width: 44px; min-height: 44px; justify-content: center; }
   .ay-nav__back span { display: none; }
-  .ay-main { padding: 28px 16px 56px; }
+  /* abajo queda lugar para el selector ES/EN, que en mobile flota abajo a la derecha */
+  .ay-main { padding: 28px 16px 96px; }
   .ay-pregunta__p { padding: 14px 16px; }
   .ay-pregunta__r { padding: 0 16px 16px; }
 }
