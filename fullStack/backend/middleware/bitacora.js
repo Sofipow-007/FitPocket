@@ -19,7 +19,14 @@ const ACCIONES = {
     'POST /integridad/recalcular': 'Recálculo de dígitos verificadores',
     'POST /checkins/': 'Registro de checkin',
     'GET /checkins/semana': 'Consulta de adherencia semanal',
-    'GET /checkins/mes': 'Consulta de adherencia mensual'
+    'GET /checkins/mes': 'Consulta de adherencia mensual',
+    'GET /bitacora/': 'Consulta de bitácora',
+    'GET /bitacora/acciones': 'Consulta de acciones de la bitácora',
+    'GET /permisos/patentes': 'Consulta de patentes',
+    'GET /permisos/familias': 'Consulta de familias',
+    'GET /checkins/hoy': 'Consulta de checkin del día',
+    'POST /backup/': 'Generación de backup',
+    'GET /backup/': 'Listado de backups'
 };
 
 module.exports = (req, res, next) => {

@@ -43,6 +43,9 @@ const planSchema = new mongoose.Schema({
     timestamps: true
 });
 
+// Casi todas las consultas buscan el plan activo de un usuario
+planSchema.index({ userId: 1, estado: 1 });
+
 // Agrega `dvh` y mantiene el DVH y el DVV en cada escritura
 planSchema.plugin(digitosVerificadores, { coleccion: 'plans' });
 

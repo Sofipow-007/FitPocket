@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 CLAUDE.md
 PRODUCT.md
 PLAN_FitPocket_revision_final.md
+
+# Backups de la base (scripts/backup.js): tienen datos de usuarios
+fullStack/backend/backups/

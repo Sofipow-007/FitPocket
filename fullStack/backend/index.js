@@ -3,6 +3,7 @@ require('dotenv').config();
 const connectDB = require('./config/db')
 const { crearEstrategiaIA } = require('./services/ia/iaFactory')
 const app = require('./app')
+const { ajustarTTLBitacora } = require('./services/indicesService')
 
 // Un IA_PROVIDER mal escrito se avisa al arrancar y no recién cuando alguien genera un plan
 try {
@@ -14,6 +15,8 @@ try {
 }
 
 connectDB()
+    .then(() => ajustarTTLBitacora())
+    .catch(error => console.error(`No se pudo ajustar el TTL de la bitácora: ${error.message}`))
 
 const PORT = process.env.PORT || 3000;
 
