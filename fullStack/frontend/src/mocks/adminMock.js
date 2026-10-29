@@ -49,3 +49,36 @@ export const MOCK_INTEGRIDAD = {
     { coleccion: "checkins", totalRegistros: 21, dvvGuardado: 13531, dvvCalculado: 13531, filasAlteradas: [], ok: true },
   ],
 };
+
+/* Forma de GET /bitacora y GET /bitacora/acciones. */
+const ACCIONES_MOCK = [
+  ["Inicio de sesión", "POST", "/auth/login", 200, null, "juan.perez@example.com"],
+  ["Evento: checkin registrado", "EVENTO", "checkin.registrado", null, "fecha 2026-10-28, puntaje 2", "juan.perez@example.com"],
+  ["Registro de checkin", "POST", "/checkins/", 200, null, "juan.perez@example.com"],
+  ["Inicio de sesión", "POST", "/auth/login", 400, "Credenciales inválidas", null],
+  ["Verificación de integridad", "GET", "/integridad/verificar", 200, null, "mauro@example.com"],
+  ["Evento: plan generado", "EVENTO", "plan.generado", null, "plan 6ae2abb3733d6f59d06809a7", "lucia.fernandez@example.com"],
+  ["Generación de plan", "POST", "/plan/generar", 503, "El servicio de IA no está disponible. Intentá de nuevo.", "tomi.gimenez@example.com"],
+  ["Eliminación de usuario por admin", "DELETE", "/users/6ae2a5b7e70347ff5e60bf7c", 200, null, "mauro@example.com"],
+];
+
+export const MOCK_BITACORA = {
+  ok: true,
+  items: Array.from({ length: 25 }, (_, i) => {
+    const [accion, metodo, ruta, statusCode, detalles, email] = ACCIONES_MOCK[i % ACCIONES_MOCK.length];
+    return { _id: `b${i}`, fecha: new Date(Date.parse("2026-10-28T23:00:00Z") - i * 7 * 60000).toISOString(), email, accion, metodo, ruta, statusCode, detalles };
+  }),
+  total: 758,
+  pagina: 1,
+  porPagina: 25,
+  paginas: 31,
+};
+
+export const MOCK_ACCIONES = [...new Set(ACCIONES_MOCK.map(a => a[0]))].sort((a, b) => a.localeCompare(b, "es"));
+
+/* Forma de GET /backup. */
+export const MOCK_BACKUPS = [
+  { nombre: "backup_2026-10-28_23-33-08", creadoEn: "2026-10-29T02:33:08.000Z", colecciones: 7, documentos: 790, bytes: 313446, valido: true },
+  { nombre: "backup_2026-10-27_03-00-00", creadoEn: "2026-10-27T06:00:00.000Z", colecciones: 7, documentos: 702, bytes: 288120, valido: true },
+  { nombre: "backup_2026-10-26_03-00-00", creadoEn: "2026-10-26T06:00:00.000Z", colecciones: 7, documentos: 655, bytes: 271904, valido: true },
+];

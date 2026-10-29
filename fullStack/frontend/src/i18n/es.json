@@ -373,7 +373,9 @@
     "tabs": {
       "usuarios": "Usuarios",
       "familias": "Familias y permisos",
-      "integridad": "Integridad"
+      "integridad": "Integridad",
+      "bitacora": "Bitácora",
+      "backup": "Backup"
     },
     "patentesDesc": {
       "plan_ver": "Ver el plan propio y la adherencia",
@@ -467,6 +469,63 @@
       "dvhDiferencia": "DVH guardado {{guardado}} · calculado {{calculado}}",
       "confirmarTitulo": "¿Recalcular los dígitos verificadores?",
       "confirmarTexto": "Los datos actuales pasan a ser los válidos, incluidos los que hoy figuran como alterados. Hacelo solo después de revisar qué cambió, o después de una migración o un restore."
+    },
+    "bitacora": {
+      "titulo": "Bitácora",
+      "intro": "Cada pedido a la app y cada evento importante (plan generado, checkin, usuario borrado) queda registrado. No se guardan contraseñas ni emails: el email se muestra desde la cuenta. Los registros de más de {{dias}} días se borran solos.",
+      "total_one": "{{count}} registro",
+      "total_other": "{{count}} registros",
+      "filtros": "Filtros de la bitácora",
+      "email": "Usuario",
+      "emailPlaceholder": "Email o parte del email",
+      "accion": "Acción",
+      "todas": "Todas",
+      "desde": "Desde",
+      "hasta": "Hasta",
+      "estado": "Resultado",
+      "todos": "Todos",
+      "estados": {
+        "ok": "Correctos (2xx)",
+        "cliente": "Rechazados (4xx)",
+        "servidor": "Errores del servidor (5xx)"
+      },
+      "filtrar": "Filtrar",
+      "limpiar": "Limpiar filtros",
+      "error": "No se pudo cargar la bitácora. Revisá tu conexión.",
+      "vacia": "Todavía no hay registros.",
+      "sinResultados": "Ningún registro coincide con los filtros.",
+      "caption": "Bitácora, página {{pagina}} de {{paginas}}",
+      "col": {
+        "fecha": "Fecha",
+        "usuario": "Usuario",
+        "accion": "Acción",
+        "ruta": "Ruta",
+        "estado": "Resultado",
+        "detalles": "Detalles"
+      },
+      "sinSesion": "Sin sesión",
+      "evento": "Evento",
+      "paginacion": "Páginas de la bitácora",
+      "anterior": "Anterior",
+      "siguiente": "Siguiente",
+      "pagina": "Página {{pagina}} de {{paginas}}"
+    },
+    "backup": {
+      "titulo": "Backup de la base",
+      "intro": "Guarda una copia de todas las colecciones en el servidor (backups/backup_FECHA, un archivo por colección). Se conservan los últimos {{retencion}}: al generar uno nuevo se borra el más viejo.",
+      "generar": "Generar backup",
+      "generando": "Generando...",
+      "generado": "Backup {{nombre}} generado con {{documentos}} documentos.",
+      "errorGenerar": "No se pudo generar el backup. Probá de nuevo.",
+      "disponibles": "Backups disponibles",
+      "errorListar": "No se pudo cargar la lista de backups.",
+      "vacio": "Todavía no hay backups en el servidor.",
+      "ultimo": "Último",
+      "incompleto": "Incompleto",
+      "resumen": "{{colecciones}} colecciones · {{documentos}} documentos · {{tamanio}}",
+      "restoreTitulo": "Restaurar un backup",
+      "restoreTexto": "Restaurar reemplaza el contenido actual de cada colección por el del backup, así que no se hace desde la web: se corre en el servidor y pide confirmación. Al terminar recalcula los dígitos verificadores.",
+      "restoreAyuda": "Sin nombre restaura el último backup. Con --si no pregunta (para automatizarlo)."
     }
   }
 }

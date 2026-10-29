@@ -373,7 +373,9 @@
     "tabs": {
       "usuarios": "Users",
       "familias": "Families & permissions",
-      "integridad": "Integrity"
+      "integridad": "Integrity",
+      "bitacora": "Audit log",
+      "backup": "Backup"
     },
     "patentesDesc": {
       "plan_ver": "View own plan and adherence",
@@ -467,6 +469,63 @@
       "dvhDiferencia": "Stored DVH {{guardado}} · computed {{calculado}}",
       "confirmarTitulo": "Recalculate check digits?",
       "confirmarTexto": "The current data becomes the valid baseline, including records now flagged as altered. Only do this after reviewing what changed, or after a migration or a restore."
+    },
+    "bitacora": {
+      "titulo": "Audit log",
+      "intro": "Every request to the app and every important event (plan generated, check-in, user deleted) is recorded. Passwords and emails are never stored: the email is shown from the account. Records older than {{dias}} days are deleted automatically.",
+      "total_one": "{{count}} record",
+      "total_other": "{{count}} records",
+      "filtros": "Audit log filters",
+      "email": "User",
+      "emailPlaceholder": "Email or part of it",
+      "accion": "Action",
+      "todas": "All",
+      "desde": "From",
+      "hasta": "To",
+      "estado": "Result",
+      "todos": "All",
+      "estados": {
+        "ok": "Successful (2xx)",
+        "cliente": "Rejected (4xx)",
+        "servidor": "Server errors (5xx)"
+      },
+      "filtrar": "Filter",
+      "limpiar": "Clear filters",
+      "error": "Couldn't load the audit log. Check your connection.",
+      "vacia": "There are no records yet.",
+      "sinResultados": "No records match the filters.",
+      "caption": "Audit log, page {{pagina}} of {{paginas}}",
+      "col": {
+        "fecha": "Date",
+        "usuario": "User",
+        "accion": "Action",
+        "ruta": "Route",
+        "estado": "Result",
+        "detalles": "Details"
+      },
+      "sinSesion": "Not signed in",
+      "evento": "Event",
+      "paginacion": "Audit log pages",
+      "anterior": "Previous",
+      "siguiente": "Next",
+      "pagina": "Page {{pagina}} of {{paginas}}"
+    },
+    "backup": {
+      "titulo": "Database backup",
+      "intro": "Saves a copy of every collection on the server (backups/backup_DATE, one file per collection). The last {{retencion}} are kept: creating a new one deletes the oldest.",
+      "generar": "Create backup",
+      "generando": "Creating...",
+      "generado": "Backup {{nombre}} created with {{documentos}} documents.",
+      "errorGenerar": "Couldn't create the backup. Try again.",
+      "disponibles": "Available backups",
+      "errorListar": "Couldn't load the backup list.",
+      "vacio": "There are no backups on the server yet.",
+      "ultimo": "Latest",
+      "incompleto": "Incomplete",
+      "resumen": "{{colecciones}} collections · {{documentos}} documents · {{tamanio}}",
+      "restoreTitulo": "Restore a backup",
+      "restoreTexto": "Restoring replaces the current content of each collection with the backup's, so it isn't done from the web: it runs on the server and asks for confirmation. When it finishes it recalculates the check digits.",
+      "restoreAyuda": "Without a name it restores the latest backup. With --si it doesn't ask (for automation)."
     }
   }
 }

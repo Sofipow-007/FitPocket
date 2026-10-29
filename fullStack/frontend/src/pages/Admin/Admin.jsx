@@ -8,6 +8,8 @@ import usePermisos from "../../hooks/usePermisos";
 import UsuariosTab from "./UsuariosTab";
 import FamiliasTab from "./FamiliasTab";
 import IntegridadTab from "./IntegridadTab";
+import BitacoraTab from "./BitacoraTab";
+import BackupTab from "./BackupTab";
 import "./Admin.css";
 
 const IconBack = () => (
@@ -21,6 +23,8 @@ const TABS = [
   { id: "usuarios", patente: "usuarios.listar" },
   { id: "familias", patente: "familias.gestionar" },
   { id: "integridad", patente: "integridad.verificar" },
+  { id: "bitacora", patente: "bitacora.ver" },
+  { id: "backup", patente: "backup.ejecutar" },
 ];
 
 export default function Admin() {
@@ -71,6 +75,11 @@ export default function Admin() {
 
   // Sin usuarios.listar no se piden usuarios: no hay nada que esperar
   const cargandoUsers = puedeListar && loading;
+
+  // En mobile la barra de pestañas se desplaza de costado: la activa tiene que quedar a la vista
+  useEffect(() => {
+    tabsRef.current?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [activa]);
 
   const reintentar = () => {
     setError(false);
@@ -163,6 +172,8 @@ export default function Admin() {
               <FamiliasTab users={users} setUsers={setUsers} cargandoUsers={cargandoUsers} isPreview={isPreview} />
             )}
             {activa === "integridad" && <IntegridadTab isPreview={isPreview} />}
+            {activa === "bitacora" && <BitacoraTab isPreview={isPreview} />}
+            {activa === "backup" && <BackupTab isPreview={isPreview} />}
           </section>
         )}
       </main>

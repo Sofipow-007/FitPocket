@@ -740,6 +740,107 @@ select.ad-input option { background: var(--bg2); color: var(--ink); }
   .ad-alterada__dvh { text-align: left; }
 }
 
+/* ── Bitácora ── */
+.ad-filtros {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.4fr) minmax(180px, 1.4fr) repeat(3, minmax(130px, 1fr));
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+.ad-filtros__acciones { grid-column: 1 / -1; display: flex; gap: 10px; }
+.ad-input[type="date"] { color-scheme: dark; }
+
+.ad-table--bitacora { font-size: 13px; }
+.ad-table--bitacora thead th:nth-child(1) { width: 19%; }
+.ad-table--bitacora thead th:nth-child(2) { width: 13%; }
+.ad-table--bitacora thead th:nth-child(3) { width: 24%; }
+.ad-table--bitacora thead th:nth-child(4) { width: 18%; }
+.ad-table--bitacora thead th:nth-child(5) { width: 9%; }
+.ad-table--bitacora thead th:nth-child(6) { width: 17%; }
+.ad-table--bitacora .ad-cell-fecha { white-space: normal; }
+.ad-cell-accion { font-weight: 600; }
+.ad-cell-ruta, .ad-cell-detalles { color: var(--ink2); }
+.ad-cell-ruta .ad-valor {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+.ad-metodo { color: var(--ink3); font-weight: 700; }
+.ad-table-wrap--cargando { opacity: 0.55; transition: opacity var(--t-fast); }
+.ad-table-wrap:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+
+.ad-code {
+  display: inline-block;
+  min-width: 42px;
+  padding: 2px 8px;
+  border-radius: var(--r-sm);
+  border: 1px solid;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.ad-code--ok     { color: var(--green); border-color: rgba(0, 232, 135, 0.35); }
+.ad-code--aviso  { color: #FBBF24; border-color: rgba(251, 191, 36, 0.4); }
+.ad-code--mal    { color: var(--ad-danger-ink); border-color: rgba(239, 68, 68, 0.4); }
+.ad-code--evento { color: #8FB6FA; border-color: rgba(79, 142, 247, 0.4); font-weight: 600; }
+
+.ad-paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+.ad-paginacion__estado { font-size: 13px; color: var(--ink2); font-variant-numeric: tabular-nums; }
+
+/* ── Backup ── */
+.ad-backups { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.ad-backup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 14px 16px;
+  background: var(--bg2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-md);
+}
+.ad-backup__principal { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ad-backup__fecha { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--ink); }
+.ad-backup__nombre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--ink3);
+  overflow-wrap: anywhere;
+}
+.ad-backup__meta { font-size: 13px; color: var(--ink2); font-variant-numeric: tabular-nums; }
+
+.ad-codigo {
+  margin: 12px 0;
+  padding: 14px 16px;
+  background: var(--bg2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-md);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  overflow-x: auto;
+}
+
+@media (max-width: 960px) {
+  .ad-filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .ad-filtros { grid-template-columns: 1fr; }
+  .ad-filtros__acciones .ad-btn { flex: 1; }
+  .ad-paginacion { justify-content: space-between; gap: 8px; }
+  .ad-paginacion__estado { text-align: center; }
+  .ad-table--bitacora .ad-cell-accion { font-size: 15px; }
+}
+
 /* ══════════════════════════════════════════════
    RESPONSIVE — la tabla pasa a tarjetas
 ══════════════════════════════════════════════ */
