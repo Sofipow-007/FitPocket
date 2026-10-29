@@ -21,7 +21,7 @@ const { AdherenciaSemanal } = require('../../services/adherenciaService');
 const DURACION_S = Number(process.env.PERF_DURACION_S) || 10;
 const CONEXIONES = Number(process.env.PERF_CONEXIONES) || 10;
 const UMBRAL_P95_MS = Number(process.env.PERF_UMBRAL_P95_MS) || 200;
-const SALIDA = path.join(__dirname, '..', '..', '..', '..', 'documentacion', 'pruebas');
+const SALIDA = path.join(__dirname, '..', '..', '..', '..', 'documentacion', '7-pruebas');
 
 const percentil = (ordenados, p) => ordenados[Math.min(ordenados.length - 1, Math.ceil((p / 100) * ordenados.length) - 1)];
 
@@ -114,7 +114,7 @@ async function main() {
             ...resultados.map(r => `| GET ${r.ruta} | ${r.pedidosPorSegundo} | ${r.p50} | ${r.p95} | ${r.p99} | ${r.max} | ${r.errores} | ${r.ok ? 'OK' : 'FALLA'} |`),
             '',
         ].join('\n'));
-        console.log(`Resultados guardados en documentacion/pruebas/rendimiento.md`);
+        console.log(`Resultados guardados en documentacion/7-pruebas/rendimiento.md`);
 
         if (!resultados.every(r => r.ok)) {
             console.error(`Alguna ruta superó el p95 de ${UMBRAL_P95_MS} ms o tuvo errores.`);
