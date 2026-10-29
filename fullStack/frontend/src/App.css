@@ -1,0 +1,74 @@
+/* Global lang toggle — visible on all non-dashboard pages */
+.g-lang {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: var(--z-lang);
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  background: rgba(6, 6, 14, 0.7);
+}
+
+.g-lang__btn {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  font-family: var(--sans);
+  transition: color 150ms, background 150ms;
+}
+
+.g-lang__btn--on {
+  color: var(--green);
+  background: rgba(0, 232, 135, 0.12);
+}
+
+.g-lang__btn:hover:not(.g-lang__btn--on) {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* En mobile, position:fixed arriba a la derecha tapaba "Empezar gratis"/
+   "Entrar" en la landing y el "Paso X de 4" del header del onboarding.
+   Se mueve abajo a la derecha, donde no hay otro elemento fijo. */
+@media (max-width: 480px) {
+  .g-lang {
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+  }
+
+  /* El onboarding tiene "Anterior"/"Siguiente"/"Generar mi plan" abajo, así que
+     ahí el selector va arriba al centro, entre el logo y el "Paso X de 4". */
+  .g-lang--onboarding {
+    top: 14px;
+    bottom: auto;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.main-content > * {
+  width: 100%;
+}

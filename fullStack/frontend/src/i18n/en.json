@@ -1,0 +1,700 @@
+{
+  "restablecer": {
+    "titulo": "Choose your new password",
+    "subtitulo": "Saving it signs you in right away and closes sessions open on other devices.",
+    "nueva": "New password",
+    "repetir": "Repeat the password",
+    "ayuda": "At least 8 characters.",
+    "mostrar": "Show passwords",
+    "guardar": "Save and sign in",
+    "guardando": "Saving...",
+    "errorCorta": "The password must be at least 8 characters.",
+    "errorDistintas": "The two passwords don't match.",
+    "errorConexion": "We couldn't reach the server. Try again.",
+    "invalidoTitulo": "This link no longer works",
+    "invalidoTexto": "It expired, was already used or is incomplete. Request a new one and use it within 30 minutes.",
+    "pedirOtro": "Request a new link"
+  },
+  "recuperar": {
+    "titulo": "Reset your password",
+    "subtitulo": "Enter your account email and we'll send you a link to choose a new password.",
+    "email": "Email",
+    "placeholderEmail": "you@email.com",
+    "enviar": "Send me the link",
+    "enviando": "Sending...",
+    "volverLogin": "Back to sign in",
+    "errorEmail": "Enter a valid email.",
+    "errorConexion": "We couldn't reach the server. Try again.",
+    "enviadoTitulo": "Check your inbox",
+    "enviadoTexto": "If {{email}} has a FitPocket account, we sent a link to reset the password.",
+    "enviadoAyuda": "The link expires in 30 minutes. If you don't see it, check your spam folder; you can request another one after a minute."
+  },
+  "progreso": {
+    "adherenciaTitulo": "This week's adherence",
+    "sinRegistros": "You don't have adherence records yet.",
+    "pesoTitulo": "Logged weight",
+    "pesoInicial": "Starting weight from your profile",
+    "sinPeso": "No weight data logged."
+  },
+  "checklist": {
+    "titulo": "How did today go?",
+    "rutina": "🏋️ Training routine",
+    "dieta": "🥗 Today's diet",
+    "completado": "Done",
+    "parcial": "Partly",
+    "noHice": "Skipped",
+    "guardar": "Save day",
+    "guardando": "Saving...",
+    "yaRegistrado": "✓ You already logged today.",
+    "errorOpciones": "Pick both options before saving.",
+    "errorGuardar": "Couldn't save. Try again."
+  },
+  "comun": {
+    "idioma": "Language",
+    "cargando": "Loading..."
+  },
+  "cargando": {
+    "pasos": [
+      "Analyzing your physical profile...",
+      "Calculating training load...",
+      "Optimizing days and routines...",
+      "Adjusting nutrition to your budget...",
+      "Finalizing your personalized plan..."
+    ],
+    "errorTitulo":   "We couldn't generate your plan",
+    "reintentar":    "Retry",
+    "errorSesion":   "No active session. Sign in to generate your plan.",
+    "errorGenerico": "An unexpected error occurred while generating the plan."
+  },
+  "dashboard": {
+    "tabs": { "inicio": "Home", "checklist": "Checklist", "progreso": "Progress" },
+    "sinPlanTitulo": "You don't have a plan yet",
+    "sinPlanTexto": "Complete your profile to generate your personalized routine and diet.",
+    "sinPlanCta": "Complete my profile",
+    "adherenciaBaja": "Your adherence this week is low.",
+    "adherencia": "adherence",
+    "saludo": {
+      "manana": "Good morning",
+      "tarde":  "Good afternoon",
+      "noche":  "Good evening"
+    },
+    "hoy":            "today",
+    "entrenarHoy":    "Training today",
+    "descansoHoy":    "Rest day",
+    "proximaSesion":  "Next: {{dia}}",
+    "recuperate":     "Rest well. The body grows during recovery.",
+    "racha":          "streak",
+    "kcalHoy":        "kcal today",
+    "imc":            "BMI",
+    "verPlan":        "View my plan",
+    "semana":         "Week",
+    "dietaHoy":       "Today's diet",
+    "desayuno":       "Breakfast",
+    "almuerzo":       "Lunch",
+    "merienda":       "Snack",
+    "cena":           "Dinner",
+    "sinPlan":        "Generate your plan to see the details",
+    "salir":          "Log out",
+    "errorConexion":  "Could not load your information. Check your connection.",
+    "dias": {
+      "lun": "Mon", "mar": "Tue", "mie": "Wed",
+      "jue": "Thu", "vie": "Fri", "sab": "Sat", "dom": "Sun"
+    }
+  },
+  "plan": {
+    "volver":            "Back to dashboard",
+    "titulo":            "Your full plan",
+    "objetivo":          "Goal",
+    "dias":              "Days of the week",
+    "entrenamiento":     "Training",
+    "descanso":          "Rest",
+    "descansoDia":       "Rest day. Recover well.",
+    "dietaDia":          "This day's diet",
+    "costoEstimado":     "Estimated cost for the day",
+    "cambiarEjercicio":  "Swap exercise",
+    "reemplazado":       "swapped",
+    "sinPlan":           "Generate your plan to see the details",
+    "errorConexion":     "Could not load your plan. Check your connection."
+  },
+  "ejercicios": {
+    "push":    { "muscles": "Chest · Triceps · Shoulders",      "tip": "Control the descent. Pause at the chest before pushing." },
+    "pull":    { "muscles": "Back · Biceps · Rhomboids",        "tip": "Scapular retraction at the start. Keep elbows close." },
+    "legs":    { "muscles": "Quadriceps · Glutes · Hamstrings", "tip": "Knees aligned with feet. Keep back straight throughout." },
+    "core":    { "muscles": "Abs · Core · Stabilizers",        "tip": "Body in a straight line from head to heels. Constant breathing." },
+    "general": { "muscles": "Compound muscles",                 "tip": "Technique first, then weight. Control each repetition." }
+  },
+  "home": {
+    "entrar":          "Sign in",
+    "empezarGratis":   "Start free",
+    "verComoFunciona": "See how it works",
+    "hero": {
+      "titulo1": "TRAIN",
+      "titulo2": "BETTER.",
+      "desc":    "Get your personalized routine and nutrition plan based on your body, goals and budget.",
+      "planes":  "Your plan in under 1 minute",
+      "scroll":  "scroll"
+    },
+    "bento": {
+      "seccion":     "Features",
+      "titulo":      "Everything in one place.",
+      "planSemanal": "Your weekly plan",
+      "mockup": {
+        "semana":          "Week 1",
+        "hoy":             "Today",
+        "adherenciaLabel": "Adherence",
+        "dias": [
+          { "day": "Mon", "work": "Upper body",      "dur": "45m" },
+          { "day": "Tue", "work": "HIIT Cardio",     "dur": "30m" },
+          { "day": "Wed", "work": "Active recovery", "dur": "—"   },
+          { "day": "Thu", "work": "Lower body",      "dur": "45m" },
+          { "day": "Fri", "work": "Cardio + Core",   "dur": "40m" }
+        ]
+      },
+      "adherenciaAvg": "Your progress",
+      "progresoValor": "Daily",
+      "adherenciaSub": "Track your routine and diet day by day from the dashboard",
+      "setupLabel":    "Setup",
+      "setupSub":      "To have your complete plan ready",
+      "proceso":       "The process",
+      "pasos": [
+        { "n": "01", "titulo": "Onboarding",       "desc": "Data, goal and availability" },
+        { "n": "02", "titulo": "Your plan ready",  "desc": "Personalized routine + diet in seconds" },
+        { "n": "03", "titulo": "Keep going",       "desc": "Log your progress day by day" }
+      ],
+      "adaptaLabel":  "We've got you",
+      "adaptaTitulo": "Alerts",
+      "adaptaDesc":   "If your adherence drops, we show it right on your dashboard",
+      "stats": [
+        { "val": "7",    "unit": "days",      "desc": "Complete plan" },
+        { "val": "2",    "unit": "in 1",      "desc": "Routine + diet" },
+        { "val": "100%", "unit": "free",      "desc": "No credit card" }
+      ]
+    },
+    "cta": {
+      "titulo":    "Ready to train differently?",
+      "subtitulo": "No credit card · No commitments · 3 minutes",
+      "btn":       "Start free"
+    },
+    "footer": "© 2026 FitPocket · All rights reserved"
+  },
+  "authModal": {
+    "olvidaste": "Forgot your password?",
+    "ariaLabel":  "Sign in",
+    "cerrar":     "Close",
+    "titulo":     "Welcome back",
+    "subtitulo":  "Sign in to your account to continue",
+    "email":      "Email",
+    "contrasena": "Password",
+    "placeholder": {
+      "email":      "you@email.com",
+      "contrasena": "Your password"
+    },
+    "mostrar":           "Show password",
+    "ocultar":           "Hide password",
+    "ingresar":          "Sign in →",
+    "ingresando":        "Signing in...",
+    "noTenes":           "Don't have an account?",
+    "registrarse":       "Sign up",
+    "errorCredenciales": "Invalid email or password",
+    "errorConexion":     "Connection error. Try again later."
+  },
+  "onboarding1": {
+    "titulo":       "Physical data",
+    "subtitulo":    "We calculate your BMI and personalize your plan",
+    "edad":         "Age",
+    "peso":         "Weight (kg)",
+    "altura":       "Height (cm)",
+    "sexo":         "Sex",
+    "selecciona":   "Select",
+    "femenino":     "Female",
+    "masculino":    "Male",
+    "imcEstimado":  "Estimated BMI",
+    "ingresaDatos": "Enter your data",
+    "siguiente":    "Next",
+    "errorCampos":  "Complete all fields to continue.",
+    "errorRango":   "Check your data: age between 10 and 99, weight between 30 and 300 kg, height between 100 and 250 cm."
+  },
+  "register": {
+    "volver":      "Back to home",
+    "titulo":      "Create account",
+    "subtitulo":   "Start free. No credit card required.",
+    "nombre":      "Name",
+    "email":       "Email",
+    "contrasena":  "Password",
+    "placeholder": {
+      "nombre":     "Your name",
+      "contrasena": "Minimum 8 characters"
+    },
+    "fuerza": {
+      "muyDebil":  "Very weak",
+      "debil":     "Weak",
+      "media":     "Fair",
+      "fuerte":    "Strong",
+      "muyFuerte": "Very strong"
+    },
+    "mostrar":       "Show",
+    "ocultar":       "Hide",
+    "crear":         "Create account and continue →",
+    "creando":       "Creating account...",
+    "terminos":      "By signing up you accept the",
+    "terminosLink":  "terms of use",
+    "yaTenes":       "Already have an account?",
+    "iniciarSesion": "Sign in",
+    "errorRegistro": "Registration error",
+    "errorConexion": "Connection error. Try again later.",
+    "errorCamposRequeridos": "Fill in all fields to continue."
+  },
+  "ob2": {
+    "titulo":        "What do you want to achieve?",
+    "subtitulo":     "Your plan is built around this goal",
+    "nivelLabel":    "Experience level",
+    "anterior":      "Back",
+    "siguiente":     "Next",
+    "errorObjetivo": "Select a goal to continue.",
+    "obj": {
+      "perderGrasa":  { "titulo": "Lose fat",       "sub": "Caloric deficit + progressive cardio" },
+      "ganarMusculo": { "titulo": "Build muscle",   "sub": "Caloric surplus + strength training" },
+      "resistencia":  { "titulo": "Endurance",      "sub": "Progressive cardio and aerobic zone" },
+      "saludGeneral": { "titulo": "General health", "sub": "Balance of strength, cardio and wellness" }
+    },
+    "nivel": {
+      "principiante": "Beginner",
+      "intermedio":   "Intermediate",
+      "avanzado":     "Advanced"
+    }
+  },
+  "ob3": {
+    "titulo":            "Tell us your routine",
+    "subtitulo":         "We adapt the plan to your schedule and preferences",
+    "diasLabel":         "Available days",
+    "minutosLabel":      "Minutes per session",
+    "dietaLabel":        "Diet type",
+    "presupuestoLabel":  "Monthly budget",
+    "opcional":          "(optional)",
+    "presupuestoPrefix": "ARS $",
+    "diasSeleccionado_one":   "{{count}} day selected",
+    "diasSeleccionado_other": "{{count}} days selected",
+    "dias": {
+      "lunes":     "Mon",
+      "martes":    "Tue",
+      "miercoles": "Wed",
+      "jueves":    "Thu",
+      "viernes":   "Fri",
+      "sabado":    "Sat",
+      "domingo":   "Sun"
+    },
+    "dieta": {
+      "normal":      "No restriction",
+      "vegetariano": "Vegetarian",
+      "vegano":      "Vegan",
+      "sinGluten":   "Gluten-free"
+    },
+    "anterior":  "Back",
+    "siguiente": "Next",
+    "errorDias": "Select at least one available day.",
+    "errorPresupuesto": "The budget must be greater than 0. Leave the field empty if you prefer not to say."
+  },
+  "ob4": {
+    "titulo":           "Anything we should know?",
+    "subtitulo":        "We avoid exercises that may cause you discomfort",
+    "limitLabel":       "Physical limitations",
+    "aclarLabel":       "Additional notes",
+    "opcional":         "(optional)",
+    "aclarPlaceholder": "E.g. I had surgery on my right knee in 2022, I can walk but not run...",
+    "todo":             "All set.",
+    "planTiempo":       "Your plan will be generated in under a minute.",
+    "anterior":         "Back",
+    "generando":        "Generating...",
+    "generar":          "Generate my plan",
+    "limit": {
+      "lumbar":       "Lower back pain",
+      "rodilla":      "Knee surgery",
+      "hombro":       "Shoulder",
+      "asma":         "Asthma",
+      "hipertension": "Hypertension",
+      "ninguna":      "None"
+    },
+    "errorGuardar":  "We couldn't save your profile. Please try again.",
+    "errorConexion": "No connection to the server. Check your connection and try again."
+  },
+  "login": {
+    "titulo":            "Welcome back",
+    "subtitulo":         "Sign in to your account to continue",
+    "email":             "Email",
+    "password":          "Password",
+    "ingresar":          "Sign in",
+    "ingresando":        "Signing in...",
+    "olvidaste":         "Forgot your password?",
+    "sinCuenta":         "Don't have an account?",
+    "registrarse":       "Sign up",
+    "errorConexion":     "Connection error. Try again later.",
+    "errorCredenciales": "Invalid email or password"
+  },
+  "admin": {
+    "link":              "Admin",
+    "titulo":            "Users",
+    "total_one":         "{{count}} registered user",
+    "total_other":       "{{count}} registered users",
+    "filtrados":         "{{n}} of {{total}}",
+    "buscarLabel":       "Search users",
+    "buscarPlaceholder": "Name or email",
+    "col": {
+      "nombre":     "Name",
+      "email":      "Email",
+      "rol":        "Role",
+      "alta":       "Joined",
+      "onboarding": "Onboarding",
+      "acciones":   "Actions"
+    },
+    "rol": {
+      "admin":   "Admin",
+      "usuario": "User"
+    },
+    "onboarding": {
+      "completo":  "Complete",
+      "pendiente": "Pending"
+    },
+    "borrar":           "Delete",
+    "borrarA":          "Delete {{email}}",
+    "confirmarTitulo":  "Delete this account?",
+    "confirmarTexto":   "The account, its plans and its check-ins will be removed. This can't be undone.",
+    "cancelar":         "Cancel",
+    "borrarDefinitivo": "Delete permanently",
+    "borrando":         "Deleting...",
+    "borrado":          "The account {{email}} was deleted.",
+    "errorBorrado":     "The account couldn't be deleted. Try again.",
+    "errorConexion":    "The list couldn't be loaded. Check your connection and reload the page.",
+    "vacio":            "There are no registered users yet.",
+    "sinResultados":    "No user matches \"{{q}}\".",
+    "limpiar":          "Clear search",
+    "reintentar":       "Try again",
+    "sinNombre":        "Name unavailable",
+    "panel": "Administration",
+    "tabs": {
+      "usuarios": "Users",
+      "familias": "Families & permissions",
+      "integridad": "Integrity",
+      "bitacora": "Audit log",
+      "backup": "Backup"
+    },
+    "patentesDesc": {
+      "plan_ver": "View own plan and adherence",
+      "plan_generar": "Generate or regenerate the plan with AI",
+      "checkin_registrar": "Complete the daily checklist",
+      "perfil_editar": "Edit profile and onboarding",
+      "cuenta_borrar": "Delete own account",
+      "usuarios_listar": "View the user list",
+      "usuarios_borrar": "Delete other users' accounts",
+      "bitacora_ver": "View the audit log",
+      "integridad_verificar": "Verify check digits",
+      "integridad_recalcular": "Recalculate check digits",
+      "backup_ejecutar": "Create a database backup",
+      "familias_gestionar": "Create and edit families and assign permissions"
+    },
+    "familias": {
+      "titulo": "Families",
+      "intro": "A family groups permissions and can include other families. A user gets every permission from their families.",
+      "nueva": "New family",
+      "editar": "Edit",
+      "editarA": "Edit the {{nombre}} family",
+      "base": "Built-in",
+      "incluye": "Includes:",
+      "patentesPropias": "Own permissions",
+      "totalPermisos_one": "{{count}} permission in total",
+      "totalPermisos_other": "{{count}} permissions in total",
+      "nombre": "Name",
+      "nombreProtegido": "Built-in families can't be renamed.",
+      "descripcion": "Description",
+      "incluyeFamilias": "Includes families",
+      "sinIncluibles": "There are no other families that can be included.",
+      "patentes": "Permissions",
+      "guardar": "Save family",
+      "guardando": "Saving...",
+      "creada": "The {{nombre}} family was created.",
+      "actualizada": "Changes to {{nombre}} were saved.",
+      "errorNombre": "Enter a name for the family.",
+      "errorGuardar": "Couldn't save. Make sure the name isn't taken and try again.",
+      "errorCarga": "Couldn't load the families. Check your connection.",
+      "asignarTitulo": "User permissions",
+      "asignarIntro": "Pick a user to change their families or grant individual permissions. Changes apply immediately.",
+      "usuario": "User",
+      "elegirUsuario": "Pick a user",
+      "vos": "you",
+      "noPropios": "You can't change your own permissions. Ask another administrator to do it.",
+      "familiasAsignadas": "Families",
+      "patentesSueltas": "Individual permissions",
+      "efectivas_one": "Will have {{count}} permission",
+      "efectivas_other": "Will have {{count}} permissions",
+      "sinPermisos": "Without permissions they won't be able to use the app.",
+      "guardarAsignacion": "Save permissions",
+      "asignado": "Permissions for {{email}} were updated.",
+      "errorAsignar": "Couldn't save the permissions. Try again."
+    },
+    "integridad": {
+      "titulo": "Data integrity",
+      "intro": "Each record stores a horizontal check digit (DVH) computed from its fields, and each collection stores a vertical one (DVV): the sum of its DVHs. If someone changes, adds or deletes data outside the app, they stop matching.",
+      "verificar": "Verify",
+      "verificando": "Verifying...",
+      "recalcular": "Recalculate",
+      "recalculando": "Recalculating...",
+      "sinVerificar": "You haven't verified in this session yet. Press Verify to check users, plans and check-ins.",
+      "resumenOk": "All good: no altered data.",
+      "resumenMal_one": "Found {{count}} altered record.",
+      "resumenMal_other": "Found {{count}} altered records.",
+      "resumenMal_zero": "Records were added or deleted outside the app.",
+      "verificadoEn": "Verified on {{fecha}}",
+      "avisoOk": "Verification finished: all good.",
+      "avisoAlterada": "Verification finished: some data was altered.",
+      "avisoRecalculado": "Check digits were recalculated.",
+      "errorVerificar": "Couldn't verify integrity. Check your connection.",
+      "errorRecalcular": "Couldn't recalculate. Try again.",
+      "tablaCaption": "Verification result per collection",
+      "col": {
+        "coleccion": "Collection",
+        "registros": "Records",
+        "alteradas": "Altered",
+        "dvvGuardado": "Stored DVV",
+        "dvvCalculado": "Computed DVV",
+        "estado": "Status"
+      },
+      "colecciones": {
+        "users": "Users",
+        "plans": "Plans",
+        "checkins": "Check-ins"
+      },
+      "ok": "OK",
+      "alterada": "Altered",
+      "filasTitulo_one": "{{count}} altered record",
+      "filasTitulo_other": "{{count}} altered records",
+      "dvhDiferencia": "Stored DVH {{guardado}} · computed {{calculado}}",
+      "confirmarTitulo": "Recalculate check digits?",
+      "confirmarTexto": "The current data becomes the valid baseline, including records now flagged as altered. Only do this after reviewing what changed, or after a migration or a restore."
+    },
+    "bitacora": {
+      "titulo": "Audit log",
+      "intro": "Every request to the app and every important event (plan generated, check-in, user deleted) is recorded. Passwords and emails are never stored: the email is shown from the account. Records older than {{dias}} days are deleted automatically.",
+      "total_one": "{{count}} record",
+      "total_other": "{{count}} records",
+      "filtros": "Audit log filters",
+      "email": "User",
+      "emailPlaceholder": "Email or part of it",
+      "accion": "Action",
+      "todas": "All",
+      "desde": "From",
+      "hasta": "To",
+      "estado": "Result",
+      "todos": "All",
+      "estados": {
+        "ok": "Successful (2xx)",
+        "cliente": "Rejected (4xx)",
+        "servidor": "Server errors (5xx)"
+      },
+      "filtrar": "Filter",
+      "limpiar": "Clear filters",
+      "error": "Couldn't load the audit log. Check your connection.",
+      "vacia": "There are no records yet.",
+      "sinResultados": "No records match the filters.",
+      "caption": "Audit log, page {{pagina}} of {{paginas}}",
+      "col": {
+        "fecha": "Date",
+        "usuario": "User",
+        "accion": "Action",
+        "ruta": "Route",
+        "estado": "Result",
+        "detalles": "Details"
+      },
+      "sinSesion": "Not signed in",
+      "evento": "Event",
+      "paginacion": "Audit log pages",
+      "anterior": "Previous",
+      "siguiente": "Next",
+      "pagina": "Page {{pagina}} of {{paginas}}"
+    },
+    "backup": {
+      "titulo": "Database backup",
+      "intro": "Saves a copy of every collection on the server (backups/backup_DATE, one file per collection). The last {{retencion}} are kept: creating a new one deletes the oldest.",
+      "generar": "Create backup",
+      "generando": "Creating...",
+      "generado": "Backup {{nombre}} created with {{documentos}} documents.",
+      "errorGenerar": "Couldn't create the backup. Try again.",
+      "disponibles": "Available backups",
+      "errorListar": "Couldn't load the backup list.",
+      "vacio": "There are no backups on the server yet.",
+      "ultimo": "Latest",
+      "incompleto": "Incomplete",
+      "resumen": "{{colecciones}} collections · {{documentos}} documents · {{tamanio}}",
+      "restoreTitulo": "Restore a backup",
+      "restoreTexto": "Restoring replaces the current content of each collection with the backup's, so it isn't done from the web: it runs on the server and asks for confirmation. When it finishes it recalculates the check digits.",
+      "restoreAyuda": "Without a name it restores the latest backup. With --si it doesn't ask (for automation)."
+    }
+  },
+  "ayuda": {
+    "titulo": "Help",
+    "intro": "Short answers to the most common questions about your plan, your progress and your account.",
+    "volver": "Back",
+    "link": "Help",
+    "masEnAyuda": "More in Help",
+    "secciones": [
+      {
+        "id": "plan",
+        "titulo": "Your plan",
+        "preguntas": [
+          {
+            "id": "generar-plan",
+            "p": "How is my plan generated?",
+            "r": [
+              "When you finish the 4 onboarding steps, FitPocket sends your data (weight, height, age, goal, level, available days and minutes, diet type, budget, limitations and notes) to an artificial intelligence model, which builds a routine and a 7-day diet.",
+              "The routine only uses the days you picked. If you marked a limitation (for example knee or lower back), besides asking the AI, the app checks the routine and removes or replaces contraindicated exercises.",
+              "It takes from a few seconds to a couple of minutes. The plan is written in the language you had selected when it was generated."
+            ]
+          },
+          {
+            "id": "cambiar-ejercicio",
+            "p": "How do I swap an exercise I can't or don't want to do?",
+            "r": [
+              "In \"View my plan\", tap the exercise to open it. If the AI suggested alternatives, a \"Swap exercise\" button appears: each tap shows the next option and goes back to the original after the last one.",
+              "The swap only lasts while you're looking at the plan: it isn't saved, and the original exercise shows up again next time."
+            ]
+          },
+          {
+            "id": "checklist",
+            "p": "How does the daily checklist work?",
+            "r": [
+              "Each day you mark how your routine and your diet went: Done (1 point), Partly (half a point) or Skipped (0). Then tap Save day.",
+              "It's recorded once per day: after saving it stays fixed until the next day. Your adherence and streak are calculated from it."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "progreso",
+        "titulo": "Your progress",
+        "preguntas": [
+          {
+            "id": "adherencia",
+            "p": "What is adherence and how is it calculated?",
+            "r": [
+              "It's how much of your plan you followed in the last 7 days, as a percentage.",
+              "The diet adds points every day; the routine only on days your plan has a workout (if the plan says rest, you don't lose points for resting). The percentage is what you scored over the maximum possible. Days before your first plan don't count.",
+              "If it drops below 50% with at least 3 days counted, the dashboard warns you."
+            ]
+          },
+          {
+            "id": "racha",
+            "p": "What is the streak?",
+            "r": [
+              "The number of consecutive days, counting back from today, in which you saved the checklist and scored at least some points.",
+              "It counts from today: if you haven't saved today yet, it shows 0 until you do. A day without a check-in, or with everything on \"Skipped\", breaks it."
+            ]
+          },
+          {
+            "id": "imc",
+            "p": "What is BMI?",
+            "r": [
+              "Body mass index: your weight in kilograms divided by your height in meters squared. It's calculated from the data you entered during onboarding.",
+              "As a general reference: under 18.5 is underweight, 18.5 to 24.9 is normal, 25 to 29.9 overweight and 30 or more obesity. It's only a guide: it doesn't tell muscle from fat and doesn't replace a professional's opinion."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cuenta",
+        "titulo": "Your account and your data",
+        "preguntas": [
+          {
+            "id": "recuperar-contrasena",
+            "p": "I forgot my password. How do I recover it?",
+            "r": [
+              "Tap \"Sign in\" and then \"Forgot your password?\". Enter your account email and you'll get a link to choose a new one.",
+              "The link expires in 30 minutes and works only once. Changing it signs you out on other devices. If it doesn't arrive, check your spam folder."
+            ]
+          },
+          {
+            "id": "datos-encriptados",
+            "p": "Which of my data is stored encrypted?",
+            "r": [
+              "Your name, your physical limitations and the note you wrote during onboarding are stored encrypted (AES-256): they can't be read in the database without the server's key.",
+              "Your password is never stored: only a hash (bcrypt) that can check it but can't recover it. For the recovery link, only a hash is stored too.",
+              "The activity log doesn't store passwords or emails, and every record has a check digit that reveals if someone changes it outside the app."
+            ]
+          },
+          {
+            "id": "borrar-cuenta",
+            "p": "How do I delete my account?",
+            "r": [
+              "On the dashboard, open the Progress tab and scroll to \"Your account\": that's where \"Delete my account\" is. It asks for confirmation before deleting anything.",
+              "Your account, all your plans and all your checklist records are deleted. It can't be undone."
+            ]
+          },
+          {
+            "id": "idioma",
+            "p": "How do I change the language?",
+            "r": [
+              "With the ES / EN buttons: they are at the top right and, on a phone, some screens show them at the bottom right. The app switches instantly and remembers your choice.",
+              "Your plan stays in the language it was generated in."
+            ]
+          }
+        ]
+      }
+    ],
+    "admin": {
+      "id": "admin",
+      "titulo": "For administrators",
+      "preguntas": [
+        {
+          "id": "admin-familias",
+          "p": "What are permissions and families?",
+          "r": [
+            "A permission allows one specific action (for example usuarios.borrar). A family groups permissions and other families too: Administrador includes Usuario.",
+            "What someone can do is the sum of their families and individual permissions. Changes apply immediately, without the person signing in again. You can't change your own permissions."
+          ]
+        },
+        {
+          "id": "admin-integridad",
+          "p": "What do I do if the integrity check flags altered data?",
+          "r": [
+            "It means those records were changed, added or deleted outside the app (for example, by editing the database directly). Check the audit log to see what happened and who did it.",
+            "Recalculate accepts the current data as valid: only use it after reviewing, or after a migration or a restore."
+          ]
+        },
+        {
+          "id": "admin-backup",
+          "p": "How do I create and restore a backup?",
+          "r": [
+            "The button in the Backup tab saves a copy of every collection on the server. You can also run node scripts/backup.js from the console.",
+            "Restoring is done from the console (node scripts/restore.js): it asks for confirmation and recalculates the check digits when it finishes."
+          ]
+        }
+      ]
+    },
+    "tips": {
+      "racha": "Consecutive days, counting from today, in which you saved the checklist and scored some points.",
+      "rachaEtiqueta": "What the streak is",
+      "imc": "Body mass index: weight divided by height squared. 18.5 to 24.9 is the normal range. It's only a guide.",
+      "imcEtiqueta": "What BMI is",
+      "adherencia": "How much of your plan you followed in the last 7 days. The diet counts every day and the routine only on workout days.",
+      "adherenciaEtiqueta": "How adherence is calculated",
+      "checklist": "Done is worth 1 point, Partly half and Skipped 0. It's saved once per day and drives your adherence and streak.",
+      "checklistEtiqueta": "How the checklist works",
+      "cambiarEjercicio": "Shows the next alternative the AI suggested. It's only for now: the swap isn't saved to your plan.",
+      "cambiarEjercicioEtiqueta": "What swap exercise does",
+      "usuarios": "Every registered account. Deleting one also deletes its plans and check-ins. Administrators can't be deleted from here.",
+      "familias": "A family groups permissions and can include other families. What a user can do is the sum of their families and individual permissions.",
+      "integridad": "Detects data changed outside the app by comparing each record's check digit (DVH) and each collection's (DVV).",
+      "bitacora": "Record of every request to the app and of important events. It doesn't store passwords or emails.",
+      "backup": "Copy of every collection on the server. Restoring runs from the console and recalculates the check digits.",
+      "seccionEtiqueta": "Help about {{seccion}}"
+    }
+  },
+  "cuenta": {
+    "titulo": "Your account",
+    "borrar": "Delete my account",
+    "adminNoPuede": "As an administrator you can't delete your own account. Ask another administrator.",
+    "confirmarTitulo": "Delete your account?",
+    "confirmarTexto": "Your account, all your plans and all your checklist records will be deleted. This can't be undone.",
+    "confirmarBoton": "Yes, delete my account",
+    "borrando": "Deleting...",
+    "errorBorrar": "Couldn't delete the account. Check your connection and try again.",
+    "errorAdmin": "An administrator can't delete their own account."
+  }
+}

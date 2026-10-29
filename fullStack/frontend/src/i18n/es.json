@@ -1,0 +1,700 @@
+{
+  "restablecer": {
+    "titulo": "Elegí tu contraseña nueva",
+    "subtitulo": "Al guardarla entrás directo a tu cuenta y se cierran las sesiones abiertas en otros dispositivos.",
+    "nueva": "Contraseña nueva",
+    "repetir": "Repetí la contraseña",
+    "ayuda": "Mínimo 8 caracteres.",
+    "mostrar": "Mostrar contraseñas",
+    "guardar": "Guardar y entrar",
+    "guardando": "Guardando...",
+    "errorCorta": "La contraseña tiene que tener al menos 8 caracteres.",
+    "errorDistintas": "Las dos contraseñas no coinciden.",
+    "errorConexion": "No pudimos conectar con el servidor. Intentá de nuevo.",
+    "invalidoTitulo": "Este enlace ya no sirve",
+    "invalidoTexto": "Venció, ya fue usado o está incompleto. Pedí uno nuevo y usalo dentro de los 30 minutos.",
+    "pedirOtro": "Pedir un enlace nuevo"
+  },
+  "recuperar": {
+    "titulo": "Recuperá tu contraseña",
+    "subtitulo": "Escribí el email de tu cuenta y te mandamos un enlace para elegir una contraseña nueva.",
+    "email": "Email",
+    "placeholderEmail": "tu@email.com",
+    "enviar": "Enviarme el enlace",
+    "enviando": "Enviando...",
+    "volverLogin": "Volver a iniciar sesión",
+    "errorEmail": "Escribí un email válido.",
+    "errorConexion": "No pudimos conectar con el servidor. Intentá de nuevo.",
+    "enviadoTitulo": "Revisá tu correo",
+    "enviadoTexto": "Si {{email}} tiene una cuenta en FitPocket, te enviamos un enlace para restablecer la contraseña.",
+    "enviadoAyuda": "El enlace vence en 30 minutos. Si no lo ves, mirá en correo no deseado; podés pedir otro después de un minuto."
+  },
+  "progreso": {
+    "adherenciaTitulo": "Adherencia de esta semana",
+    "sinRegistros": "Todavía no tenés registros de adherencia.",
+    "pesoTitulo": "Peso registrado",
+    "pesoInicial": "Peso inicial registrado en tu perfil",
+    "sinPeso": "No hay datos de peso registrados."
+  },
+  "checklist": {
+    "titulo": "¿Cómo te fue hoy?",
+    "rutina": "🏋️ Rutina de entrenamiento",
+    "dieta": "🥗 Dieta del día",
+    "completado": "Completado",
+    "parcial": "Parcial",
+    "noHice": "No hice",
+    "guardar": "Guardar día",
+    "guardando": "Guardando...",
+    "yaRegistrado": "✓ Ya registraste el día de hoy.",
+    "errorOpciones": "Seleccioná ambas opciones antes de guardar.",
+    "errorGuardar": "No se pudo guardar. Intentá de nuevo."
+  },
+  "comun": {
+    "idioma": "Idioma",
+    "cargando": "Cargando..."
+  },
+  "cargando": {
+    "pasos": [
+      "Analizando tu perfil físico...",
+      "Calculando carga de entrenamiento...",
+      "Optimizando días y rutinas...",
+      "Ajustando nutrición al presupuesto...",
+      "Finalizando tu plan personalizado..."
+    ],
+    "errorTitulo":   "No pudimos generar tu plan",
+    "reintentar":    "Reintentar",
+    "errorSesion":   "No hay sesión activa. Iniciá sesión para generar tu plan.",
+    "errorGenerico": "Ocurrió un error inesperado al generar el plan."
+  },
+  "dashboard": {
+    "tabs": { "inicio": "Inicio", "checklist": "Checklist", "progreso": "Progreso" },
+    "sinPlanTitulo": "Todavía no tenés un plan",
+    "sinPlanTexto": "Completá tu perfil para generar tu rutina y tu dieta personalizada.",
+    "sinPlanCta": "Completar mi perfil",
+    "adherenciaBaja": "Tu adherencia esta semana es baja.",
+    "adherencia": "adherencia",
+    "saludo": {
+      "manana": "Buenos días",
+      "tarde":  "Buenas tardes",
+      "noche":  "Buenas noches"
+    },
+    "hoy":            "hoy",
+    "entrenarHoy":    "Entrenás hoy",
+    "descansoHoy":    "Descanso hoy",
+    "proximaSesion":  "Próxima: {{dia}}",
+    "recuperate":     "Recuperate bien. El cuerpo crece en el descanso.",
+    "racha":          "racha",
+    "kcalHoy":        "kcal hoy",
+    "imc":            "IMC",
+    "verPlan":        "Ver mi plan",
+    "semana":         "Semana",
+    "dietaHoy":       "Dieta de hoy",
+    "desayuno":       "Desayuno",
+    "almuerzo":       "Almuerzo",
+    "merienda":       "Merienda",
+    "cena":           "Cena",
+    "sinPlan":        "Generá tu plan para ver el detalle",
+    "salir":          "Salir",
+    "errorConexion":  "No se pudo cargar tu información. Revisá tu conexión.",
+    "dias": {
+      "lun": "Lun", "mar": "Mar", "mie": "Mié",
+      "jue": "Jue", "vie": "Vie", "sab": "Sáb", "dom": "Dom"
+    }
+  },
+  "plan": {
+    "volver":            "Volver al dashboard",
+    "titulo":            "Tu plan completo",
+    "objetivo":          "Objetivo",
+    "dias":              "Días de la semana",
+    "entrenamiento":     "Entrenamiento",
+    "descanso":          "Descanso",
+    "descansoDia":       "Día de descanso. Recuperate bien.",
+    "dietaDia":          "Dieta de este día",
+    "costoEstimado":     "Costo estimado del día",
+    "cambiarEjercicio":  "Cambiar ejercicio",
+    "reemplazado":       "reemplazado",
+    "sinPlan":           "Generá tu plan para ver el detalle",
+    "errorConexion":     "No se pudo cargar tu plan. Revisá tu conexión."
+  },
+  "ejercicios": {
+    "push":    { "muscles": "Pecho · Tríceps · Hombros",             "tip": "Controlá el descenso. Pausa en el pecho antes de empujar." },
+    "pull":    { "muscles": "Espalda · Bíceps · Romboides",          "tip": "Retracción escapular al inicio. Codos cerca del cuerpo." },
+    "legs":    { "muscles": "Cuádriceps · Glúteos · Isquiotibiales", "tip": "Rodillas alineadas con los pies. Espalda recta durante todo el movimiento." },
+    "core":    { "muscles": "Abdomen · Core · Estabilizadores",      "tip": "Cuerpo en línea recta de cabeza a talones. Respiración constante." },
+    "general": { "muscles": "Músculos compuestos",                   "tip": "Técnica primero, peso después. Controlá cada repetición." }
+  },
+  "home": {
+    "entrar":          "Entrar",
+    "empezarGratis":   "Empezar gratis",
+    "verComoFunciona": "Ver cómo funciona",
+    "hero": {
+      "titulo1": "ENTRENÁS",
+      "titulo2": "MEJOR.",
+      "desc":    "Obtené tu rutina y alimentación personalizada según tu cuerpo, objetivos y presupuesto.",
+      "planes":  "Tu plan en menos de 1 minuto",
+      "scroll":  "scroll"
+    },
+    "bento": {
+      "seccion":      "Funcionalidades",
+      "titulo":       "Todo en un solo lugar.",
+      "planSemanal":  "Tu plan semanal",
+      "mockup": {
+        "semana":          "Semana 1",
+        "hoy":             "Hoy",
+        "adherenciaLabel": "Adherencia",
+        "dias": [
+          { "day": "Lun", "work": "Tren superior",   "dur": "45m" },
+          { "day": "Mar", "work": "Cardio HIIT",     "dur": "30m" },
+          { "day": "Mié", "work": "Descanso activo", "dur": "—"   },
+          { "day": "Jue", "work": "Tren inferior",   "dur": "45m" },
+          { "day": "Vie", "work": "Cardio + Core",   "dur": "40m" }
+        ]
+      },
+      "adherenciaAvg": "Tu progreso",
+      "progresoValor": "Diario",
+      "adherenciaSub": "Seguís tu rutina y tu dieta día a día desde el dashboard",
+      "setupLabel":    "Setup",
+      "setupSub":      "Para tener tu plan completo listo",
+      "proceso":       "El proceso",
+      "pasos": [
+        { "n": "01", "titulo": "Onboarding",    "desc": "Datos, objetivo y disponibilidad" },
+        { "n": "02", "titulo": "Tu plan listo", "desc": "Rutina + dieta personalizada en segundos" },
+        { "n": "03", "titulo": "Seguís",        "desc": "Registrás tu progreso día a día" }
+      ],
+      "adaptaLabel":  "Te avisamos",
+      "adaptaTitulo": "Alertas",
+      "adaptaDesc":   "Si tu adherencia baja, te lo mostramos en el dashboard",
+      "stats": [
+        { "val": "7",    "unit": "días",   "desc": "Plan completo" },
+        { "val": "2",    "unit": "en 1",   "desc": "Rutina + dieta" },
+        { "val": "100%", "unit": "gratis", "desc": "Sin tarjeta" }
+      ]
+    },
+    "cta": {
+      "titulo":    "¿Listo para entrenar diferente?",
+      "subtitulo": "Sin tarjeta de crédito · Sin compromisos · 3 minutos",
+      "btn":       "Empezar gratis"
+    },
+    "footer": "© 2026 FitPocket · Todos los derechos reservados"
+  },
+  "authModal": {
+    "olvidaste": "¿Olvidaste tu contraseña?",
+    "ariaLabel":  "Iniciar sesión",
+    "cerrar":     "Cerrar",
+    "titulo":     "Bienvenido de vuelta",
+    "subtitulo":  "Ingresá a tu cuenta para continuar",
+    "email":      "Email",
+    "contrasena": "Contraseña",
+    "placeholder": {
+      "email":      "tu@email.com",
+      "contrasena": "Tu contraseña"
+    },
+    "mostrar":          "Mostrar contraseña",
+    "ocultar":          "Ocultar contraseña",
+    "ingresar":         "Ingresar →",
+    "ingresando":       "Ingresando...",
+    "noTenes":          "¿No tenés cuenta?",
+    "registrarse":      "Registrarse",
+    "errorCredenciales": "Email o contraseña incorrectos",
+    "errorConexion":    "Error de conexión. Intentá más tarde."
+  },
+  "onboarding1": {
+    "titulo":       "Datos físicos",
+    "subtitulo":    "Calculamos tu IMC y personalizamos el plan",
+    "edad":         "Edad",
+    "peso":         "Peso (kg)",
+    "altura":       "Altura (cm)",
+    "sexo":         "Sexo",
+    "selecciona":   "Seleccioná",
+    "femenino":     "Femenino",
+    "masculino":    "Masculino",
+    "imcEstimado":  "IMC estimado",
+    "ingresaDatos": "Ingresá tus datos",
+    "siguiente":    "Siguiente",
+    "errorCampos":  "Completá todos los campos para continuar.",
+    "errorRango":   "Revisá los datos: edad entre 10 y 99 años, peso entre 30 y 300 kg, altura entre 100 y 250 cm."
+  },
+  "register": {
+    "volver":      "Volver al inicio",
+    "titulo":      "Crear cuenta",
+    "subtitulo":   "Empezá gratis. Sin tarjeta de crédito.",
+    "nombre":      "Nombre",
+    "email":       "Email",
+    "contrasena":  "Contraseña",
+    "placeholder": {
+      "nombre":     "Tu nombre",
+      "contrasena": "Mínimo 8 caracteres"
+    },
+    "fuerza": {
+      "muyDebil":  "Muy débil",
+      "debil":     "Débil",
+      "media":     "Media",
+      "fuerte":    "Fuerte",
+      "muyFuerte": "Muy fuerte"
+    },
+    "mostrar":       "Mostrar",
+    "ocultar":       "Ocultar",
+    "crear":         "Crear cuenta y continuar →",
+    "creando":       "Creando cuenta...",
+    "terminos":      "Al registrarte aceptás los",
+    "terminosLink":  "términos de uso",
+    "yaTenes":       "¿Ya tenés cuenta?",
+    "iniciarSesion": "Iniciá sesión",
+    "errorRegistro": "Error en el registro",
+    "errorConexion": "Error de conexión. Intentá más tarde.",
+    "errorCamposRequeridos": "Completá todos los campos para continuar."
+  },
+  "ob2": {
+    "titulo":        "¿Qué querés lograr?",
+    "subtitulo":     "Tu plan se construye alrededor de este objetivo",
+    "nivelLabel":    "Nivel de experiencia",
+    "anterior":      "Anterior",
+    "siguiente":     "Siguiente",
+    "errorObjetivo": "Seleccioná un objetivo para continuar.",
+    "obj": {
+      "perderGrasa":  { "titulo": "Perder grasa",    "sub": "Déficit calórico + cardio progresivo" },
+      "ganarMusculo": { "titulo": "Ganar músculo",   "sub": "Superávit calórico + entrenamiento de fuerza" },
+      "resistencia":  { "titulo": "Resistencia",     "sub": "Cardio progresivo y zona aeróbica" },
+      "saludGeneral": { "titulo": "Salud general",   "sub": "Balance entre fuerza, cardio y bienestar" }
+    },
+    "nivel": {
+      "principiante": "Principiante",
+      "intermedio":   "Intermedio",
+      "avanzado":     "Avanzado"
+    }
+  },
+  "ob3": {
+    "titulo":            "Contanos tu rutina",
+    "subtitulo":         "Adaptamos el plan a tus tiempos y preferencias",
+    "diasLabel":         "Días disponibles",
+    "minutosLabel":      "Minutos por sesión",
+    "dietaLabel":        "Tipo de dieta",
+    "presupuestoLabel":  "Presupuesto mensual",
+    "opcional":          "(opcional)",
+    "presupuestoPrefix": "ARS $",
+    "diasSeleccionado_one":   "{{count}} día seleccionado",
+    "diasSeleccionado_other": "{{count}} días seleccionados",
+    "dias": {
+      "lunes":     "Lun",
+      "martes":    "Mar",
+      "miercoles": "Mié",
+      "jueves":    "Jue",
+      "viernes":   "Vie",
+      "sabado":    "Sáb",
+      "domingo":   "Dom"
+    },
+    "dieta": {
+      "normal":      "Sin restricción",
+      "vegetariano": "Vegetariano",
+      "vegano":      "Vegano",
+      "sinGluten":   "Sin gluten"
+    },
+    "anterior":  "Anterior",
+    "siguiente": "Siguiente",
+    "errorDias": "Seleccioná al menos un día disponible.",
+    "errorPresupuesto": "El presupuesto tiene que ser mayor a 0. Si no querés indicarlo, dejá el campo vacío."
+  },
+  "ob4": {
+    "titulo":           "¿Algo que debamos saber?",
+    "subtitulo":        "Evitamos ejercicios que puedan causarte molestias",
+    "limitLabel":       "Limitaciones físicas",
+    "aclarLabel":       "Aclaración adicional",
+    "opcional":         "(opcional)",
+    "aclarPlaceholder": "Ej: operé la rodilla derecha en 2022, puedo caminar pero no correr...",
+    "todo":             "Todo listo.",
+    "planTiempo":       "Tu plan se generará en menos de un minuto.",
+    "anterior":         "Anterior",
+    "generando":        "Generando...",
+    "generar":          "Generar mi plan",
+    "limit": {
+      "lumbar":       "Dolor lumbar",
+      "rodilla":      "Rodilla operada",
+      "hombro":       "Hombro",
+      "asma":         "Asma",
+      "hipertension": "Hipertensión",
+      "ninguna":      "Ninguna"
+    },
+    "errorGuardar":  "No pudimos guardar tu perfil. Intentá de nuevo.",
+    "errorConexion": "No hay conexión con el servidor. Revisá tu conexión e intentá de nuevo."
+  },
+  "login": {
+    "titulo":            "Bienvenido de vuelta",
+    "subtitulo":         "Ingresá a tu cuenta para continuar",
+    "email":             "Email",
+    "password":          "Contraseña",
+    "ingresar":          "Ingresar",
+    "ingresando":        "Ingresando...",
+    "olvidaste":         "¿Olvidaste tu contraseña?",
+    "sinCuenta":         "¿No tenés cuenta?",
+    "registrarse":       "Registrarse",
+    "errorConexion":     "Error de conexión. Intentá más tarde.",
+    "errorCredenciales": "Email o contraseña incorrectos"
+  },
+  "admin": {
+    "link":              "Admin",
+    "titulo":            "Usuarios",
+    "total_one":         "{{count}} usuario registrado",
+    "total_other":       "{{count}} usuarios registrados",
+    "filtrados":         "{{n}} de {{total}}",
+    "buscarLabel":       "Buscar usuario",
+    "buscarPlaceholder": "Nombre o email",
+    "col": {
+      "nombre":     "Nombre",
+      "email":      "Email",
+      "rol":        "Rol",
+      "alta":       "Alta",
+      "onboarding": "Onboarding",
+      "acciones":   "Acciones"
+    },
+    "rol": {
+      "admin":   "Admin",
+      "usuario": "Usuario"
+    },
+    "onboarding": {
+      "completo":  "Completo",
+      "pendiente": "Pendiente"
+    },
+    "borrar":           "Borrar",
+    "borrarA":          "Borrar a {{email}}",
+    "confirmarTitulo":  "¿Borrar esta cuenta?",
+    "confirmarTexto":   "Se eliminan la cuenta, sus planes y sus check-ins. No se puede deshacer.",
+    "cancelar":         "Cancelar",
+    "borrarDefinitivo": "Borrar definitivamente",
+    "borrando":         "Borrando...",
+    "borrado":          "Se borró la cuenta de {{email}}.",
+    "errorBorrado":     "No se pudo borrar la cuenta. Probá de nuevo.",
+    "errorConexion":    "No se pudo cargar el listado. Revisá tu conexión y recargá la página.",
+    "vacio":            "Todavía no hay usuarios registrados.",
+    "sinResultados":    "Ningún usuario coincide con \"{{q}}\".",
+    "limpiar":          "Limpiar búsqueda",
+    "reintentar":       "Reintentar",
+    "sinNombre":        "Nombre no disponible",
+    "panel": "Administración",
+    "tabs": {
+      "usuarios": "Usuarios",
+      "familias": "Familias y permisos",
+      "integridad": "Integridad",
+      "bitacora": "Bitácora",
+      "backup": "Backup"
+    },
+    "patentesDesc": {
+      "plan_ver": "Ver el plan propio y la adherencia",
+      "plan_generar": "Generar o regenerar el plan con IA",
+      "checkin_registrar": "Completar el checklist diario",
+      "perfil_editar": "Editar el perfil y el onboarding",
+      "cuenta_borrar": "Borrar la cuenta propia",
+      "usuarios_listar": "Ver el listado de usuarios",
+      "usuarios_borrar": "Borrar cuentas de otros usuarios",
+      "bitacora_ver": "Consultar la bitácora",
+      "integridad_verificar": "Verificar los dígitos verificadores",
+      "integridad_recalcular": "Recalcular los dígitos verificadores",
+      "backup_ejecutar": "Generar un backup de la base",
+      "familias_gestionar": "Crear y editar familias y asignar permisos"
+    },
+    "familias": {
+      "titulo": "Familias",
+      "intro": "Una familia agrupa patentes (permisos) y puede incluir otras familias. Un usuario tiene todos los permisos de sus familias.",
+      "nueva": "Nueva familia",
+      "editar": "Editar",
+      "editarA": "Editar la familia {{nombre}}",
+      "base": "Base",
+      "incluye": "Incluye:",
+      "patentesPropias": "Patentes propias",
+      "totalPermisos_one": "{{count}} permiso en total",
+      "totalPermisos_other": "{{count}} permisos en total",
+      "nombre": "Nombre",
+      "nombreProtegido": "Las familias base no se pueden renombrar.",
+      "descripcion": "Descripción",
+      "incluyeFamilias": "Incluye las familias",
+      "sinIncluibles": "No hay otras familias que se puedan incluir.",
+      "patentes": "Patentes",
+      "guardar": "Guardar familia",
+      "guardando": "Guardando...",
+      "creada": "Se creó la familia {{nombre}}.",
+      "actualizada": "Se guardaron los cambios de {{nombre}}.",
+      "errorNombre": "Poné un nombre para la familia.",
+      "errorGuardar": "No se pudo guardar. Revisá que el nombre no esté repetido y probá de nuevo.",
+      "errorCarga": "No se pudieron cargar las familias. Revisá tu conexión.",
+      "asignarTitulo": "Permisos de un usuario",
+      "asignarIntro": "Elegí un usuario para cambiar sus familias o darle patentes sueltas. El cambio rige en el momento.",
+      "usuario": "Usuario",
+      "elegirUsuario": "Elegí un usuario",
+      "vos": "vos",
+      "noPropios": "No podés cambiar tus propios permisos. Pedile a otro administrador que lo haga.",
+      "familiasAsignadas": "Familias",
+      "patentesSueltas": "Patentes sueltas",
+      "efectivas_one": "Va a tener {{count}} permiso",
+      "efectivas_other": "Va a tener {{count}} permisos",
+      "sinPermisos": "Sin permisos no va a poder usar la app.",
+      "guardarAsignacion": "Guardar permisos",
+      "asignado": "Se actualizaron los permisos de {{email}}.",
+      "errorAsignar": "No se pudieron guardar los permisos. Probá de nuevo."
+    },
+    "integridad": {
+      "titulo": "Integridad de datos",
+      "intro": "Cada registro guarda un dígito verificador horizontal (DVH) calculado con sus campos, y cada colección guarda uno vertical (DVV): la suma de sus DVH. Si alguien modifica, agrega o borra datos por fuera de la app, dejan de coincidir.",
+      "verificar": "Verificar",
+      "verificando": "Verificando...",
+      "recalcular": "Recalcular",
+      "recalculando": "Recalculando...",
+      "sinVerificar": "Todavía no verificaste en esta sesión. Tocá Verificar para revisar usuarios, planes y check-ins.",
+      "resumenOk": "Todo en orden: no hay datos alterados.",
+      "resumenMal_one": "Se encontró {{count}} registro alterado.",
+      "resumenMal_other": "Se encontraron {{count}} registros alterados.",
+      "resumenMal_zero": "Hay registros agregados o borrados por fuera de la app.",
+      "verificadoEn": "Verificado el {{fecha}}",
+      "avisoOk": "Verificación terminada: todo en orden.",
+      "avisoAlterada": "Verificación terminada: hay datos alterados.",
+      "avisoRecalculado": "Se recalcularon los dígitos verificadores.",
+      "errorVerificar": "No se pudo verificar la integridad. Revisá tu conexión.",
+      "errorRecalcular": "No se pudo recalcular. Probá de nuevo.",
+      "tablaCaption": "Resultado de la verificación por colección",
+      "col": {
+        "coleccion": "Colección",
+        "registros": "Registros",
+        "alteradas": "Alterados",
+        "dvvGuardado": "DVV guardado",
+        "dvvCalculado": "DVV calculado",
+        "estado": "Estado"
+      },
+      "colecciones": {
+        "users": "Usuarios",
+        "plans": "Planes",
+        "checkins": "Check-ins"
+      },
+      "ok": "OK",
+      "alterada": "Alterada",
+      "filasTitulo_one": "{{count}} registro alterado",
+      "filasTitulo_other": "{{count}} registros alterados",
+      "dvhDiferencia": "DVH guardado {{guardado}} · calculado {{calculado}}",
+      "confirmarTitulo": "¿Recalcular los dígitos verificadores?",
+      "confirmarTexto": "Los datos actuales pasan a ser los válidos, incluidos los que hoy figuran como alterados. Hacelo solo después de revisar qué cambió, o después de una migración o un restore."
+    },
+    "bitacora": {
+      "titulo": "Bitácora",
+      "intro": "Cada pedido a la app y cada evento importante (plan generado, checkin, usuario borrado) queda registrado. No se guardan contraseñas ni emails: el email se muestra desde la cuenta. Los registros de más de {{dias}} días se borran solos.",
+      "total_one": "{{count}} registro",
+      "total_other": "{{count}} registros",
+      "filtros": "Filtros de la bitácora",
+      "email": "Usuario",
+      "emailPlaceholder": "Email o parte del email",
+      "accion": "Acción",
+      "todas": "Todas",
+      "desde": "Desde",
+      "hasta": "Hasta",
+      "estado": "Resultado",
+      "todos": "Todos",
+      "estados": {
+        "ok": "Correctos (2xx)",
+        "cliente": "Rechazados (4xx)",
+        "servidor": "Errores del servidor (5xx)"
+      },
+      "filtrar": "Filtrar",
+      "limpiar": "Limpiar filtros",
+      "error": "No se pudo cargar la bitácora. Revisá tu conexión.",
+      "vacia": "Todavía no hay registros.",
+      "sinResultados": "Ningún registro coincide con los filtros.",
+      "caption": "Bitácora, página {{pagina}} de {{paginas}}",
+      "col": {
+        "fecha": "Fecha",
+        "usuario": "Usuario",
+        "accion": "Acción",
+        "ruta": "Ruta",
+        "estado": "Resultado",
+        "detalles": "Detalles"
+      },
+      "sinSesion": "Sin sesión",
+      "evento": "Evento",
+      "paginacion": "Páginas de la bitácora",
+      "anterior": "Anterior",
+      "siguiente": "Siguiente",
+      "pagina": "Página {{pagina}} de {{paginas}}"
+    },
+    "backup": {
+      "titulo": "Backup de la base",
+      "intro": "Guarda una copia de todas las colecciones en el servidor (backups/backup_FECHA, un archivo por colección). Se conservan los últimos {{retencion}}: al generar uno nuevo se borra el más viejo.",
+      "generar": "Generar backup",
+      "generando": "Generando...",
+      "generado": "Backup {{nombre}} generado con {{documentos}} documentos.",
+      "errorGenerar": "No se pudo generar el backup. Probá de nuevo.",
+      "disponibles": "Backups disponibles",
+      "errorListar": "No se pudo cargar la lista de backups.",
+      "vacio": "Todavía no hay backups en el servidor.",
+      "ultimo": "Último",
+      "incompleto": "Incompleto",
+      "resumen": "{{colecciones}} colecciones · {{documentos}} documentos · {{tamanio}}",
+      "restoreTitulo": "Restaurar un backup",
+      "restoreTexto": "Restaurar reemplaza el contenido actual de cada colección por el del backup, así que no se hace desde la web: se corre en el servidor y pide confirmación. Al terminar recalcula los dígitos verificadores.",
+      "restoreAyuda": "Sin nombre restaura el último backup. Con --si no pregunta (para automatizarlo)."
+    }
+  },
+  "ayuda": {
+    "titulo": "Ayuda",
+    "intro": "Respuestas cortas a las dudas más comunes sobre tu plan, tu progreso y tu cuenta.",
+    "volver": "Volver",
+    "link": "Ayuda",
+    "masEnAyuda": "Más en Ayuda",
+    "secciones": [
+      {
+        "id": "plan",
+        "titulo": "Tu plan",
+        "preguntas": [
+          {
+            "id": "generar-plan",
+            "p": "¿Cómo se genera mi plan?",
+            "r": [
+              "Al terminar los 4 pasos del onboarding, FitPocket le pasa tus datos (peso, altura, edad, objetivo, nivel, días y minutos disponibles, tipo de dieta, presupuesto, limitaciones y aclaraciones) a un modelo de inteligencia artificial, que arma una rutina y una dieta de 7 días.",
+              "La rutina solo usa los días que elegiste. Si marcaste una limitación (por ejemplo rodilla o lumbar), además de pedírselo a la IA, la app revisa la rutina y saca o reemplaza los ejercicios contraindicados.",
+              "Tarda entre unos segundos y un par de minutos. El plan se escribe en el idioma que tenías elegido al generarlo."
+            ]
+          },
+          {
+            "id": "cambiar-ejercicio",
+            "p": "¿Cómo cambio un ejercicio que no puedo o no quiero hacer?",
+            "r": [
+              "En \"Ver mi plan\", tocá el ejercicio para abrirlo. Si la IA sugirió alternativas, aparece el botón \"Cambiar ejercicio\": cada toque muestra la siguiente opción y vuelve al original después de la última.",
+              "El cambio es solo para esa vez que mirás el plan: no se guarda, y al volver a abrirlo aparece el ejercicio original."
+            ]
+          },
+          {
+            "id": "checklist",
+            "p": "¿Cómo funciona el checklist diario?",
+            "r": [
+              "Cada día marcás cómo te fue con la rutina y con la dieta: Completado (vale 1 punto), Parcial (medio punto) o No hice (0). Después tocás Guardar día.",
+              "Se registra una vez por día: después de guardar queda fijo hasta el día siguiente. Con eso se calculan tu adherencia y tu racha."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "progreso",
+        "titulo": "Tu progreso",
+        "preguntas": [
+          {
+            "id": "adherencia",
+            "p": "¿Qué es la adherencia y cómo se calcula?",
+            "r": [
+              "Es qué tanto cumpliste tu plan en los últimos 7 días, en porcentaje.",
+              "La dieta suma puntos todos los días; la rutina solo los días que tu plan tiene entrenamiento (si el plan dice descanso, no perdés puntos por descansar). El porcentaje es lo que sumaste sobre lo máximo posible. Los días anteriores a tu primer plan no cuentan.",
+              "Si baja del 50% con al menos 3 días contados, el dashboard te avisa."
+            ]
+          },
+          {
+            "id": "racha",
+            "p": "¿Qué es la racha?",
+            "r": [
+              "La cantidad de días seguidos, contando desde hoy hacia atrás, en los que registraste el checklist y sumaste algún punto.",
+              "Se cuenta desde hoy: si todavía no registraste el día de hoy, marca 0 hasta que lo hagas. Un día sin registrar, o con todo en \"No hice\", la corta."
+            ]
+          },
+          {
+            "id": "imc",
+            "p": "¿Qué es el IMC?",
+            "r": [
+              "El índice de masa corporal: tu peso en kilos dividido tu altura en metros al cuadrado. Se calcula con los datos que cargaste en el onboarding.",
+              "Como referencia general: menos de 18,5 es bajo peso, de 18,5 a 24,9 es normal, de 25 a 29,9 sobrepeso y 30 o más obesidad. Es orientativo: no distingue músculo de grasa y no reemplaza la opinión de un profesional."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cuenta",
+        "titulo": "Tu cuenta y tus datos",
+        "preguntas": [
+          {
+            "id": "recuperar-contrasena",
+            "p": "Me olvidé la contraseña, ¿cómo la recupero?",
+            "r": [
+              "Tocá \"Entrar\" y después \"¿Olvidaste tu contraseña?\". Escribí el email de tu cuenta y te llega un enlace para elegir una nueva.",
+              "El enlace vence en 30 minutos y sirve una sola vez. Al cambiarla se cierran las sesiones abiertas en otros dispositivos. Si no te llega, revisá la carpeta de spam."
+            ]
+          },
+          {
+            "id": "datos-encriptados",
+            "p": "¿Qué datos míos se guardan encriptados?",
+            "r": [
+              "Tu nombre, tus limitaciones físicas y la aclaración que escribiste en el onboarding se guardan encriptados (AES-256): en la base no se pueden leer sin la clave del servidor.",
+              "Tu contraseña nunca se guarda: se guarda un hash (bcrypt) que sirve para comprobarla pero no para recuperarla. Del enlace de recuperación también se guarda solo un hash.",
+              "La bitácora de actividad no guarda contraseñas ni emails, y cada registro tiene un dígito verificador que permite detectar si alguien lo modifica por fuera de la app."
+            ]
+          },
+          {
+            "id": "borrar-cuenta",
+            "p": "¿Cómo borro mi cuenta?",
+            "r": [
+              "En el dashboard, abrí la pestaña Progreso y bajá hasta \"Tu cuenta\": ahí está \"Borrar mi cuenta\". Te pide confirmación antes de borrar nada.",
+              "Se eliminan tu cuenta, todos tus planes y todos tus registros del checklist. No se puede deshacer."
+            ]
+          },
+          {
+            "id": "idioma",
+            "p": "¿Cómo cambio el idioma?",
+            "r": [
+              "Con los botones ES / EN: están arriba a la derecha y, en el celular, en algunas pantallas aparecen abajo a la derecha. La app cambia al instante y recuerda tu elección.",
+              "Tu plan queda en el idioma en el que se generó."
+            ]
+          }
+        ]
+      }
+    ],
+    "admin": {
+      "id": "admin",
+      "titulo": "Para administradores",
+      "preguntas": [
+        {
+          "id": "admin-familias",
+          "p": "¿Qué son las patentes y las familias?",
+          "r": [
+            "Una patente es un permiso para una acción concreta (por ejemplo usuarios.borrar). Una familia agrupa patentes y también otras familias: Administrador incluye a Usuario.",
+            "Lo que alguien puede hacer es la suma de sus familias y sus patentes sueltas. Un cambio rige en el momento, sin que la persona tenga que volver a entrar. No podés cambiar tus propios permisos."
+          ]
+        },
+        {
+          "id": "admin-integridad",
+          "p": "¿Qué hago si la verificación de integridad marca datos alterados?",
+          "r": [
+            "Significa que esos registros se modificaron, agregaron o borraron por fuera de la app (por ejemplo, editando la base directamente). Revisá en la bitácora qué pasó y con quién.",
+            "Recalcular acepta los datos actuales como válidos: usalo solo después de revisar, o después de una migración o un restore."
+          ]
+        },
+        {
+          "id": "admin-backup",
+          "p": "¿Cómo hago y restauro un backup?",
+          "r": [
+            "El botón de la pestaña Backup guarda una copia de todas las colecciones en el servidor. También se puede hacer por consola con node scripts/backup.js.",
+            "El restore se hace por consola (node scripts/restore.js), pide confirmación y al terminar recalcula los dígitos verificadores."
+          ]
+        }
+      ]
+    },
+    "tips": {
+      "racha": "Días seguidos, contando desde hoy, en los que registraste el checklist y sumaste algún punto.",
+      "rachaEtiqueta": "Qué es la racha",
+      "imc": "Índice de masa corporal: peso dividido altura al cuadrado. De 18,5 a 24,9 es el rango normal. Es orientativo.",
+      "imcEtiqueta": "Qué es el IMC",
+      "adherencia": "Cuánto cumpliste tu plan en los últimos 7 días. La dieta cuenta todos los días y la rutina solo los días de entrenamiento.",
+      "adherenciaEtiqueta": "Cómo se calcula la adherencia",
+      "checklist": "Completado vale 1 punto, Parcial medio y No hice 0. Se guarda una vez por día y con eso se calculan tu adherencia y tu racha.",
+      "checklistEtiqueta": "Cómo funciona el checklist",
+      "cambiarEjercicio": "Muestra la siguiente alternativa que sugirió la IA. Es solo para esta vez: el cambio no se guarda en tu plan.",
+      "cambiarEjercicioEtiqueta": "Qué hace cambiar ejercicio",
+      "usuarios": "Todas las cuentas registradas. Borrar una elimina también sus planes y checkins. Los administradores no se pueden borrar desde acá.",
+      "familias": "Una familia agrupa permisos (patentes) y puede incluir otras familias. Lo que puede hacer un usuario es la suma de sus familias y patentes sueltas.",
+      "integridad": "Detecta datos modificados por fuera de la app comparando el dígito verificador de cada registro (DVH) y el de cada colección (DVV).",
+      "bitacora": "Registro de cada pedido a la app y de los eventos importantes. No guarda contraseñas ni emails.",
+      "backup": "Copia de todas las colecciones en el servidor. El restore se corre por consola y recalcula los dígitos verificadores.",
+      "seccionEtiqueta": "Ayuda sobre {{seccion}}"
+    }
+  },
+  "cuenta": {
+    "titulo": "Tu cuenta",
+    "borrar": "Borrar mi cuenta",
+    "adminNoPuede": "Como administrador no podés borrar tu propia cuenta. Pedíselo a otro administrador.",
+    "confirmarTitulo": "¿Borrar tu cuenta?",
+    "confirmarTexto": "Se borran tu cuenta, todos tus planes y todos tus registros del checklist. No se puede deshacer.",
+    "confirmarBoton": "Sí, borrar mi cuenta",
+    "borrando": "Borrando...",
+    "errorBorrar": "No se pudo borrar la cuenta. Revisá tu conexión y probá de nuevo.",
+    "errorAdmin": "Un administrador no puede borrar su propia cuenta."
+  }
+}

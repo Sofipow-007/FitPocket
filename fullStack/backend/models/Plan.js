@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const digitosVerificadores = require('./plugins/digitosVerificadores');
 
 const planSchema = new mongoose.Schema({
     userId: {
@@ -18,20 +19,34 @@ const planSchema = new mongoose.Schema({
     meta: {
         objetivo: String,
         nivel: String,
+        duracionSemanas: Number,
+        caloriasObjetivoDia: Number,
+        nivelDificultad: { type: String, enum: ['principiante', 'intermedio', 'avanzado'] },
+        justificacion: String,
         tipoDieta: String,
         diasDisponibles: [String],
-        minutosPorSesion: Number
+        minutosPorSesion: Number,
+        presupuestoMensual: Number
     },
     rutina: [{
         dia: String,
+        tipo: String,
+        duracionMinutos: Number,
         ejercicios: mongoose.Schema.Types.Mixed
     }],
     dieta: [{
         dia: String,
-        comida: mongoose.Schema.Types.Mixed
+        comida: mongoose.Schema.Types.Mixed,
+        costoEstimadoDia: Number
     }]
 }, {
     timestamps: true
 });
+
+// Casi todas las consultas buscan el plan activo de un usuario
+planSchema.index({ userId: 1, estado: 1 });
+
+// Agrega `dvh` y mantiene el DVH y el DVV en cada escritura
+planSchema.plugin(digitosVerificadores, { coleccion: 'plans' });
 
 module.exports = mongoose.model('Plan', planSchema);

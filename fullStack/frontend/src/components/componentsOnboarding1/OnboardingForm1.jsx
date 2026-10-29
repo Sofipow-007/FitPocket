@@ -1,0 +1,158 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import "./OnboardingForm1.css";
+
+const IconArrow = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
+function getIMCCategory(imc) {
+  if (imc < 18.5) return { label: "Bajo peso",  color: "var(--blue)" };
+  if (imc < 25)   return { label: "Normal",     color: "var(--green)" };
+  if (imc < 30)   return { label: "Sobrepeso",  color: "var(--warn)" };
+  return             { label: "Obesidad",    color: "var(--err)" };
+}
+
+// Mismos límites que los atributos min/max de los inputs.
+const RANGOS = {
+  edad:   [10, 99],
+  peso:   [30, 300],
+  altura: [100, 250],
+};
+
+const fueraDeRango = (valor, [min, max]) => !(valor >= min && valor <= max);
+
+// Lo guardado al tocar "Siguiente", para no perderlo al volver con "Anterior".
+const leerGuardado = () => {
+  try {
+    return JSON.parse(localStorage.getItem("ob_paso1")) || {};
+  } catch {
+    return {};
+  }
+};
+
+export default function OnboardingForm1() {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [guardado] = useState(leerGuardado);
+  const [edad,   setEdad]   = useState(guardado.edad   ? String(guardado.edad)   : "");
+  const [peso,   setPeso]   = useState(guardado.peso   ? String(guardado.peso)   : "");
+  const [altura, setAltura] = useState(guardado.altura ? String(guardado.altura) : "");
+  const [sexo,   setSexo]   = useState(guardado.sexo ?? "");
+  const [error,  setError]  = useState("");
+
+  const p = parseFloat(peso);
+  const h = parseFloat(altura);
+  const imc = p > 0 && h > 0 ? parseFloat((p / Math.pow(h / 100, 2)).toFixed(1)) : null;
+
+  const categoria = imc ? getIMCCategory(imc) : null;
+
+  const handleSiguiente = () => {
+    if (!edad || !peso || !altura || !sexo) {
+      setError(t("onboarding1.errorCampos"));
+      return;
+    }
+    if (
+      fueraDeRango(parseInt(edad), RANGOS.edad) ||
+      fueraDeRango(parseFloat(peso), RANGOS.peso) ||
+      fueraDeRango(parseFloat(altura), RANGOS.altura)
+    ) {
+      setError(t("onboarding1.errorRango"));
+      return;
+    }
+    setError("");
+    localStorage.setItem("ob_paso1", JSON.stringify({
+      edad:   parseInt(edad),
+      peso:   parseFloat(peso),
+      altura: parseFloat(altura),
+      sexo,
+    }));
+    navigate("/onboarding/2");
+  };
+
+  return (
+    <div className="ob1-card">
+      <div className="ob1-header">
+        <h1 className="ob1-header__title">{t("onboarding1.titulo")}</h1>
+        <p className="ob1-header__subtitle">{t("onboarding1.subtitulo")}</p>
+      </div>
+
+      <div className="ob1-form">
+        <div className="ob1-row3">
+          <div className="ob1-field">
+            <label className="ob1-label" htmlFor="ob1-edad">{t("onboarding1.edad")}</label>
+            <input
+              id="ob1-edad"
+              type="number"
+              className="ob1-input"
+              placeholder="Años"
+              value={edad}
+              onChange={e => setEdad(e.target.value)}
+              min="10" max="99"
+            />
+          </div>
+          <div className="ob1-field">
+            <label className="ob1-label" htmlFor="ob1-peso">{t("onboarding1.peso")}</label>
+            <input
+              id="ob1-peso"
+              type="number"
+              className="ob1-input"
+              placeholder="kg"
+              value={peso}
+              onChange={e => setPeso(e.target.value)}
+              min="30" max="300"
+            />
+          </div>
+          <div className="ob1-field">
+            <label className="ob1-label" htmlFor="ob1-altura">{t("onboarding1.altura")}</label>
+            <input
+              id="ob1-altura"
+              type="number"
+              className="ob1-input"
+              placeholder="cm"
+              value={altura}
+              onChange={e => setAltura(e.target.value)}
+              min="100" max="250"
+            />
+          </div>
+        </div>
+
+        <div className="ob1-row2">
+          <div className="ob1-field">
+            <label className="ob1-label" htmlFor="ob1-sexo">{t("onboarding1.sexo")}</label>
+            <select
+              id="ob1-sexo"
+              className="ob1-select"
+              value={sexo}
+              onChange={e => setSexo(e.target.value)}
+            >
+              <option value="">{t("onboarding1.selecciona")}</option>
+              <option value="femenino">{t("onboarding1.femenino")}</option>
+              <option value="masculino">{t("onboarding1.masculino")}</option>
+            </select>
+          </div>
+
+          <div className={`ob1-imc${!imc ? " ob1-imc--empty" : ""}`}>
+            <span className="ob1-imc__label">{t("onboarding1.imcEstimado")}</span>
+            <span className="ob1-imc__val" style={{ color: categoria?.color ?? "var(--ink4)" }}>
+              {imc ?? "—"}
+            </span>
+            <span className="ob1-imc__cat" style={{ color: categoria?.color ?? "var(--ink4)" }}>
+              {categoria?.label ?? t("onboarding1.ingresaDatos")}
+            </span>
+          </div>
+        </div>
+
+        {error && <p className="ob1-error" role="alert">{error}</p>}
+        <div className="ob1-actions">
+          <button type="button" className="ob1-btn-next" onClick={handleSiguiente}>
+            {t("onboarding1.siguiente")} <IconArrow />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

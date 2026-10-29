@@ -1,0 +1,12 @@
+.wave-divider {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wave-divider__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}

@@ -1,0 +1,93 @@
+/* ── Panel izquierdo paso 2 — idéntico a Hero1 ───────────────── */
+
+.ob2-panel {
+  width: 280px;
+  min-width: 280px;
+  height: 100vh;
+  background-color: var(--bg2);
+  border-right: 1px solid rgba(139, 127, 245, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 40px 32px 48px;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.ob2-panel::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  left: -80px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 127, 245, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Logo ─────────────────────────────────────────────────────── */
+.ob2-panel__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 56px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ob2-panel__logo-img {
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+}
+
+.ob2-panel__logo-text {
+  font-family: var(--heading);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+}
+
+.ob2-panel__logo:hover .ob-panel__logo-text {
+  color: var(--vio2);
+  transition: color 0.2s;
+}
+/* ── Stepper ──────────────────────────────────────────────────── */
+.ob2-panel__stepper {
+  flex: 1;
+}
+
+/* ── Info motivacional ────────────────────────────────────────── */
+.ob2-panel__info {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(139, 127, 245, 0.08);
+  flex-shrink: 0;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ob2-panel {
+    width: 100%;
+    min-width: unset;
+    height: auto;
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid rgba(139, 127, 245, 0.1);
+    padding: 28px 24px;
+  }
+
+  .ob2-panel__logo {
+    margin-bottom: 28px;
+  }
+
+  .ob2-panel::before {
+    display: none;
+  }
+}

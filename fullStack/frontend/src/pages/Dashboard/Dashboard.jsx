@@ -1,0 +1,456 @@
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import logo from "../../assets/fitpocketlogo(inverted).png";
+import { normalize, fechaLocal } from "../../lib/utils";
+import { EX_CATS, getExCat } from "../../lib/exerciseCategories";
+import { MOCK_PERFIL, MOCK_PLAN } from "../../mocks/planMock";
+import ConPermiso from "../../components/ConPermiso";
+import AyudaTip from "../../components/Ayuda/AyudaTip";
+import { pedirConCache, invalidar, invalidarTodo, actualizarCache } from "../../lib/apiCache";
+import ChecklistTab from "./ChecklistTab";
+import ProgresoTab from "./ProgresoTab";
+import "./Dashboard.css";
+
+const DIAS_SEMANA      = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+const DIAS_CORTOS_KEYS = [
+  "dashboard.dias.lun", "dashboard.dias.mar", "dashboard.dias.mie",
+  "dashboard.dias.jue", "dashboard.dias.vie", "dashboard.dias.sab", "dashboard.dias.dom",
+];
+const JS_TO_IDX = [6, 0, 1, 2, 3, 4, 5];
+
+function getGreetingKey() {
+  const h = new Date().getHours();
+  if (h < 12) return "dashboard.saludo.manana";
+  if (h < 19) return "dashboard.saludo.tarde";
+  return "dashboard.saludo.noche";
+}
+
+function getFecha(lang) {
+  const locale = lang === "en" ? "en-US" : "es-AR";
+  return new Intl.DateTimeFormat(locale, {
+    weekday: "long", day: "numeric", month: "long",
+  }).format(new Date());
+}
+
+function calcImc(peso, altura) {
+  if (!peso || !altura) return null;
+  return (peso / Math.pow(altura / 100, 2)).toFixed(1);
+}
+
+function getNextSession(rutina) {
+  if (!rutina?.length) return null;
+  const todayIdx = JS_TO_IDX[new Date().getDay()];
+  for (let i = 1; i <= 7; i++) {
+    const idx     = (todayIdx + i) % 7;
+    const diaData = rutina.find(r => normalize(r.dia) === normalize(DIAS_SEMANA[idx]));
+    if (diaData?.ejercicios?.length > 0) return idx;
+  }
+  return null;
+}
+
+function getFechaDeIdx(idx) {
+  const hoy = new Date();
+  const diffToMon = (hoy.getDay() + 6) % 7;
+  const d = new Date(hoy);
+  d.setDate(hoy.getDate() - diffToMon + idx);
+  return fechaLocal(d);
+}
+
+/* ── Icons ── */
+const IconLogout = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+    <polyline points="16 17 21 12 16 7"/>
+    <line x1="21" y1="12" x2="9" y2="12"/>
+  </svg>
+);
+const IconBolt = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+  </svg>
+);
+const IconChevron = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polyline points="4 6 8 10 12 6"/>
+  </svg>
+);
+
+const COMIDAS = [
+  { key: "desayuno", tKey: "dashboard.desayuno", dot: "#F97316" },
+  { key: "almuerzo", tKey: "dashboard.almuerzo", dot: "#00E887" },
+  { key: "merienda", tKey: "dashboard.merienda", dot: "#4F8EF7" },
+  { key: "cena",     tKey: "dashboard.cena",     dot: "#A855F7" },
+];
+
+const IconAyuda = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" /><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+);
+
+export default function Dashboard() {
+  const navigate         = useNavigate();
+  const { t, i18n }      = useTranslation();
+  const [searchParams]   = useSearchParams();
+  const isPreview        = import.meta.env.DEV && searchParams.get("preview") === "true";
+
+  const [tab,        setTab]        = useState("home");
+  const [loading,    setLoading]    = useState(!isPreview);
+  const [perfil,     setPerfil]     = useState(isPreview ? MOCK_PERFIL : null);
+  const [plan,       setPlan]       = useState(isPreview ? MOCK_PLAN   : null);
+  const [sinPlan,    setSinPlan]    = useState(false);
+  const [adherencia, setAdherencia] = useState(null);
+  const [checkinHoy, setCheckinHoy] = useState(null);
+  const [error,      setError]      = useState("");
+  const [expandedEx, setExpandedEx] = useState(null);
+
+  useEffect(() => {
+    if (isPreview) return;
+    const token = localStorage.getItem("token");
+    if (!token) { navigate("/login", { replace: true }); return; }
+
+    const irAlLogin = () => {
+      localStorage.removeItem("token");
+      invalidarTodo();
+      navigate("/login", { replace: true });
+    };
+
+    // Salen de la caché (lib/apiCache) si están frescos: volver desde /plan no repite pedidos
+    Promise.all(["perfil", "plan", "semana", "hoy"].map(pedirConCache))
+      .then(([rPerfil, rPlan, rAdh, rHoy]) => {
+        if ([rPerfil, rPlan, rAdh, rHoy].some(r => r.status === 401)) {
+          irAlLogin();
+          return;
+        }
+        setPerfil(rPerfil.status === 200 ? rPerfil.datos : null);
+        setSinPlan(rPlan.status === 404);
+        setPlan(rPlan.status === 200 ? rPlan.datos : null);
+        if (rAdh.status === 200) setAdherencia(rAdh.datos);
+        if (rHoy.status === 200) setCheckinHoy(rHoy.datos?.checkin ?? null);
+      })
+      .catch(() => setError("No se pudo cargar tu información. Revisá tu conexión."))
+      .finally(() => setLoading(false));
+  }, [navigate, isPreview]);
+
+  const todayIdx         = JS_TO_IDX[new Date().getDay()];
+  const hoy              = DIAS_SEMANA[todayIdx];
+  const nombre           = perfil?.nombre?.split(" ")[0] ?? "";
+  const imc              = calcImc(perfil?.perfil?.peso, perfil?.perfil?.altura);
+  const calorias         = plan?.meta?.caloriasObjetivoDia ?? null;
+  const proximaSesionIdx = getNextSession(plan?.rutina);
+  const rutina           = plan?.rutina ?? [];
+  const hoyRutina        = rutina.find(r => normalize(r.dia) === normalize(hoy));
+  const hoyEntrena       = (hoyRutina?.ejercicios?.length ?? 0) > 0;
+  const hoyDieta         = plan?.dieta?.find(d => normalize(d.dia) === normalize(hoy));
+  const minutos          = perfil?.perfil?.minutosPorSesion;
+  const nivel            = perfil?.perfil?.nivel;
+
+  const pct = adherencia?.porcentaje ?? null;
+  const pctColor = pct == null ? undefined
+    : pct >= 70 ? "#00E887"
+    : pct >= 50 ? "#F59E0B" : "#EF4444";
+
+  // Precarga: mientras el usuario mira el dashboard se baja el código de "Ver mi plan",
+  // así al tocarlo la pantalla abre sin esperar el chunk (el plan ya está en la caché)
+  useEffect(() => {
+    const precargar = () => import("../PlanDetalle/PlanDetalle");
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(precargar, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(precargar, 1500);
+    return () => clearTimeout(id);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    invalidarTodo();
+    navigate("/");
+  };
+
+  return (
+    <div className="db-page">
+
+      {/* ── Navbar ── */}
+      <nav className="db-nav">
+        <div className="db-nav__perfil">
+          <div className="db-nav__avatar" aria-hidden="true">
+            {nombre?.[0]?.toUpperCase() ?? "U"}
+          </div>
+          <div className="db-nav__userinfo">
+            <span className="db-nav__nombre">{perfil?.nombre ?? "—"}</span>
+            {nivel && <span className="db-nav__nivel">{nivel}</span>}
+          </div>
+        </div>
+        <div className="db-nav__brand">
+          <img src={logo} alt="" className="db-nav__logo" />
+          <span className="db-nav__brand-text">FitPocket</span>
+        </div>
+        <div className="db-nav__right">
+          <div className="db-lang" role="group" aria-label={t("comun.idioma")}>
+            <button
+              className={`db-lang__btn${i18n.language === "es" ? " db-lang__btn--on" : ""}`}
+              onClick={() => { i18n.changeLanguage("es"); localStorage.setItem("idioma", "es"); }}
+            >ES</button>
+            <button
+              className={`db-lang__btn${i18n.language === "en" ? " db-lang__btn--on" : ""}`}
+              onClick={() => { i18n.changeLanguage("en"); localStorage.setItem("idioma", "en"); }}
+            >EN</button>
+          </div>
+          <Link to="/ayuda" className="db-nav__ayuda" aria-label={t("ayuda.link")} title={t("ayuda.link")}>
+            <IconAyuda />
+          </Link>
+          <ConPermiso patente="usuarios.listar">
+            <button className="db-nav__admin" onClick={() => navigate(isPreview ? "/admin?preview=true" : "/admin")}>
+              {t("admin.link")}
+            </button>
+          </ConPermiso>
+          <button className="db-nav__logout" onClick={handleLogout} aria-label={t("dashboard.salir")}>
+            <IconLogout /><span>{t("dashboard.salir")}</span>
+          </button>
+        </div>
+      </nav>
+
+      <div className="db-main">
+
+        {/* ── Tabs ── */}
+        <div className="db-tabs" role="tablist">
+          {[["home", t("dashboard.tabs.inicio")], ["checklist", t("dashboard.tabs.checklist")], ["progreso", t("dashboard.tabs.progreso")]].map(([id, label]) => (
+            <button key={id} role="tab" aria-selected={tab === id}
+              className={`db-tab${tab === id ? " db-tab--on" : ""}`}
+              onClick={() => setTab(id)}>
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* ── Skeleton ── */}
+        {loading && (
+          <div className="db-skeleton-wrap" aria-busy="true" aria-label={t("comun.cargando")}>
+            <div className="db-sk-hero">
+              <div className="db-sk db-sk--title" />
+              <div className="db-sk db-sk--today" />
+            </div>
+            <div className="db-sk db-sk--strip" />
+            <div className="db-sk db-sk--block" />
+          </div>
+        )}
+
+        {!loading && error && <p className="db-error" role="alert">{t("dashboard.errorConexion")}</p>}
+
+        {!loading && !error && tab !== "progreso" && sinPlan && (
+          <div className="db-sin-plan">
+            <h2>{t("dashboard.sinPlanTitulo")}</h2>
+            <p>{t("dashboard.sinPlanTexto")}</p>
+            <button className="db-sin-plan__btn" onClick={() => navigate("/onboarding")}>
+              {t("dashboard.sinPlanCta")}
+            </button>
+          </div>
+        )}
+
+        {!loading && !error && tab === "home" && !sinPlan && (
+          <>
+            {/* ── Banner alerta ── */}
+            {pct != null && pct < 50 && (adherencia?.diasContados ?? 7) >= 3 && (
+              <div className="db-alerta-banner" role="alert">
+                <span>⚠️</span>
+                <span>{t("dashboard.adherenciaBaja")}</span>
+              </div>
+            )}
+
+            {/* ══ HERO ══ */}
+            <section className="db-hero">
+              <div className="db-hero__left">
+                <div>
+                  <h1 className="db-hero__greeting">
+                    {t(getGreetingKey())}{nombre ? `, ${nombre}` : ""}.
+                  </h1>
+                  <p className="db-hero__fecha">{getFecha(i18n.language)}</p>
+                </div>
+
+                <div className="db-strip">
+                  <div className="db-strip__item db-strip__item--orange">
+                    <span className="db-strip__val">{adherencia?.racha ?? "—"}</span>
+                    <span className="db-strip__label">
+                      {t("dashboard.racha")}
+                      <AyudaTip etiqueta={t("ayuda.tips.rachaEtiqueta")} texto={t("ayuda.tips.racha")} ancla="racha" lado="izq" />
+                    </span>
+                  </div>
+                  <span className="db-strip__sep" aria-hidden="true" />
+                  <div className="db-strip__item">
+                    <span className="db-strip__val">{calorias ?? "—"}</span>
+                    <span className="db-strip__label">{t("dashboard.kcalHoy")}</span>
+                  </div>
+                  <span className="db-strip__sep" aria-hidden="true" />
+                  <div className="db-strip__item db-strip__item--purple">
+                    <span className="db-strip__val">{imc ?? "—"}</span>
+                    <span className="db-strip__label">
+                      {t("dashboard.imc")}
+                      <AyudaTip etiqueta={t("ayuda.tips.imcEtiqueta")} texto={t("ayuda.tips.imc")} ancla="imc" />
+                    </span>
+                  </div>
+                  <span className="db-strip__sep" aria-hidden="true" />
+                  <div className="db-strip__item">
+                    <span className="db-strip__val" style={{ color: pctColor }}>
+                      {pct != null ? `${pct}%` : "—"}
+                    </span>
+                    <span className="db-strip__label">
+                      {t("dashboard.adherencia")}
+                      <AyudaTip etiqueta={t("ayuda.tips.adherenciaEtiqueta")} texto={t("ayuda.tips.adherencia")} ancla="adherencia" lado="der" />
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  className="db-cta"
+                  onClick={() => navigate(isPreview ? "/plan?preview=true" : "/plan")}
+                >
+                  <IconBolt /> {t("dashboard.verPlan")}
+                </button>
+              </div>
+
+              {/* Bloque de hoy */}
+              <div className={`db-today${hoyEntrena ? " db-today--activo" : " db-today--descanso"}`}>
+                <div className="db-today__head">
+                  <span className="db-today__estado">
+                    {hoyEntrena ? t("dashboard.entrenarHoy") : t("dashboard.descansoHoy")}
+                  </span>
+                  {hoyEntrena && minutos && (
+                    <span className="db-today__meta">{minutos} min</span>
+                  )}
+                  {!hoyEntrena && proximaSesionIdx !== null && (
+                    <span className="db-today__meta">
+                      {t("dashboard.proximaSesion", { dia: t(DIAS_CORTOS_KEYS[proximaSesionIdx]) })}
+                    </span>
+                  )}
+                </div>
+
+                {hoyEntrena && hoyRutina?.ejercicios?.length > 0 ? (
+                  <ul className="db-today__ejercicios" aria-label={t("dashboard.entrenarHoy")}>
+                    {hoyRutina.ejercicios.slice(0, 3).map((ej, i) => {
+                      const cat    = getExCat(ej.nombre);
+                      const info   = EX_CATS[cat];
+                      const isOpen = expandedEx === i;
+                      return (
+                        <li key={i} className={`db-today__ejercicio${isOpen ? " db-today__ejercicio--open" : ""}`}>
+                          <button
+                            className="db-today__ej-row"
+                            onClick={() => setExpandedEx(isOpen ? null : i)}
+                            aria-expanded={isOpen}
+                          >
+                            <span className="db-today__ej-n">{String(i + 1).padStart(2, "0")}</span>
+                            <span className="db-today__ej-nom">{ej.nombre}</span>
+                            {ej.series && (
+                              <span className="db-today__ej-meta">{ej.series}×{ej.repeticiones}</span>
+                            )}
+                            <span className="db-today__ej-chevron"><IconChevron /></span>
+                          </button>
+                          {isOpen && (
+                            <div className="db-today__ej-detail">
+                              <div className="db-today__ej-illu">{info.illu}</div>
+                              <div className="db-today__ej-info">
+                                <span className="db-today__ej-muscles">
+                                  {t(`ejercicios.${cat}.muscles`)}
+                                </span>
+                                <span className="db-today__ej-tip">
+                                  {t(`ejercicios.${cat}.tip`)}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : !hoyEntrena ? (
+                  <p className="db-today__rest-sub">{t("dashboard.recuperate")}</p>
+                ) : null}
+              </div>
+            </section>
+
+            {/* ══ SEMANA ══ */}
+            <section className="db-section" id="db-semana">
+              <h2 className="db-section__title">{t("dashboard.semana")}</h2>
+              <div className="db-week" role="list" aria-label={t("dashboard.semana")}>
+                {DIAS_SEMANA.map((dia, idx) => {
+                  const diaData  = rutina.find(r => normalize(r.dia) === normalize(dia));
+                  const entrena  = (diaData?.ejercicios?.length ?? 0) > 0;
+                  const esHoy    = dia === hoy;
+                  const fecha    = getFechaDeIdx(idx);
+                  const checkin  = adherencia?.semana?.find(s => s.fecha === fecha)?.checkin;
+                  const dotColor = !entrena
+                    ? "rgba(255,255,255,0.12)"
+                    : !checkin
+                    ? "rgba(255,255,255,0.15)"
+                    : checkin.puntajeTotal >= 1.5 ? "#00E887"
+                    : checkin.puntajeTotal >= 0.5 ? "#F59E0B" : "#EF4444";
+
+                  return (
+                    <div key={dia} role="listitem"
+                      className={`db-wday${esHoy ? " db-wday--hoy" : ""}${entrena ? " db-wday--entrena" : ""}`}>
+                      <span className="db-wday__nom">{t(DIAS_CORTOS_KEYS[idx])}</span>
+                      <span className="db-wday__dot" style={{ background: dotColor }} aria-hidden="true" />
+                      {esHoy && <span className="db-wday__hoy-tag">{t("dashboard.hoy")}</span>}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* ══ DIETA ══ */}
+            <section className="db-section">
+              <h2 className="db-section__title">{t("dashboard.dietaHoy")}</h2>
+              <div className="db-timeline">
+                {COMIDAS.map(({ key, tKey, dot }, idx) => {
+                  const comida = hoyDieta?.[key] ?? hoyDieta?.comida?.[key] ?? null;
+                  const isLast = idx === COMIDAS.length - 1;
+                  return (
+                    <div key={key} className="db-tl-row">
+                      <div className="db-tl-row__gutter" aria-hidden="true">
+                        <span className="db-tl-row__dot" style={{ background: dot }} />
+                        {!isLast && <span className="db-tl-row__line" />}
+                      </div>
+                      <div className="db-tl-row__content">
+                        <div className="db-tl-row__head">
+                          <span className="db-tl-row__label">{t(tKey)}</span>
+                          {comida?.calorias && (
+                            <span className="db-tl-row__kcal">{comida.calorias} kcal</span>
+                          )}
+                        </div>
+                        <p className="db-tl-row__desc">
+                          {comida?.descripcion ?? t("dashboard.sinPlan")}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          </>
+        )}
+
+        {!loading && !error && tab === "checklist" && !sinPlan && (
+          <ChecklistTab
+            checkinHoy={checkinHoy}
+            onGuardado={(c) => {
+              setCheckinHoy(c);
+              actualizarCache("hoy", 200, { checkin: c });
+              // la adherencia cambió: se descarta la guardada y se pide de nuevo
+              invalidar("semana");
+              pedirConCache("semana").then(r => { if (r.status === 200) setAdherencia(r.datos); }).catch(() => {});
+            }}
+          />
+        )}
+
+        {!loading && !error && tab === "progreso" && (
+          <ProgresoTab adherencia={adherencia} perfil={perfil} />
+        )}
+
+      </div>
+    </div>
+  );
+}

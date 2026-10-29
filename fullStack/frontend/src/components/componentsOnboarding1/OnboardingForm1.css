@@ -1,0 +1,200 @@
+/* ── Onboarding step 1 — Tu cuerpo ────────────────────────────── */
+.ob1-card {
+  width: 100%;
+  max-width: 560px;
+  background: var(--bg2);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-xl);
+  padding: 36px 36px 32px;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Header ────────────────────────────────────────────────────── */
+.ob1-header {
+  margin-bottom: 32px;
+}
+.ob1-header__title {
+  font-family: var(--heading);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin: 0 0 8px;
+  text-wrap: balance;
+}
+.ob1-header__subtitle {
+  font-size: 0.875rem;
+  color: var(--ink3);
+  line-height: 1.5;
+}
+
+/* ── Form ──────────────────────────────────────────────────────── */
+.ob1-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ob1-row3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.ob1-row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: end;
+}
+
+.ob1-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ob1-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.ob1-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-md);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  -moz-appearance: textfield;
+}
+.ob1-input::-webkit-inner-spin-button,
+.ob1-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.ob1-input::placeholder { color: var(--ink3); font-weight: 400; }
+.ob1-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--green-t);
+}
+
+/* ── Sex select ────────────────────────────────────────────────── */
+.ob1-select {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-md);
+  color: var(--ink);
+  font-size: 0.9rem;
+  padding: 11px 14px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236A6A84' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.ob1-select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--green-t);
+}
+.ob1-select option { background: var(--bg3); color: var(--ink); }
+
+/* ── IMC Card ──────────────────────────────────────────────────── */
+.ob1-imc {
+  background: var(--green-t);
+  border: 1px solid rgba(0,232,135,0.15);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 88px;
+  justify-content: center;
+}
+.ob1-imc--empty {
+  background: var(--bg3);
+  border-color: var(--border);
+}
+.ob1-imc__label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.ob1-imc__val {
+  font-family: var(--heading);
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  transition: color var(--t-base);
+}
+.ob1-imc__cat {
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: color var(--t-base);
+}
+
+/* ── Actions ───────────────────────────────────────────────────── */
+.ob1-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+.ob1-btn-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--grad);
+  border: none;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 12px 26px;
+  border-radius: var(--r-full);
+  transition: opacity var(--t-fast), transform var(--t-fast);
+}
+.ob1-btn-next:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+.ob1-btn-next:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+.ob1-btn-next svg { width: 16px; height: 16px; }
+
+/* ── Inline error ──────────────────────────────────────────────── */
+.ob1-error {
+  font-size: 0.82rem;
+  color: var(--err);
+  background: var(--err-t);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+  line-height: 1.4;
+}
+
+/* ── Reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ob1-input,
+  .ob1-select,
+  .ob1-btn-next { transition: none; }
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .ob1-card { padding: 28px 20px 24px; }
+  .ob1-row3 { grid-template-columns: 1fr 1fr; }
+  .ob1-row2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .ob1-row3 { grid-template-columns: 1fr; }
+}
