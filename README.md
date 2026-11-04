@@ -17,12 +17,31 @@ La documentación del proyecto (descripción, requisitos, diseño, base de datos
 - Una base MongoDB (Atlas o local) — ver `fullStack/backend/.env.example`
 - Una API key de [Groq](https://console.groq.com/keys) para la generación de planes
 
+## Después de clonar: un solo comando
+
+```bash
+node setup.js
+```
+
+Chequea la versión de Node, crea los `.env` e instala backend y frontend. Pide la **contraseña del equipo**: con ella descifra `fullStack/backend/.env.cifrado`, que es el `.env` real guardado en el repo de forma cifrada (el repositorio es público, así que el `.env` en texto plano no se sube nunca). Si ya existe un `.env`, no lo toca.
+
+Instala con `npm ci`, que usa exactamente las versiones de `package-lock.json` y no lo modifica. Para agregar o actualizar una dependencia, `npm install <paquete>` y se sube el `package-lock.json` que cambia.
+
+Si cambiás algo del `.env` del backend (una clave nueva, otra base), volvé a cifrarlo para el resto del equipo y subí el archivo:
+
+```bash
+cd fullStack/backend
+npm run env:cerrar      # pide la contraseña del equipo dos veces
+git add .env.cifrado && git commit -m "chore: actualizar .env cifrado" && git push
+```
+
+`npm run env:abrir` hace lo inverso (crea el `.env` desde `.env.cifrado`), por si no se usa `setup.js`.
+
 ## Backend
 
 ```bash
 cd fullStack/backend
-npm install
-cp .env.example .env   # completar con tus valores
+npm ci
 npm run dev             # http://localhost:3000
 ```
 
@@ -58,7 +77,7 @@ Y adaptar `backend/services/iaService.js` para apuntar a tu instancia local en v
 
 ```bash
 cd fullStack/frontend
-npm install
+npm ci
 cp .env.example .env   # opcional, default apunta a localhost:3000
 npm run dev             # http://localhost:5173
 ```
