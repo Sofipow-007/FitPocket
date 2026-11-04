@@ -8,7 +8,9 @@
     "dev": "nodemon index.js",
     "test": "jest",
     "test:cobertura": "jest --coverage",
-    "test:perf": "node tests/perf/rendimiento.js"
+    "test:perf": "node tests/perf/rendimiento.js",
+    "env:abrir": "node scripts/envCifrado.js abrir",
+    "env:cerrar": "node scripts/envCifrado.js cerrar"
   },
   "keywords": [],
   "author": "",
