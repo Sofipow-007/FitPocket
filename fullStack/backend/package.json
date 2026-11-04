@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "node scripts/verificarNode.cjs",
+    "prestart": "node scripts/prepararEnv.js",
     "start": "node index.js",
+    "predev": "node scripts/prepararEnv.js",
     "dev": "nodemon index.js",
     "test": "jest",
     "test:cobertura": "jest --coverage",

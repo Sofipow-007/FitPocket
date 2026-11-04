@@ -4,6 +4,16 @@ require('dotenv').config();
 const { problemasDeEntorno } = require('./config/entorno')
 const problemas = problemasDeEntorno()
 if (problemas.length) {
+    const fs = require('fs')
+    const path = require('path')
+    // Caso típico de un clon nuevo: el .env no viene en el repo, pero sí su versión cifrada
+    if (!fs.existsSync(path.join(__dirname, '.env')) && fs.existsSync(path.join(__dirname, '.env.cifrado'))) {
+        console.error('Falta el archivo .env. Arrancá con "npm start" (o "npm run dev"): te pide la')
+        console.error('contraseña del equipo y lo crea. También sirve "npm run env:abrir".')
+        console.error('En Render u otra plataforma, en cambio, faltan estas variables en Environment:')
+        for (const p of problemas) console.error(`  - ${p}`)
+        process.exit(1)
+    }
     console.error('No se puede iniciar el backend. Revisá el .env (o las variables de la plataforma):')
     for (const p of problemas) console.error(`  - ${p}`)
     process.exit(1)

@@ -35,7 +35,7 @@ npm run env:cerrar      # pide la contraseña del equipo dos veces
 git add .env.cifrado && git commit -m "chore: actualizar .env cifrado" && git push
 ```
 
-`npm run env:abrir` hace lo inverso (crea el `.env` desde `.env.cifrado`), por si no se usa `setup.js`.
+Si no se usó `setup.js`, no hace falta nada más: `npm start` y `npm run dev` piden la contraseña del equipo cuando falta el `.env` y lo crean solos. `npm run env:abrir` hace lo mismo sin arrancar el servidor. En Render no pregunta nada: ahí las variables van en Environment.
 
 ## Backend
 
