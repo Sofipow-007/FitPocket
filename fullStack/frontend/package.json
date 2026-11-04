@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "preinstall": "node scripts/verificarNode.cjs",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -44,5 +45,8 @@
     "tailwindcss": "^4.3.0",
     "vite": "^8.0.4",
     "vitest": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   }
 }
