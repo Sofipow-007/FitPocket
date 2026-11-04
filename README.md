@@ -34,10 +34,11 @@ Variables de entorno (`fullStack/backend/.env`):
 |---|---|
 | `MONGODB_URI` | Connection string de MongoDB (Atlas o local) |
 | `JWT_SECRET` | Clave para firmar los tokens de sesión |
-| `CRYPTO_KEY` | Clave para encriptar datos sensibles del perfil (nombre, limitaciones, aclaración). **Sin esta variable, el backend usa una clave por defecto — no usar así en producción.** |
+| `CRYPTO_KEY` | Clave para encriptar datos sensibles del perfil (nombre, limitaciones, aclaración). Obligatoria: sin ella el backend no arranca. Si se pierde, los datos cifrados no se pueden recuperar. |
 | `GROQ_API_KEY` | API key de Groq para generar rutina y dieta |
 | `PORT` | Puerto del servidor (default 3000) |
 | `FRONTEND_URL` | URL del frontend, para armar el enlace de recuperación de contraseña (default `http://localhost:5173`) |
+| `ADMIN_EMAILS` | Opcional. Emails de las cuentas administradoras, separados por coma. Al arrancar el backend, las que ya existen pasan a admin; las que no, quedan como admin al registrarse. Sacarlas de la lista no les quita el rol (se hace desde `/admin` → Familias) |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | Servidor de correo para enviar ese enlace. Sirve cualquier SMTP (Gmail con contraseña de aplicación, Brevo, etc.). **Si faltan, no se envía ningún mail y el enlace se imprime en la consola del backend.** |
 | `MAIL_FROM` | Remitente de los mails (default: `SMTP_USER`) |
 

@@ -4,7 +4,8 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { enviarMailDeReset } = require('../services/mailService');
 const { encrypt, decrypt } = require('../utils/crypto');
-const { familiaBase, FAMILIA_USUARIO } = require('../services/permisosService');
+const { familiaBase, FAMILIA_USUARIO, FAMILIA_ADMIN } = require('../services/permisosService');
+const { esEmailAdmin } = require('../services/adminsService');
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -37,17 +38,17 @@ exports.register = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         // El DVH lo calcula el modelo al guardar (plugin de dígitos verificadores)
-        const rol = 'usuario';
-
-        // Toda cuenta nueva arranca con la familia Usuario: sin ella no tendría permisos para nada
-        const familiaUsuario = await familiaBase(FAMILIA_USUARIO);
+        // Toda cuenta nueva arranca con la familia Usuario: sin ella no tendría permisos para nada.
+        // Si el email está en ADMIN_EMAILS, arranca directamente como Administrador (que incluye a Usuario).
+        const esAdmin = esEmailAdmin(email);
+        const familia = await familiaBase(esAdmin ? FAMILIA_ADMIN : FAMILIA_USUARIO);
 
         const user = new User({
             nombre: encrypt(nombre),   // nombre encriptado en BD
             email,
             passwordHash,
-            rol,
-            familias: [familiaUsuario._id],
+            rol: esAdmin ? 'admin' : 'usuario',
+            familias: [familia._id],
             perfil: {},
         });
 

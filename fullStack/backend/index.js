@@ -13,6 +13,7 @@ const connectDB = require('./config/db')
 const { crearEstrategiaIA } = require('./services/ia/iaFactory')
 const app = require('./app')
 const { ajustarTTLBitacora } = require('./services/indicesService')
+const { aplicarAdminsConfigurados } = require('./services/adminsService')
 
 // Un IA_PROVIDER mal escrito se avisa al arrancar y no recién cuando alguien genera un plan
 try {
@@ -23,9 +24,20 @@ try {
     process.exit(1)
 }
 
-connectDB()
+const conectada = connectDB()
+conectada
     .then(() => ajustarTTLBitacora())
     .catch(error => console.error(`No se pudo ajustar el TTL de la bitácora: ${error.message}`))
+
+// ADMIN_EMAILS: las cuentas que ya existen pasan a admin al arrancar
+conectada
+    .then(() => aplicarAdminsConfigurados())
+    .then(({ promovidos, yaEran, sinCuenta }) => {
+        for (const e of promovidos) console.log(`ADMIN_EMAILS: ${e} ahora es admin`)
+        if (yaEran.length) console.log(`ADMIN_EMAILS: ya eran admin: ${yaEran.join(', ')}`)
+        for (const e of sinCuenta) console.log(`ADMIN_EMAILS: ${e} todavía no tiene cuenta; queda como admin al registrarse`)
+    })
+    .catch(error => console.error(`No se pudieron aplicar los ADMIN_EMAILS: ${error.message}`))
 
 const PORT = process.env.PORT || 3000;
 
