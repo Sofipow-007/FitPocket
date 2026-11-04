@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "preinstall": "node scripts/verificarNode.cjs",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest",
@@ -52,5 +53,13 @@
       "text",
       "lcov"
     ]
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      "disablePostinstall": "1"
+    }
   }
 }

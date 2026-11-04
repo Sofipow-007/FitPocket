@@ -5,6 +5,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY package*.json ./
+COPY scripts/verificarNode.cjs ./scripts/
 # solo dependencias de producción: jest, supertest, etc. no van a la imagen
 RUN npm ci --omit=dev
 

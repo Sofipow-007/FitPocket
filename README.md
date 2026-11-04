@@ -13,7 +13,7 @@ La documentación del proyecto (descripción, requisitos, diseño, base de datos
 
 ## Requisitos
 
-- Node.js 20+
+- Node.js 22 LTS (mínimo 20.19). Si tenés uno más viejo, `npm install` se frena y te lo avisa. Con [nvm](https://github.com/nvm-sh/nvm) alcanza con `nvm use`: la versión está en `.nvmrc`.
 - Una base MongoDB (Atlas o local) — ver `fullStack/backend/.env.example`
 - Una API key de [Groq](https://console.groq.com/keys) para la generación de planes
 
@@ -25,6 +25,8 @@ npm install
 cp .env.example .env   # completar con tus valores
 npm run dev             # http://localhost:3000
 ```
+
+`npm install` no descarga MongoDB. Las pruebas (`npm test`) usan una base en memoria que baja MongoDB (~800 MB) la primera vez que se corren; las siguientes ya lo tienen guardado.
 
 Variables de entorno (`fullStack/backend/.env`):
 
