@@ -69,6 +69,8 @@ web_modules/
 .env
 .env.*
 !.env.example
+# el .env del backend cifrado con la contraseña del equipo (scripts/envCifrado.js)
+!.env.cifrado
 atlas-credentials.env
 
 # parcel-bundler cache (https://parceljs.org/)
